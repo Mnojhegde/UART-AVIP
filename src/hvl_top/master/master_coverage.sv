@@ -69,8 +69,5 @@ endtask : run_phase
 //--------------------------------------------------------------------------------------------
 // Function: write
 //--------------------------------------------------------------------------------------------
-function void device0_coverage::write(device0_tx t);
-//  device0_tx device0_tx_h;
-//  this.device0_tx_h = t;
-// cg.sample(device0_agent_cfg_h, device0_tx_cov_data);     
+function void device0_coverage::write(device0_tx t);    
 endfunction: write
