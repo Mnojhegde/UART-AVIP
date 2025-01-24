@@ -1,8 +1,0 @@
-var g_data = {
-c1027:[4,'PR',[],,'1025',1,1,'UartTxCovergroup','1020','/UartTxPkg/UartTxCoverage',[[],[0,'1','0',1,'UART_PARITY']],[]],
-c1030:[4,'PR',[],'parity','1028',2,1,'\\/UartTxPkg::UartTxCoverage::UartTxCovergroup ','1020','/UartTxPkg/UartTxCoverage',[[],[0,'1','0',1,'UART_PARITY']],[]],
-c1393:[4,'PR',[],,'1391',1,1,'UartTxCovergroup','1386','work.UartTxPkg::UartTxCoverage',[[],[0,'1','0',1,'UART_PARITY']],[]],
-c1396:[4,'PR',[],'parity','1394',2,1,'\\/UartTxPkg::UartTxCoverage::UartTxCovergroup ','1386','work.UartTxPkg::UartTxCoverage',[[],[0,'1','0',1,'UART_PARITY']],[]],
-dummyEnd:0
-};
-processCovergroupsData(g_data);
