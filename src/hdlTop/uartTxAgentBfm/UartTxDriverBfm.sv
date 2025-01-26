@@ -34,7 +34,7 @@ interface UartTxDriverBfm (input  bit   clk,
    //Variable: bclk
   //baud clock for uart transmisson/reception
 	
-  bit bclk;
+  bit baudClk;
    
    //Variable: baudRate
   //Used to sample the uart data
@@ -69,7 +69,24 @@ interface UartTxDriverBfm (input  bit   clk,
   // this task will calculate the baud divider based on sys clk frequency
   //-------------------------------------------------------------------
 	
- //  task Baud_div(input overSampling, input baudRate);
+    task bauddivcalculation(input clk,input oversamplingmethod,input baudrate);
+      real clkPeriodStartTime; 
+      real clkPeriodStopTime;
+      real clkPeriod;
+      real clkFrequency;
+      int baudDivisor;
+      @(posedge clk);
+      clkPeriodStartTime = $realtime;
+      @(posedge clk);
+      clkPeriodStopTime = $realtime; 
+      clkPeriod = clkPeriodStopTime - clkPeriodSatrtTime;
+      clkFrequency = ( 10 **9 )/ clkPeriod;
+
+      baudDivisor = (clkFrequency)/(oversamplingmethod * baudrate); 
+
+      baudclkgenerator(baudDivisor,baudClk);
+    endtask
+  
 	  
 	// baudDivider = (FREQUENCY *1000000000) / (overSampling * baudRate);    
 	  
