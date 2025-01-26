@@ -69,7 +69,7 @@ interface UartTxDriverBfm (input  bit   clk,
   // this task will calculate the baud divider based on sys clk frequency
   //-------------------------------------------------------------------
 	
-    task bauddivcalculation(input clk,input oversamplingmethod,input baudrate);
+    task bauddivcalculation(input oversamplingmethod,input baudrate);
       real clkPeriodStartTime; 
       real clkPeriodStopTime;
       real clkPeriod;
@@ -84,8 +84,9 @@ interface UartTxDriverBfm (input  bit   clk,
 
       baudDivisor = (clkFrequency)/(oversamplingmethod * baudrate); 
 
-      baudclkgenerator(baudDivisor,baudClk);
+      baudclkgenerator(baudDivisor);
     endtask
+
   
 	  
 	// baudDivider = (FREQUENCY *1000000000) / (overSampling * baudRate);    
