@@ -87,28 +87,21 @@ interface UartTxDriverBfm (input  bit   clk,
       baudclkgenerator(baudDivisor);
     endtask
 
-  
+    task baudclkgenerator(input int baudDivisor);
+      int count=0;
+      forever begin 
+        @(posedge clk or negedge clk)
+    
+        if(count == (baudDivisor-1))begin 
+          count <= 0;
+          baudClk <= ~baudClk;
+        end 
+        else begin 
+          count <= count +1;
+        end   
+      end
+    endtask
 	  
-	// baudDivider = (FREQUENCY *1000000000) / (overSampling * baudRate);    
-	  
- //  endtask: Baud_div
- 
- //  initial begin 
-	  
-	//   Baud_div(agtcfg.overSampling, agtcfg.baudRate);   // variables yet to be added in the agent
-	  
- //    forever begin
-	//     @(posedge clk or negedge clk) begin
- //        	if (counter == baudDivider - 1) begin
- //            		bclk <= ~bclk;   // Toggle bclk when counter reaches baudDivider
- //            		counter <= 0;    // Reset the counter
- //        	end else begin
- //            		counter <= counter + 1;  // Increment the counter
- //        	end
- //    	    end
- //    	end
- //   end
-
   
   //-------------------------------------------------------
   // Task: WaitForReset
