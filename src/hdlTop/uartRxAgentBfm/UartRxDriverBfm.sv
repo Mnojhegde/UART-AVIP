@@ -60,33 +60,48 @@ interface UartRxDriverBfm (input  bit   clk,
   end
 
   
-
   //------------------------------------------------------------------
-  // Task: Baud_div
+  // Task: bauddivCalculation
   // this task will calculate the baud divider based on sys clk frequency
   //-------------------------------------------------------------------
 	
- //  task Baud_div(input overSampling, input baudRate);
-	  
-	// baudDivider = (FREQUENCY *1000000000) / (overSampling * baudRate);    
-	  
- //  endtask: Baud_div
- 
- //  initial begin 
-	  
-	//   Baud_div(agtcfg.overSampling, agtcfg.baudRate);   // variables yet to be added in the agent
-	  
- //    forever begin
-	//     @(posedge clk or negedge clk) begin
- //        	if (counter == baudDivider - 1) begin
- //            		bclk <= ~bclk;   // Toggle bclk when counter reaches baudDivider
- //            		counter <= 0;    // Reset the counter
- //        	end else begin
- //            		counter <= counter + 1;  // Increment the counter
- //        	end
- //    	    end
- //    	end
- //   end
+    task bauddivcalculation(input oversamplingmethod,input baudrate);
+      real clkPeriodStartTime; 
+      real clkPeriodStopTime;
+      real clkPeriod;
+      real clkFrequency;
+      int baudDivisor;
+      @(posedge clk);
+      clkPeriodStartTime = $realtime;
+      @(posedge clk);
+      clkPeriodStopTime = $realtime; 
+      clkPeriod = clkPeriodStopTime - clkPeriodStartTime;
+      clkFrequency = ( 10 **9 )/ clkPeriod;
+
+      baudDivisor = (clkFrequency)/(oversamplingmethod * baudrate); 
+
+      baudclkgenerator(baudDivisor);
+    endtask
+
+  //------------------------------------------------------------------
+  // Task: baudclkgenerator
+  // this task will generate baud clk based on baud divider
+  //-------------------------------------------------------------------
+
+    task baudclkgenerator(input int baudDivisor);
+      static int count=0;
+      forever begin 
+        @(posedge clk or negedge clk)
+    
+        if(count == (baudDivisor-1))begin 
+          count <= 0;
+          baudClk <= ~baudClk;
+        end 
+        else begin 
+          count <= count +1;
+        end   
+      end
+    endtask
 
   
  //  //-------------------------------------------------------
