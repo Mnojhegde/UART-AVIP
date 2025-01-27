@@ -74,7 +74,7 @@ endfunction : setupUartEnvConfig
   uartEnvConfig.uartTxAgentConfig = UartTxAgentConfig :: type_id :: create("uartTxAgentConfig");
   uartEnvConfig.uartTxAgentConfig.is_active = UVM_ACTIVE;
   uartEnvConfig.uartTxAgentConfig.hasCoverage = 1;
-  uartEnvConfig.uartTxAgentConfig.hasParity = 1;
+  uartEnvConfig.uartTxAgentConfig.hasParity = PARITY_ENABLED;
   uvm_config_db #(UartTxAgentConfig) :: set(this,"*", "uartTxAgentConfig",uartEnvConfig.uartTxAgentConfig);
 
 endfunction : setupUartTxAgentConfig
@@ -88,7 +88,7 @@ endfunction : setupUartTxAgentConfig
   uartEnvConfig.uartRxAgentConfig = UartRxAgentConfig :: type_id :: create("uartRxAgentConfig");
   uartEnvConfig.uartRxAgentConfig.is_active = UVM_PASSIVE;
   uartEnvConfig.uartRxAgentConfig.hasCoverage = 1;
-  uartEnvConfig.uartRxAgentConfig.hasParity = 1;
+  uartEnvConfig.uartRxAgentConfig.hasParity = PARITY_ENABLED;
   uvm_config_db#(UartRxAgentConfig) :: set(this, "*" , "uartRxAgentConfig", uartEnvConfig.uartRxAgentConfig);
 
 endfunction : setupUartRxAgentConfig
