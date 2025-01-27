@@ -161,7 +161,7 @@ interface UartRxDriverBfm (input  bit   clk,
   //--------------------------------------------------------------------------------------------
   
   task sample_data(inout UartRxPacketStruct uartRxPacketStruct);
-      int total_receiving = uartRxTransaction.receivingData.size();
+      int total_receiving = uartRxPacketStruct.receivingData.size();
      //@(posedge oversampling_clk) 
      // tx = START_BIT;  //create enum
 	  
