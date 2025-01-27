@@ -6,8 +6,31 @@ import uvm_pkg :: *;
 import UartGlobalPkg :: *;
 
 module UartTxAssertionTb;
+  logic tx;
+  bit clk = 0;
 
+  always #5 clk = ~clk;
+  initial begin 
+    #80;
+    $finish;
+  end 
 
+  UartTxAssertions uartTxAssertions(.uartClk(clk),.uartTx(tx));
+  
+  initial begin 
+    When_startBitisdetected_nextCycleDataTransferStarts_ThenStopBitDetected_AssertionPass();
+  end 
+
+  task  When_startBitisdetected_nextCycleDataTransferStarts_ThenStopBitDetected_AssertionPass()
+    #4  tx = 1;
+    #10 tx = 0;
+    #10 tx = 1;
+    #10 tx = 0;
+    #10 tx = 1;
+    #10 tx = 1;
+    #10 tx = 0;
+    #10 tx = 1 ;
+  endtask 
 endmodule 
 
 `endif
