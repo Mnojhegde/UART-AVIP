@@ -147,7 +147,7 @@ interface UartTxDriverBfm (input  bit   clk,
   task bclk_counter(input oversamplingmethod);
     static int countbclk = 0;
     forever begin
-      @posedge(bclk)
+	@posedge(baudClk)
       	if(countbclk == oversamplingmethod/2) begin
       	oversampling_clk = ~oversampling_clk;
       	countbclk=0;
