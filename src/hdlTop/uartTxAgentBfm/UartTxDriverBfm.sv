@@ -40,6 +40,12 @@ interface UartTxDriverBfm (input  bit   clk,
   //Used to sample the uart data
 	
   // reg[31:0] baudRate = 9600; 
+
+  
+  //Variable: oversampling_clk
+  // clk used to sample the data
+	
+  bit oversampling_clk;
   
   //Variable: counter
   // Counter to keep track of clock cycles
@@ -139,11 +145,12 @@ interface UartTxDriverBfm (input  bit   clk,
   //--------------------------------------------------------------------------------------------
 
   task bclk_counter(input oversamplingmethod);
+    static int countbclk = 0;
     forever begin
       @posedge(bclk)
-      if(count == oversamplingmethod/2) begin
-      oversampling_clk = ~oversampling_clk;
-      countbclk=0;
+      	if(countbclk == oversamplingmethod/2) begin
+      	oversampling_clk = ~oversampling_clk;
+      	countbclk=0;
       end
       else begin
       	countbclk = countbclk+1;
