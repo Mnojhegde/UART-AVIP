@@ -18,11 +18,36 @@ class UartRxCoverage extends uvm_subscriber #(UartRxTransaction);
   //  based on the number of the variables used to improve the coverage.
   //-------------------------------------------------------
   covergroup UartRxCovergroup with function sample (UartRxAgentConfig uartRxAgentConfig, UartRxTransaction uartRxTransaction);
-    RX : coverpoint uartRxTransaction.receivingData{
+    RX_CP : coverpoint uartRxTransaction.receivingData{
       option.comment = "rx";
       bins UART_RX = {[1:$]};
     }
+
+    DATA_WIDTH_CP : coverpoint uartRxAgentConfig.data_type{
+      option.comment = "data_width";
+      bins TRANSFER_BIT_5 = {5};
+      bins TRANSFER_BIT_6 = {6};
+      bins TRANSFER_BIT_7 = {7};
+      bins TRANSFER_BIT_8 = {8};
+    }
+
+    PARITY_CP : coverpoint uartRxAgentConfig.parity_type{
+      option.comment = "parity_type";
+      bins EVEN_PARITY = {0};
+      bins ODD_PARITY = {1};
+    }
+
+    STOP_BIT_CP : coverpoint uartRxAgentConfig.stop_bit{
+      option.comment = "stop bit width";
+      bins STOP_BIT_1 = {1};
+      bins STOP_BIT_2 = {2};
+    }
+
+    DATA_WIDTH_CP_PARITY_CP : cross DATA_WIDTH_CP,PARITY_CP;
+    DATA_WIDTH_CP_STOP_BIT_CP :cross DATA_WIDTH_CP,STOP_BIT_CP;
+    
   endgroup: UartRxCovergroup
+
   
   //-------------------------------------------------------
   //Externally defined tasks and functions
