@@ -23,15 +23,15 @@ package UartGlobalPkg;
 
 
   typedef enum bit[1:0]{ ONE_BIT = 1,
-                         TWO_BIT = 2 } stop_bit;
+                        TWO_BIT = 2 } stop_bit_e;
 
   typedef enum bit[1:0]{ FIVE_BIT = 5,
                          SIX_BIT = 6,
                          SEVEN_BIT=7,
-                         EIGHT_BIT=8} data_type;
+                        EIGHT_BIT=8} data_type_e;
 
   typedef enum bit[1:0]{ EVEN_PARITY = 0,
-                         ODD_PARITY = 1 } parity_type;
+                        ODD_PARITY = 1 } parity_type_e;
   
 
 endpackage : UartGlobalPkg
