@@ -10,6 +10,8 @@ package UartGlobalPkg;
   //parameter PERIOD = 1/f ;//frequency;
 
   parameter PARITY_ENABLED = 1'b 1;
+
+  typedef enum{ EVEN_PARITY , ODD_PARITY} PARITY_TYPE;
   
   typedef struct packed { bit[NO_OF_PACKETS -1 :0][DATA_WIDTH-1:0] transmissionData; bit parity;} UartTxPacketStruct;
   typedef struct packed { bit[NO_OF_PACKETS -1 :0][DATA_WIDTH-1:0] receivingData; bit parity;} UartRxPacketStruct;
