@@ -18,6 +18,19 @@ class UartRxAgentConfig extends uvm_object;
  
   //Variable: has_coverage 
   bit hasParity;
+
+  //no. of stop bit required
+  rand stop_bit_e stop_bit;
+
+  //oversamping method
+  rand over_sampling_e over_sampling;
+
+  //no. of data bit tranferred
+  rand data_type_e data_type;
+
+  //no. of parity bit required
+  rand parity_type_e parity_type;
+
   
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
