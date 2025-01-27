@@ -32,9 +32,5 @@ package UartGlobalPkg;
                          SEVEN_BIT=7,
                         EIGHT_BIT=8} data_type_e;
 
-  typedef enum bit[1:0]{ EVEN_PARITY = 0,
-                        ODD_PARITY = 1 } parity_type_e;
-  
-
 endpackage : UartGlobalPkg
 `endif
