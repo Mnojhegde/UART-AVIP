@@ -8,6 +8,8 @@ package UartGlobalPkg;
   //parameter FREQUENCY = 0.5; // in GHz
   //parameter PERIOD = 1/f ;//frequency;
   parameter NO_OF_PACKETS = 50;
+
+  parameter PARITY_ENABLED = 1'b 1;
   
   typedef struct packed { bit[NO_OF_PACKETS -1 :0][DATA_WIDTH-1:0] transmissionData; bit parity;} UartTxPacketStruct;
   typedef struct packed { bit[NO_OF_PACKETS -1 :0][DATA_WIDTH-1:0] receivingData; bit parity;} UartRxPacketStruct;
