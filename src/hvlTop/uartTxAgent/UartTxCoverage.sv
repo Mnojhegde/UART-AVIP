@@ -17,12 +17,32 @@ class UartTxCoverage extends uvm_subscriber #(UartTxTransaction);
   //  no. of the variables used to improve the coverage.
   //-------------------------------------------------------
   covergroup UartTxCovergroup with function sample (UartTxAgentConfig uartTxAgentConfig, UartTxTransaction uartTxTransaction);
-    TX : coverpoint uartTxTransaction.transmissionData{
+    TX_CP : coverpoint uartTxTransaction.transmissionData{
      option.comment = "tx";
      bins UART_TX = {[1:$]};}
-   PR : coverpoint uartTxTransaction.parity{
-     option.comment = "parity";
-     bins UART_PARITY = {[0:1]};}
+
+    DATA_WIDTH_CP : coverpoint uartTxAgentConfig.data_type{
+      option.comment = "data_width";
+      bins TRANSFER_BIT_5 = {5};
+      bins TRANSFER_BIT_6 = {6};
+      bins TRANSFER_BIT_7 = {7};
+      bins TRANSFER_BIT_8 = {8};
+    }
+
+    PARITY_CP : coverpoint uartTxAgentConfig.parity_type{
+      option.comment = "parity_type";
+      bins EVEN_PARITY = {0};
+      bins ODD_PARITY = {1};
+    }
+
+    STOP_BIT_CP : coverpoint uartTxAgentConfig.stop_bit{
+      option.comment = "stop bit width";
+      bins STOP_BIT_1 = {1};
+      bins STOP_BIT_2 = {2};
+    }
+
+    DATA_WIDTH_CP_PARITY_CP : cross DATA_WIDTH_CP,PARITY_CP;
+    DATA_WIDTH_CP_STOP_BIT_CP :cross DATA_WIDTH_CP,STOP_BIT_CP;
     
  endgroup: UartTxCovergroup
 
