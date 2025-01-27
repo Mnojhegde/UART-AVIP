@@ -4,9 +4,9 @@
 package UartGlobalPkg;
 
   parameter DATA_WIDTH=8;
-  parameter  DUTY = 60;
-  parameter FREQUENCY = 0.5; // in GHz
-  parameter PERIOD = 1/f ;//frequency;
+  //parameter  DUTY = 60;
+  //parameter FREQUENCY = 0.5; // in GHz
+  //parameter PERIOD = 1/f ;//frequency;
   parameter NO_OF_PACKETS = 50;
   
   typedef struct packed { bit[NO_OF_PACKETS -1 :0][DATA_WIDTH-1:0] transmissionData; bit parity;} UartTxPacketStruct;
@@ -24,6 +24,12 @@ package UartGlobalPkg;
 
   typedef enum bit[1:0]{ ONE_BIT = 1,
                         TWO_BIT = 2 } stop_bit;
+
+  typedef enum bit[1:0]{ FIVE_BIT = 5,
+                        SIX_BIT = 2,
+                        SEVEN_BIT=7,
+                        EIGHT_BIT=8} data_type;
+  
 
 endpackage : UartGlobalPkg
 `endif
