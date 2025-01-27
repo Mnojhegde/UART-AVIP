@@ -65,7 +65,7 @@ interface UartTxDriverBfm (input  bit   clk,
   
 
   //------------------------------------------------------------------
-  // Task: Baud_div
+  // Task: bauddivCalculation
   // this task will calculate the baud divider based on sys clk frequency
   //-------------------------------------------------------------------
 	
@@ -79,7 +79,7 @@ interface UartTxDriverBfm (input  bit   clk,
       clkPeriodStartTime = $realtime;
       @(posedge clk);
       clkPeriodStopTime = $realtime; 
-      clkPeriod = clkPeriodStopTime - clkPeriodSatrtTime;
+      clkPeriod = clkPeriodStopTime - clkPeriodStartTime;
       clkFrequency = ( 10 **9 )/ clkPeriod;
 
       baudDivisor = (clkFrequency)/(oversamplingmethod * baudrate); 
@@ -87,8 +87,13 @@ interface UartTxDriverBfm (input  bit   clk,
       baudclkgenerator(baudDivisor);
     endtask
 
+  //------------------------------------------------------------------
+  // Task: baudclkgenerator
+  // this task will generate baud clk based on baud divider
+  //-------------------------------------------------------------------
+
     task baudclkgenerator(input int baudDivisor);
-      int count=0;
+      static int count=0;
       forever begin 
         @(posedge clk or negedge clk)
     
@@ -118,8 +123,54 @@ interface UartTxDriverBfm (input  bit   clk,
   //--------------------------------------------------------------------------------------------
 
   task DriveToBfm();
-   // @(posedge bclk)
+	  
+    	`uvm_info(name,$sformatf("data_packet=\n%p",uartTxPacketStruct),UVM_HIGH);
+    	`uvm_info(name,$sformatf("DRIVE TO BFM TASK"),UVM_HIGH);
+    
+	bclk_counter(agtcfg.oversamplingmethod);   // configure in agt config
+    
+     	sample_data(uartTxPacketStruct);
 
   endtask: DriveToBfm
+ 
+  //--------------------------------------------------------------------------------------------
+  // Task: bclk_counter
+  //  This task will count the number of cycles of bclk and generate oversampling_clk to sample data
+  //--------------------------------------------------------------------------------------------
 
+  task bclk_counter(input oversamplingmethod);
+    forever begin
+      @posedge(bclk)
+      if(count == oversamplingmethod/2) begin
+      oversampling_clk = ~oversampling_clk;
+      countbclk=0;
+      end
+      else begin
+      	countbclk = countbclk+1;
+      end
+   
+    end
+  endtask
+  
+  //--------------------------------------------------------------------------------------------
+  // Task: sample_data
+  //  This task will send the data to the uart interface based on oversampling_clk
+  //--------------------------------------------------------------------------------------------
+  
+  task sample_data(inout UartTxPacketStruct uartTxPacketStruct);
+     int total_transmission = $size(uartTxPacketStruct.transmissionData);
+     @(posedge oversampling_clk) 
+    // tx = START_BIT;  //create enum
+	  
+     for(int transmission_number=0 ; transmission_number < total_transmission; transmission_number++)begin 
+	for( int i=0 ; i< DATA_WIDTH ; i++) begin
+      		@(posedge oversampling_clk or negedge oversampling_clk) begin
+        		tx = uartTxPacketStruct.trasmissionData[transmission_number][i];
+      	end
+    end
+      
+    @(posedge oversampling_clk)
+    //tx = STOP_BIT;  // create enum 
+  endtask
+	     
 endinterface : UartTxDriverBfm
