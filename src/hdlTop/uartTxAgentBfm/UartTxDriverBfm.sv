@@ -161,7 +161,7 @@ interface UartTxDriverBfm (input  bit   clk,
      tx = START_BIT;  //create enum
 	  
      for(int transmission_number=0 ; transmission_number < total_transmission; transmission_number++)begin 
-	  for( int i=0 ; i< uartConfigStruct.noOfDataBits ; i++) begin
+	for( int i=0 ; i< uartConfigStruct.uartDataType ; i++) begin
       	  @(posedge oversamplingClk) begin
             tx = uartTxPacketStruct.transmissionData[transmission_number][i];
       	  end
