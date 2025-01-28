@@ -19,7 +19,7 @@ interface UartTxDriverBfm (input  bit   clk,
   //-------------------------------------------------------
   import uvm_pkg::*;
   `include "uvm_macros.svh"
-  
+  import UartGlobalPkg :: *;
   //-------------------------------------------------------
   // Importing the Transmitter package file
   //-------------------------------------------------------
@@ -27,29 +27,19 @@ interface UartTxDriverBfm (input  bit   clk,
   
   //Variable: name
   //Used to store the name of the interface
-
   string name = "UART_TRANSMITTER_DRIVER_BFM"; 
 
   
    //Variable: bclk
-  //baud clock for uart transmisson/reception
-	
+  //baud clock for uart transmisson/reception	
   bit baudClk;
-   
-   //Variable: baudRate
-  //Used to sample the uart data
-	
-  // reg[31:0] baudRate = 9600; 
-
-  
+     
   //Variable: oversampling_clk
   // clk used to sample the data
-	
   bit oversampling_clk;
   
   //Variable: counter
   // Counter to keep track of clock cycles
-	
   reg [15:0] counter;  
   
   //Variable: baudDivider
@@ -129,14 +119,12 @@ interface UartTxDriverBfm (input  bit   clk,
   //--------------------------------------------------------------------------------------------
 
   task DriveToBfm(inout UartTxPacketStruct uartTxPacketStruct);
-	  
     	`uvm_info(name,$sformatf("data_packet=\n%p",uartTxPacketStruct),UVM_HIGH);
     	`uvm_info(name,$sformatf("DRIVE TO BFM TASK"),UVM_HIGH);
-    
-	 bclk_counter(agtcfg.oversamplingmethod);   // configure in agt config
-    
-     	sample_data(uartTxPacketStruct);
-
+	fork 
+	  bclk_counter(agtcfg.oversamplingmethod);   // configure in agt config
+     	  sample_data(uartTxPacketStruct);
+	join 
   endtask: DriveToBfm
  
   //--------------------------------------------------------------------------------------------
@@ -166,18 +154,18 @@ interface UartTxDriverBfm (input  bit   clk,
   
   task sample_data(inout UartTxPacketStruct uartTxPacketStruct);
     static int total_transmission = $size(uartTxPacketStruct.transmissionData);
-     //@(posedge oversampling_clk) 
-    // tx = START_BIT;  //create enum
+     @(posedge oversampling_clk) 
+     tx = START_BIT;  //create enum
 	  
      for(int transmission_number=0 ; transmission_number < total_transmission; transmission_number++)begin 
 	for( int i=0 ; i< DATA_WIDTH ; i++) begin
-      		@(posedge oversampling_clk or negedge oversampling_clk) begin
-        		tx = uartTxPacketStruct.transmissionData[transmission_number][i];
-      	end
-    end
-  end
-    //@(posedge oversampling_clk)
-    //tx = STOP_BIT;  // create enum 
+      	  @(posedge oversampling_clk) begin
+            tx = uartTxPacketStruct.transmissionData[transmission_number][i];
+      	  end
+        end
+     end
+    @(posedge oversampling_clk)
+      tx = STOP_BIT;  // create enum 
   endtask
 	     
 endinterface : UartTxDriverBfm
