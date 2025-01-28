@@ -111,7 +111,11 @@ interface UartTxMonitorBfm (input  bit   clk,
   //-------------------------------------------------------
 
   task WaitForReset();
+    @(negedge reset)
+    `uvm_info(name, $sformatf("system reset detected"), UVM_HIGH)
     
+    @(posedge reset);
+    `uvm_info(name, $sformatf("system reset deactivated"), UVM_HIGH)
   endtask: WaitForReset
   
 
