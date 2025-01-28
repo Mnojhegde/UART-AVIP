@@ -52,7 +52,7 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
     $info("START BIT DETECTED : ASSERTION PASS");
     uartStartDetectInitiation = 0;
     end 
-    else
+    else 
       $error("FAILED TO DETECT STOP BIT : ASSERTION FAILED");
     
   property data_width_check_property;
@@ -76,8 +76,10 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
     $info("EVEN PARITY IS DETECTED : ASSERTION PASS ");
     uartEvenParityDetectionInitiation = 0;
     end 
-    else 
+    else begin 
       $error("EVEN PARITY NOT DETECTED : ASSERTION FAIL ");
+      uartEvenParityDetectionInitiation = 0;
+    end 
 
   property odd_parity_check;
     @(posedge uartClk) disable iff(!(uartOddParityDetectionInitiation))
@@ -88,9 +90,10 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
     $info("ODD PARITY IS DETECTED : ASSERTION PASS ");
     uartOddParityDetectionInitiation = 0;
     end 
-    else 
+    else begin 
       $error("Odd PARITY NOT DETECTED : ASSERTION FAIL ");
- 
+      uartOddParityDetectionInitiation = 0;
+    end 
   property stop_bit_detection_property;
     @(posedge uartClk) disable iff (!(uartStopDetectInitiation))
     ##1 ($rose(uartTx) || $stable(uartTx));
@@ -101,9 +104,10 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
     uartStopDetectInitiation = 0;
     uartStartDetectInitiation = 1;
     end 
-    else
+    else begin 
       $error(" FAILED TO DETECT STOP BIT : ASSERTION FAIL ");
-    
+      uartStopDetectInitiation = 0;
+    end 
 endinterface : UartTxAssertions
 
 `endif
