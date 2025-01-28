@@ -4,7 +4,8 @@
 +incdir+($basepath)/tb/uartLocalAssertionTest/
 +incdir+src/globals/
 
-../../../globals/UartGlobalPkg.sv
+$basepath/uartTxAgent/UartTxCoverParameter.sv
+$basepath/uartRxAgent/UartRxCoverParameter.sv
 $basepath/uartTxAgent/UartTxAssertions.sv
 $basepath/uartRxAgent/UartRxAssertions.sv
 $basepath/tb/uartLocalAssertionTest/UartTxAssertionTB.sv

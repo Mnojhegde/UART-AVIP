@@ -1,8 +1,8 @@
 `ifndef UARTTXASSERTIONS_INCLUDED_
 `define UARTTXASSERTIONS_INCLUDED_
 
-import UartGlobalPkg :: *;
-
+//import UartGlobalPkg :: *;
+import UartTxCoverParameter :: *;
 interface UartTxAssertions ( input bit uartClk , input logic uartTx);
   import uvm_pkg :: *;
   `include "uvm_macros.svh"
