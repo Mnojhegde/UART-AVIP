@@ -172,7 +172,7 @@ interface UartTxDriverBfm (input  bit   clk,
      for(int transmission_number=0 ; transmission_number < total_transmission; transmission_number++)begin 
 	for( int i=0 ; i< DATA_WIDTH ; i++) begin
       		@(posedge oversampling_clk or negedge oversampling_clk) begin
-        		tx = uartTxPacketStruct.trasmissionData[transmission_number][i];
+        		tx = uartTxPacketStruct.transmissionData[transmission_number][i];
       	end
     end
   end
