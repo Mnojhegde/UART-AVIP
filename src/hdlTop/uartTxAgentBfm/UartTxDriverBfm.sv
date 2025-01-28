@@ -155,20 +155,29 @@ interface UartTxDriverBfm (input  bit   clk,
   //  This task will send the data to the uart interface based on oversamplingClk
   //--------------------------------------------------------------------------------------------
   
-    task SampleData(inout UartTxPacketStruct uartTxPacketStruct , inout UartConfigStruct uartConfigStruct);
-    static int total_transmission = $size(uartTxPacketStruct.transmissionData);
-     @(posedge oversamplingClk) 
-     tx = START_BIT;  //create enum
-	  
-     for(int transmission_number=0 ; transmission_number < total_transmission; transmission_number++)begin 
-	for( int i=0 ; i< uartConfigStruct.uartDataType ; i++) begin
-      	  @(posedge oversamplingClk) begin
-            tx = uartTxPacketStruct.transmissionData[transmission_number][i];
-      	  end
+  task SampleData(inout UartTxPacketStruct uartTxPacketStruct , inout UartConfigStruct uartConfigStruct);
+    static int total_transmission = $size(uartTxPacketStruct.transmissionData);	  
+    for(int transmission_number=0 ; transmission_number < total_transmission; transmission_number++)begin 
+      @posedge oversamplingClk);
+      tx = START_BIT;
+      for( int i=0 ; i< uartConfigStruct.uartDataType ; i++) begin
+      	@(posedge oversamplingClk)
+        tx = uartTxPacketStruct.transmissionData[transmission_number][i];
+      end
+      if(uartConfigStruct.parityEnabled ==1) begin 
+        if(uartConfigStruct.parityType == EVEN_PARITY)begin
+	  @(posedge oversamplingClk)
+	  tx = ^(uartTxPacketStruct.transmissionData[transmission_number];
         end
-     end
-    @(posedge oversamplingClk)
+        else if (uartConfigStruct.parityType == ODD_PARITY) begin 
+	  @(posedge oversamplingClk)
+          tx =~^(uartTxPacketStruct.transmissionData[transmission_number];
+        end 
+      end 		 
+      @(posedge oversamplingClk)
       tx = STOP_BIT;  // create enum 
-  endtask
-	     
+    end
+  endtask 
+		
+    
 endinterface : UartTxDriverBfm
