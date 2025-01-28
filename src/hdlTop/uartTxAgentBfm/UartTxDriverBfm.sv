@@ -58,6 +58,10 @@ interface UartTxDriverBfm (input  bit   clk,
     `uvm_info(name, $sformatf(name),UVM_LOW)
   end
   
+    task drivetoidealstate();
+      @(posedge clk);
+      tx <=1;
+     endtask
 
   //------------------------------------------------------------------
   // Task: bauddivCalculation
