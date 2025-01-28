@@ -17,11 +17,6 @@ package UartGlobalPkg;
   // indicates stop bit
   parameter STOP_BIT = 1;
 
-  // required Tx and Rx struct packet
-  typedef struct packed { bit[NO_OF_PACKETS -1 :0][DATA_WIDTH-1:0] transmissionData; bit parity;} UartTxPacketStruct;
-  typedef struct packed { bit[NO_OF_PACKETS -1 :0][DATA_WIDTH-1:0] receivingData; bit parity;} UartRxPacketStruct;
-  typedef struct packed { OVER_SAMPLING_E uartOverSamplingMethod ; BAUD_RATE_E uartBaudRate; DATA_TYPE_E uartDataType;PARITY_TYPE_E uartParityType; bit uartParityEnable}UartConfigStruct;
-
   // even or odd parity can be set
   typedef enum{ EVEN_PARITY , ODD_PARITY} PARITY_TYPE_E;
 
@@ -41,6 +36,11 @@ package UartGlobalPkg;
                          SIX_BIT = 6,
                          SEVEN_BIT=7,
                         EIGHT_BIT=8} DATA_TYPE_E;
+
+   // required Tx and Rx struct packet
+  typedef struct packed { bit[NO_OF_PACKETS -1 :0][DATA_WIDTH-1:0] transmissionData; bit parity;} UartTxPacketStruct;
+  typedef struct packed { bit[NO_OF_PACKETS -1 :0][DATA_WIDTH-1:0] receivingData; bit parity;} UartRxPacketStruct;
+  typedef struct packed { OVER_SAMPLING_E uartOverSamplingMethod ; BAUD_RATE_E uartBaudRate; DATA_TYPE_E uartDataType;PARITY_TYPE_E uartParityType; bit uartParityEnable}UartConfigStruct;
 
 endpackage : UartGlobalPkg
 `endif
