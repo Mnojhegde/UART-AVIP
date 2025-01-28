@@ -2,35 +2,58 @@
 `define UARTGLOBALPKG_INCLUDED_
 
 package UartGlobalPkg;
+<<<<<<< HEAD
 
   parameter DATA_WIDTH=5;
+=======
+  // maximum width of data packet
+  parameter DATA_WIDTH=8;
+
+  // No. of packets to be transferred
+>>>>>>> 3e233b4e8c3b51e2eecc0494df8d5e9891ed9319
   parameter NO_OF_PACKETS = 50;
-  //parameter  DUTY = 60;
-  //parameter FREQUENCY = 0.5; // in GHz
-  //parameter PERIOD = 1/f ;//frequency;
 
+<<<<<<< HEAD
   parameter PARITY_ENABLED = 1'b 0;
+=======
+  // can enable or disable parity
+  parameter PARITY_ENABLED = 1'b 1;
+>>>>>>> 3e233b4e8c3b51e2eecc0494df8d5e9891ed9319
 
-  typedef enum{ EVEN_PARITY , ODD_PARITY} PARITY_TYPE;
-  
+  // indicates start bit
+  parameter START_BIT = 0;
+
+  // indicates stop bit
+  parameter STOP_BIT = 1;
+
+  // requiredTx and Rx struct packet
   typedef struct packed { bit[NO_OF_PACKETS -1 :0][DATA_WIDTH-1:0] transmissionData; bit parity;} UartTxPacketStruct;
   typedef struct packed { bit[NO_OF_PACKETS -1 :0][DATA_WIDTH-1:0] receivingData; bit parity;} UartRxPacketStruct;
 
+  // even or odd parity can be set
+  typedef enum{ EVEN_PARITY , ODD_PARITY} PARITY_TYPE_E;
+
+  // baud rate in which data transfers
   typedef enum bit[31:0]{ BAUD_4800 = 32'd4800,
                           BAUD_9600 = 32'd9600,
-                         BAUD_19200 = 32'd19200 }baud_rate_e;
-
+                         BAUD_19200 = 32'd19200 }BAUD_RATE_E;
+  // oversamping rate
   typedef enum bit[4:0]{ X16 = 5'd16,
-                        X13 = 5'd13}over_sampling_e;
+                        X13 = 5'd13}OVER_SMPLING_E;
 
-
+  // no of stop bits 
   typedef enum bit[1:0]{ ONE_BIT = 1,
+<<<<<<< HEAD
                         TWO_BIT = 2 } stop_bit_e;
 
+=======
+                        TWO_BIT = 2 } STOP_BIT_E;
+  // data width
+>>>>>>> 3e233b4e8c3b51e2eecc0494df8d5e9891ed9319
   typedef enum bit[3:0]{ FIVE_BIT = 5,
                          SIX_BIT = 6,
                          SEVEN_BIT=7,
-                        EIGHT_BIT=8} data_type_e;
+                        EIGHT_BIT=8} DATA_TYPE_E;
 
 endpackage : UartGlobalPkg
 `endif

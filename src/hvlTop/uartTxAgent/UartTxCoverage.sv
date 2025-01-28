@@ -21,7 +21,7 @@ class UartTxCoverage extends uvm_subscriber #(UartTxTransaction);
      option.comment = "tx";
      bins UART_TX = {[1:$]};}
 
-    DATA_WIDTH_CP : coverpoint uartTxAgentConfig.data_type{
+    DATA_WIDTH_CP : coverpoint uartTxAgentConfig.DATA_TYPE_E{
       option.comment = "data_width";
       bins TRANSFER_BIT_5 = {5};
       bins TRANSFER_BIT_6 = {6};
@@ -29,13 +29,13 @@ class UartTxCoverage extends uvm_subscriber #(UartTxTransaction);
       bins TRANSFER_BIT_8 = {8};
     }
 
-    PARITY_CP : coverpoint uartTxAgentConfig.parity_type{
+    PARITY_CP : coverpoint uartTxAgentConfig.PARITY_TYPE_E{
       option.comment = "parity_type";
       bins EVEN_PARITY = {0};
       bins ODD_PARITY = {1};
     }
 
-    STOP_BIT_CP : coverpoint uartTxAgentConfig.stop_bit{
+    STOP_BIT_CP : coverpoint uartTxAgentConfig.STOP_BIT_E{
       option.comment = "stop bit width";
       bins STOP_BIT_1 = {1};
       bins STOP_BIT_2 = {2};
@@ -52,7 +52,7 @@ class UartTxCoverage extends uvm_subscriber #(UartTxTransaction);
   extern function new(string name = "UartTxCoverage", uvm_component parent = null);
   extern function void write(UartTxTransaction t);
   extern virtual function void report_phase(uvm_phase phase);
-
+  extern virtual function void build_phase(uvm_phase phase);
 endclass : UartTxCoverage
 
 //--------------------------------------------------------------------------------------------
@@ -66,6 +66,17 @@ function  UartTxCoverage::new(string name = "UartTxCoverage", uvm_component pare
   super.new(name, parent);
   UartTxCovergroup = new();
 endfunction : new
+
+//--------------------------------------------------------------------------------------------
+// Build phase
+//
+//--------------------------------------------------------------------------------------------
+function void UartTxCoverage :: build_phase(uvm_phase phase);
+  super.build_phase(phase);
+  if(!(uvm_config_db #(UartTxAgentConfig) :: get(this,"","uartTxAgentConfig",this.uartTxAgentConfig)));
+  `uvm_fatal("FATAL Tx AGENT CONFIG", $sformatf("Failed to get Tx agent config in coverage"))
+endfunction : build_phase
+
 
 //--------------------------------------------------------------------------------------------
 // Function: write

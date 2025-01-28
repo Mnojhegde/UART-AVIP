@@ -128,12 +128,12 @@ interface UartTxDriverBfm (input  bit   clk,
   //  This task will drive the data from bfm to proxy using converters
   //--------------------------------------------------------------------------------------------
 
-  task DriveToBfm();
+  task DriveToBfm(inout UartTxPacketStruct uartTxPacketStruct);
 	  
     	`uvm_info(name,$sformatf("data_packet=\n%p",uartTxPacketStruct),UVM_HIGH);
     	`uvm_info(name,$sformatf("DRIVE TO BFM TASK"),UVM_HIGH);
     
-	bclk_counter(agtcfg.oversamplingmethod);   // configure in agt config
+	 bclk_counter(agtcfg.oversamplingmethod);   // configure in agt config
     
      	sample_data(uartTxPacketStruct);
 
@@ -147,7 +147,7 @@ interface UartTxDriverBfm (input  bit   clk,
   task bclk_counter(input oversamplingmethod);
     static int countbclk = 0;
     forever begin
-	@posedge(baudClk)
+	@(posedge baudClk)
 	if(countbclk == (oversamplingmethod/2)-1) begin
       		oversampling_clk = ~oversampling_clk;
       		countbclk=0;
@@ -165,17 +165,17 @@ interface UartTxDriverBfm (input  bit   clk,
   //--------------------------------------------------------------------------------------------
   
   task sample_data(inout UartTxPacketStruct uartTxPacketStruct);
-     int total_transmission = $size(uartTxPacketStruct.transmissionData);
+    static int total_transmission = $size(uartTxPacketStruct.transmissionData);
      //@(posedge oversampling_clk) 
     // tx = START_BIT;  //create enum
 	  
      for(int transmission_number=0 ; transmission_number < total_transmission; transmission_number++)begin 
 	for( int i=0 ; i< DATA_WIDTH ; i++) begin
       		@(posedge oversampling_clk or negedge oversampling_clk) begin
-        		tx = uartTxPacketStruct.trasmissionData[transmission_number][i];
+        		tx = uartTxPacketStruct.transmissionData[transmission_number][i];
       	end
     end
-      
+  end
     //@(posedge oversampling_clk)
     //tx = STOP_BIT;  // create enum 
   endtask

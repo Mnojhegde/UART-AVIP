@@ -67,30 +67,44 @@ interface UartTxMonitorBfm (input  bit   clk,
   // Task: Baud_div
   // this task will calculate the baud divider based on sys clk frequency
   //-------------------------------------------------------------------
- //  task Baud_div(input overSampling, input baudRate);
-	  
-	// baudDivider = (FREQUENCY *1000000000) / (overSampling * baudRate);    
-	  
- //  endtask: Baud_div
- 
- //  initial begin 
-	  
-	//   Baud_div(agtcfg.overSampling, agtcfg.baudRate);   // variables yet to be added in the agent
-	  
- //    forever begin
-	//     @(posedge clk or negedge clk) begin
- //        	if (counter == baudDivider - 1) begin
- //            		bclk <= ~bclk;   // Toggle bclk when counter reaches baudDivider
- //            		counter <= 0;    // Reset the counter
- //        	end else begin
- //            		counter <= counter + 1;  // Increment the counter
- //        	end
- //    	    end
- //    	end
- //   end
+  task Baud_div(input oversamplingmethod,input baudrate);
+      real clkPeriodStartTime; 
+      real clkPeriodStopTime;
+      real clkPeriod;
+      real clkFrequency;
+      int baudDivisor;
+      @(posedge clk);
+      clkPeriodStartTime = $realtime;
+      @(posedge clk);
+      clkPeriodStopTime = $realtime; 
+      clkPeriod = clkPeriodStopTime - clkPeriodStartTime;
+      clkFrequency = ( 10 **9 )/ clkPeriod;
 
+      baudDivisor = (clkFrequency)/(oversamplingmethod * baudrate); 
 
-  
+      BaudClkGenerator(baudDivisor);
+    endtask
+
+  //------------------------------------------------------------------
+  // Task: BaudClkGenerator
+  // this task will generate baud clk based on baud divider
+  //-------------------------------------------------------------------
+
+    task BaudClkGenerator(input int baudDivisor);
+      static int count=0;
+      forever begin 
+        @(posedge clk or negedge clk)
+    
+        if(count == (baudDivisor-1))begin 
+          count <= 0;
+          baudClk <= ~baudClk;
+        end 
+        else begin 
+          count <= count +1;
+        end   
+      end
+    endtask
+	
   //-------------------------------------------------------
   // Task: WaitForReset
   //  Waiting for the system reset

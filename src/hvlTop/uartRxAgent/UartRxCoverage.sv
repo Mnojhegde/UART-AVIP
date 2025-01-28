@@ -55,7 +55,7 @@ class UartRxCoverage extends uvm_subscriber #(UartRxTransaction);
   extern function new(string name = "UartRxCoverage", uvm_component parent = null);
   extern function void write(UartRxTransaction t);
   extern virtual function void report_phase(uvm_phase phase);
-
+  extern virtual function void build_phase(uvm_phase phase);
 endclass : UartRxCoverage
 
 //--------------------------------------------------------------------------------------------
@@ -70,6 +70,17 @@ function  UartRxCoverage::new(string name = "UartRxCoverage", uvm_component pare
   UartRxCovergroup = new();
 endfunction : new
 
+//---------------------------------------------------------------------------------------------------------
+// Build Phase
+//
+//-------------------------------------------------------------------------------------------------------------
+function void UartRxCoverage :: build_phase(uvm_phase phase);
+  super.build_phase(phase);
+  if(!(uvm_config_db #(UartRxAgentConfig) :: get(this,"","uartRxAgentConfig",this.uartRxAgentConfig)));
+  `uvm_fatal("FATAL Rx AGENT CONFIG", $sformatf("Failed to get Rx agent config in coverage"))
+endfunction : build_phase
+
+    
 //-------------------------------------------------------
 // Function: write
 //  Creates the write method
