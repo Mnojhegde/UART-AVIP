@@ -123,7 +123,7 @@ interface UartTxMonitorBfm (input  bit   clk,
   //  converts serial data to parallel
   //-------------------------------------------------------
 
-   task Deserializer(output UartTxPacketStruct uartTxPacketStruct);
+  task Deserializer(output UartTxPacketStruct uartTxPacketStruct, input UartTxPacketCfg uartTxCfg);
 	
 	   
    endtask
