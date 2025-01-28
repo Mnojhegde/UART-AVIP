@@ -20,6 +20,7 @@ interface UartRxAssertions ( input bit uartClk , input logic uartRx);
     if(!(uartStartDetectInitiation))begin 
       localWidth++;
       uartLocalData = {uartLocalData,uartRx};
+      $display("%b",uartLocalData);
       if(localWidth == DATA_WIDTH)begin 
         if(uartParityEnabled == 1)begin 
           if(uartEvenOddParity == EVEN_PARITY)begin
@@ -51,7 +52,7 @@ interface UartRxAssertions ( input bit uartClk , input logic uartRx);
     $info("START BIT DETECTED : ASSERTION PASS");
     uartStartDetectInitiation = 0;
     end 
-    else
+    else 
       $error("FAILED TO DETECT STOP BIT : ASSERTION FAILED");
     
   property data_width_check_property;
@@ -59,37 +60,42 @@ interface UartRxAssertions ( input bit uartClk , input logic uartRx);
     ##1 localWidth == DATA_WIDTH;
   endproperty 
 
-  CHECK_FOR_DATA_WIDTH_LENGTH : assert property (data_width_check_property)begin 
+  CHECK_FOR_DATA_WIDTH_LENGTH : assert property (data_width_check_property)begin
     $info("DATA WIDTH IS MATCHING : ASSERTION PASS ");
     uartDataWidthDetectInitiation = 0;
     end 
-    else 
+    else begin
       $error("DATA WIDTH MATCH FAILED : ASSERTION FAILED ");
+      uartDataWidthDetectInitiation = 0;
+    end 
 
   property even_parity_check;
     @(posedge uartClk) disable iff(!(uartEvenParityDetectionInitiation))
     ##1 uartRx == ^(uartLocalData);
   endproperty 
     
-  CHECK_FOR_EVEN_PARITY : assert property (even_parity_check)begin 
+  CHECK_FOR_EVEN_PROPERTY : assert property (even_parity_check)begin 
     $info("EVEN PARITY IS DETECTED : ASSERTION PASS ");
     uartEvenParityDetectionInitiation = 0;
     end 
-    else 
+    else begin 
       $error("EVEN PARITY NOT DETECTED : ASSERTION FAIL ");
+      uartEvenParityDetectionInitiation = 0;
+    end 
 
   property odd_parity_check;
     @(posedge uartClk) disable iff(!(uartOddParityDetectionInitiation))
     ##1 !uartRx == ^(uartLocalData);
   endproperty 
     
-  CHECK_FOR_ODD_PARITY : assert property (odd_parity_check)begin 
+  CHECK_FOR_ODD_PROPERTY : assert property (odd_parity_check)begin 
     $info("ODD PARITY IS DETECTED : ASSERTION PASS ");
     uartOddParityDetectionInitiation = 0;
     end 
-    else 
+    else begin 
       $error("Odd PARITY NOT DETECTED : ASSERTION FAIL ");
- 
+      uartOddParityDetectionInitiation = 0;
+    end 
   property stop_bit_detection_property;
     @(posedge uartClk) disable iff (!(uartStopDetectInitiation))
     ##1 ($rose(uartRx) || $stable(uartRx));
@@ -100,9 +106,10 @@ interface UartRxAssertions ( input bit uartClk , input logic uartRx);
     uartStopDetectInitiation = 0;
     uartStartDetectInitiation = 1;
     end 
-    else
+    else begin 
       $error(" FAILED TO DETECT STOP BIT : ASSERTION FAIL ");
-    
+      uartStopDetectInitiation = 0;
+    end 
 endinterface : UartRxAssertions
 
 `endif
