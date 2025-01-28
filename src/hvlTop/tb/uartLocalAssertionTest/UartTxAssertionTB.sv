@@ -52,6 +52,29 @@ module UartTxAssertionTb;
     #10 tx = 0;
     #10 tx = 1 ;
   endtask 
+  task  When_startBitisdetected_nextCycleDataTransferStarts_ThenOddParityIsCheckedPassCase_ThenStopBitDetected_AssertionPass();
+    #4  tx = 1;
+    #10 tx = 0;
+    #10 tx = 1;
+    #10 tx = 0;
+    #10 tx = 1;
+    #10 tx = 1;
+    #10 tx = 0;
+    #10 tx = 0;
+    #10 tx = 1 ;
+  endtask
+  task  When_startBitisdetected_nextCycleDataTransferStarts_ThenOddParityIsCheckedFailCase_ThenStopBitDetected_AssertionFail();
+    #4  tx = 1;
+    #10 tx = 0;
+    #10 tx = 1;
+    #10 tx = 0;
+    #10 tx = 1;
+    #10 tx = 1;
+    #10 tx = 0;
+    #10 tx = 1;
+    #10 tx = 1 ;
+  endtask 
+  
 endmodule 
 
 `endif
