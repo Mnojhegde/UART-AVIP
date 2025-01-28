@@ -68,6 +68,17 @@ function  UartTxCoverage::new(string name = "UartTxCoverage", uvm_component pare
 endfunction : new
 
 //--------------------------------------------------------------------------------------------
+// Build phase
+//
+//--------------------------------------------------------------------------------------------
+function void UartTxCoverage :: build_phase(uvm_phase phase);
+  super.build_phase(phase);
+  if(!(uvm_config_db #(UartTxAgentConfig) :: get(this,"","uartTxAgentConfig",this.uartTxAgentConfig)));
+  `uvm_fatal("FATAL Tx AGENT CONFIG", $sformatf("Failed to get Tx agent config in coverage"))
+endfunction : build_phase
+
+
+//--------------------------------------------------------------------------------------------
 // Function: write
 // Overriding the write method declared in the parent class
 //--------------------------------------------------------------------------------------------
