@@ -101,8 +101,7 @@ interface UartTxDriverBfm (input  bit   clk,
         end   
       end
     endtask
-	  
-  
+	     
   //-------------------------------------------------------
   // Task: WaitForReset
   //  Waiting for the system reset
@@ -136,8 +135,8 @@ interface UartTxDriverBfm (input  bit   clk,
     forever begin
 	@(posedge baudClk)
 	if(countbclk == (oversamplingmethod/2)-1) begin
-      		oversampling_clk = ~oversampling_clk;
-      		countbclk=0;
+      	  oversampling_clk = ~oversampling_clk;
+      	  countbclk=0;
       	end
       	else begin
       	countbclk = countbclk+1;
