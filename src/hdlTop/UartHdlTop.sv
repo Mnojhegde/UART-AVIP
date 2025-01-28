@@ -34,12 +34,9 @@ module HdlTop;
   //-------------------------------------------------------
 
   initial begin
-    on= PERIOD*(DUTY*0.01);
-    off = PERIOD-on;
+     clk=0;
     forever begin
-      clk=1;
-      #on clk=0;
-      #off;
+     #10 clk = ~clk;
     end
   end
 
