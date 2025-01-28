@@ -42,6 +42,10 @@ function void UartTxDriverProxy :: build_phase( uvm_phase phase);
    begin 
     `uvm_fatal(get_type_name(),$sformatf("FAILED TO GET VIRTUAL BFM HANDLE "))
    end 
+  if(!(uvm_config_db #(UartTxAgentConfig) :: get(this, "" ,"uartTxAgentConfig",uartTxAgentConfig)))
+    begin 
+      `uvm_fatal(get_type_name(),$sformatf("FAILED TO GET AGENT CONFIG"))
+    end 
 endfunction : build_phase
 //--------------------------------------------------------------------------------------------
 // Task: run_phase
@@ -50,9 +54,17 @@ endfunction : build_phase
 //--------------------------------------------------------------------------------------------
 
 task UartTxDriverProxy :: run_phase(uvm_phase phase);
+
+  super.run_phase(phase);
+  uartTxDriverBfm.waitforreset();
+  fork
+    uartTxDriverBfm.generatebaudclock(uartTxAgentConfig.uartOverSamplingMethod , uartTxAgentConfig.uartBaudRate);
+  join_none
+  forever begin
   seq_item_port.get_next_item(req);
   UartTxSeqItemConverter :: fromTxClass(req,uartTxPacketStruct);
   `uvm_info("BFM",$sformatf("data in driver is %p",uartTxPacketStruct.transmissionData),UVM_LOW)
   seq_item_port.item_done();
+  end 
 endtask : run_phase
 `endif
