@@ -2,23 +2,17 @@
 `define UARTGLOBALPKG_INCLUDED_
 
 package UartGlobalPkg;
-<<<<<<< HEAD
-
-  parameter DATA_WIDTH=5;
-=======
   // maximum width of data packet
   parameter DATA_WIDTH=8;
 
   // No. of packets to be transferred
->>>>>>> 3e233b4e8c3b51e2eecc0494df8d5e9891ed9319
+
   parameter NO_OF_PACKETS = 50;
 
-<<<<<<< HEAD
-  parameter PARITY_ENABLED = 1'b 0;
-=======
+
   // can enable or disable parity
   parameter PARITY_ENABLED = 1'b 1;
->>>>>>> 3e233b4e8c3b51e2eecc0494df8d5e9891ed9319
+
 
   // indicates start bit
   parameter START_BIT = 0;
@@ -43,13 +37,8 @@ package UartGlobalPkg;
 
   // no of stop bits 
   typedef enum bit[1:0]{ ONE_BIT = 1,
-<<<<<<< HEAD
-                        TWO_BIT = 2 } stop_bit_e;
-
-=======
                         TWO_BIT = 2 } STOP_BIT_E;
-  // data width
->>>>>>> 3e233b4e8c3b51e2eecc0494df8d5e9891ed9319
+
   typedef enum bit[3:0]{ FIVE_BIT = 5,
                          SIX_BIT = 6,
                          SEVEN_BIT=7,
