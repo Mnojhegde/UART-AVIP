@@ -127,7 +127,7 @@ interface UartTxMonitorBfm (input  bit   clk,
     static int total_transmission = uartTxCfg.TotalFrameWidth;
     @(negedge tx)
     for(int transmission_number=0 ; transmission_number < total_transmission; transmission_number++)begin 
-      for( int i=0 ; i< uartTxCfg.DATA_WIDTH ; i++) begin
+      for( int i=0 ; i < uartTxCfg.DATA_WIDTH ; i++) begin
       	@(posedge oversampling_clk or negedge oversampling_clk) begin
 	uartTxPacketStruct.transmissionData[transmission_number][i] = tx;
       end
