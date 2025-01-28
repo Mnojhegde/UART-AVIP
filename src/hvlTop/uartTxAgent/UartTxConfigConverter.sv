@@ -20,7 +20,7 @@ function void UartTxSeqItemConverter :: fromTxClass(input uartTxAgentConfig uart
   uartConfigStruct.uartBaudRate =  uartTxAgentConfig.uartBaudRate;
   uartConfigStruct.uartDataType = uartTxAgentConfig.uartDataType;
   uartConfigStruct.uartParityType = uartTxAgentConfig.uartParityType;
-  uartConfigStruct.uartParityEnable = uartTxAgentConfig.hasparity;
+  uartConfigStruct.uartParityEnable = uartTxAgentConfig.hasParity;
 endfunction : fromTxClass
 
 
