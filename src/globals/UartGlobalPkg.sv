@@ -29,8 +29,8 @@ package UartGlobalPkg;
                           BAUD_9600 = 32'd 9600,
                          BAUD_19200 = 32'd 19200 }BAUD_RATE_E;
   // oversamping rate
-  typedef enum bit[4:0]{ X16 = 5'd 16,
-                        X13 = 5'd 13}OVER_SMPLING_E;
+  typedef enum bit[4:0]{ OVERSAMPLING_16 = 5'd 16,
+                        OVERSAMPLING_13 = 5'd 13}OVER_SAMPLING_E;
 
   // no of stop bits 
   typedef enum bit[1:0]{ ONE_BIT = 1,
