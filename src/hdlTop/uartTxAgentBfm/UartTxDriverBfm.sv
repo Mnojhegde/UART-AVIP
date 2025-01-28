@@ -121,12 +121,12 @@ interface UartTxDriverBfm (input  bit   clk,
   //  This task will drive the data from bfm to proxy using converters
   //--------------------------------------------------------------------------------------------
 
-	task DriveToBfm(inout UartTxPacketStruct uartTxPacketStruct , inout UartConfigStruct uartConfigStruct);
+  task DriveToBfm(inout UartTxPacketStruct uartTxPacketStruct , inout UartConfigStruct uartConfigStruct);
     	`uvm_info(name,$sformatf("data_packet=\n%p",uartTxPacketStruct),UVM_HIGH);
     	`uvm_info(name,$sformatf("DRIVE TO BFM TASK"),UVM_HIGH);
 	fork 
 	  BclkCounter(uartConfigStruct.uartOverSamplingMethod);   /* NEED TO UPDATE CONFIG CONVERTER IN DRIVER PROXY SIDE */
-     	  SampleData(uartTxPacketStruct);
+	  SampleData(uartTxPacketStruct);
 	join 
   endtask: DriveToBfm
  
@@ -155,13 +155,13 @@ interface UartTxDriverBfm (input  bit   clk,
   //  This task will send the data to the uart interface based on oversamplingClk
   //--------------------------------------------------------------------------------------------
   
-  task SampleData(inout UartTxPacketStruct uartTxPacketStruct);
+    task SampleData(inout UartTxPacketStruct uartTxPacketStruct , inout UartConfigStruct uartConfigStruct);
     static int total_transmission = $size(uartTxPacketStruct.transmissionData);
      @(posedge oversamplingClk) 
      tx = START_BIT;  //create enum
 	  
      for(int transmission_number=0 ; transmission_number < total_transmission; transmission_number++)begin 
-	for( int i=0 ; i< DATA_WIDTH ; i++) begin
+	  for( int i=0 ; i< uartConfigStruct.noOfDataBits ; i++) begin
       	  @(posedge oversamplingClk) begin
             tx = uartTxPacketStruct.transmissionData[transmission_number][i];
       	  end
