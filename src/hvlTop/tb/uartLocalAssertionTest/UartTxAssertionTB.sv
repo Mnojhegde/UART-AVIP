@@ -17,7 +17,7 @@ module UartTxAssertionTb;
   UartTxAssertions uartTxAssertions(.uartClk(clk),.uartTx(tx));
   
   initial begin 
-    When_startBitisdetected_nextCycleDataTransferStarts_ThenStopBitDetected_AssertionPass();
+    When_startBitisdetected_nextCycleDataTransferStarts_ThenEvenParityIsChecked_ThenStopBitDetected_AssertionPass();
   end 
 
   task  When_startBitisdetected_nextCycleDataTransferStarts_ThenStopBitDetected_AssertionPass();
@@ -30,6 +30,16 @@ module UartTxAssertionTb;
     #10 tx = 0;
     #10 tx = 1 ;
   endtask 
+  task  When_startBitisdetected_nextCycleDataTransferStarts_ThenEvenParityIsChecked_ThenStopBitDetected_AssertionPass();
+    #4  tx = 1;
+    #10 tx = 0;
+    #10 tx = 1;
+    #10 tx = 0;
+    #10 tx = 1;
+    #10 tx = 1;
+    #10 tx = 0;
+    #10 tx = 1;
+    #10 tx = 1 ;
 endmodule 
 
 `endif
