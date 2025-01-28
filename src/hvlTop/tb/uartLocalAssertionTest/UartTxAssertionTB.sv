@@ -40,6 +40,7 @@ module UartTxAssertionTb;
     #10 tx = 0;
     #10 tx = 1;
     #10 tx = 1 ;
+  endtask 
 endmodule 
 
 `endif
