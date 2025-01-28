@@ -142,8 +142,7 @@ interface UartTxMonitorBfm (input  bit   clk,
       `uvm_info(TxMonitor, $sformatf(" Stop bit is detected in Tx monitor "), UVM_LOW);
     else
       `uvm_error(TxMonitor, $sformatf(" Stop bit is not recieved by Tx monitor "));
-  
-	   
-   endtask
+     
+  endtask
 	
 endinterface : UartTxMonitorBfm
