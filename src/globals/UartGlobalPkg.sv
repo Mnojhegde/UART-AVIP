@@ -6,13 +6,10 @@ package UartGlobalPkg;
   parameter DATA_WIDTH=8;
 
   // No. of packets to be transferred
-
   parameter NO_OF_PACKETS = 50;
-
 
   // can enable or disable parity
   parameter PARITY_ENABLED = 1'b 1;
-
 
   // indicates start bit
   parameter START_BIT = 0;
@@ -20,7 +17,7 @@ package UartGlobalPkg;
   // indicates stop bit
   parameter STOP_BIT = 1;
 
-  // requiredTx and Rx struct packet
+  // required Tx and Rx struct packet
   typedef struct packed { bit[NO_OF_PACKETS -1 :0][DATA_WIDTH-1:0] transmissionData; bit parity;} UartTxPacketStruct;
   typedef struct packed { bit[NO_OF_PACKETS -1 :0][DATA_WIDTH-1:0] receivingData; bit parity;} UartRxPacketStruct;
 
@@ -28,12 +25,12 @@ package UartGlobalPkg;
   typedef enum{ EVEN_PARITY , ODD_PARITY} PARITY_TYPE_E;
 
   // baud rate in which data transfers
-  typedef enum bit[31:0]{ BAUD_4800 = 32'd4800,
-                          BAUD_9600 = 32'd9600,
-                         BAUD_19200 = 32'd19200 }BAUD_RATE_E;
+  typedef enum bit[31:0]{ BAUD_4800 = 32'd 4800,
+                          BAUD_9600 = 32'd 9600,
+                         BAUD_19200 = 32'd 19200 }BAUD_RATE_E;
   // oversamping rate
-  typedef enum bit[4:0]{ X16 = 5'd16,
-                        X13 = 5'd13}OVER_SMPLING_E;
+  typedef enum bit[4:0]{ X16 = 5'd 16,
+                        X13 = 5'd 13}OVER_SMPLING_E;
 
   // no of stop bits 
   typedef enum bit[1:0]{ ONE_BIT = 1,
