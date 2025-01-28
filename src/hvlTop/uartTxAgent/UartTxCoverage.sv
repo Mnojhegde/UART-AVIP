@@ -52,7 +52,7 @@ class UartTxCoverage extends uvm_subscriber #(UartTxTransaction);
   extern function new(string name = "UartTxCoverage", uvm_component parent = null);
   extern function void write(UartTxTransaction t);
   extern virtual function void report_phase(uvm_phase phase);
-
+  extern virtual function void build_phase(uvm_phase phase);
 endclass : UartTxCoverage
 
 //--------------------------------------------------------------------------------------------
