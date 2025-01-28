@@ -74,6 +74,16 @@ module UartTxAssertionTb;
     #10 tx = 1;
     #10 tx = 1 ;
   endtask 
+   task  When_startBitisFailedToDetect_AssertionFail();
+    #4  tx = 1;
+    #10 tx = 1;
+    #10 tx = 1;
+    #10 tx = 1;
+    #10 tx = 1;
+    #10 tx = 1;
+    #10 tx = 1;
+    #10 tx = 1 ;
+  endtask 
   
 endmodule 
 
