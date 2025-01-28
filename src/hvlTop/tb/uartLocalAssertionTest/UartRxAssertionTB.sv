@@ -22,7 +22,7 @@ module UartRxAssertionTb;
     When_startBitisdetected_nextCycleDataTransferStarts_ThenStopBitDetected_AssertionPass();
   end 
 
-  task  When_startBitisdetected_nextCycleDataTransferStarts_ThenStopBitDetected_AssertionPass()
+  task  When_startBitisdetected_nextCycleDataTransferStarts_ThenStopBitDetected_AssertionPass();
     #4  Rx = 1;
     #10 Rx = 0;
     #10 Rx = 1;

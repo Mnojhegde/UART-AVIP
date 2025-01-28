@@ -3,13 +3,13 @@
 
 package UartGlobalPkg;
 
-  parameter DATA_WIDTH=8;
+  parameter DATA_WIDTH=5;
   parameter NO_OF_PACKETS = 50;
   //parameter  DUTY = 60;
   //parameter FREQUENCY = 0.5; // in GHz
   //parameter PERIOD = 1/f ;//frequency;
 
-  parameter PARITY_ENABLED = 1'b 1;
+  parameter PARITY_ENABLED = 1'b 0;
 
   typedef enum{ EVEN_PARITY , ODD_PARITY} PARITY_TYPE;
   
@@ -27,7 +27,7 @@ package UartGlobalPkg;
   typedef enum bit[1:0]{ ONE_BIT = 1,
                         TWO_BIT = 2 } stop_bit_e;
 
-  typedef enum bit[1:0]{ FIVE_BIT = 5,
+  typedef enum bit[3:0]{ FIVE_BIT = 5,
                          SIX_BIT = 6,
                          SEVEN_BIT=7,
                         EIGHT_BIT=8} data_type_e;

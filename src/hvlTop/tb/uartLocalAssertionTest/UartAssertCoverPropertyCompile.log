@@ -1,0 +1,27 @@
+QuestaSim vlog 10.6c Compiler 2017.07 Jul 25 2017
+Start time: 11:39:54 on Jan 28,2025
+vlog -sv "+acc" "+cover" "+fcover" -l UartAssertCoverPropertyCompile.log -f ./UartAssertionCover.f 
+-- Compiling package UartGlobalPkg
+** Note: (vlog-2286) /home/swasthikkamath/UART-AVIP/src/hvlTop/uartTxAgent/UartTxAssertions.sv(8): Using implicit +incdir+/tools/mentor/questasim_10.6c/questasim/uvm-1.1d/../verilog_src/uvm-1.1d/src from import uvm_pkg
+-- Compiling package UartTxAssertions_sv_unit
+-- Importing package UartGlobalPkg
+-- Compiling interface UartTxAssertions
+-- Importing package mtiUvm.uvm_pkg (uvm-1.1d Built-in)
+-- Compiling package UartRxAssertions_sv_unit
+-- Importing package UartGlobalPkg
+-- Compiling interface UartRxAssertions
+-- Importing package mtiUvm.uvm_pkg (uvm-1.1d Built-in)
+-- Compiling package UartTxAssertionTB_sv_unit
+-- Importing package mtiUvm.uvm_pkg (uvm-1.1d Built-in)
+-- Importing package UartGlobalPkg
+-- Compiling module UartTxAssertionTb
+-- Compiling package UartRxAssertionTB_sv_unit
+-- Importing package mtiUvm.uvm_pkg (uvm-1.1d Built-in)
+-- Importing package UartGlobalPkg
+-- Compiling module UartRxAssertionTb
+
+Top level modules:
+	UartTxAssertionTb
+	UartRxAssertionTb
+End time: 11:39:56 on Jan 28,2025, Elapsed time: 0:00:02
+Errors: 0, Warnings: 0
