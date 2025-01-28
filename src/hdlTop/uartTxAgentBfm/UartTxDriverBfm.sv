@@ -164,12 +164,12 @@ interface UartTxDriverBfm (input  bit   clk,
       	@(posedge oversamplingClk)
         tx = uartTxPacketStruct.transmissionData[transmission_number][i];
       end
-      if(uartConfigStruct.parityEnabled ==1) begin 
-        if(uartConfigStruct.parityType == EVEN_PARITY)begin
+      if(uartConfigStruct.uartParityEnable ==1) begin 
+	if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
 	  @(posedge oversamplingClk)
 	  tx = ^(uartTxPacketStruct.transmissionData[transmission_number];
         end
-        else if (uartConfigStruct.parityType == ODD_PARITY) begin 
+	else if (uartConfigStruct.uartParityType == ODD_PARITY) begin 
 	  @(posedge oversamplingClk)
           tx =~^(uartTxPacketStruct.transmissionData[transmission_number];
         end 
