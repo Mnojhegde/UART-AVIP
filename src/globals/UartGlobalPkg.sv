@@ -5,9 +5,6 @@ package UartGlobalPkg;
 
   parameter DATA_WIDTH=8;
   parameter NO_OF_PACKETS = 50;
-  //parameter  DUTY = 60;
-  //parameter FREQUENCY = 0.5; // in GHz
-  //parameter PERIOD = 1/f ;//frequency;
 
   parameter PARITY_ENABLED = 1'b 1;
 
