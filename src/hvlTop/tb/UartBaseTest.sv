@@ -77,6 +77,7 @@ endfunction : setupUartEnvConfig
   uartEnvConfig.uartTxAgentConfig.hasParity = PARITY_ENABLED;
   uartEnvConfig.uartTxAgentConfig.uartOverSamplingMethod = OVERSAMPLING_16;
   uartEnvConfig.uartTxAgentConfig.uartBaudRate = BAUD_9600;
+  uartEnvConfig.uartTxAgentConfig.uartDataTye = FIVE_BIT;
   uvm_config_db #(UartTxAgentConfig) :: set(this,"*", "uartTxAgentConfig",uartEnvConfig.uartTxAgentConfig);
 
 endfunction : setupUartTxAgentConfig
