@@ -10,7 +10,7 @@ module UartTxAssertionTb;
 
   always #5 clk = ~clk;
   initial begin 
-    #80;
+    #100;
     $finish;
   end 
 
