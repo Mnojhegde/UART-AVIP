@@ -65,7 +65,7 @@ interface UartTxDriverBfm (input  bit   clk,
   // this task will calculate the baud divider based on sys clk frequency
   //-------------------------------------------------------------------
 	
-	task GenerateBaudClk(inout UartConfigStruct uartConfigStruct);
+   task GenerateBaudClk(inout UartConfigStruct uartConfigStruct);
       real clkPeriodStartTime; 
       real clkPeriodStopTime;
       real clkPeriod;
