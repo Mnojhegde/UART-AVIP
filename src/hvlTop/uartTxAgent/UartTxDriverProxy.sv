@@ -54,11 +54,12 @@ endfunction : build_phase
 //--------------------------------------------------------------------------------------------
 
 task UartTxDriverProxy :: run_phase(uvm_phase phase);
-
   super.run_phase(phase);
+  UartConfigStruct uartConfigStruct;
+  UartTxConfigConverter :: fromTxClass(uartTxAgentConfig , uartConfigStruct);
   uartTxDriverBfm.waitforreset();
   fork
-    uartTxDriverBfm.generatebaudclock(uartTxAgentConfig.uartOverSamplingMethod , uartTxAgentConfig.uartBaudRate);
+    uartTxDriverBfm.generatebaudclock(uartConfigStruct);
   join_none
   forever begin
   seq_item_port.get_next_item(req);
