@@ -82,10 +82,29 @@ interface UartTxMonitorBfm (input  bit   clk,
 
       baudDivisor = (clkFrequency)/(oversamplingmethod * baudrate); 
 
-      baudclkgenerator(baudDivisor);
+      BaudClkGenerator(baudDivisor);
     endtask
 
-  
+  //------------------------------------------------------------------
+  // Task: BaudClkGenerator
+  // this task will generate baud clk based on baud divider
+  //-------------------------------------------------------------------
+
+    task BaudClkGenerator(input int baudDivisor);
+      static int count=0;
+      forever begin 
+        @(posedge clk or negedge clk)
+    
+        if(count == (baudDivisor-1))begin 
+          count <= 0;
+          baudClk <= ~baudClk;
+        end 
+        else begin 
+          count <= count +1;
+        end   
+      end
+    endtask
+	
   //-------------------------------------------------------
   // Task: WaitForReset
   //  Waiting for the system reset
