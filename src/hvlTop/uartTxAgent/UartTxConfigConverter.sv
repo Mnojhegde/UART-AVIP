@@ -18,7 +18,8 @@ endfunction : new
 function void UartTxSeqItemConverter :: fromTxClass(input uartTxAgentConfig uartTxAgentConfig, output uartConfigStruct uartConfigStruct);
   uartConfigStruct.uartOversamplingMethod =  uartTxAgentConfig.uartOversamplingMethod;
   uartConfigStruct.uartBaudRate =  uartTxAgentConfig.uartBaudRate;
- endfunction : fromTxClass
+  uartConfigStruct.uartDataType = uartTxAgentConfig.uartDataType;
+endfunction : fromTxClass
 
 
 `endif
