@@ -23,7 +23,7 @@ class UartRxCoverage extends uvm_subscriber #(UartRxTransaction);
       bins UART_RX = {[1:$]};
     }
 
-    DATA_WIDTH_CP : coverpoint uartRxAgentConfig.DATA_TYPE_E{
+    DATA_WIDTH_CP : coverpoint uartRxAgentConfig.data_type{
       option.comment = "data_width";
       bins TRANSFER_BIT_5 = {5};
       bins TRANSFER_BIT_6 = {6};
@@ -31,13 +31,13 @@ class UartRxCoverage extends uvm_subscriber #(UartRxTransaction);
       bins TRANSFER_BIT_8 = {8};
     }
 
-    PARITY_CP : coverpoint uartRxAgentConfig.PARITY_TYPE_E{
+    PARITY_CP : coverpoint uartRxAgentConfig.parity_type{
       option.comment = "parity_type";
       bins EVEN_PARITY = {0};
       bins ODD_PARITY = {1};
     }
 
-    STOP_BIT_CP : coverpoint uartRxAgentConfig.STOP_BIT_E{
+    STOP_BIT_CP : coverpoint uartRxAgentConfig.stop_bit{
       option.comment = "stop bit width";
       bins STOP_BIT_1 = {1};
       bins STOP_BIT_2 = {2};
