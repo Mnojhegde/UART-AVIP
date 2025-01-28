@@ -65,7 +65,7 @@ interface UartTxDriverBfm (input  bit   clk,
   // this task will calculate the baud divider based on sys clk frequency
   //-------------------------------------------------------------------
 	
-    task GenerateBaudClk(inout UartTxConfigStruct uartTxConfigStruct);
+	task GenerateBaudClk(inout UartConfigStruct uartConfigStruct);
       real clkPeriodStartTime; 
       real clkPeriodStopTime;
       real clkPeriod;
@@ -78,7 +78,7 @@ interface UartTxDriverBfm (input  bit   clk,
       clkPeriod = clkPeriodStopTime - clkPeriodStartTime;
       clkFrequency = ( 10 **9 )/ clkPeriod;
 
-      baudDivisor = (clkFrequency)/(uartTxConfigStruct.uartOverSamplingMethod * uartTxConfigStruct.uartBaudRate); 
+      baudDivisor = (clkFrequency)/(uartConfigStruct.uartOverSamplingMethod * uartConfigStruct.uartBaudRate); 
 
       BaudClkGenerator(baudDivisor);
     endtask
@@ -121,11 +121,11 @@ interface UartTxDriverBfm (input  bit   clk,
   //  This task will drive the data from bfm to proxy using converters
   //--------------------------------------------------------------------------------------------
 
-	task DriveToBfm(inout UartTxPacketStruct uartTxPacketStruct , inout UartTxConfigStruct uartTxConfigStruct);
+	task DriveToBfm(inout UartTxPacketStruct uartTxPacketStruct , inout UartConfigStruct uartConfigStruct);
     	`uvm_info(name,$sformatf("data_packet=\n%p",uartTxPacketStruct),UVM_HIGH);
     	`uvm_info(name,$sformatf("DRIVE TO BFM TASK"),UVM_HIGH);
 	fork 
-	  BclkCounter(uartTxConfigStruct.uartOverSamplingMethod);   /* NEED TO UPDATE CONFIG CONVERTER IN DRIVER PROXY SIDE */
+	  BclkCounter(uartConfigStruct.uartOverSamplingMethod);   /* NEED TO UPDATE CONFIG CONVERTER IN DRIVER PROXY SIDE */
      	  SampleData(uartTxPacketStruct);
 	join 
   endtask: DriveToBfm
