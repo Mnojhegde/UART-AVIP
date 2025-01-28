@@ -133,7 +133,7 @@ interface UartTxDriverBfm (input  bit   clk,
     	`uvm_info(name,$sformatf("data_packet=\n%p",uartTxPacketStruct),UVM_HIGH);
     	`uvm_info(name,$sformatf("DRIVE TO BFM TASK"),UVM_HIGH);
     
-	bclk_counter(agtcfg.oversamplingmethod);   // configure in agt config
+	 bclk_counter(agtcfg.oversamplingmethod);   // configure in agt config
     
      	sample_data(uartTxPacketStruct);
 
@@ -147,7 +147,7 @@ interface UartTxDriverBfm (input  bit   clk,
   task bclk_counter(input oversamplingmethod);
     static int countbclk = 0;
     forever begin
-	@posedge(baudClk)
+	@(posedge baudClk)
 	if(countbclk == (oversamplingmethod/2)-1) begin
       		oversampling_clk = ~oversampling_clk;
       		countbclk=0;
@@ -175,7 +175,7 @@ interface UartTxDriverBfm (input  bit   clk,
         		tx = uartTxPacketStruct.trasmissionData[transmission_number][i];
       	end
     end
-      
+  end
     //@(posedge oversampling_clk)
     //tx = STOP_BIT;  // create enum 
   endtask
