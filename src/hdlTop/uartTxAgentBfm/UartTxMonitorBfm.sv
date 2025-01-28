@@ -67,27 +67,6 @@ interface UartTxMonitorBfm (input  bit   clk,
   // Task: Baud_div
   // this task will calculate the baud divider based on sys clk frequency
   //-------------------------------------------------------------------
- //  task Baud_div(input overSampling, input baudRate);
-	  
-	// baudDivider = (FREQUENCY *1000000000) / (overSampling * baudRate);    
-	  
- //  endtask: Baud_div
- 
- //  initial begin 
-	  
-	//   Baud_div(agtcfg.overSampling, agtcfg.baudRate);   // variables yet to be added in the agent
-	  
- //    forever begin
-	//     @(posedge clk or negedge clk) begin
- //        	if (counter == baudDivider - 1) begin
- //            		bclk <= ~bclk;   // Toggle bclk when counter reaches baudDivider
- //            		counter <= 0;    // Reset the counter
- //        	end else begin
- //            		counter <= counter + 1;  // Increment the counter
- //        	end
- //    	    end
- //    	end
- //   end
 
 
   
