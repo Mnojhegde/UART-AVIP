@@ -67,7 +67,23 @@ interface UartTxMonitorBfm (input  bit   clk,
   // Task: Baud_div
   // this task will calculate the baud divider based on sys clk frequency
   //-------------------------------------------------------------------
+  task Baud_div(input oversamplingmethod,input baudrate);
+      real clkPeriodStartTime; 
+      real clkPeriodStopTime;
+      real clkPeriod;
+      real clkFrequency;
+      int baudDivisor;
+      @(posedge clk);
+      clkPeriodStartTime = $realtime;
+      @(posedge clk);
+      clkPeriodStopTime = $realtime; 
+      clkPeriod = clkPeriodStopTime - clkPeriodStartTime;
+      clkFrequency = ( 10 **9 )/ clkPeriod;
 
+      baudDivisor = (clkFrequency)/(oversamplingmethod * baudrate); 
+
+      baudclkgenerator(baudDivisor);
+    endtask
 
   
   //-------------------------------------------------------
