@@ -165,7 +165,7 @@ interface UartTxDriverBfm (input  bit   clk,
   //--------------------------------------------------------------------------------------------
   
   task sample_data(inout UartTxPacketStruct uartTxPacketStruct);
-     int total_transmission = $size(uartTxPacketStruct.transmissionData);
+    static int total_transmission = $size(uartTxPacketStruct.transmissionData);
      //@(posedge oversampling_clk) 
     // tx = START_BIT;  //create enum
 	  
