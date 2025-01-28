@@ -14,8 +14,8 @@ class UartTxAgentConfig extends uvm_object;
   //Variables
   bit hasCoverage;
   bit hasParity;
-  OVER_SAMPLING_E uartOverSamplingMethod = OVERSAMPLING_16;
-  BAUD_RATE_E uartBaudRate = BAUD_9600;
+  OVER_SAMPLING_E uartOverSamplingMethod;
+  BAUD_RATE_E uartBaudRate;
 //-------------------------------------------------------
 // Externally defined Tasks and Functions
 //-------------------------------------------------------
