@@ -117,6 +117,10 @@ interface UartTxMonitorBfm (input  bit   clk,
     @(posedge reset);
     `uvm_info(name, $sformatf("system reset deactivated"), UVM_HIGH)
   endtask: WaitForReset
-  
+
+  //-------------------------------------------------------
+  // Task: DeSerializer
+  //  converts serial data to parallel
+  //-------------------------------------------------------
 
 endinterface : UartTxMonitorBfm
