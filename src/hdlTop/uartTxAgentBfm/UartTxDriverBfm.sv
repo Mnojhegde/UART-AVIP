@@ -128,7 +128,7 @@ interface UartTxDriverBfm (input  bit   clk,
   //  This task will drive the data from bfm to proxy using converters
   //--------------------------------------------------------------------------------------------
 
-  task DriveToBfm();
+  task DriveToBfm(inout UartTxPacketStruct uartTxPacketStruct);
 	  
     	`uvm_info(name,$sformatf("data_packet=\n%p",uartTxPacketStruct),UVM_HIGH);
     	`uvm_info(name,$sformatf("DRIVE TO BFM TASK"),UVM_HIGH);
