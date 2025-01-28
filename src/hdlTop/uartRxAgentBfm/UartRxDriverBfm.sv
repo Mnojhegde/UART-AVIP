@@ -32,7 +32,7 @@ interface UartRxDriverBfm (input  bit   clk,
   
   //Variable: bclk
   //baud clock for uart transmisson/reception
-  bit bclk;
+  bit baudClk;
    
   //Variable: baudRate
   //Used to sample the uart data
@@ -128,7 +128,7 @@ interface UartRxDriverBfm (input  bit   clk,
 	`uvm_info(name,$sformatf("data_packet=\n%p",uartRxPacketStruct),UVM_HIGH);
     	`uvm_info(name,$sformatf("DRIVE TO BFM TASK"),UVM_HIGH);
     
-	bclk_counter(agtcfg.oversamplingmethod);   // configure in agt config
+	 bclk_counter(agtcfg.oversamplingmethod);   // configure in agt config
     
 	sample_data(uartRxPacketStruct);
 
@@ -151,7 +151,7 @@ interface UartRxDriverBfm (input  bit   clk,
       	else begin
       	countbclk = countbclk+1;
       end
-   
+    
     end
   endtask
   
@@ -161,7 +161,7 @@ interface UartRxDriverBfm (input  bit   clk,
   //--------------------------------------------------------------------------------------------
   
   task sample_data(inout UartRxPacketStruct uartRxPacketStruct);
-      int total_receiving = uartRxPacketStruct.receivingData.size();
+     static int total_receiving = $size(uartRxPacketStruct.receivingData);
      //@(posedge oversampling_clk) 
      // tx = START_BIT;  //create enum
 	  
@@ -171,7 +171,7 @@ interface UartRxDriverBfm (input  bit   clk,
 			rx = uartRxPacketStruct.receivingData[receiving_number][i];
       	end
     end
-      
+  end 
     //@(posedge oversampling_clk)
     //tx = STOP_BIT;  // create enum 
   endtask
