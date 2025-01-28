@@ -19,7 +19,6 @@ interface UartTxDriverBfm (input  bit   clk,
   //-------------------------------------------------------
   import uvm_pkg::*;
   `include "uvm_macros.svh"
-  import UartGlobalPkg :: *;
   //-------------------------------------------------------
   // Importing the Transmitter package file
   //-------------------------------------------------------
