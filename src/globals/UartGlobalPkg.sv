@@ -20,7 +20,7 @@ package UartGlobalPkg;
   // required Tx and Rx struct packet
   typedef struct packed { bit[NO_OF_PACKETS -1 :0][DATA_WIDTH-1:0] transmissionData; bit parity;} UartTxPacketStruct;
   typedef struct packed { bit[NO_OF_PACKETS -1 :0][DATA_WIDTH-1:0] receivingData; bit parity;} UartRxPacketStruct;
-  typedef struct packed { OVER_SAMPLING_E uartOverSamplingMethod ; BAUD_RATE_E uartBaudRate;}UartConfigStruct;
+  typedef struct packed { OVER_SAMPLING_E uartOverSamplingMethod ; BAUD_RATE_E uartBaudRate; DATA_TYPE_E uartDataType;PARITY_TYPE_E uartParityType;}UartConfigStruct;
 
   // even or odd parity can be set
   typedef enum{ EVEN_PARITY , ODD_PARITY} PARITY_TYPE_E;
