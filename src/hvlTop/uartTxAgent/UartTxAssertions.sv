@@ -53,7 +53,7 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
     uartStartDetectInitiation = 0;
     end 
     else 
-      $error("FAILED TO DETECT STOP BIT : ASSERTION FAILED");
+      $error("FAILED TO DETECT START BIT : ASSERTION FAILED");
     
   property data_width_check_property;
     @(posedge uartClk) disable iff(!(uartDataWidthDetectInitiation))
