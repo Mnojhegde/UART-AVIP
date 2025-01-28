@@ -58,17 +58,14 @@ interface UartTxDriverBfm (input  bit   clk,
     `uvm_info(name, $sformatf(name),UVM_LOW)
   end
   
-    task drivetoidealstate();
-      @(posedge clk);
-      tx <=1;
-     endtask
+
 
   //------------------------------------------------------------------
   // Task: bauddivCalculation
   // this task will calculate the baud divider based on sys clk frequency
   //-------------------------------------------------------------------
 	
-    task generatebaudclk(input OVERSAMPLING_E uartOverSamplingMethod ,input BAUD_RATE_E uartBaudRate);
+    task GenerateBaudClk(inout UartTxConfigStruct uartTxConfigStruct);
       real clkPeriodStartTime; 
       real clkPeriodStopTime;
       real clkPeriod;
@@ -81,9 +78,9 @@ interface UartTxDriverBfm (input  bit   clk,
       clkPeriod = clkPeriodStopTime - clkPeriodStartTime;
       clkFrequency = ( 10 **9 )/ clkPeriod;
 
-      baudDivisor = (clkFrequency)/(uartOverSamplingMethod * uartBaudRate); 
+      baudDivisor = (clkFrequency)/(uartTxConfigStruct.uartOverSamplingMethod * uartTxConfigStruct.uartBaudRate); 
 
-      baudclkgenerator(baudDivisor);
+      BaudClkGenerator(baudDivisor);
     endtask
 
   //------------------------------------------------------------------
@@ -91,7 +88,7 @@ interface UartTxDriverBfm (input  bit   clk,
   // this task will generate baud clk based on baud divider
   //-------------------------------------------------------------------
 
-    task baudclkgenerator(input int baudDivisor);
+    task BaudClkGenerator(input int baudDivisor);
       static int count=0;
       forever begin 
         @(posedge clk or negedge clk)
@@ -112,7 +109,11 @@ interface UartTxDriverBfm (input  bit   clk,
   //-------------------------------------------------------
 
   task WaitForReset();
-    
+	  @(negedge uartReset);
+	  `uvm_info(get_type_name(),$sformatf("RESET DETECTED"),UVM_LOW);
+	  tx = 1; //DRIVE THE UART TO IDEAL STATE
+	  @(posedge uartReset);
+	  `uvm_info(get_type_name(),$sformatf("RESET DEASSERTED"),UVM_LOW);
   endtask: WaitForReset
   
   //--------------------------------------------------------------------------------------------
@@ -120,12 +121,12 @@ interface UartTxDriverBfm (input  bit   clk,
   //  This task will drive the data from bfm to proxy using converters
   //--------------------------------------------------------------------------------------------
 
-  task DriveToBfm(inout UartTxPacketStruct uartTxPacketStruct);
+	task DriveToBfm(inout UartTxPacketStruct uartTxPacketStruct , inout UartTxConfigStruct uartTxConfigStruct);
     	`uvm_info(name,$sformatf("data_packet=\n%p",uartTxPacketStruct),UVM_HIGH);
     	`uvm_info(name,$sformatf("DRIVE TO BFM TASK"),UVM_HIGH);
 	fork 
-	  bclk_counter(agtcfg.uartOverSamplingMethod);   // configure in agt config
-     	  sample_data(uartTxPacketStruct);
+	  BclkCounter(uartTxConfigStruct.uartOverSamplingMethod);   /* NEED TO UPDATE CONFIG CONVERTER IN DRIVER PROXY SIDE */
+     	  SampleData(uartTxPacketStruct);
 	join 
   endtask: DriveToBfm
  
@@ -134,7 +135,7 @@ interface UartTxDriverBfm (input  bit   clk,
   //  This task will count the number of cycles of bclk and generate oversamplingClk to sample data
   //--------------------------------------------------------------------------------------------
 
-  task bclk_counter(input uartOverSamplingMethod);
+  task BclkCounter(input uartOverSamplingMethod);
     static int countbClk = 0;
     forever begin
 	@(posedge baudClk)
@@ -154,7 +155,7 @@ interface UartTxDriverBfm (input  bit   clk,
   //  This task will send the data to the uart interface based on oversamplingClk
   //--------------------------------------------------------------------------------------------
   
-  task sample_data(inout UartTxPacketStruct uartTxPacketStruct);
+  task SampleData(inout UartTxPacketStruct uartTxPacketStruct);
     static int total_transmission = $size(uartTxPacketStruct.transmissionData);
      @(posedge oversamplingClk) 
      tx = START_BIT;  //create enum
