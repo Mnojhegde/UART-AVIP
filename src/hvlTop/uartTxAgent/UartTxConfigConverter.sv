@@ -19,6 +19,7 @@ function void UartTxSeqItemConverter :: fromTxClass(input uartTxAgentConfig uart
   uartConfigStruct.uartOversamplingMethod =  uartTxAgentConfig.uartOversamplingMethod;
   uartConfigStruct.uartBaudRate =  uartTxAgentConfig.uartBaudRate;
   uartConfigStruct.uartDataType = uartTxAgentConfig.uartDataType;
+  uartConfigStruct.uartParityType = uartTxAgentConfig.uartParityType;
 endfunction : fromTxClass
 
 
