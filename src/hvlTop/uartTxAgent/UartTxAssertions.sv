@@ -64,8 +64,10 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
     $info("DATA WIDTH IS MATCHING : ASSERTION PASS ");
     uartDataWidthDetectInitiation = 0;
     end 
-    else 
+    else begin
       $error("DATA WIDTH MATCH FAILED : ASSERTION FAILED ");
+      uartDataWidthDetectInitiation = 0;
+    end 
 
   property even_parity_check;
     @(posedge uartClk) disable iff(!(uartEvenParityDetectionInitiation))
