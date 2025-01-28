@@ -124,23 +124,7 @@ simulate:
 	# For checking and reporting simulation errors
 	make simulate_war_err
 
-	## TODO(mshariff): 
-	## # For coverage report in text format 
-	## #vcover report -text Axi4LiteAssertionTB/Axi4LiteAssertionTB_cov
-	# -c -do "log -r /*; add wave -r /*; coverage save -onexit -assert -directive -cvg -codeAll Axi4LiteAssertionTB/coverage.ucdb; coverage report -file $(teset)/coverage.txt -byfile -detail -noannotate -option -directive -cvg -details -verbose; run -all; exit" \
-	# vcover report -file  -byfile -detail -noannotate -option -cvg
-
-	# For coverage report in HTML format 
-	vcover report -html $(test_folder)/$(test)_coverage.ucdb -htmldir $(test_folder)/html_cov_report -details
-
-	# To open the html coverage report
-	# firefox test_folder/html_cov_report/index.html &
-
-	# To open the waveform use the below command 
-	# vsim -view waveform.wlf &
-	#
-	# To open the wavefrom with saved signals
-	# vsim -view waveform.wlf -do axi4_waves.do &
+	
 
 clean_simulate:
 	rm -rf *_test*
@@ -173,11 +157,11 @@ compile_war_err:
 	echo "-----------------------------------------------------------------";
 	echo "------------------- Compilation Report --------------------------";
 	echo "";
-	grep "^** " Axi4LiteMasterWriteAssertCoverPropertyCompile.log;
+	grep "^** "UartAssertCoverPropertyCompile.log;
 	echo "";
-	grep "^Error" Axi4LiteMasterWriteAssertCoverPropertyCompile.log;
+	grep "^Error" UartAssertCoverPropertyCompile.log;
 	echo "";
-	echo "Log file path: Axi4LiteMasterWriteAssertCoverPropertyCompile.log"
+	echo "Log file path: UartAssertCoverPropertyCompile.log"
 	echo "";
 	echo "-----------------------------------------------------------------";
 	echo "-----------------------------------------------------------------";
