@@ -11,7 +11,7 @@ package UartGlobalPkg;
 
   parameter PARITY_ENABLED = 1'b 1;
 
-  typedef enum{ EVEN_PARITY , ODD_PARITY} PARITY_TYPE;
+  typedef enum{ EVEN_PARITY , ODD_PARITY} parity_type_e;
   
   typedef struct packed { bit[NO_OF_PACKETS -1 :0][DATA_WIDTH-1:0] transmissionData; bit parity;} UartTxPacketStruct;
   typedef struct packed { bit[NO_OF_PACKETS -1 :0][DATA_WIDTH-1:0] receivingData; bit parity;} UartRxPacketStruct;
