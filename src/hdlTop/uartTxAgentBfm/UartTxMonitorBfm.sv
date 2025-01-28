@@ -90,12 +90,12 @@ interface UartTxMonitorBfm (input  bit   clk,
   // this task will generate baud clk based on baud divider
   //-------------------------------------------------------------------
 
-    task BaudClkGenerator(input int baudDivisor);
+    task BaudClkGenerator(input int baudDiv);
       static int count=0;
       forever begin 
         @(posedge clk or negedge clk)
     
-        if(count == (baudDivisor-1))begin 
+        if(count == (baudDiv-1))begin 
           count <= 0;
           baudClk <= ~baudClk;
         end 
@@ -123,4 +123,9 @@ interface UartTxMonitorBfm (input  bit   clk,
   //  converts serial data to parallel
   //-------------------------------------------------------
 
+   task Deserializer(output UartTxPacketStruct uartTxPacketStruct);
+	
+	   
+   endtask
+	
 endinterface : UartTxMonitorBfm
