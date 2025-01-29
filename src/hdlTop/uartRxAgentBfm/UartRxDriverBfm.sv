@@ -65,43 +65,43 @@ interface UartRxDriverBfm (input  bit   clk,
   // this task will calculate the baud divider based on sys clk frequency
   //-------------------------------------------------------------------
 	
-    task bauddivcalculation(input oversamplingmethod,input baudrate);
-      real clkPeriodStartTime; 
-      real clkPeriodStopTime;
-      real clkPeriod;
-      real clkFrequency;
-      int baudDivisor;
-      @(posedge clk);
-      clkPeriodStartTime = $realtime;
-      @(posedge clk);
-      clkPeriodStopTime = $realtime; 
-      clkPeriod = clkPeriodStopTime - clkPeriodStartTime;
-      clkFrequency = ( 10 **9 )/ clkPeriod;
+    // task bauddivcalculation(input oversamplingmethod,input baudrate);
+    //   real clkPeriodStartTime; 
+    //   real clkPeriodStopTime;
+    //   real clkPeriod;
+    //   real clkFrequency;
+    //   int baudDivisor;
+    //   @(posedge clk);
+    //   clkPeriodStartTime = $realtime;
+    //   @(posedge clk);
+    //   clkPeriodStopTime = $realtime; 
+    //   clkPeriod = clkPeriodStopTime - clkPeriodStartTime;
+    //   clkFrequency = ( 10 **9 )/ clkPeriod;
 
-      baudDivisor = (clkFrequency)/(oversamplingmethod * baudrate); 
+    //   baudDivisor = (clkFrequency)/(oversamplingmethod * baudrate); 
 
-      baudclkgenerator(baudDivisor);
-    endtask
+    //   baudclkgenerator(baudDivisor);
+    // endtask
 
   //------------------------------------------------------------------
   // Task: baudclkgenerator
   // this task will generate baud clk based on baud divider
   //-------------------------------------------------------------------
 
-    task baudclkgenerator(input int baudDivisor);
-      static int count=0;
-      forever begin 
-        @(posedge clk or negedge clk)
+    // task baudclkgenerator(input int baudDivisor);
+    //   static int count=0;
+    //   forever begin 
+    //     @(posedge clk or negedge clk)
     
-        if(count == (baudDivisor-1))begin 
-          count <= 0;
-          baudClk <= ~baudClk;
-        end 
-        else begin 
-          count <= count +1;
-        end   
-      end
-    endtask
+    //     if(count == (baudDivisor-1))begin 
+    //       count <= 0;
+    //       baudClk <= ~baudClk;
+    //     end 
+    //     else begin 
+    //       count <= count +1;
+    //     end   
+    //   end
+    // endtask
 
   
  //  //-------------------------------------------------------
@@ -109,27 +109,27 @@ interface UartRxDriverBfm (input  bit   clk,
   //  Waiting for the system reset
   //-------------------------------------------------------
 
-  task WaitForReset();
-  	  @(negedge reset);
-	  `uvm_info(get_type_name(),$sformatf("RESET DETECTED"),UVM_LOW);
-	   rx = 1; //DRIVE THE UART TO IDEAL STATE
-	  @(posedge reset);
-	  `uvm_info(get_type_name(),$sformatf("RESET DEASSERTED"),UVM_LOW);
-  endtask: WaitForReset
+  // task WaitForReset();
+  // 	  @(negedge reset);
+	 //  `uvm_info(name,$sformatf("RESET DETECTED"),UVM_LOW);
+	 //   rx = 1; //DRIVE THE UART TO IDEAL STATE
+	 //  @(posedge reset);
+	 //  `uvm_info(name,$sformatf("RESET DEASSERTED"),UVM_LOW);
+  // endtask: WaitForReset
   
   //--------------------------------------------------------------------------------------------
   // Task: DriveToBfm
   //  This task will drive the data from bfm to proxy using converters
   //--------------------------------------------------------------------------------------------
 
-  task DriveToBfm(inout UartRxPacketStruct uartRxPacketStruct);  
-	`uvm_info(name,$sformatf("data_packet=\n%p",uartRxPacketStruct),UVM_HIGH);
-    	`uvm_info(name,$sformatf("DRIVE TO BFM TASK"),UVM_HIGH);
-	 fork
-         BclkCounter(uartConfigStruct.uartOverSamplingMethod);   /* NEED TO UPDATE CONFIG CONVERTER IN DRIVER PROXY SIDE */
-         SampleData(uartRxPacketStruct);
-	 join
-  endtask: DriveToBfm
+ //  task DriveToBfm(inout UartRxPacketStruct uartRxPacketStruct);  
+	// `uvm_info(name,$sformatf("data_packet=\n%p",uartRxPacketStruct),UVM_HIGH);
+ //    	`uvm_info(name,$sformatf("DRIVE TO BFM TASK"),UVM_HIGH);
+	//  fork
+ //         BclkCounter(uartConfigStruct.uartOverSamplingMethod);   /* NEED TO UPDATE CONFIG CONVERTER IN DRIVER PROXY SIDE */
+ //         SampleData(uartRxPacketStruct);
+	//  join
+ //  endtask: DriveToBfm
 
 
    //--------------------------------------------------------------------------------------------
