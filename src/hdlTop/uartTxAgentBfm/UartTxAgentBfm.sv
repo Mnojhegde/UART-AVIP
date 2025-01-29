@@ -13,7 +13,7 @@ module UartTxAgentBfm(UartIf uartIf);
   `include "uvm_macros.svh"
   
   initial begin
-    `uvm_info("uart transmitter agent bfm",$sformatf("UART TRANSMITTER AGENT BFM"),UVM_LOW);
+    `uvm_info("uart transmitter agent bfm",$sformatf("UART TRANSMITTER AGENT BFM"),UVM_LOW)
   end
   
   //-------------------------------------------------------
