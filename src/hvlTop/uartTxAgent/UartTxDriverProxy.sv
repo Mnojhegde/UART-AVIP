@@ -11,6 +11,7 @@ class UartTxDriverProxy extends uvm_driver#(UartTxTransaction);
  
   virtual UartTxDriverBfm uartTxDriverBfm;
   UartTxPacketStruct uartTxPacketStruct;
+  UartTxAgentConfig uartTxAgentConfig;
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
