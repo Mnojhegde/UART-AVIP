@@ -67,7 +67,7 @@ task UartTxDriverProxy :: run_phase(uvm_phase phase);
 
   UartTxSeqItemConverter :: fromTxClass(req,uartTxAgentConfig,uartTxPacketStruct);
   `uvm_info("BFM",$sformatf("data in driver is %p",uartTxPacketStruct.transmissionData),UVM_LOW)
-    #100;
+
   seq_item_port.item_done();
   end 
 endtask : run_phase
