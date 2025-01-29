@@ -13,7 +13,7 @@ function UartTxConfigConverter :: new(string name = "uartTxConfigConverter");
 endfunction : new
 
 function void UartTxConfigConverter :: from_Class(input UartTxAgentConfig uartTxAgentConfig, output UartConfigStruct uartConfigStruct);
-  uartConfigStruct.uartOversamplingMethod =  uartTxAgentConfig.uartOversamplingMethod;
+  uartConfigStruct.uartOverSamplingMethod =  uartTxAgentConfig.uartOverSamplingMethod;
   uartConfigStruct.uartBaudRate =  uartTxAgentConfig.uartBaudRate;
   uartConfigStruct.uartDataType = uartTxAgentConfig.uartDataType;
   uartConfigStruct.uartParityType = uartTxAgentConfig.uartParityType;
