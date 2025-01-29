@@ -33,7 +33,7 @@ interface UartTxMonitorBfm (input  bit   clk,
   //baud clock for uart transmisson/reception
 	
   bit baudClk;
-   
+   bit oversamplingClk;
    //Variable: baudRate
   //Used to sample the uart data
 	
