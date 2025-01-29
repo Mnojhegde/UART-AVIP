@@ -104,6 +104,26 @@ interface UartTxMonitorBfm (input  bit   clk,
         end   
       end
     endtask
+
+  //--------------------------------------------------------------------------------------------
+  // Task: bclk_counter
+  //  This task will count the number of cycles of bclk and generate oversamplingClk to sample data
+  //--------------------------------------------------------------------------------------------
+
+  task BclkCounter(input uartOverSamplingMethod);
+    static int countbClk = 0;
+    forever begin
+	@(posedge baudClk)
+	if(countbClk == (uartOverSamplingMethod/2)-1) begin
+      	  oversamplingClk = ~oversamplingClk;
+      	  countbClk=0;
+      	end
+      	else begin
+      	countbClk = countbClk+1;
+      end
+   
+    end
+  endtask
 	
   //-------------------------------------------------------
   // Task: WaitForReset
