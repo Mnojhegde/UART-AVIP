@@ -37,7 +37,7 @@ interface UartRxDriverBfm (input  bit   clk,
 
   //Variable: oversampling_clk
   // clk used to sample the data
-  bit oversampling_clk;
+  bit oversamplingClk;
   
   //Variable: baudRate
   // Counter to keep track of clock cycles
@@ -122,15 +122,13 @@ interface UartRxDriverBfm (input  bit   clk,
   //  This task will drive the data from bfm to proxy using converters
   //--------------------------------------------------------------------------------------------
 
-  task DriveToBfm(inout UartRxPacketStruct uartRxPacketStruct);
-	  
+  task DriveToBfm(inout UartRxPacketStruct uartRxPacketStruct);  
 	`uvm_info(name,$sformatf("data_packet=\n%p",uartRxPacketStruct),UVM_HIGH);
     	`uvm_info(name,$sformatf("DRIVE TO BFM TASK"),UVM_HIGH);
-    
-	 bclk_counter(uartConfigStruct.uartOverSamplingMethod);   /* NEED TO UPDATE CONFIG CONVERTER IN DRIVER PROXY SIDE */
-    
-	 sample_data(uartRxPacketStruct);
-
+	 fork
+         BclkCounter(uartConfigStruct.uartOverSamplingMethod);   /* NEED TO UPDATE CONFIG CONVERTER IN DRIVER PROXY SIDE */
+         SampleData(uartRxPacketStruct);
+	 join
   endtask: DriveToBfm
 
 
@@ -139,16 +137,16 @@ interface UartRxDriverBfm (input  bit   clk,
   //  This task will count the number of cycles of bclk and generate oversampling_clk to sample data
   //--------------------------------------------------------------------------------------------
 
-  task bclk_counter(input oversamplingmethod);
-    static int countbclk = 0;
+  task BclkCounter(input oversamplingmethod);
+    static int countbClk = 0;
     forever begin
 	@(posedge baudClk)
-	if(countbclk == (oversamplingmethod/2)-1) begin
-      		oversampling_clk = ~oversampling_clk;
-      		countbclk=0;
+	    if(countbClk == (oversamplingmethod/2)-1) begin
+      		oversamplingcClk = ~oversamplingClk;
+      		countbClk=0;
       	end
       	else begin
-      	countbclk = countbclk+1;
+      	countbClk = countbClk+1;
       end
     
     end
@@ -159,13 +157,13 @@ interface UartRxDriverBfm (input  bit   clk,
   //  This task will send the data to the uart interface based on oversampling_clk
   //--------------------------------------------------------------------------------------------
   
-  task sample_data(inout UartRxPacketStruct uartRxPacketStruct);
+  task SampleData(inout UartRxPacketStruct uartRxPacketStruct);
      static int total_receiving = $size(uartRxPacketStruct.receivingData);
      for(int receiving_number=0 ; receiving_number < total_receiving; receiving_number++) begin 
-	@(posedge oversampling_clk) 
+        @(posedge oversamplingClk) 
         rx = START_BIT; 
 	for( int i=0 ; i< uartConfigStruct.uartDataType ; i++) begin
-      	   @(posedge oversampling_clk)
+	   @(posedge oversamplingClk)
 	   rx = uartRxPacketStruct.receivingData[receiving_number][i];
 	end
       	if(uartConfigStruct.uartParityEnable ==1) begin 
