@@ -158,7 +158,7 @@ interface UartTxDriverBfm (input  bit   clk,
   task SampleData(inout UartTxPacketStruct uartTxPacketStruct , inout UartConfigStruct uartConfigStruct);
     static int total_transmission = $size(uartTxPacketStruct.transmissionData);	  
     for(int transmission_number=0 ; transmission_number < total_transmission; transmission_number++)begin 
-      @posedge oversamplingClk);
+    @(posedge oversamplingClk);
       tx = START_BIT;
       for( int i=0 ; i< uartConfigStruct.uartDataType ; i++) begin
       	@(posedge oversamplingClk)
@@ -167,11 +167,11 @@ interface UartTxDriverBfm (input  bit   clk,
       if(uartConfigStruct.uartParityEnable ==1) begin 
 	if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
 	  @(posedge oversamplingClk)
-	  tx = ^(uartTxPacketStruct.transmissionData[transmission_number];
+	  tx = ^(uartTxPacketStruct.transmissionData[transmission_number]);
         end
 	else if (uartConfigStruct.uartParityType == ODD_PARITY) begin 
 	  @(posedge oversamplingClk)
-          tx =~^(uartTxPacketStruct.transmissionData[transmission_number];
+	  tx =~^(uartTxPacketStruct.transmissionData[transmission_number]);
         end 
       end 		 
       @(posedge oversamplingClk)
