@@ -5,7 +5,7 @@ class UartTxConfigConverter extends uvm_object;
   `uvm_object_utils(UartTxConfigConverter)
   
 
-  extern function new( string name = "UartTxConfigConverter");
+  extern function new( string name = "uartTxConfigConverter");
   extern static function void fromTxClass(input UartTxAgentConfig uartTxAgentConfig, output UartConfigStruct uartConfigStruct);
 endclass :UartTxConfigConverter
     
