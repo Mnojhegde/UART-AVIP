@@ -8,8 +8,9 @@ package UartTxPkg;
   import UartGlobalPkg :: *;
   `include "UartTxAgentConfig.sv"
   `include "UartTxTransaction.sv"
-   `include "UartTxConfigConverter.sv"
   `include "UartTxSeqItemConverter.sv"
+  `include "UartTxConfigConverter.sv"
+  //`include "UartTxSeqItemConverter.sv"
   `include "UartTxSequencer.sv"
   `include "UartTxDriverProxy.sv"
   `include "UartTxMonitorProxy.sv"

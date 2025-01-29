@@ -13,7 +13,7 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
   bit uartDataWidthDetectInitiation = 0;
   bit uartEvenParityDetectionInitiation = 0;
   bit uartOddParityDetectionInitiation = 0;
-  PARITY_TYPE uartEvenOddParity = EVEN_PARITY;
+  PARITY_TYPE uartEvenOddParity = ODD_PARITY;
   bit [DATA_WIDTH-1 :0]uartLocalData;
 
   always@(posedge uartClk) begin 

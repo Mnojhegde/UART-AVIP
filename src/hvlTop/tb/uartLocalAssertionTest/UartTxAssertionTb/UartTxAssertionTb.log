@@ -1,5 +1,5 @@
 # vsim -vopt work.UartTxAssertionTb -voptargs="+acc=npr" -assertdebug "+UVM_TESTNAME=UartTxAssertionTb" "+UVM_VERBOSITY=UVM_MEDIUM" -l UartTxAssertionTb/UartTxAssertionTb.log -sva -coverage -c -do "log -r /*; add wave -r /*; coverage save -onexit -assert -directive -cvg -codeAll UartTxAssertionTb/UartTxAssertionTb_coverage.ucdb; run -all; exit" -wlf UartTxAssertionTb/waveform.wlf 
-# Start time: 12:56:32 on Jan 28,2025
+# Start time: 12:26:14 on Jan 29,2025
 # ** Note: (vsim-3812) Design is being optimized...
 # //  Questa Sim
 # //  Version 10.6c linux Jul 25 2017
@@ -59,10 +59,13 @@
 # 10110
 # ** Info: DATA WIDTH IS MATCHING : ASSERTION PASS
 #    Time: 75 ns Started: 65 ns  Scope: UartTxAssertionTb.uartTxAssertions.CHECK_FOR_DATA_WIDTH_LENGTH File: /home/swasthikkamath/UART-AVIP/src/hvlTop/uartTxAgent/UartTxAssertions.sv Line: 64
-# ** Info: EVEN PARITY IS DETECTED : ASSERTION PASS
-#    Time: 75 ns Started: 65 ns  Scope: UartTxAssertionTb.uartTxAssertions.CHECK_FOR_EVEN_PROPERTY File: /home/swasthikkamath/UART-AVIP/src/hvlTop/uartTxAgent/UartTxAssertions.sv Line: 76
+# ** Error: Odd PARITY NOT DETECTED : ASSERTION FAIL
+#    Time: 75 ns Started: 65 ns  Scope: UartTxAssertionTb.uartTxAssertions.CHECK_FOR_ODD_PROPERTY File: /home/swasthikkamath/UART-AVIP/src/hvlTop/uartTxAgent/UartTxAssertions.sv Line: 96 Expr: ~uartTx==^uartLocalData
+# 01101
+# ** Info: STOP BIT IS BEING DETECTED : ASSERTION PASS
+#    Time: 85 ns Started: 75 ns  Scope: UartTxAssertionTb.uartTxAssertions.CHECK_FOR_STOP_BIT File: /home/swasthikkamath/UART-AVIP/src/hvlTop/uartTxAgent/UartTxAssertions.sv Line: 105
 # ** Note: $finish    : /home/swasthikkamath/UART-AVIP/src/hvlTop/tb/uartLocalAssertionTest/UartTxAssertionTB.sv(14)
-#    Time: 80 ns  Iteration: 0  Instance: /UartTxAssertionTb
+#    Time: 100 ns  Iteration: 0  Instance: /UartTxAssertionTb
 # Saving coverage database on exit...
-# End time: 12:56:39 on Jan 28,2025, Elapsed time: 0:00:07
-# Errors: 0, Warnings: 0
+# End time: 12:26:21 on Jan 29,2025, Elapsed time: 0:00:07
+# Errors: 1, Warnings: 0

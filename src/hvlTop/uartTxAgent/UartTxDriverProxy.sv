@@ -54,15 +54,16 @@ endfunction : build_phase
 //--------------------------------------------------------------------------------------------
 
 task UartTxDriverProxy :: run_phase(uvm_phase phase);
-  super.run_phase(phase);
   UartConfigStruct uartConfigStruct;
-  UartTxConfigConverter :: from_Class(uartTxAgentConfig , uartConfigStruct);
+ // UartTxConfigConverter::from_Class(uartTxAgentConfig , uartConfigStruct);
   uartTxDriverBfm.waitforreset();
   fork
     uartTxDriverBfm.GenerateBaudClock(uartConfigStruct);
   join_none
   forever begin
   seq_item_port.get_next_item(req);
+  UartTxConfigConverter::from_Class(uartTxAgentConfig , uartConfigStruct);
+
   UartTxSeqItemConverter :: fromTxClass(req,uartTxAgentConfig,uartTxPacketStruct);
   `uvm_info("BFM",$sformatf("data in driver is %p",uartTxPacketStruct.transmissionData),UVM_LOW)
   seq_item_port.item_done();
