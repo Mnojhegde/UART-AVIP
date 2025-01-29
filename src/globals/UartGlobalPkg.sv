@@ -38,7 +38,7 @@ package UartGlobalPkg;
                         EIGHT_BIT=8} DATA_TYPE_E;
 
    // required Tx and Rx struct packet
-  typedef struct packed { bit[NO_OF_PACKETS -1 :0][DATA_WIDTH-1:0] transmissionData; bit parity;} UartTxPacketStruct;
+  typedef struct packed { bit[NO_OF_PACKETS -1 :0][DATA_WIDTH-1:0] transmissionData; bit parity;bit breaking_error;bit overrun_error;} UartTxPacketStruct;
   typedef struct packed { bit[NO_OF_PACKETS -1 :0][DATA_WIDTH-1:0] receivingData; bit parity;} UartRxPacketStruct;
   typedef struct packed {OVER_SAMPLING_E uartOverSamplingMethod ; BAUD_RATE_E uartBaudRate; DATA_TYPE_E uartDataType;PARITY_TYPE_E uartParityType; bit uartParityEnable;}UartConfigStruct;
 
