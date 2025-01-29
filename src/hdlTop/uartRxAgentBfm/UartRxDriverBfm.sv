@@ -34,14 +34,9 @@ interface UartRxDriverBfm (input  bit   clk,
   //baud clock for uart transmisson/reception
   bit baudClk;
    
-  //Variable: baudRate
-  //Used to sample the uart data
-	
-  //reg[31:0] baudRate = 9600;
 
   //Variable: oversampling_clk
   // clk used to sample the data
-	
   bit oversampling_clk;
   
   //Variable: baudRate
@@ -115,7 +110,11 @@ interface UartRxDriverBfm (input  bit   clk,
   //-------------------------------------------------------
 
   task WaitForReset();
-    
+  	  @(negedge uartReset);
+	  `uvm_info(get_type_name(),$sformatf("RESET DETECTED"),UVM_LOW);
+	   rx = 1; //DRIVE THE UART TO IDEAL STATE
+	  @(posedge uartReset);
+	  `uvm_info(get_type_name(),$sformatf("RESET DEASSERTED"),UVM_LOW);
   endtask: WaitForReset
   
   //--------------------------------------------------------------------------------------------
@@ -128,9 +127,9 @@ interface UartRxDriverBfm (input  bit   clk,
 	`uvm_info(name,$sformatf("data_packet=\n%p",uartRxPacketStruct),UVM_HIGH);
     	`uvm_info(name,$sformatf("DRIVE TO BFM TASK"),UVM_HIGH);
     
-	 bclk_counter(agtcfg.oversamplingmethod);   // configure in agt config
+	 bclk_counter(uartConfigStruct.uartOverSamplingMethod);   /* NEED TO UPDATE CONFIG CONVERTER IN DRIVER PROXY SIDE */
     
-	sample_data(uartRxPacketStruct);
+	 sample_data(uartRxPacketStruct);
 
   endtask: DriveToBfm
 
@@ -162,18 +161,27 @@ interface UartRxDriverBfm (input  bit   clk,
   
   task sample_data(inout UartRxPacketStruct uartRxPacketStruct);
      static int total_receiving = $size(uartRxPacketStruct.receivingData);
-     //@(posedge oversampling_clk) 
-     // tx = START_BIT;  //create enum
-	  
-     for(int receiving_number=0 ; receiving_number < total_receiving; receiving_number++) begin  
-	for( int i=0 ; i< DATA_WIDTH ; i++) begin
-      		@(posedge oversampling_clk or negedge oversampling_clk) begin
-			rx = uartRxPacketStruct.receivingData[receiving_number][i];
-      	end
-    end
-  end 
-    //@(posedge oversampling_clk)
-    //tx = STOP_BIT;  // create enum 
+     for(int receiving_number=0 ; receiving_number < total_receiving; receiving_number++) begin 
+	@(posedge oversampling_clk) 
+        rx = START_BIT; 
+	for( int i=0 ; i< uartConfigStruct.uartDataType ; i++) begin
+      	   @(posedge oversampling_clk)
+	   rx = uartRxPacketStruct.receivingData[receiving_number][i];
+	end
+      	if(uartConfigStruct.uartParityEnable ==1) begin 
+	   if(uartConfigStruct.uartParityType == EVEN_PARITY) begin
+	      @(posedge oversamplingClk)
+	         rx = ^(uartRxPacketStruct.receivingData[receiving_number]);
+           end
+	else if (uartConfigStruct.uartParityType == ODD_PARITY) begin 
+	   @(posedge oversamplingClk)
+	      rx =~^(uartRxPacketStruct.receivingData[receiving_number]);
+        end 
+      end 		 
+      @(posedge oversamplingClk)
+      rx = STOP_BIT;  
+	
+    end 
   endtask
 
   //--------------------------------------------------------------------------------------------
