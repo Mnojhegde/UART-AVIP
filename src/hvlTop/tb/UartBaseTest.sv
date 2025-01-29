@@ -120,6 +120,7 @@ endfunction : end_of_elaboration_phase
   uartVirtualBaseSequence = UartVirtualBaseSequence :: type_id :: create("uartVirtualBaseSequence");
   phase.raise_objection(this);
    uartVirtualBaseSequence.start(uartEnv.uartVirtualSequencer);
+    #30;
   phase.drop_objection(this);
 endtask : run_phase
 
