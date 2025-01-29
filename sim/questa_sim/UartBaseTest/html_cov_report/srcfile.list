@@ -30,6 +30,7 @@
 ../../src/hvlTop/uartRxAgent/uartRxSequences/UartRxSequencePkg.sv
 ../../src/hvlTop/uartTxAgent//UartTxAgent.sv
 ../../src/hvlTop/uartTxAgent//UartTxAgentConfig.sv
+../../src/hvlTop/uartTxAgent//UartTxConfigConverter.sv
 ../../src/hvlTop/uartTxAgent//UartTxCoverage.sv
 ../../src/hvlTop/uartTxAgent//UartTxDriverProxy.sv
 ../../src/hvlTop/uartTxAgent//UartTxMonitorProxy.sv

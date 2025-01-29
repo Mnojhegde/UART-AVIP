@@ -71,6 +71,8 @@ interface UartTxDriverBfm (input  bit   clk,
       real clkPeriod;
       real clkFrequency;
       int baudDivisor;
+
+      $display("*****************Started generating baud clk ********************");
       @(posedge clk);
       clkPeriodStartTime = $realtime;
       @(posedge clk);
@@ -79,7 +81,7 @@ interface UartTxDriverBfm (input  bit   clk,
       clkFrequency = ( 10 **9 )/ clkPeriod;
 
       baudDivisor = (clkFrequency)/(uartConfigStruct.uartOverSamplingMethod * uartConfigStruct.uartBaudRate); 
-
+      $display("************BAUD DIVISOR VALUE IS %0d***********",baudDivisor);
       BaudClkGenerator(baudDivisor);
     endtask
 
@@ -127,7 +129,7 @@ interface UartTxDriverBfm (input  bit   clk,
 	fork 
 	  BclkCounter(uartConfigStruct.uartOverSamplingMethod);   /* NEED TO UPDATE CONFIG CONVERTER IN DRIVER PROXY SIDE */
 	  SampleData(uartTxPacketStruct , uartConfigStruct);
-	join 
+	join
   endtask: DriveToBfm
  
   //--------------------------------------------------------------------------------------------

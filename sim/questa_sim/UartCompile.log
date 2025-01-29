@@ -1,176 +1,58 @@
 QuestaSim vlog 10.6c Compiler 2017.07 Jul 25 2017
-Start time: 21:28:44 on Jan 29,2025
+Start time: 00:56:05 on Jan 30,2025
 vlog -sv "+acc" "+cover" "+fcover" -l UartCompile.log -f ../UartCompile.f 
 -- Compiling package UartGlobalPkg
 -- Compiling package UartTxPkg
 ** Note: (vlog-2286) ../../src/hvlTop/uartTxAgent/UartTxPkg.sv(6): Using implicit +incdir+/tools/mentor/questasim_10.6c/questasim/uvm-1.1d/../verilog_src/uvm-1.1d/src from import uvm_pkg
 -- Importing package mtiUvm.uvm_pkg (uvm-1.1d Built-in)
 -- Importing package UartGlobalPkg
-** Error (suppressible): (vlog-13276) ../../src/hvlTop/uartTxAgent//UartTxConfigConverter.sv(16): Field/method name (uartOversamplingMethod) not in 'uartConfigStruct'.
-** Error (suppressible): (vlog-13276) ../../src/hvlTop/uartTxAgent//UartTxConfigConverter.sv(16): Field/method name (uartOversamplingMethod) not in 'uartTxAgentConfig'.
-** Error: ../../src/hvlTop/uartTxAgent//UartTxDriverProxy.sv(65): (vlog-2730) Undefined variable: 'uartTxAgentConfig'.
-** Error: ../../src/hvlTop/uartTxAgent//UartTxDriverProxy.sv(65): (vlog-2730) Undefined variable: 'uartTxAgentConfig'.
-** Error: ../../src/hvlTop/uartTxAgent//UartTxDriverProxy.sv(45): (vlog-2730) Undefined variable: 'uartTxAgentConfig'.
-** Error: ../../src/hvlTop/uartTxAgent//UartTxDriverProxy.sv(45): (vlog-2730) Undefined variable: 'uartTxAgentConfig'.
 -- Compiling package UartRxPkg
-** Error: ** while parsing file included at ../../src/hvlTop/uartRxAgent/UartRxPkg.sv(8)
-** at ../../src/hvlTop/uartRxAgent/UartRxAgentConfig.sv(23): (vlog-2294) The 'var' keyword is missing.
-** Error: (vlog-13069) ** while parsing file included at ../../src/hvlTop/uartRxAgent/UartRxPkg.sv(8)
-** at ../../src/hvlTop/uartRxAgent/UartRxAgentConfig.sv(23): near "stop_bit": syntax error, unexpected IDENTIFIER, expecting ';' or ','.
 -- Compiling package UartTxSequencePkg
-** Error: ** while parsing file included at ../../src/hvlTop/uartRxAgent/UartRxPkg.sv(8)
-** at ../../src/hvlTop/uartTxAgent/uartTxSequences/UartTxSequencePkg.sv(30): (vlog-13006) Could not find the package (UartTxPkg).  Design read will continue, but expect a cascade of errors after this failure.  Furthermore if you experience a vopt-7 error immediately before this error then please check the package names or the library search paths on the command line.
-** Error: ** while parsing file included at ../../src/hvlTop/uartRxAgent/UartRxPkg.sv(8)
-** while parsing file included at ../../src/hvlTop/uartTxAgent/uartTxSequences/UartTxSequencePkg.sv(32)
-** at ../../src/hvlTop/uartTxAgent/uartTxSequences//UartTxBaseSequence.sv(4): (vlog-2730) Undefined variable: 'UartTxTransaction'.
-** Error: ** while parsing file included at ../../src/hvlTop/uartRxAgent/UartRxPkg.sv(8)
-** while parsing file included at ../../src/hvlTop/uartTxAgent/uartTxSequences/UartTxSequencePkg.sv(32)
-** at ../../src/hvlTop/uartTxAgent/uartTxSequences//UartTxBaseSequence.sv(18): (vlog-2164) Class or package 'UartTxTransaction' not found.
-** Error: (vlog-13069) ** while parsing file included at ../../src/hvlTop/uartRxAgent/UartRxPkg.sv(8)
-** while parsing file included at ../../src/hvlTop/uartTxAgent/uartTxSequences/UartTxSequencePkg.sv(32)
-** at ../../src/hvlTop/uartTxAgent/uartTxSequences//UartTxBaseSequence.sv(18): near "::": syntax error, unexpected ::, expecting ';'.
-** Warning: (vlog-13184) ../../src/hvlTop/uartTxAgent/uartTxSequences/UartTxSequencePkg.sv(35): The Verilog preprocessor found an `endif directive matched to an `if directive in a different file: ../../src/hvlTop/uartRxAgent/UartRxAgentConfig.sv(23)
-** Error: (vlog-13069) ../../src/hvlTop/uartRxAgent/UartRxPkg.sv(16): near "endpackage": syntax error, unexpected "SystemVerilog keyword 'endpackage'", expecting class.
+-- Importing package UartTxPkg
 -- Compiling package UartRxSequencePkg
-** Error: ** while parsing file included at ../../src/hvlTop/uartRxAgent/uartRxSequences/UartRxSequencePkg.sv(11)
-** at ../../src/hvlTop/uartRxAgent/uartRxSequences//UartRxBaseSequence.sv(4): Identifier 'UartRxTransaction' is not directly visible.
-   Found multiple Declaration of 'UartRxTransaction' through wildcard imports from these packages : UartRxPkg, UartRxPkg
-** Error: ** while parsing file included at ../../src/hvlTop/uartRxAgent/uartRxSequences/UartRxSequencePkg.sv(11)
-** at ../../src/hvlTop/uartRxAgent/uartRxSequences//UartRxBaseSequence.sv(4): Illegal to use typedef "UartRxTransaction" as a variable.
-** Error: ** while parsing file included at ../../src/hvlTop/uartRxAgent/uartRxSequences/UartRxSequencePkg.sv(11)
-** at ../../src/hvlTop/uartRxAgent/uartRxSequences//UartRxBaseSequence.sv(18): (vlog-2164) Class or package 'UartRxTransaction' not found.
-** Error: ** while parsing file included at ../../src/hvlTop/uartRxAgent/uartRxSequences/UartRxSequencePkg.sv(11)
-** at ../../src/hvlTop/uartRxAgent/uartRxSequences//UartRxBaseSequence.sv(18): Identifier 'UartRxTransaction' is not directly visible.
-   Found multiple Declaration of 'UartRxTransaction' through wildcard imports from these packages : UartRxPkg, UartRxPkg
-** Error: ** while parsing file included at ../../src/hvlTop/uartRxAgent/uartRxSequences/UartRxSequencePkg.sv(11)
-** at ../../src/hvlTop/uartRxAgent/uartRxSequences//UartRxBaseSequence.sv(18): Illegal to use typedef "UartRxTransaction" as a variable.
-** Error: (vlog-13069) ** while parsing file included at ../../src/hvlTop/uartRxAgent/uartRxSequences/UartRxSequencePkg.sv(11)
-** at ../../src/hvlTop/uartRxAgent/uartRxSequences//UartRxBaseSequence.sv(18): near "::": syntax error, unexpected ::, expecting ';'.
+-- Importing package UartRxPkg
 -- Compiling package UartEnvPkg
-** Error: ../../src/hvlTop/uartEnv/UartEnvPkg.sv(20): (vlog-13006) Could not find the package (UartTxPkg).  Design read will continue, but expect a cascade of errors after this failure.  Furthermore if you experience a vopt-7 error immediately before this error then please check the package names or the library search paths on the command line.
-** Error: ../../src/hvlTop/uartEnv/UartEnvPkg.sv(21): (vlog-13006) Could not find the package (UartRxPkg).  Design read will continue, but expect a cascade of errors after this failure.  Furthermore if you experience a vopt-7 error immediately before this error then please check the package names or the library search paths on the command line.
-** Error: ** while parsing file included at ../../src/hvlTop/uartEnv/UartEnvPkg.sv(27)
-** at ../../src/hvlTop/uartEnv/UartEnvConfig.sv(21): Invalid type 'UartTxAgentConfig'. Please check the type of the variable 'uartTxAgentConfig'.
-** Error: ** while parsing file included at ../../src/hvlTop/uartEnv/UartEnvPkg.sv(27)
-** at ../../src/hvlTop/uartEnv/UartEnvConfig.sv(25): Invalid type 'UartRxAgentConfig'. Please check the type of the variable 'uartRxAgentConfig'.
-** Error: ** while parsing file included at ../../src/hvlTop/uartEnv/UartEnvPkg.sv(28)
-** at ../../src/hvlTop/uartEnv/virtualSequencer//UartVirtualSequencer.sv(9): Invalid type 'UartTxSequencer'. Please check the type of the variable 'uartTxSequencer'.
-** Error: ** while parsing file included at ../../src/hvlTop/uartEnv/UartEnvPkg.sv(28)
-** at ../../src/hvlTop/uartEnv/virtualSequencer//UartVirtualSequencer.sv(10): Invalid type 'UartRxSequencer'. Please check the type of the variable 'uartRxSequencer'.
-** Error: ** while parsing file included at ../../src/hvlTop/uartEnv/UartEnvPkg.sv(29)
-** at ../../src/hvlTop/uartEnv/UartScoreboard.sv(13): (vlog-2730) Undefined variable: 'UartTxTransaction'.
-** Error: ** while parsing file included at ../../src/hvlTop/uartEnv/UartEnvPkg.sv(29)
-** at ../../src/hvlTop/uartEnv/UartScoreboard.sv(18): (vlog-2730) Undefined variable: 'UartRxTransaction'.
-** Error: ** while parsing file included at ../../src/hvlTop/uartEnv/UartEnvPkg.sv(30)
-** at ../../src/hvlTop/uartEnv/UartEnv.sv(17): Invalid type 'UartTxAgent'. Please check the type of the variable 'uartTxAgent'.
-** Error: ** while parsing file included at ../../src/hvlTop/uartEnv/UartEnvPkg.sv(30)
-** at ../../src/hvlTop/uartEnv/UartEnv.sv(21): Invalid type 'UartRxAgent'. Please check the type of the variable 'uartRxAgent'.
-** Error: ** while parsing file included at ../../src/hvlTop/uartEnv/UartEnvPkg.sv(30)
-** at ../../src/hvlTop/uartEnv/UartEnv.sv(73): (vlog-2730) Undefined variable: 'uartTxAgent'.
-** Error: ** while parsing file included at ../../src/hvlTop/uartEnv/UartEnvPkg.sv(30)
-** at ../../src/hvlTop/uartEnv/UartEnv.sv(73): (vlog-2164) Class or package 'UartTxAgent' not found.
-** Error: ** while parsing file included at ../../src/hvlTop/uartEnv/UartEnvPkg.sv(30)
-** at ../../src/hvlTop/uartEnv/UartEnv.sv(73): (vlog-2730) Undefined variable: 'UartTxAgent'.
-** Error: (vlog-13069) ** while parsing file included at ../../src/hvlTop/uartEnv/UartEnvPkg.sv(30)
-** at ../../src/hvlTop/uartEnv/UartEnv.sv(73): near "::": syntax error, unexpected ::, expecting ';'.
-** Error: ** while parsing file included at ../../src/hvlTop/uartEnv/UartEnvPkg.sv(30)
-** at ../../src/hvlTop/uartEnv/UartEnv.sv(74): (vlog-2730) Undefined variable: 'uartRxAgent'.
-** Error: ** while parsing file included at ../../src/hvlTop/uartEnv/UartEnvPkg.sv(30)
-** at ../../src/hvlTop/uartEnv/UartEnv.sv(74): (vlog-2164) Class or package 'UartRxAgent' not found.
-** Error: ** while parsing file included at ../../src/hvlTop/uartEnv/UartEnvPkg.sv(30)
-** at ../../src/hvlTop/uartEnv/UartEnv.sv(74): (vlog-2730) Undefined variable: 'UartRxAgent'.
-** Error: (vlog-13069) ** while parsing file included at ../../src/hvlTop/uartEnv/UartEnvPkg.sv(30)
-** at ../../src/hvlTop/uartEnv/UartEnv.sv(74): near "::": syntax error, unexpected ::, expecting ';'.
 -- Compiling package UartVirtualSequencePkg
-** Error: ../../src/hvlTop/tb/uartVirtualSequences/UartVirtualSequencePkg.sv(14): (vlog-13006) Could not find the package (UartEnvPkg).  Design read will continue, but expect a cascade of errors after this failure.  Furthermore if you experience a vopt-7 error immediately before this error then please check the package names or the library search paths on the command line.
-** Error: ../../src/hvlTop/tb/uartVirtualSequences/UartVirtualSequencePkg.sv(15): (vlog-13006) Could not find the package (UartTxPkg).  Design read will continue, but expect a cascade of errors after this failure.  Furthermore if you experience a vopt-7 error immediately before this error then please check the package names or the library search paths on the command line.
-** Error: ../../src/hvlTop/tb/uartVirtualSequences/UartVirtualSequencePkg.sv(16): (vlog-13006) Could not find the package (UartRxPkg).  Design read will continue, but expect a cascade of errors after this failure.  Furthermore if you experience a vopt-7 error immediately before this error then please check the package names or the library search paths on the command line.
-** Error: ../../src/hvlTop/tb/uartVirtualSequences/UartVirtualSequencePkg.sv(17): (vlog-13006) Could not find the package (UartTxSequencePkg).  Design read will continue, but expect a cascade of errors after this failure.  Furthermore if you experience a vopt-7 error immediately before this error then please check the package names or the library search paths on the command line.
-** Error: ../../src/hvlTop/tb/uartVirtualSequences/UartVirtualSequencePkg.sv(18): (vlog-13006) Could not find the package (UartRxSequencePkg).  Design read will continue, but expect a cascade of errors after this failure.  Furthermore if you experience a vopt-7 error immediately before this error then please check the package names or the library search paths on the command line.
-** Error: ** while parsing file included at ../../src/hvlTop/tb/uartVirtualSequences/UartVirtualSequencePkg.sv(24)
-** while parsing macro expansion: 'uvm_declare_p_sequencer' starting at ../../src/hvlTop/tb/uartVirtualSequences//UartVirtualBaseSequence.sv(9)
-** at ../../src/hvlTop/tb/uartVirtualSequences//UartVirtualBaseSequence.sv(9): Invalid type 'UartVirtualSequencer'. Please check the type of the variable 'p_sequencer'.
-** Error: ** while parsing file included at ../../src/hvlTop/tb/uartVirtualSequences/UartVirtualSequencePkg.sv(25)
-** while parsing macro expansion: 'uvm_declare_p_sequencer' starting at ../../src/hvlTop/tb/uartVirtualSequences//UartVirtualTransmissionSequence.sv(9)
-** at ../../src/hvlTop/tb/uartVirtualSequences//UartVirtualTransmissionSequence.sv(9): Invalid type 'UartVirtualSequencer'. Please check the type of the variable 'p_sequencer'.
-** Error: ** while parsing file included at ../../src/hvlTop/tb/uartVirtualSequences/UartVirtualSequencePkg.sv(25)
-** at ../../src/hvlTop/tb/uartVirtualSequences//UartVirtualTransmissionSequence.sv(11): Invalid type 'UartTxBaseSequence'. Please check the type of the variable 'uartTxBaseSequence'.
-** Error: ** while parsing file included at ../../src/hvlTop/tb/uartVirtualSequences/UartVirtualSequencePkg.sv(25)
-** at ../../src/hvlTop/tb/uartVirtualSequences//UartVirtualTransmissionSequence.sv(12): Invalid type 'UartRxBaseSequence'. Please check the type of the variable 'uartRxBaseSequence'.
-** Error: ** while parsing file included at ../../src/hvlTop/tb/uartVirtualSequences/UartVirtualSequencePkg.sv(25)
-** at ../../src/hvlTop/tb/uartVirtualSequences//UartVirtualTransmissionSequence.sv(43): (vlog-2730) Undefined variable: 'uartTxBaseSequence'.
-** Error: ** while parsing file included at ../../src/hvlTop/tb/uartVirtualSequences/UartVirtualSequencePkg.sv(25)
-** at ../../src/hvlTop/tb/uartVirtualSequences//UartVirtualTransmissionSequence.sv(43): (vlog-2164) Class or package 'UartTxBaseSequence' not found.
-** Error: ** while parsing file included at ../../src/hvlTop/tb/uartVirtualSequences/UartVirtualSequencePkg.sv(25)
-** at ../../src/hvlTop/tb/uartVirtualSequences//UartVirtualTransmissionSequence.sv(43): (vlog-2730) Undefined variable: 'UartTxBaseSequence'.
-** Error: (vlog-13069) ** while parsing file included at ../../src/hvlTop/tb/uartVirtualSequences/UartVirtualSequencePkg.sv(25)
-** at ../../src/hvlTop/tb/uartVirtualSequences//UartVirtualTransmissionSequence.sv(43): near "::": syntax error, unexpected ::, expecting ';'.
-** Error: ** while parsing file included at ../../src/hvlTop/tb/uartVirtualSequences/UartVirtualSequencePkg.sv(25)
-** at ../../src/hvlTop/tb/uartVirtualSequences//UartVirtualTransmissionSequence.sv(44): (vlog-2730) Undefined variable: 'uartRxBaseSequence'.
-** Error: ** while parsing file included at ../../src/hvlTop/tb/uartVirtualSequences/UartVirtualSequencePkg.sv(25)
-** at ../../src/hvlTop/tb/uartVirtualSequences//UartVirtualTransmissionSequence.sv(44): (vlog-2164) Class or package 'UartRxBaseSequence' not found.
-** Error: ** while parsing file included at ../../src/hvlTop/tb/uartVirtualSequences/UartVirtualSequencePkg.sv(25)
-** at ../../src/hvlTop/tb/uartVirtualSequences//UartVirtualTransmissionSequence.sv(44): (vlog-2730) Undefined variable: 'UartRxBaseSequence'.
-** Error: (vlog-13069) ** while parsing file included at ../../src/hvlTop/tb/uartVirtualSequences/UartVirtualSequencePkg.sv(25)
-** at ../../src/hvlTop/tb/uartVirtualSequences//UartVirtualTransmissionSequence.sv(44): near "::": syntax error, unexpected ::, expecting ';'.
+-- Importing package UartEnvPkg
+-- Importing package UartTxSequencePkg
+-- Importing package UartRxSequencePkg
 -- Compiling package UartBaseTestPkg
-** Error: ../../src/hvlTop/tb/UartBaseTestPkg.sv(18): (vlog-13006) Could not find the package (UartTxPkg).  Design read will continue, but expect a cascade of errors after this failure.  Furthermore if you experience a vopt-7 error immediately before this error then please check the package names or the library search paths on the command line.
-** Error: ../../src/hvlTop/tb/UartBaseTestPkg.sv(19): (vlog-13006) Could not find the package (UartRxPkg).  Design read will continue, but expect a cascade of errors after this failure.  Furthermore if you experience a vopt-7 error immediately before this error then please check the package names or the library search paths on the command line.
-** Error: ../../src/hvlTop/tb/UartBaseTestPkg.sv(20): (vlog-13006) Could not find the package (UartEnvPkg).  Design read will continue, but expect a cascade of errors after this failure.  Furthermore if you experience a vopt-7 error immediately before this error then please check the package names or the library search paths on the command line.
-** Error: ../../src/hvlTop/tb/UartBaseTestPkg.sv(21): (vlog-13006) Could not find the package (UartTxSequencePkg).  Design read will continue, but expect a cascade of errors after this failure.  Furthermore if you experience a vopt-7 error immediately before this error then please check the package names or the library search paths on the command line.
-** Error: ../../src/hvlTop/tb/UartBaseTestPkg.sv(22): (vlog-13006) Could not find the package (UartRxSequencePkg).  Design read will continue, but expect a cascade of errors after this failure.  Furthermore if you experience a vopt-7 error immediately before this error then please check the package names or the library search paths on the command line.
-** Error: ../../src/hvlTop/tb/UartBaseTestPkg.sv(23): (vlog-13006) Could not find the package (UartVirtualSequencePkg).  Design read will continue, but expect a cascade of errors after this failure.  Furthermore if you experience a vopt-7 error immediately before this error then please check the package names or the library search paths on the command line.
-** Error: ** while parsing file included at ../../src/hvlTop/tb/UartBaseTestPkg.sv(26)
-** at ../../src/hvlTop/tb/UartBaseTest.sv(13): Invalid type 'UartVirtualBaseSequence'. Please check the type of the variable 'uartVirtualBaseSequence'.
-** Error: ** while parsing file included at ../../src/hvlTop/tb/UartBaseTestPkg.sv(26)
-** at ../../src/hvlTop/tb/UartBaseTest.sv(14): Invalid type 'UartEnvConfig'. Please check the type of the variable 'uartEnvConfig'.
-** Error: ** while parsing file included at ../../src/hvlTop/tb/UartBaseTestPkg.sv(26)
-** at ../../src/hvlTop/tb/UartBaseTest.sv(15): Invalid type 'UartEnv'. Please check the type of the variable 'uartEnv'.
-** Error: ** while parsing file included at ../../src/hvlTop/tb/UartBaseTestPkg.sv(26)
-** at ../../src/hvlTop/tb/UartBaseTest.sv(51): (vlog-2730) Undefined variable: 'uartEnv'.
-** Error: ** while parsing file included at ../../src/hvlTop/tb/UartBaseTestPkg.sv(26)
-** at ../../src/hvlTop/tb/UartBaseTest.sv(51): (vlog-2164) Class or package 'UartEnv' not found.
-** Error: ** while parsing file included at ../../src/hvlTop/tb/UartBaseTestPkg.sv(26)
-** at ../../src/hvlTop/tb/UartBaseTest.sv(51): (vlog-2730) Undefined variable: 'UartEnv'.
-** Error: (vlog-13069) ** while parsing file included at ../../src/hvlTop/tb/UartBaseTestPkg.sv(26)
-** at ../../src/hvlTop/tb/UartBaseTest.sv(51): near "::": syntax error, unexpected ::, expecting ';'.
-** Error: ** while parsing file included at ../../src/hvlTop/tb/UartBaseTestPkg.sv(26)
-** at ../../src/hvlTop/tb/UartBaseTest.sv(60): (vlog-2730) Undefined variable: 'uartEnvConfig'.
-** Error: ** while parsing file included at ../../src/hvlTop/tb/UartBaseTestPkg.sv(26)
-** at ../../src/hvlTop/tb/UartBaseTest.sv(60): (vlog-2164) Class or package 'UartEnvConfig' not found.
-** Error: ** while parsing file included at ../../src/hvlTop/tb/UartBaseTestPkg.sv(26)
-** at ../../src/hvlTop/tb/UartBaseTest.sv(60): (vlog-2730) Undefined variable: 'UartEnvConfig'.
-** Error: (vlog-13069) ** while parsing file included at ../../src/hvlTop/tb/UartBaseTestPkg.sv(26)
-** at ../../src/hvlTop/tb/UartBaseTest.sv(60): near "::": syntax error, unexpected ::, expecting ';'.
-** Error: ** while parsing file included at ../../src/hvlTop/tb/UartBaseTestPkg.sv(26)
-** at ../../src/hvlTop/tb/UartBaseTest.sv(74): (vlog-2164) Class or package 'UartTxAgentConfig' not found.
-** Error: ** while parsing file included at ../../src/hvlTop/tb/UartBaseTestPkg.sv(26)
-** at ../../src/hvlTop/tb/UartBaseTest.sv(74): (vlog-2730) Undefined variable: 'UartTxAgentConfig'.
-** Error: (vlog-13069) ** while parsing file included at ../../src/hvlTop/tb/UartBaseTestPkg.sv(26)
-** at ../../src/hvlTop/tb/UartBaseTest.sv(74): near "::": syntax error, unexpected ::, expecting ';'.
-** Error: ** while parsing file included at ../../src/hvlTop/tb/UartBaseTestPkg.sv(26)
-** at ../../src/hvlTop/tb/UartBaseTest.sv(92): (vlog-2164) Class or package 'UartRxAgentConfig' not found.
-** Error: ** while parsing file included at ../../src/hvlTop/tb/UartBaseTestPkg.sv(26)
-** at ../../src/hvlTop/tb/UartBaseTest.sv(92): (vlog-2730) Undefined variable: 'UartRxAgentConfig'.
-** Error: (vlog-13069) ** while parsing file included at ../../src/hvlTop/tb/UartBaseTestPkg.sv(26)
-** at ../../src/hvlTop/tb/UartBaseTest.sv(92): near "::": syntax error, unexpected ::, expecting ';'.
-** Error: ** while parsing file included at ../../src/hvlTop/tb/UartBaseTestPkg.sv(26)
-** at ../../src/hvlTop/tb/UartBaseTest.sv(120): (vlog-2730) Undefined variable: 'uartVirtualBaseSequence'.
-** Error: ** while parsing file included at ../../src/hvlTop/tb/UartBaseTestPkg.sv(26)
-** at ../../src/hvlTop/tb/UartBaseTest.sv(120): (vlog-2164) Class or package 'UartVirtualBaseSequence' not found.
-** Error: ** while parsing file included at ../../src/hvlTop/tb/UartBaseTestPkg.sv(26)
-** at ../../src/hvlTop/tb/UartBaseTest.sv(120): (vlog-2730) Undefined variable: 'UartVirtualBaseSequence'.
-** Error: (vlog-13069) ** while parsing file included at ../../src/hvlTop/tb/UartBaseTestPkg.sv(26)
-** at ../../src/hvlTop/tb/UartBaseTest.sv(120): near "::": syntax error, unexpected ::, expecting ';'.
+-- Importing package UartVirtualSequencePkg
+-- Compiling package UartInterface_sv_unit
+-- Importing package UartGlobalPkg
 -- Compiling interface UartIf
-** Error: ../../src/hdlTop/uartInterface/UartInterface.sv(12): Illegal use of 'automatic' for variable declaration (clk).
-** Error: ../../src/hdlTop/uartInterface/UartInterface.sv(12): Illegal use of 'automatic' for variable declaration (reset).
-** Error: ../../src/hdlTop/uartInterface/UartInterface.sv(14): Illegal use of 'automatic' for variable declaration (tx).
-** Error: ../../src/hdlTop/uartInterface/UartInterface.sv(14): Illegal use of 'automatic' for variable declaration (#notrandmode#tx#).
+-- Compiling package UartTxDriverBfm_sv_unit
+-- Importing package UartGlobalPkg
 -- Compiling interface UartTxDriverBfm
-** Error: ../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv(12): Illegal use of 'automatic' for variable declaration (clk).
-** Error: ../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv(12): Illegal use of 'automatic' for variable declaration (#notrandmode#clk#).
-** Error (suppressible): ../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv(12): (vlog-2388) '#notrandmode#clk#' already declared in this scope (UartTxDriverBfm).
-** Error: ../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv(12): Verilog Compiler exiting
-End time: 21:28:44 on Jan 29,2025, Elapsed time: 0:00:00
-Errors: 89, Warnings: 1
+-- Importing package mtiUvm.uvm_pkg (uvm-1.1d Built-in)
+-- Importing package UartTxPkg
+-- Compiling package UartTxMonitorBfm_sv_unit
+-- Importing package UartGlobalPkg
+-- Compiling interface UartTxMonitorBfm
+-- Importing package mtiUvm.uvm_pkg (uvm-1.1d Built-in)
+-- Compiling module UartTxAgentBfm
+-- Compiling package UartRxDriverBfm_sv_unit
+-- Importing package UartGlobalPkg
+-- Compiling interface UartRxDriverBfm
+-- Importing package mtiUvm.uvm_pkg (uvm-1.1d Built-in)
+-- Importing package UartRxPkg
+-- Compiling package UartRxMonitorBfm_sv_unit
+-- Importing package UartGlobalPkg
+-- Compiling interface UartRxMonitorBfm
+-- Importing package mtiUvm.uvm_pkg (uvm-1.1d Built-in)
+-- Importing package UartRxPkg
+-- Compiling module UartRxAgentBfm
+-- Compiling module HdlTop
+-- Compiling module HvlTop
+-- Importing package UartBaseTestPkg
+-- Importing package UartTxPkg
+-- Importing package UartEnvPkg
+-- Importing package UartTxSequencePkg
+-- Importing package UartRxSequencePkg
+-- Importing package UartVirtualSequencePkg
+
+Top level modules:
+	HdlTop
+	HvlTop
+End time: 00:56:07 on Jan 30,2025, Elapsed time: 0:00:02
+Errors: 0, Warnings: 0
