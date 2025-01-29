@@ -142,7 +142,7 @@ interface UartRxDriverBfm (input  bit   clk,
     forever begin
 	@(posedge baudClk)
 	    if(countbClk == (oversamplingmethod/2)-1) begin
-      		oversamplingcClk = ~oversamplingClk;
+      		oversamplingClk = ~oversamplingClk;
       		countbClk=0;
       	end
       	else begin
