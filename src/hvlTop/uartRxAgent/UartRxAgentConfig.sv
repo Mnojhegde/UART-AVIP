@@ -20,16 +20,16 @@ class UartRxAgentConfig extends uvm_object;
   bit hasParity;
 
   //no. of stop bit required
-  rand stop_bit_e stop_bit;
+  rand STOP_BIT_E stop_bit;
 
   //oversamping method
-  rand over_sampling_e over_sampling;
+  rand OVER_SAMPLING_E uartOverSamplingMethod;
 
   //no. of data bit tranferred
-  rand data_type_e data_type;
+  rand DATA_TYPE_E uartDataType;
 
   //no. of parity bit required
-  rand parity_type_e parity_type;
+  rand PARITY_TYPE_E parity_type;
 
   
   //-------------------------------------------------------
