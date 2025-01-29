@@ -56,7 +56,7 @@ endfunction : build_phase
 task UartTxDriverProxy :: run_phase(uvm_phase phase);
   super.run_phase(phase);
   UartConfigStruct uartConfigStruct;
-  UartTxConfigConverter :: fromTxClass(uartTxAgentConfig , uartConfigStruct);
+  UartTxConfigConverter :: from_Class(uartTxAgentConfig , uartConfigStruct);
   uartTxDriverBfm.waitforreset();
   fork
     uartTxDriverBfm.GenerateBaudClock(uartConfigStruct);
