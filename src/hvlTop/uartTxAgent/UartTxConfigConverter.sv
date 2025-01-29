@@ -11,11 +11,11 @@ class UartTxConfigConverter extends uvm_object;
 endclass :UartTxConfigConverter
     
 
-function UartTxSeqItemConverter :: new(string name = "UartTxSeqItemConverter");
+function UartTxConfigConverter :: new(string name = "uartTxConfigConverter");
   super.new(name);
 endfunction : new
 
-function void UartTxSeqItemConverter :: fromTxClass(input uartTxAgentConfig uartTxAgentConfig, output uartConfigStruct uartConfigStruct);
+function void UartTxConfigConverter :: fromTxClass(input uartTxAgentConfig uartTxAgentConfig, output uartConfigStruct uartConfigStruct);
   uartConfigStruct.uartOversamplingMethod =  uartTxAgentConfig.uartOversamplingMethod;
   uartConfigStruct.uartBaudRate =  uartTxAgentConfig.uartBaudRate;
   uartConfigStruct.uartDataType = uartTxAgentConfig.uartDataType;
