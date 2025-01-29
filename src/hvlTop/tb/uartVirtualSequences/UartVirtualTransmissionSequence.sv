@@ -45,7 +45,7 @@ task UartVirtualTransmissionSequence :: body();
   
   begin 
     uartTxBaseSequence.start(p_sequencer.uartTxSequencer);
-    uartRxBaseSequence.start(p_sequencer.uartRxSequencer);
+  //  uartRxBaseSequence.start(p_sequencer.uartRxSequencer);
   end 
 
 
