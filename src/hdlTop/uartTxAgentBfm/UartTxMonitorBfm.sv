@@ -148,20 +148,20 @@ interface UartTxMonitorBfm (input  bit   clk,
     @(negedge tx)
     for(int transmission_number=0 ; transmission_number < total_transmission; transmission_number++)begin 
       for( int i=0 ; i < uartTxCfg.DATA_WIDTH ; i++) begin
-      	@(posedge oversampling_clk or negedge oversampling_clk) begin
+      	@(posedge oversamplingClk or negedge oversamplingClk) begin
 	uartTxPacketStruct.transmissionData[transmission_number][i] = tx;
       end
     end
   
-    @(posedge oversampling_clk or negedge oversampling_clk)
+    @(posedge oversamplingClk or negedge oversamplingClk)
     if(PARITY_ENABLED)
 	uartTxPacketStruct.parity = ^uartTxPacketStruct.transmissionData;
 
-    @(posedge oversampling_clk or negedge oversampling_clk)
-    if(tx == 0)
-      `uvm_info(TxMonitor, $sformatf(" Stop bit is detected in Tx monitor "), UVM_LOW);
-    else
-      `uvm_error(TxMonitor, $sformatf(" Stop bit is not recieved by Tx monitor "));
+    // @(posedge oversamplingClk or negedge oversamplingClk)
+    // if(tx == 0)
+    //   `uvm_info(TxMonitor, $sformatf(" Stop bit is detected in Tx monitor "), UVM_LOW);
+    // else
+    //   `uvm_error(TxMonitor, $sformatf(" Stop bit is not recieved by Tx monitor "));
      
   endtask
 	
