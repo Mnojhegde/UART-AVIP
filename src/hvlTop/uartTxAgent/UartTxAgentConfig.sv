@@ -17,7 +17,7 @@ class UartTxAgentConfig extends uvm_object;
   OVER_SAMPLING_E uartOverSamplingMethod;
   BAUD_RATE_E uartBaudRate;
   DATA_TYPE_E uartDataType;/* these enum can be randomized and can apply inline constraint in test file*/
-  Parity_TYPE_E uartParityType;
+  PARITY_TYPE_E uartParityType;
 //-------------------------------------------------------
 // Externally defined Tasks and Functions
 //-------------------------------------------------------
