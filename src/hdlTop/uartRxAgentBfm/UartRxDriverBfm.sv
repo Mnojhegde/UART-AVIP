@@ -137,67 +137,67 @@ interface UartRxDriverBfm (input  bit   clk,
   //  This task will count the number of cycles of bclk and generate oversampling_clk to sample data
   //--------------------------------------------------------------------------------------------
 
-  task BclkCounter(input oversamplingmethod);
-    static int countbClk = 0;
-    forever begin
-	@(posedge baudClk)
-	    if(countbClk == (oversamplingmethod/2)-1) begin
-      		oversamplingClk = ~oversamplingClk;
-      		countbClk=0;
-      	end
-      	else begin
-      	countbClk = countbClk+1;
-      end
+ //  task BclkCounter(input oversamplingmethod);
+ //    static int countbClk = 0;
+ //    forever begin
+	// @(posedge baudClk)
+	//     if(countbClk == (oversamplingmethod/2)-1) begin
+ //      		oversamplingClk = ~oversamplingClk;
+ //      		countbClk=0;
+ //      	end
+ //      	else begin
+ //      	countbClk = countbClk+1;
+ //      end
     
-    end
-  endtask
+ //    end
+ //  endtask
   
   //--------------------------------------------------------------------------------------------
   // Task: sample_data
   //  This task will send the data to the uart interface based on oversampling_clk
   //--------------------------------------------------------------------------------------------
   
-  task SampleData(inout UartRxPacketStruct uartRxPacketStruct);
-     static int total_receiving = $size(uartRxPacketStruct.receivingData);
-     for(int receiving_number=0 ; receiving_number < total_receiving; receiving_number++) begin 
-        @(posedge oversamplingClk) 
-        rx = START_BIT; 
-	for( int i=0 ; i< uartConfigStruct.uartDataType ; i++) begin
-	   @(posedge oversamplingClk)
-	   rx = uartRxPacketStruct.receivingData[receiving_number][i];
-	end
-      	if(uartConfigStruct.uartParityEnable ==1) begin 
-	   if(uartConfigStruct.uartParityType == EVEN_PARITY) begin
-	      @(posedge oversamplingClk)
-	         rx = ^(uartRxPacketStruct.receivingData[receiving_number]);
-           end
-	else if (uartConfigStruct.uartParityType == ODD_PARITY) begin 
-	   @(posedge oversamplingClk)
-	      rx =~^(uartRxPacketStruct.receivingData[receiving_number]);
-        end 
-      end 		 
-      @(posedge oversamplingClk)
-      rx = STOP_BIT;  
+ //  task SampleData(inout UartRxPacketStruct uartRxPacketStruct);
+ //     static int total_receiving = $size(uartRxPacketStruct.receivingData);
+ //     for(int receiving_number=0 ; receiving_number < total_receiving; receiving_number++) begin 
+ //        @(posedge oversamplingClk) 
+ //        rx = START_BIT; 
+	// for( int i=0 ; i< uartConfigStruct.uartDataType ; i++) begin
+	//    @(posedge oversamplingClk)
+	//    rx = uartRxPacketStruct.receivingData[receiving_number][i];
+	// end
+ //      	if(uartConfigStruct.uartParityEnable ==1) begin 
+	//    if(uartConfigStruct.uartParityType == EVEN_PARITY) begin
+	//       @(posedge oversamplingClk)
+	//          rx = ^(uartRxPacketStruct.receivingData[receiving_number]);
+ //           end
+	// else if (uartConfigStruct.uartParityType == ODD_PARITY) begin 
+	//    @(posedge oversamplingClk)
+	//       rx =~^(uartRxPacketStruct.receivingData[receiving_number]);
+ //        end 
+ //      end 		 
+ //      @(posedge oversamplingClk)
+ //      rx = STOP_BIT;  
 	
-    end 
-  endtask
+ //    end 
+ //  endtask
 
-  //--------------------------------------------------------------------------------------------
-  // Task: DeSerialization
-  //  This task will convert the serial data obtained to parallel formate
-  //--------------------------------------------------------------------------------------------
+ //  //--------------------------------------------------------------------------------------------
+ //  // Task: DeSerialization
+ //  //  This task will convert the serial data obtained to parallel formate
+ //  //--------------------------------------------------------------------------------------------
 
-  task DeSerialization();
+ //  task DeSerialization();
 
-  endtask
+ //  endtask
 
-  //--------------------------------------------------------------------------------------------
-  // Task: ExtractDataFrame
-  //  This task will discards the start bit, parity bit, and stop bit from the packet to extract the data frame
-  //--------------------------------------------------------------------------------------------
+ //  //--------------------------------------------------------------------------------------------
+ //  // Task: ExtractDataFrame
+ //  //  This task will discards the start bit, parity bit, and stop bit from the packet to extract the data frame
+ //  //--------------------------------------------------------------------------------------------
 
-  task ExtractDataFrame();
+ //  task ExtractDataFrame();
 
-  endtask
+ //  endtask
 
 endinterface : UartRxDriverBfm
