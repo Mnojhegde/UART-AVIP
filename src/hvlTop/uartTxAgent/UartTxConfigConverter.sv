@@ -6,7 +6,7 @@ class UartTxConfigConverter extends uvm_object;
   
 
   extern function new( string name = "uartTxConfigConverter");
-  extern static function void fromTxClass(input UartTxAgentConfig uartTxAgentConfig, output UartConfigStruct uartConfigStruct);
+  extern static function void from_Class(input UartTxAgentConfig uartTxAgentConfig, output UartConfigStruct uartConfigStruct);
 endclass :UartTxConfigConverter
     
 
@@ -14,13 +14,13 @@ function UartTxConfigConverter :: new(string name = "uartTxConfigConverter");
   super.new(name);
 endfunction : new
 
-function void UartTxConfigConverter :: fromTxClass(input UartTxAgentConfig uartTxAgentConfig, output UartConfigStruct uartConfigStruct);
+function void UartTxConfigConverter :: from_Class(input UartTxAgentConfig uartTxAgentConfig, output UartConfigStruct uartConfigStruct);
   uartConfigStruct.uartOversamplingMethod =  uartTxAgentConfig.uartOversamplingMethod;
   uartConfigStruct.uartBaudRate =  uartTxAgentConfig.uartBaudRate;
   uartConfigStruct.uartDataType = uartTxAgentConfig.uartDataType;
   uartConfigStruct.uartParityType = uartTxAgentConfig.uartParityType;
   uartConfigStruct.uartParityEnable = uartTxAgentConfig.hasParity;
-endfunction : fromTxClass
+endfunction : from_Class
 
 
 `endif
