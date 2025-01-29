@@ -59,7 +59,7 @@ task UartTxDriverProxy :: run_phase(uvm_phase phase);
   UartTxConfigConverter::from_Class(uartTxAgentConfig , uartConfigStruct);
   uartTxDriverBfm.waitforreset();
   fork
-    uartTxDriverBfm.GenerateBaudClock(uartConfigStruct);
+    uartTxDriverBfm.GenerateBaudClk(uartConfigStruct);
   join_none
   forever begin
   seq_item_port.get_next_item(req);
