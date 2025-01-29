@@ -143,7 +143,7 @@ interface UartTxMonitorBfm (input  bit   clk,
   //  converts serial data to parallel
   //-------------------------------------------------------
 
-  task Deserializer(output UartTxPacketStruct uartTxPacketStruct, input UartTxPacketCfg uartTxCfg);
+  task Deserializer(output UartTxPacketStruct uartTxPacketStruct, input UartConfigStruct uartTxCfg);
     static int total_transmission = uartTxCfg.TotalFrameWidth;
     @(negedge tx)
     for(int transmission_number=0 ; transmission_number < total_transmission; transmission_number++)begin 
