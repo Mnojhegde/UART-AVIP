@@ -10,7 +10,7 @@ class UartBaseTest extends uvm_test;
  
   `uvm_component_utils(UartBaseTest)
  
-  UartVirtualBaseSequence uartVirtualBaseSequence;
+  UartVirtualTransmissionSequence uartVirtualTransmissionSequence;
   UartEnvConfig           uartEnvConfig;
   UartEnv                 uartEnv;
  
@@ -117,9 +117,9 @@ endfunction : end_of_elaboration_phase
 // phase - stores the current phase
 //--------------------------------------------------------------------------------------------
  task UartBaseTest :: run_phase(uvm_phase phase);
-  uartVirtualBaseSequence = UartVirtualBaseSequence :: type_id :: create("uartVirtualBaseSequence");
+  uartVirtualTransmissionSequence = UartVirtualTransmissionSequence :: type_id :: create("uartVirtualTransmissionSequence");
   phase.raise_objection(this);
-   uartVirtualBaseSequence.start(uartEnv.uartVirtualSequencer);
+   uartVirtualTransmissionSequence.start(uartEnv.uartVirtualSequencer);
     #30;
   phase.drop_objection(this);
 endtask : run_phase
