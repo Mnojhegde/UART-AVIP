@@ -8,7 +8,7 @@ class UartTxConfigConverter extends uvm_object;
   extern function new( string name = "UartTxConfigConverter");
     extern static function void fromTxClass(input UartTxAgentConfig uartTxAgentConfig, output UartConfigStruct uartConfigStruct);
     extern static function void toTxClass(input UartConfigStruct uartConfigStruct, output UartTxAgentConfig uartTxAgentConfig);
-endclass :UartTxSeqItemConverter
+endclass :UartTxConfigConverter
     
 
 function UartTxSeqItemConverter :: new(string name = "UartTxSeqItemConverter");
