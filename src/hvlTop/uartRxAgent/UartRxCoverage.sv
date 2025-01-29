@@ -76,7 +76,7 @@ endfunction : new
 //-------------------------------------------------------------------------------------------------------------
 function void UartRxCoverage :: build_phase(uvm_phase phase);
   super.build_phase(phase);
-  if(!(uvm_config_db #(UartRxAgentConfig) :: get(this,"","uartRxAgentConfig",this.uartRxAgentConfig)));
+  if(!(uvm_config_db #(UartRxAgentConfig) :: get(this,"","uartRxAgentConfig",uartRxAgentConfig)));
   `uvm_fatal("FATAL Rx AGENT CONFIG", $sformatf("Failed to get Rx agent config in coverage"))
 endfunction : build_phase
 
