@@ -73,7 +73,7 @@ endfunction : new
 //--------------------------------------------------------------------------------------------
 function void UartTxCoverage :: build_phase(uvm_phase phase);
   super.build_phase(phase);
-  if(!(uvm_config_db #(UartTxAgentConfig) :: get(this,"","uartTxAgentConfig",this.uartTxAgentConfig)));
+  if(!(uvm_config_db #(UartTxAgentConfig) :: get(this,"","uartTxAgentConfig",this.uartTxAgentConfig)))
   `uvm_fatal("FATAL Tx AGENT CONFIG", $sformatf("Failed to get Tx agent config in coverage"))
 endfunction : build_phase
 
