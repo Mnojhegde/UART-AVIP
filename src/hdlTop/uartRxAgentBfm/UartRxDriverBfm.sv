@@ -110,10 +110,10 @@ interface UartRxDriverBfm (input  bit   clk,
   //-------------------------------------------------------
 
   task WaitForReset();
-  	  @(negedge uartReset);
+  	  @(negedge reset);
 	  `uvm_info(get_type_name(),$sformatf("RESET DETECTED"),UVM_LOW);
 	   rx = 1; //DRIVE THE UART TO IDEAL STATE
-	  @(posedge uartReset);
+	  @(posedge reset);
 	  `uvm_info(get_type_name(),$sformatf("RESET DEASSERTED"),UVM_LOW);
   endtask: WaitForReset
   
