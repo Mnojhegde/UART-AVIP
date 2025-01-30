@@ -153,17 +153,17 @@ interface UartTxMonitorBfm (input  bit   clk,
  //        end
  //      end
   
-        if(uartConfigStruct.uartParityEnable ==1) begin 
-	  if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
-	    @(posedge oversamplingClk)
-	     uartTxPacketStruct.parity[transmission_number] = ^uartTxPacketStruct.transmissionData[transmission_number];
-          end
+   //      if(uartConfigStruct.uartParityEnable ==1) begin 
+	  // if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
+	  //   @(posedge oversamplingClk)
+	  //    uartTxPacketStruct.parity[transmission_number] = ^uartTxPacketStruct.transmissionData[transmission_number];
+   //        end
 	
-	  else begin 
-	    @(posedge oversamplingClk)
-	      uartTxPacketStruct.parity[transmission_number] = ~^uartTxPacketStruct.transmissionData[transmission_number];
-        end 
-      end 	
+	  // else begin 
+	  //   @(posedge oversamplingClk)
+	  //     uartTxPacketStruct.parity[transmission_number] = ~^uartTxPacketStruct.transmissionData[transmission_number];
+   //      end 
+   //    end 	
  
      
  //      @(posedge oversamplingClk) begin
