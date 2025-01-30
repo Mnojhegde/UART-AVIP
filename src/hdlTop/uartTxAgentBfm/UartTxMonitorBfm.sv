@@ -143,26 +143,28 @@ interface UartTxMonitorBfm (input  bit   clk,
   //  converts serial data to parallel
   //-------------------------------------------------------
 
- //  task Deserializer(output UartTxPacketStruct uartTxPacketStruct, input UartConfigStruct uartTxCfg);
- //    static int total_transmission = uartTxCfg.TotalFrameWidth;
- //    @(negedge tx)
+ // task Deserializer(output UartTxPacketStruct uartTxPacketStruct, input UartConfigStruct uartTxCfg);
+ //   static int total_transmission = uartTxCfg.uartDataType;
+ //    @(negedge tx);
  //    for(int transmission_number=0 ; transmission_number < total_transmission; transmission_number++)begin 
-	//     for( int i=0 ; i < uartTxCfg.uartDataType ; i++) begin
- //      	@(posedge oversamplingClk or negedge oversamplingClk) begin
-	// uartTxPacketStruct.transmissionData[transmission_number][i] = tx;
+ //      for( int i=0 ; i < uartTxCfg.uartDataType ; i++) begin
+ //    	@(posedge oversamplingClk or negedge oversamplingClk) begin
+ //          uartTxPacketStruct.transmissionData[transmission_number][i] = tx;
+ //        end
  //      end
- //    end
   
- //    @(posedge oversamplingClk or negedge oversamplingClk)
- //    if(PARITY_ENABLED)
-	// uartTxPacketStruct.parity = ^uartTxPacketStruct.transmissionData;
-
-    // @(posedge oversamplingClk or negedge oversamplingClk)
-    // if(tx == 0)
-    //   `uvm_info(TxMonitor, $sformatf(" Stop bit is detected in Tx monitor "), UVM_LOW);
-    // else
-    //   `uvm_error(TxMonitor, $sformatf(" Stop bit is not recieved by Tx monitor "));
-  //   end   
-  // endtask
+ //      if(PARITY_ENABLED) begin    
+ //        @(posedge oversamplingClk or negedge oversamplingClk) 
+	//   uartTxPacketStruct.parity[transmission_number] = ^uartTxPacketStruct.transmissionData[transmission_number];
+ //      end      
+     
+ //      @(posedge oversamplingClk or negedge oversamplingClk) begin
+ //        if(tx == 0)
+ //          `uvm_info(TxMonitor, $sformatf(" Stop bit is detected in Tx monitor "), UVM_LOW);
+ //        else
+ //          `uvm_error(TxMonitor, $sformatf(" Stop bit is not recieved by Tx monitor "));
+ //       end 
+ //    end
+ endtask
 	
 endinterface : UartTxMonitorBfm
