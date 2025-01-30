@@ -45,7 +45,18 @@ interface UartTxDriverBfm (input  bit   clk,
   //to Calculate baud rate divider
 	
   reg [15:0] baudDivider;
-  
+
+  //Variable: count
+  //to count the no of clock cycles
+  int count=0;
+
+  //Variable: baudDivisor
+  //used to generate the baud clock
+  int baudDivisor;
+
+  //Variable: baudDivider
+  //to count the no of baud clock cycles
+  int countbClk = 0;	
   
   //Creating the handle for the proxy_driver
 
@@ -70,7 +81,7 @@ interface UartTxDriverBfm (input  bit   clk,
       real clkPeriodStopTime;
       real clkPeriod;
       real clkFrequency;
-      int baudDivisor;
+      
 
       $display("*****************Started generating baud clk ********************");
       @(posedge clk);
@@ -82,27 +93,23 @@ interface UartTxDriverBfm (input  bit   clk,
 
       baudDivisor = (clkFrequency)/(uartConfigStruct.uartOverSamplingMethod * uartConfigStruct.uartBaudRate); 
       $display("************BAUD DIVISOR VALUE IS %0d***********",baudDivisor);
-      BaudClkGenerator(baudDivisor);
     endtask
 
   //------------------------------------------------------------------
-  // Task: baudclkgenerator
-  // this task will generate baud clk based on baud divider
+  // this block will generate baud clk based on baud divider
   //-------------------------------------------------------------------
 
-    task BaudClkGenerator(input int baudDivisor);
-      static int count=0;
-      forever begin 
-        @(posedge clk or negedge clk)
-    
-        if(count == (baudDivisor-1))begin 
-          count <= 0;
-          baudClk <= ~baudClk;
-        end 
-        else begin 
-          count <= count +1;
-        end   
-      end
+    initial begin      
+       forever begin 
+          @(posedge clk or negedge clk)    
+	     if(count == (baudDivisor-1))begin 
+                count <= 0;
+                baudClk <= ~baudClk;
+             end 
+             else begin 
+                count <= count +1;
+             end   
+      	end
     endtask
 	     
   //-------------------------------------------------------
@@ -126,30 +133,28 @@ interface UartTxDriverBfm (input  bit   clk,
   task DriveToBfm(inout UartTxPacketStruct uartTxPacketStruct , inout UartConfigStruct uartConfigStruct);
     	`uvm_info(name,$sformatf("data_packet=\n%p",uartTxPacketStruct),UVM_HIGH);
     	`uvm_info(name,$sformatf("DRIVE TO BFM TASK"),UVM_HIGH);
-	fork 
-	  BclkCounter(uartConfigStruct.uartOverSamplingMethod);   /* NEED TO UPDATE CONFIG CONVERTER IN DRIVER PROXY SIDE */
+	 
+	 // BclkCounter(uartConfigStruct.uartOverSamplingMethod);   /* NEED TO UPDATE CONFIG CONVERTER IN DRIVER PROXY SIDE */
 	  SampleData(uartTxPacketStruct , uartConfigStruct);
-	join
+	
   endtask: DriveToBfm
  
   //--------------------------------------------------------------------------------------------
-  // Task: bclk_counter
-  //  This task will count the number of cycles of bclk and generate oversamplingClk to sample data
+  //  This block will count the number of cycles of bclk and generate oversamplingClk to sample data
   //--------------------------------------------------------------------------------------------
 
-  task BclkCounter(input uartOverSamplingMethod);
-    static int countbClk = 0;
-    forever begin
-	@(posedge baudClk)
-	if(countbClk == (uartOverSamplingMethod/2)-1) begin
-      	  oversamplingClk = ~oversamplingClk;
-      	  countbClk=0;
-      	end
-      	else begin
-      	countbClk = countbClk+1;
-      end
-   
-    end
+  
+    initial begin 
+       forever begin
+          @(posedge baudClk)
+	     if(countbClk == (uartConfigStruct.uartOverSamplingMethod/2)-1) begin
+      	        oversamplingClk = ~oversamplingClk;
+      	        countbClk=0;
+      	     end
+      	     else begin
+      		countbClk = countbClk+1;
+      	     end   
+    	end
   endtask
   
   //--------------------------------------------------------------------------------------------
