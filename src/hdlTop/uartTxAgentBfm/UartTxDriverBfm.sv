@@ -110,7 +110,7 @@ interface UartTxDriverBfm (input  bit   clk,
                 count <= count +1;
              end   
       	end
-    endtask
+    task
 	     
   //-------------------------------------------------------
   // Task: WaitForReset
@@ -155,7 +155,7 @@ interface UartTxDriverBfm (input  bit   clk,
       		countbClk = countbClk+1;
       	     end   
     	end
-  endtask
+  task
   
   //--------------------------------------------------------------------------------------------
   // Task: sample_data
