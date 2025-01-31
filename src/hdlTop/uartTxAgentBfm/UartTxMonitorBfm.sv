@@ -145,8 +145,8 @@ interface UartTxMonitorBfm (input  bit   clk,
 
  // task Deserializer(output UartTxPacketStruct uartTxPacketStruct, input UartConfigStruct uartConfigStruct);
  //   static int total_transmission = NO_OF_PACKETS;
- //    @(negedge tx);
  //    for(int transmission_number=0 ; transmission_number < total_transmission; transmission_number++)begin 
+//       @(negedge tx);
  //      for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
  //    	@(posedge oversamplingClk or negedge oversamplingClk) begin
  //          uartTxPacketStruct.transmissionData[transmission_number][i] = tx;
