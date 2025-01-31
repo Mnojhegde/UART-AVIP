@@ -103,47 +103,47 @@ interface UartRxMonitorBfm (input  bit   clk,
   //  Set break error if data input (UARTn_RXD) was held low for longer than a full-word transmission time
   //-------------------------------------------------------
 
-   task BreakIndicator(inout UartRxPacketStruct uartRxPacketStruct, input UartConfigStruct uartConfigStruct);
-    time StartTime, StopTime;
-    time BitTransmissionTime;
-    time WordTransmissionTime;
-    time Breakstart, BreakStop;
+ //   task BreakIndicator(inout UartRxPacketStruct uartRxPacketStruct, input UartConfigStruct uartConfigStruct);
+ //    time StartTime, StopTime;
+ //    time BitTransmissionTime;
+ //    time WordTransmissionTime;
+ //    time Breakstart, BreakStop;
      
-    @(posedge clk) begin
-      @(negedge rx) begin
-        StartTime = $time;
-        @(posedge clk.triggered) begin
-	  StopTime = $time;
-	end
-      end
-    end
+ //    @(posedge clk) begin
+ //      @(negedge rx) begin
+ //        StartTime = $time;
+ //        @(posedge clk.triggered) begin
+	//   StopTime = $time;
+	// end
+ //      end
+ //    end
 
-    BitTransmissionTime = StartTime - StopTime;
-    WordTransmissionTime = 64 * BitTransmissionTime;
+ //    BitTransmissionTime = StartTime - StopTime;
+ //    WordTransmissionTime = 64 * BitTransmissionTime;
 
-    forever begin
-      @(posedge clk) begin
-	if (rx == 0) begin
-	  if(BreakStart == BreakStop)
-	    BreakStart = $time;
-	  else 
-	    BreakStop = $time;
-	end
-	else begin
-	  BreakStop = 0;
-	  BreakStop = 0;
-	end
-      end
+ //    forever begin
+ //      @(posedge clk) begin
+	// if (rx == 0) begin
+	//   if(BreakStart == BreakStop)
+	//     BreakStart = $time;
+	//   else 
+	//     BreakStop = $time;
+	// end
+	// else begin
+	//   BreakStop = 0;
+	//   BreakStop = 0;
+	// end
+ //      end
 
-    forever begin
-      @(posedge clk) begin
-	if((BreakStop - BreakStart) > WordTransmission)
-	  BreakError = 1;   // < GIVE FIELD LOCATION>
-	else
-	  BreakError = 0;   // < GIVE FIELD LOCATION>
-      end
-    end
-  endtask
+ //    forever begin
+ //      @(posedge clk) begin
+	// if((BreakStop - BreakStart) > WordTransmission)
+	//   BreakError = 1;   // < GIVE FIELD LOCATION>
+	// else
+	//   BreakError = 0;   // < GIVE FIELD LOCATION>
+ //      end
+ //    end
+ //  endtask
 			
 	
 endinterface : UartRxMonitorBfm
