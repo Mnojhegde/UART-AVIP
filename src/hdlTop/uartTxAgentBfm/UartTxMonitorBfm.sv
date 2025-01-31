@@ -203,4 +203,4 @@ interface UartTxMonitorBfm (input  bit   clk,
      // parity_error==1;
      // end
   // endtask:parityCheck
-// endinterface : UartTxMonitorBfm
+ endinterface : UartTxMonitorBfm
