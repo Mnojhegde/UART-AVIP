@@ -42,9 +42,26 @@ interface UartTxDriverBfm (input  bit   clk,
   //Variable: baudDivider
   //to Calculate baud rate divider
 	
+<<<<<<< HEAD
   //reg [15:0] baudDivider;
 //  int baudDivisor;
 //  int count; 
+=======
+  reg [15:0] baudDivider;
+
+  //Variable: count
+  //to count the no of clock cycles
+  int count=0;
+
+  //Variable: baudDivisor
+  //used to generate the baud clock
+  int baudDivisor;
+
+  //Variable: baudDivider
+  //to count the no of baud clock cycles
+  int countbClk = 0;	
+  
+>>>>>>> c5db94a3bc9836f8741ab710a64327cf12491ad8
   //Creating the handle for the proxy_driver
 
   UartTxDriverProxy uartTxDriverProxy;
@@ -68,8 +85,14 @@ interface UartTxDriverBfm (input  bit   clk,
       real clkPeriodStopTime;
       real clkPeriod;
       real clkFrequency;
+<<<<<<< HEAD
       int baudDivisor;
       int count;
+=======
+      
+
+      $display("*****************Started generating baud clk ********************");
+>>>>>>> c5db94a3bc9836f8741ab710a64327cf12491ad8
       @(posedge clk);
       clkPeriodStartTime = $realtime;
       @(posedge clk);
@@ -78,14 +101,18 @@ interface UartTxDriverBfm (input  bit   clk,
       clkFrequency = ( 10 **9 )/ clkPeriod;
 
       baudDivisor = (clkFrequency)/(uartConfigStruct.uartOverSamplingMethod * uartConfigStruct.uartBaudRate); 
+<<<<<<< HEAD
      BaudClkGenerator(baudDivisor);
+=======
+      $display("************BAUD DIVISOR VALUE IS %0d***********",baudDivisor);
+>>>>>>> c5db94a3bc9836f8741ab710a64327cf12491ad8
     endtask
 
   //------------------------------------------------------------------
-  // Task: baudclkgenerator
-  // this task will generate baud clk based on baud divider
+  // this block will generate baud clk based on baud divider
   //-------------------------------------------------------------------
 
+<<<<<<< HEAD
     task BaudClkGenerator(input int baudDivisor);
       static int count=0;
       
@@ -101,6 +128,20 @@ interface UartTxDriverBfm (input  bit   clk,
         end  
       end
     endtask
+=======
+    initial begin      
+       forever begin 
+          @(posedge clk or negedge clk)    
+	     if(count == (baudDivisor-1))begin 
+                count <= 0;
+                baudClk <= ~baudClk;
+             end 
+             else begin 
+                count <= count +1;
+             end   
+      	end
+    end
+>>>>>>> c5db94a3bc9836f8741ab710a64327cf12491ad8
 	     
   //-------------------------------------------------------
   // Task: WaitForReset
@@ -123,18 +164,22 @@ interface UartTxDriverBfm (input  bit   clk,
   task DriveToBfm(inout UartTxPacketStruct uartTxPacketStruct , inout UartConfigStruct uartConfigStruct);
     	`uvm_info(name,$sformatf("data_packet=\n%p",uartTxPacketStruct),UVM_HIGH);
     	`uvm_info(name,$sformatf("DRIVE TO BFM TASK"),UVM_HIGH);
-	fork 
-	  BclkCounter(uartConfigStruct.uartOverSamplingMethod);   /* NEED TO UPDATE CONFIG CONVERTER IN DRIVER PROXY SIDE */
+	 
+	 // BclkCounter(uartConfigStruct.uartOverSamplingMethod);   /* NEED TO UPDATE CONFIG CONVERTER IN DRIVER PROXY SIDE */
 	  SampleData(uartTxPacketStruct , uartConfigStruct);
+<<<<<<< HEAD
 	join_any
 	disable fork;
+=======
+	
+>>>>>>> c5db94a3bc9836f8741ab710a64327cf12491ad8
   endtask: DriveToBfm
  
   //--------------------------------------------------------------------------------------------
-  // Task: bclk_counter
-  //  This task will count the number of cycles of bclk and generate oversamplingClk to sample data
+  //  This block will count the number of cycles of bclk and generate oversamplingClk to sample data
   //--------------------------------------------------------------------------------------------
 
+<<<<<<< HEAD
   task BclkCounter(input int uartOverSamplingMethod);
     static int countbClk = 0;
     forever begin
@@ -146,8 +191,21 @@ interface UartTxDriverBfm (input  bit   clk,
       	else begin
       	countbClk = countbClk+1;
       end
+=======
+  
+    initial begin 
+       forever begin
+          @(posedge baudClk)
+	     if(countbClk == (uartConfigStruct.uartOverSamplingMethod/2)-1) begin
+      	        oversamplingClk = ~oversamplingClk;
+      	        countbClk=0;
+      	     end
+      	     else begin
+      		countbClk = countbClk+1;
+      	     end   
+    	end
+>>>>>>> c5db94a3bc9836f8741ab710a64327cf12491ad8
     end
-  endtask
   
   //--------------------------------------------------------------------------------------------
   // Task: sample_data
