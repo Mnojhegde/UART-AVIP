@@ -9,7 +9,7 @@ package UartGlobalPkg;
   parameter NO_OF_PACKETS = 50;
 
   // can enable or disable parity
-  parameter PARITY_ENABLED = 1'b 1;
+  parameter PARITY_ENABLED = 1'b 0;
 
   // indicates start bit
   parameter START_BIT = 0;

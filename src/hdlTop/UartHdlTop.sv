@@ -1,7 +1,7 @@
 //--------------------------------------------------------------------------------------------
 // Module      : HDLTop
 //--------------------------------------------------------------------------------------------
-
+`timescale 1ns/1ps
 module HdlTop;
 
   //-------------------------------------------------------
@@ -36,7 +36,7 @@ module HdlTop;
   initial begin
      clk=0;
     forever begin
-     #10 clk = ~clk;
+     #0.1 clk = ~clk;
     end
   end
 
@@ -46,7 +46,7 @@ module HdlTop;
 
   initial begin
     reset = 1'b1;
-    #15 reset = 1'b0;
+    #1 reset = 1'b0;
 
     repeat(1) begin
       @(posedge clk);

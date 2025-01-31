@@ -8,7 +8,6 @@ import UartGlobalPkg::*;
 //  Used as the HDL driver for Uart
 //  It connects with the HVL driver_proxy for driving the stimulus
 //--------------------------------------------------------------------------------------------
-
 interface UartTxDriverBfm (input  bit   clk,
                            input  bit   reset,
                            output  bit   tx
@@ -39,14 +38,13 @@ interface UartTxDriverBfm (input  bit   clk,
   
   //Variable: counter
   // Counter to keep track of clock cycles
-  reg [15:0] counter;  
   
   //Variable: baudDivider
   //to Calculate baud rate divider
 	
-  reg [15:0] baudDivider;
-  
-  
+  //reg [15:0] baudDivider;
+//  int baudDivisor;
+//  int count; 
   //Creating the handle for the proxy_driver
 
   UartTxDriverProxy uartTxDriverProxy;
@@ -71,8 +69,7 @@ interface UartTxDriverBfm (input  bit   clk,
       real clkPeriod;
       real clkFrequency;
       int baudDivisor;
-
-      $display("*****************Started generating baud clk ********************");
+      int count;
       @(posedge clk);
       clkPeriodStartTime = $realtime;
       @(posedge clk);
@@ -81,8 +78,7 @@ interface UartTxDriverBfm (input  bit   clk,
       clkFrequency = ( 10 **9 )/ clkPeriod;
 
       baudDivisor = (clkFrequency)/(uartConfigStruct.uartOverSamplingMethod * uartConfigStruct.uartBaudRate); 
-      $display("************BAUD DIVISOR VALUE IS %0d***********",baudDivisor);
-      BaudClkGenerator(baudDivisor);
+     BaudClkGenerator(baudDivisor);
     endtask
 
   //------------------------------------------------------------------
@@ -92,16 +88,17 @@ interface UartTxDriverBfm (input  bit   clk,
 
     task BaudClkGenerator(input int baudDivisor);
       static int count=0;
-      forever begin 
+      
+      forever begin
+
         @(posedge clk or negedge clk)
-    
         if(count == (baudDivisor-1))begin 
           count <= 0;
           baudClk <= ~baudClk;
         end 
         else begin 
           count <= count +1;
-        end   
+        end  
       end
     endtask
 	     
@@ -129,7 +126,8 @@ interface UartTxDriverBfm (input  bit   clk,
 	fork 
 	  BclkCounter(uartConfigStruct.uartOverSamplingMethod);   /* NEED TO UPDATE CONFIG CONVERTER IN DRIVER PROXY SIDE */
 	  SampleData(uartTxPacketStruct , uartConfigStruct);
-	join
+	join_any
+	disable fork;
   endtask: DriveToBfm
  
   //--------------------------------------------------------------------------------------------
@@ -137,7 +135,7 @@ interface UartTxDriverBfm (input  bit   clk,
   //  This task will count the number of cycles of bclk and generate oversamplingClk to sample data
   //--------------------------------------------------------------------------------------------
 
-  task BclkCounter(input uartOverSamplingMethod);
+  task BclkCounter(input int uartOverSamplingMethod);
     static int countbClk = 0;
     forever begin
 	@(posedge baudClk)
@@ -148,7 +146,6 @@ interface UartTxDriverBfm (input  bit   clk,
       	else begin
       	countbClk = countbClk+1;
       end
-   
     end
   endtask
   

@@ -1,5 +1,5 @@
 # vsim -vopt work.HvlTop work.HdlTop -voptargs="+acc=npr" -assertdebug "+UVM_TESTNAME=UartBaseTest" "+UVM_VERBOSITY=UVM_MEDIUM" "+define+UartBaseTest" -l UartBaseTest/UartBaseTest.log -sva -coverage -c -do "log -r /*; add wave -r /*; coverage save -onexit -assert -directive -cvg -codeAll UartBaseTest/UartBaseTest_coverage.ucdb; run -all; exit" -wlf UartBaseTest/waveform.wlf 
-# Start time: 00:56:13 on Jan 30,2025
+# Start time: 00:50:36 on Feb 01,2025
 # ** Note: (vsim-3812) Design is being optimized...
 # //  Questa Sim
 # //  Version 10.6c linux Jul 25 2017
@@ -46,16 +46,6 @@
 # Loading mtiUvm.questa_uvm_pkg(fast)
 # Loading /tools/mentor/questasim_10.6c/questasim/uvm-1.1d/linux/uvm_dpi.so
 # log -r /*
-# ** Error: Unable to lock WLF file "UartBaseTest/waveform.wlf". Retrying 1 times, errno 11
-# ** Error: Unable to lock WLF file "UartBaseTest/waveform.wlf". Retrying 2 times, errno 11
-# ** Error: Unable to lock WLF file "UartBaseTest/waveform.wlf". Retrying 3 times, errno 11
-# ** Error: Cannot lock WLF file: "UartBaseTest/waveform.wlf"
-#           errno 11: Resource temporarily unavailable.
-# ** Warning: (vsim-WLF-5000) WLF file currently in use: UartBaseTest/waveform.wlf
-#           File in use by: swasthikkamath  Hostname: FEserver.mirafra.com  ProcessID: 75900
-#           Attempting to use alternate WLF file "UartBaseTest/wlftipO8qv".
-# ** Warning: (vsim-WLF-5001) Could not open WLF file: UartBaseTest/waveform.wlf
-#           Using alternate file: UartBaseTest/wlftipO8qv
 #  add wave -r /*
 #  coverage save -onexit -assert -directive -cvg -codeAll UartBaseTest/UartBaseTest_coverage.ucdb
 #  run -all
@@ -84,29 +74,29 @@
 # UVM_INFO @ 0: reporter [RNTST] Running test UartBaseTest...
 # UVM_INFO ../../src/hdlTop/UartHdlTop.sv(15) @ 0: reporter [HDL_TOP] HDL_TOP
 # UVM_INFO ../../src/hdlTop/uartTxAgentBfm/UartTxAgentBfm.sv(16) @ 0: reporter [uart transmitter agent bfm] UART TRANSMITTER AGENT BFM
-# UVM_INFO ../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv(58) @ 0: reporter [UART_TRANSMITTER_DRIVER_BFM] UART_TRANSMITTER_DRIVER_BFM
+# UVM_INFO ../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv(56) @ 0: reporter [UART_TRANSMITTER_DRIVER_BFM] UART_TRANSMITTER_DRIVER_BFM
 # UVM_INFO ../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv(62) @ 0: reporter [UART_TRANSMITTER_MONITOR_BFM] UART_TRANSMITTER_MONITOR_BFM
 # UVM_INFO ../../src/hdlTop/uartRxAgentBfm/UartRxAgentBfm.sv(16) @ 0: reporter [uart transmitter agent bfm] UART TRANSMITTER AGENT BFM
 # UVM_INFO ../../src/hdlTop/uartRxAgentBfm/UartRxDriverBfm.sv(59) @ 0: reporter [UART_RECIEVER_DRIVER_BFM] UART_RECIEVER_DRIVER_BFM
 # UVM_INFO ../../src/hdlTop/uartRxAgentBfm/UartRxMonitorBfm.sv(57) @ 0: reporter [UART_RECIEVER_MONITOR_BFM] UART_RECIEVER_MONITOR_BFM
 # Warning: In instance '\/UartRxPkg::UartRxCoverage::UartRxCovergroup ' the 'option.per_instance' is set to '0' (false). Assignment to members 'weight', 'goal' and 'comment' of 'option' would not have any effect.
 # ** Warning: (vsim-3881) ../../src/hvlTop/uartRxAgent/UartRxCoverage.sv(23): Sign-and-Width conversion applied in bin 'UART_RX' for Coverpoint 'RX_CP'. Value '1' changed to ' (maximum)' value.
-#    Time: 0 ns  Iteration: 7  Region: /uvm_pkg::uvm_phase::m_run_phases
+#    Time: 0 ps  Iteration: 7  Region: /uvm_pkg::uvm_phase::m_run_phases
 # ** Warning: (vsim-8475) ../../src/hvlTop/uartRxAgent/UartRxCoverage.sv(23): The invalid value range [1 : ] is found in bin 'UART_RX' of Coverpoint 'RX_CP'. It will be ignored.
-#    Time: 0 ns  Iteration: 7  Region: /uvm_pkg::uvm_phase::m_run_phases
+#    Time: 0 ps  Iteration: 7  Region: /uvm_pkg::uvm_phase::m_run_phases
 # ** Warning: (vsim-8549) After dropping the illegal, ignore or invalid values, the values list associated with scalar bin 'UART_RX' in Coverpoint 'RX_CP' of Covergroup instance '\/UartRxPkg::UartRxCoverage::UartRxCovergroup ' has converged to empty list. The bin will be taken out of coverage calculation.
-#    Time: 0 ns  Iteration: 7  Region: /uvm_pkg::uvm_phase::m_run_phases
+#    Time: 0 ps  Iteration: 7  Region: /uvm_pkg::uvm_phase::m_run_phases
 # ** Warning: (vsim-8522) The number of coverpoint bins is zero for the coverpoint 'RX_CP' of covergroup instance '\/UartRxPkg::UartRxCoverage::UartRxCovergroup '. All the user defined bins in the coverpoint are empty bins and hence it would not contribute towards the overall coverage result.
-#    Time: 0 ns  Iteration: 7  Region: /uvm_pkg::uvm_phase::m_run_phases
+#    Time: 0 ps  Iteration: 7  Region: /uvm_pkg::uvm_phase::m_run_phases
 # Warning: In instance '\/UartTxPkg::UartTxCoverage::UartTxCovergroup ' the 'option.per_instance' is set to '0' (false). Assignment to members 'weight', 'goal' and 'comment' of 'option' would not have any effect.
 # ** Warning: (vsim-3881) ../../src/hvlTop/uartTxAgent//UartTxCoverage.sv(22): Sign-and-Width conversion applied in bin 'UART_TX' for Coverpoint 'TX_CP'. Value '1' changed to ' (maximum)' value.
-#    Time: 0 ns  Iteration: 7  Region: /uvm_pkg::uvm_phase::m_run_phases
+#    Time: 0 ps  Iteration: 7  Region: /uvm_pkg::uvm_phase::m_run_phases
 # ** Warning: (vsim-8475) ../../src/hvlTop/uartTxAgent//UartTxCoverage.sv(22): The invalid value range [1 : ] is found in bin 'UART_TX' of Coverpoint 'TX_CP'. It will be ignored.
-#    Time: 0 ns  Iteration: 7  Region: /uvm_pkg::uvm_phase::m_run_phases
+#    Time: 0 ps  Iteration: 7  Region: /uvm_pkg::uvm_phase::m_run_phases
 # ** Warning: (vsim-8549) After dropping the illegal, ignore or invalid values, the values list associated with scalar bin 'UART_TX' in Coverpoint 'TX_CP' of Covergroup instance '\/UartTxPkg::UartTxCoverage::UartTxCovergroup ' has converged to empty list. The bin will be taken out of coverage calculation.
-#    Time: 0 ns  Iteration: 7  Region: /uvm_pkg::uvm_phase::m_run_phases
+#    Time: 0 ps  Iteration: 7  Region: /uvm_pkg::uvm_phase::m_run_phases
 # ** Warning: (vsim-8522) The number of coverpoint bins is zero for the coverpoint 'TX_CP' of covergroup instance '\/UartTxPkg::UartTxCoverage::UartTxCovergroup '. All the user defined bins in the coverpoint are empty bins and hence it would not contribute towards the overall coverage result.
-#    Time: 0 ns  Iteration: 7  Region: /uvm_pkg::uvm_phase::m_run_phases
+#    Time: 0 ps  Iteration: 7  Region: /uvm_pkg::uvm_phase::m_run_phases
 # UVM_INFO @ 0: reporter [UVMTOP] UVM testbench topology:
 # -----------------------------------------------------------------------------
 # Name                                  Type                        Size  Value
@@ -160,17 +150,17 @@
 # -----------------------------------------------------------------------------
 # 
 # UVM_INFO ../../src/hvlTop/uartTxAgent//UartTxMonitorProxy.sv(58) @ 0: uvm_test_top.uartEnv.uartTxAgent.uartTxMonitorProxy [UartTxMonitorProxy] Inside the TX_monitor_proxy
+# The config struct is '{uartOverSamplingMethod:OVERSAMPLING_16, uartBaudRate:BAUD_9600, uartDataType:FIVE_BIT, uartParityType:EVEN_PARITY, uartParityEnable:0}
 # UVM_INFO ../../src/hvlTop/uartRxAgent/UartRxMonitorProxy.sv(64) @ 0: uvm_test_top.uartEnv.uartRxAgent.uartRxMonitorProxy [UartRxMonitorProxy] Inside the RX_monitor_proxy
 # UVM_WARNING @ 0: uvm_test_top.uartEnv.uartVirtualSequencer@@uartVirtualTransmissionSequence [uvm_sequence_base] Body definition undefined
 # UVM_WARNING @ 0: uvm_test_top.uartEnv.uartTxAgent.uartTxSequencer@@uartTxBaseSequence [uvm_sequence_base] Body definition undefined
-# UVM_INFO ../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv(115) @ 15: reporter [UART_TRANSMITTER_DRIVER_BFM] RESET DETECTED
-# UVM_INFO ../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv(118) @ 30: reporter [UART_TRANSMITTER_DRIVER_BFM] RESET DEASSERTED
-# *****************Started generating baud clk ********************
+# UVM_INFO ../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv(112) @ 1000: reporter [UART_TRANSMITTER_DRIVER_BFM] RESET DETECTED
+# UVM_INFO ../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv(115) @ 1100: reporter [UART_TRANSMITTER_DRIVER_BFM] RESET DEASSERTED
 # ---------------------------------------------------------------------------------------------------------------------------
 # Name                           Type               Size  Value                                                              
 # ---------------------------------------------------------------------------------------------------------------------------
 # req                            UartTxTransaction  -     @1007                                                              
-#   begin_time                   time               64    30                                                                 
+#   begin_time                   time               64    1100                                                               
 #   depth                        int                32    'd2                                                                
 #   parent sequence (name)       string             18    uartTxBaseSequence                                                 
 #   parent sequence (full name)  string             67    uvm_test_top.uartEnv.uartTxAgent.uartTxSequencer.uartTxBaseSequence
@@ -188,5 +178,87 @@
 #   transmissionData[10]         integral           8     'b11011010                                                         
 #   parity                       integral           1     'b0                                                                
 # ---------------------------------------------------------------------------------------------------------------------------
-# UVM_INFO ../../src/hvlTop/uartTxAgent//UartTxDriverProxy.sv(69) @ 30: uvm_test_top.uartEnv.uartTxAgent.uartTxDriverProxy [BFM] data in driver is '{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 26, 17, 14, 30, 22, 10, 15, 29, 21, 27, 4}
-# ************BAUD DIVISOR VALUE IS 326***********
+# UVM_INFO ../../src/hvlTop/uartTxAgent//UartTxDriverProxy.sv(73) @ 1100: uvm_test_top.uartEnv.uartTxAgent.uartTxDriverProxy [BFM] data in driver is '{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 26, 17, 14, 30, 22, 10, 15, 29, 21, 27, 4}
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# START BIT ADDED 0
+# UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_objection.svh(1268) @ 36905400: reporter [TEST_DONE] 'run' phase is ready to proceed to the 'extract' phase
+# UVM_INFO ../../src/hvlTop/uartRxAgent/UartRxCoverage.sv(105) @ 36905400: uvm_test_top.uartEnv.uartRxAgent.uartRxCoverage [UartRxCoverage] UART RX Agent Coverage = 0.00 %
+# UVM_INFO ../../src/hvlTop/uartTxAgent//UartTxCoverage.sv(98) @ 36905400: uvm_test_top.uartEnv.uartTxAgent.uartTxCoverage [UartTxCoverage] UART TX Agent Coverage = 0.00 %
+# 
+# --- UVM Report Summary ---
+# 
+# ** Report counts by severity
+# UVM_INFO :   19
+# UVM_WARNING :    2
+# UVM_ERROR :    0
+# UVM_FATAL :    0
+# ** Report counts by id
+# [BFM]     1
+# [HDL_TOP]     1
+# [Questa UVM]     2
+# [RNTST]     1
+# [TEST_DONE]     1
+# [UART_RECIEVER_DRIVER_BFM]     1
+# [UART_RECIEVER_MONITOR_BFM]     1
+# [UART_TRANSMITTER_DRIVER_BFM]     3
+# [UART_TRANSMITTER_MONITOR_BFM]     1
+# [UVMTOP]     1
+# [UartRxCoverage]     1
+# [UartRxMonitorProxy]     1
+# [UartTxCoverage]     1
+# [UartTxMonitorProxy]     1
+# [uart transmitter agent bfm]     2
+# [uvm_sequence_base]     2
+# ** Note: $finish    : /tools/mentor/questasim_10.6c/questasim/linux/../verilog_src/uvm-1.1d/src/base/uvm_root.svh(430)
+#    Time: 36905400 ps  Iteration: 68  Instance: /HvlTop
+# Saving coverage database on exit...
+# End time: 00:50:43 on Feb 01,2025, Elapsed time: 0:00:07
+# Errors: 0, Warnings: 10

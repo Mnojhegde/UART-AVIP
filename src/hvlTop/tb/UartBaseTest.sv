@@ -120,7 +120,6 @@ endfunction : end_of_elaboration_phase
   uartVirtualTransmissionSequence = UartVirtualTransmissionSequence :: type_id :: create("uartVirtualTransmissionSequence");
   phase.raise_objection(this);
    uartVirtualTransmissionSequence.start(uartEnv.uartVirtualSequencer);
-    #30;
   phase.drop_objection(this);
 endtask : run_phase
 
