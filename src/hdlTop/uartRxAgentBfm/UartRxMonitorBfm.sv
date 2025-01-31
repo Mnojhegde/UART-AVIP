@@ -91,9 +91,59 @@ interface UartRxMonitorBfm (input  bit   clk,
   //-------------------------------------------------------
 
   task WaitForReset();
+    @(negedge reset)
+    `uvm_info(name, $sformatf("system reset detected"), UVM_HIGH)
     
+    @(posedge reset);
+    `uvm_info(name, $sformatf("system reset deactivated"), UVM_HIGH)
   endtask: WaitForReset
 
-  
+  //-------------------------------------------------------
+  // Task: BreakIndicator
+  //  Set break error if data input (UARTn_RXD) was held low for longer than a full-word transmission time
+  //-------------------------------------------------------
 
+  task BreakIndicator(output UartRxPacketStruct uartRxPacketStruct, input UartConfigStruct uartConfigStruct);
+    time StartTime, StopTime;
+    time BitTransmissionTime;
+    time WordTransmissionTime;
+    time Breakstart, BreakStop;
+     
+    @(posedge clk) begin
+      @(negedge tx) begin
+        StartTime = $time;
+        @(posedge clk.triggered) begin
+	  StopTime = $time;
+	end
+      end
+    end
+
+    BitTransmissionTime = StartTime - StopTime;
+    WordTransmissionTime = 64 * BitTransmissionTime;
+
+    forever begin
+      @(posedge clk) begin
+	if (rx == 0) begin
+	  if(BreakStart == BreakStop)
+	    BreakStart = $time;
+	  else 
+	    BreakStop = $time;
+	end
+	else begin
+	  BreakStop = 0;
+	  BreakStop = 0;
+	end
+      end
+
+    forever begin
+      @(posedge clk) begin
+	if((BreakStop - BreakStart) > WordTransmission)
+	  BreakError = 1;   // < GIVE FIELD LOCATION>
+	else
+	  BreakError = 0;   // < GIVE FIELD LOCATION>
+      end
+    end
+  endtask
+			
+	
 endinterface : UartRxMonitorBfm
