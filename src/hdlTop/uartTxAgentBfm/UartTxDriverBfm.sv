@@ -186,7 +186,7 @@ endtask
         end 
       end 		 
       @(posedge oversamplingClk)
-      tx = STOP_BIT;  /
+      tx = STOP_BIT;  
     end
   endtask 
 		
