@@ -103,7 +103,7 @@ interface UartRxMonitorBfm (input  bit   clk,
   //  Set break error if data input (UARTn_RXD) was held low for longer than a full-word transmission time
   //-------------------------------------------------------
 
-  task BreakIndicator(output UartRxPacketStruct uartRxPacketStruct, input UartConfigStruct uartConfigStruct);
+	task BreakIndicator(inout UartRxPacketStruct uartRxPacketStruct, input UartConfigStruct uartConfigStruct);
     time StartTime, StopTime;
     time BitTransmissionTime;
     time WordTransmissionTime;
