@@ -154,17 +154,10 @@ interface UartTxMonitorBfm (input  bit   clk,
  //      end
   
    //      if(uartConfigStruct.uartParityEnable ==1) begin 
-	  // if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
+	  
 	  //   @(posedge oversamplingClk)
-	  //    uartTxPacketStruct.parity[transmission_number] = ^uartTxPacketStruct.transmissionData[transmission_number];
-   //        end
 	
-	  // else begin 
-	  //   @(posedge oversamplingClk)
-	  //     uartTxPacketStruct.parity[transmission_number] = ~^uartTxPacketStruct.transmissionData[transmission_number];
-   //      end 
-   //    end 	
- 
+   parityCheck(uartTxPacketStruct,tx,transmission_number);
      
  //      @(posedge oversamplingClk) begin
  //        if(tx == 0)
@@ -175,4 +168,28 @@ interface UartTxMonitorBfm (input  bit   clk,
  //    end
  // endtask
 	
+  //-------------------------------------------------------
+  // Task: parityCheck
+  //  The parityCheck task checks for parity errors in the transmitted data 
+  //-------------------------------------------------------
+   task parityCheck(inout UartTxPacketStruct uartTxPacketStruct,input bit tx,input int transmission_number);
+    
+    int cal_parity;
+    
+     if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
+	     cal_parity = ^uartTxPacketStruct.transmissionData[transmission_number];
+          end
+	
+	   else begin 
+	      cal_parity = ~^uartTxPacketStruct.transmissionData[transmission_number];
+        end 
+    if(tx==cal_parity)
+      begin
+        parity_error==0;
+      end
+    else
+      begin
+      parity_error==1;
+      end
+  endtask:parityCheck
 endinterface : UartTxMonitorBfm
