@@ -110,7 +110,7 @@ interface UartRxMonitorBfm (input  bit   clk,
     time Breakstart, BreakStop;
      
     @(posedge clk) begin
-      @(negedge tx) begin
+      @(negedge rx) begin
         StartTime = $time;
         @(posedge clk.triggered) begin
 	  StopTime = $time;
