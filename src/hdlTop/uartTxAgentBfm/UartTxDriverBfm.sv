@@ -8,9 +8,9 @@ import UartGlobalPkg::*;
 //  Used as the HDL driver for Uart
 //  It connects with the HVL driver_proxy for driving the stimulus
 //--------------------------------------------------------------------------------------------
-interface UartTxDriverBfm (input  bit   clk,
-                           input  bit   reset,
-                           output  bit   tx
+interface UartTxDriverBfm (input  logic   clk,
+                           input  logic   reset,
+                           output logic   tx
                           );
 
   //-------------------------------------------------------
@@ -109,6 +109,7 @@ interface UartTxDriverBfm (input  bit   clk,
         else begin 
           count <= count +1;
         end  
+	$display("baud clk count is %0d and clk=%b",count,baudClk);
       end
     endtask
 
@@ -132,11 +133,11 @@ interface UartTxDriverBfm (input  bit   clk,
   //--------------------------------------------------------------------------------------------
 
   task DriveToBfm(inout UartTxPacketStruct uartTxPacketStruct , inout UartConfigStruct uartConfigStruct);
-    	`uvm_info(name,$sformatf("data_packet=\n%p",uartTxPacketStruct),UVM_HIGH);
-    	`uvm_info(name,$sformatf("DRIVE TO BFM TASK"),UVM_HIGH);
+    	`uvm_info(name,$sformatf("data_packet=\n%p",uartTxPacketStruct),UVM_LOW);
+    	`uvm_info(name,$sformatf("DRIVE TO BFM TASK"),UVM_LOW);
 
-	  fork
-	  BclkCounter(uartConfigStruct.uartOverSamplingMethod);   /* NEED TO UPDATE CONFIG CONVERTER IN DRIVER PROXY SIDE */
+	fork
+	BclkCounter(uartConfigStruct.uartOverSamplingMethod);   /* NEED TO UPDATE CONFIG CONVERTER IN DRIVER PROXY SIDE */
         SampleData(uartTxPacketStruct , uartConfigStruct);
 	join_any
 	disable fork;
@@ -149,6 +150,7 @@ interface UartTxDriverBfm (input  bit   clk,
 
   task BclkCounter(input int uartOverSamplingMethod);
     static int countbClk = 0;
+    $display("inside overclk task count value is %0d baud clock is %b",countbClk,baudClk);
     forever begin
 	@(posedge baudClk)
 	if(countbClk == (uartOverSamplingMethod/2)-1) begin
@@ -158,6 +160,7 @@ interface UartTxDriverBfm (input  bit   clk,
       	else begin
       	countbClk = countbClk+1;
       end
+      $display("COUNT IN OVER=%0d  and clk=%b",countbClk,oversamplingClk);
     end 
 endtask 
   
@@ -189,6 +192,7 @@ endtask
       tx = STOP_BIT;  
     end
   endtask 
-		
-    
+  always@(posedge oversamplingClk) 
+  $display("DATA IS BEING SENT  %b",tx);
+  
 endinterface : UartTxDriverBfm

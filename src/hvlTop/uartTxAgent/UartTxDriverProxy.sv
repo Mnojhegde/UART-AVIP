@@ -12,6 +12,8 @@ class UartTxDriverProxy extends uvm_driver#(UartTxTransaction);
   virtual UartTxDriverBfm uartTxDriverBfm;
   UartTxPacketStruct uartTxPacketStruct;
   UartTxAgentConfig uartTxAgentConfig;
+  UartTxTransaction uartTxTransaction;
+  event driverSynchronizer;  
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
@@ -47,6 +49,7 @@ function void UartTxDriverProxy :: build_phase( uvm_phase phase);
     begin 
       `uvm_fatal(get_type_name(),$sformatf("FAILED TO GET AGENT CONFIG"))
     end 
+    uartTxTransaction = UartTxTransaction :: type_id :: create("uartTxTransaction");
 endfunction : build_phase
 //--------------------------------------------------------------------------------------------
 // Task: run_phase
@@ -56,21 +59,30 @@ endfunction : build_phase
 
 task UartTxDriverProxy :: run_phase(uvm_phase phase);
   UartConfigStruct uartConfigStruct;
-  int count;
   UartTxConfigConverter::from_Class(uartTxAgentConfig , uartConfigStruct);
-  $display("The config struct is %p",uartConfigStruct);
+
+ fork
+     uartTxDriverBfm.GenerateBaudClk(uartConfigStruct);
+       join_none
+
+
 
   uartTxDriverBfm.WaitForReset();
-  fork
-    uartTxDriverBfm.GenerateBaudClk(uartConfigStruct);
-  join_none
   forever begin
-  count++;
+
+
+
   seq_item_port.get_next_item(req);
   UartTxConfigConverter::from_Class(uartTxAgentConfig , uartConfigStruct);
   UartTxSeqItemConverter :: fromTxClass(req,uartTxAgentConfig,uartTxPacketStruct);
-  `uvm_info("BFM",$sformatf("data in driver is %p",uartTxPacketStruct.transmissionData),UVM_LOW)
    uartTxDriverBfm.DriveToBfm(uartTxPacketStruct , uartConfigStruct);
+    wait(driverSynchronizer.triggered);
+     UartTxSeqItemConverter :: toTxClass(uartTxPacketStruct ,uartTxAgentConfig,uartTxTransaction);
+        foreach(uartTxTransaction.transmissionData[i])
+	    $display("SENT PACKET IS %b",uartTxTransaction.transmissionData[i]);
+
+    
+    $display("EVENT IS BEING TRIGGERED");
   seq_item_port.item_done();
   end 
 endtask : run_phase

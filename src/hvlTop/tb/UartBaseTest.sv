@@ -13,7 +13,6 @@ class UartBaseTest extends uvm_test;
   UartVirtualTransmissionSequence uartVirtualTransmissionSequence;
   UartEnvConfig           uartEnvConfig;
   UartEnv                 uartEnv;
- 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
@@ -120,7 +119,9 @@ endfunction : end_of_elaboration_phase
   uartVirtualTransmissionSequence = UartVirtualTransmissionSequence :: type_id :: create("uartVirtualTransmissionSequence");
   phase.raise_objection(this);
    uartVirtualTransmissionSequence.start(uartEnv.uartVirtualSequencer);
+   #1000;
   phase.drop_objection(this);
+
 endtask : run_phase
 
 `endif  

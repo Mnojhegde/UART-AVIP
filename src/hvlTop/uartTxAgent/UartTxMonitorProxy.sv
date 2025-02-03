@@ -10,7 +10,12 @@ class UartTxMonitorProxy extends uvm_monitor;
   `uvm_component_utils(UartTxMonitorProxy)
  
   virtual UartTxMonitorBfm uartTxMonitorBfm;
+  UartTxPacketStruct uartTxPacketStruct;
+  UartTxAgentConfig uartTxAgentConfig;
+  UartTxTransaction uartTxTransaction;
   //declaring analysis port for the monitor port
+
+  event monitorSynchronizer;
   uvm_analysis_port#(UartTxTransaction) uartTxMonitorAnalysisPort;
   
 //-------------------------------------------------------
@@ -45,6 +50,12 @@ function void UartTxMonitorProxy :: build_phase( uvm_phase phase);
    begin 
     `uvm_fatal(get_type_name(),$sformatf("FAILED TO GET VIRTUAL BFM HANDLE "))
    end 
+  if(!(uvm_config_db #(UartTxAgentConfig) :: get(this , "" , "uartTxAgentConfig",uartTxAgentConfig)))
+   begin 
+     `uvm_fatal(get_type_name(),$sformatf("FAILED TO GET AGENT CONFIG"))
+   end 
+
+   uartTxTransaction = UartTxTransaction :: type_id :: create("uartTxTransaction");
 endfunction : build_phase
     
 //--------------------------------------------------------------------------------------------
@@ -53,9 +64,26 @@ endfunction : build_phase
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
 task UartTxMonitorProxy :: run_phase(uvm_phase phase);
-  UartTxTransaction uartTxTransaction;
- 
-  `uvm_info(get_type_name(), $sformatf("Inside the TX_monitor_proxy"), UVM_LOW);
+ UartConfigStruct uartConfigStruct;
+ UartTxConfigConverter :: from_Class(uartTxAgentConfig,uartConfigStruct);
+
+ uartTxMonitorBfm.WaitForReset();
+ fork 
+   uartTxMonitorBfm.GenerateBaudClk(uartConfigStruct);
+ join_none
+ $display("****************emtering forever loop**************");
+ forever begin
+ uartTxMonitorBfm.StartMonitoring(uartTxPacketStruct , uartConfigStruct);
+ $display("**********************I AM HERE****************");
+
+
+ UartTxSeqItemConverter::toTxClass(uartTxPacketStruct , uartTxAgentConfig , uartTxTransaction);
+  foreach(uartTxTransaction.transmissionData[i])
+   $display("MONITOR HAS received %b",uartTxPacketStruct.transmissionData[i]);
+  $display("********parity result is %b*************",uartTxTransaction.parity);
+
+  ->monitorSynchronizer;
+ end 
 endtask : run_phase
 `endif
  

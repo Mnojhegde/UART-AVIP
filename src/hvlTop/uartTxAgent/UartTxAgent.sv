@@ -26,7 +26,8 @@ class UartTxAgent extends uvm_component;
   // Variable:  uartTxSequencer
   // Declaring handle for uart sequencer
   UartTxSequencer uartTxSequencer;
-
+  
+  event synchronizer;
   //Analysis port
   uvm_analysis_port #(UartTxTransaction) uartTxAgentAnalysisPort;
 
@@ -64,10 +65,12 @@ function void UartTxAgent :: build_phase( uvm_phase phase);
     `uvm_fatal(get_type_name(),$sformatf("FAILED TO OBTAIN AGENT CONFIG"))
 
   uartTxMonitorProxy = UartTxMonitorProxy :: type_id :: create("uartTxMonitorProxy",this);
+  uartTxMonitorProxy.monitorSynchronizer = synchronizer;
   if(uartTxAgentConfig.is_active == UVM_ACTIVE)
     begin 
       uartTxDriverProxy = UartTxDriverProxy :: type_id :: create("uartTxDriverProxy",this);
       uartTxSequencer = UartTxSequencer :: type_id :: create("uartTxSequencer",this);
+      uartTxDriverProxy.driverSynchronizer = synchronizer;
     end 
   
   if(uartTxAgentConfig.hasCoverage == 1)

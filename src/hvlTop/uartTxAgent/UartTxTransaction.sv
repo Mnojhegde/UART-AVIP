@@ -8,8 +8,8 @@ class UartTxTransaction extends uvm_sequence_item;
    //register with factory so we can override with uvm method in future if necessary.
    `uvm_object_utils(UartTxTransaction)
    //input signals
-   rand bit[DATA_WIDTH-1 : 0]transmissionData[];
-   bit parity;
+   rand logic[DATA_WIDTH-1 : 0]transmissionData[];
+   bit [NO_OF_PACKETS-1:0]parity;
    
    rand bit[31:0] baud_rate;
    rand bit[4:0] oversample;
@@ -17,9 +17,8 @@ class UartTxTransaction extends uvm_sequence_item;
    //-------------------------------------------------------
    // constraints for uart
    //-------------------------------------------------------
-   constraint set_number_of_transmissionn_range{ soft transmissionData.size() <= NO_OF_PACKETS;}
+   constraint set_number_of_transmissionn_range{ soft transmissionData.size() ==1;}
    constraint set_transmissionData_range{ foreach(transmissionData[i]) transmissionData[i] inside{[1:$]};}
-   
    //-------------------------------------------------------
    // Externally defined Tasks and Functions
    //-------------------------------------------------------
