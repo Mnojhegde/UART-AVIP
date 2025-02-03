@@ -143,23 +143,23 @@ interface UartTxMonitorBfm (input  bit   clk,
   //  converts serial data to parallel
   //-------------------------------------------------------
 
- // task Deserializer(output UartTxPacketStruct uartTxPacketStruct, input UartConfigStruct uartConfigStruct);
- //   static int total_transmission = NO_OF_PACKETS;
- //    for(int transmission_number=0 ; transmission_number < total_transmission; transmission_number++)begin 
-//       @(negedge tx);
- //      for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
- //    	@(posedge oversamplingClk or negedge oversamplingClk) begin
- //          uartTxPacketStruct.transmissionData[transmission_number][i] = tx;
- //        end
- //      end
+  // task Deserializer(output UartTxPacketStruct uartTxPacketStruct, input UartConfigStruct uartConfigStruct);
+  //   static int total_transmission = NO_OF_PACKETS;
+  //    for(int transmission_number=0 ; transmission_number < total_transmission; transmission_number++)begin 
+  //       @(negedge tx);
+  //      for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
+  //    	@(posedge oversamplingClk or negedge oversamplingClk) begin
+  //          uartTxPacketStruct.transmissionData[transmission_number][i] = tx;
+  //        end
+  //      end
 
-//if(uartConfigStruct.uartParityEnable ==1) begin   
-//	   @(posedge oversamplingClk)
-//	   parityCheck(uartTxPacketStruct, tx, transmission_number);
-//   end
+  //if(uartConfigStruct.uartParityEnable ==1) begin   
+  //	   @(posedge oversamplingClk)
+  //	   parityCheck(uartTxPacketStruct, tx, transmission_number);
+  //   end
 	
- // @(posedge oversamplingClk) begin
-//	StopBitCheck (uartTxPacketStruct,tx,transmission_number );
+  // @(posedge oversamplingClk) begin
+  //	StopBitCheck (uartTxPacketStruct,tx,transmission_number );
   //  end
   //	end
   //	endtask
