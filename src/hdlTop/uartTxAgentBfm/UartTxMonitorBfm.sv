@@ -151,6 +151,7 @@ endtask
   //  converts serial data to parallel
   //-------------------------------------------------------
 
+<<<<<<< HEAD
   task Deserializer(inout UartTxPacketStruct uartTxPacketStruct, inout UartConfigStruct uartConfigStruct);
     static int total_transmission = NO_OF_PACKETS;
      for(int transmission_number=0 ; transmission_number < total_transmission; transmission_number++)begin 
@@ -176,6 +177,28 @@ endtask
 initial begin 
 $monitor("DATA IS BEING RECEIVED %b",tx);
 end 
+=======
+  // task Deserializer(output UartTxPacketStruct uartTxPacketStruct, input UartConfigStruct uartConfigStruct);
+  //   static int total_transmission = NO_OF_PACKETS;
+  //    for(int transmission_number=0 ; transmission_number < total_transmission; transmission_number++)begin 
+  //       @(negedge tx);
+  //      for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
+  //    	@(posedge oversamplingClk or negedge oversamplingClk) begin
+  //          uartTxPacketStruct.transmissionData[transmission_number][i] = tx;
+  //        end
+  //      end
+
+  //if(uartConfigStruct.uartParityEnable ==1) begin   
+  //	   @(posedge oversamplingClk)
+  //	   parityCheck(uartTxPacketStruct, tx, transmission_number);
+  //   end
+	
+  // @(posedge oversamplingClk) begin
+  //	StopBitCheck (uartTxPacketStruct,tx,transmission_number );
+  //  end
+  //	end
+  //	endtask
+>>>>>>> 56bf2272c1be53356ecee023256ea2da8448cd68
 
   //-------------------------------------------------------
   // Task: StopBitCheck

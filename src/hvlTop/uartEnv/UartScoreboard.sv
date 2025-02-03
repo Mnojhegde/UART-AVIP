@@ -81,6 +81,23 @@ endfunction : connect_phase
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
 task UartScoreboard :: run_phase(uvm_phase phase);
+super.run_phase(phase);
+  
+  forever begin
+    `uvm_info(get_type_name(),$sformatf("before calling analysis fifo get method"),UVM_HIGH)
+    fork 
+      begin
+        uartScoreboardTxAnalysisExport.get(uartTxTransaction);
+        foreach(uartTxTransaction.txData[i]) begin
+          txData.push_back(uartTxTransaction.txData[i]);
+          `uvm_info(get_type_name(),$sformatf("Printing txData[%p]= %p", i, txData[i]),UVM_HIGH)
+        end
+        uartScoreboardRxAnalysisFifo.get(uartRxTransaction);
+        foreach(uartRxTransaction.rxData[i]) begin
+          rxData.push_back(uartRxTransaction.rxData[i]);
+          `uvm_info(get_type_name(),$sformatf("printing rxData[%p]=%p", i, rxData[i]),UVM_HIGH)
+        end
+        endtask
 
 endtask : run_phase
 
