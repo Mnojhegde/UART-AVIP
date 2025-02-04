@@ -6,10 +6,10 @@ package UartGlobalPkg;
   parameter DATA_WIDTH=8;
 
   // No. of packets to be transferred
-  parameter NO_OF_PACKETS = 100; 
+  parameter NO_OF_PACKETS = 50;
 
   // can enable or disable parity
-  parameter PARITY_ENABLED = 1'b 0;
+  parameter PARITY_ENABLED = 1'b 1;
 
   // indicates start bit
   parameter START_BIT = 0;
@@ -38,8 +38,8 @@ package UartGlobalPkg;
                         EIGHT_BIT=8} DATA_TYPE_E;
 
    // required Tx and Rx struct packet
-  typedef struct packed { logic[NO_OF_PACKETS -1 :0][DATA_WIDTH-1:0] transmissionData; bit parity;bit[NO_OF_PACKETS -1 :0]parityResult;} UartTxPacketStruct;
-  typedef struct packed { bit[NO_OF_PACKETS -1 :0][DATA_WIDTH-1:0] receivingData; bit parity;} UartRxPacketStruct;
+  typedef struct packed { bit[NO_OF_PACKETS -1 :0][DATA_WIDTH-1:0] transmissionData; bit [NO_OF_PACKETS-1:0]parity; bit [NO_OF_PACKETS-1:0]parity_error; bit [NO_OF_PACKETS-1:0]breaking_error; bit [NO_OF_PACKETS-1:0]overrun_error;} UartTxPacketStruct;
+  typedef struct packed { bit[NO_OF_PACKETS -1 :0][DATA_WIDTH-1:0] receivingData; bit [NO_OF_PACKETS-1:0]parity; bit [NO_OF_PACKETS-1:0]parity_error; bit [NO_OF_PACKETS-1:0]breaking_error; bit [NO_OF_PACKETS-1:0]overrun_error;} UartRxPacketStruct;
   typedef struct packed {OVER_SAMPLING_E uartOverSamplingMethod ; BAUD_RATE_E uartBaudRate; DATA_TYPE_E uartDataType;PARITY_TYPE_E uartParityType; bit uartParityEnable; bit uartParityErrorInjection;}UartConfigStruct;
 
 endpackage : UartGlobalPkg
