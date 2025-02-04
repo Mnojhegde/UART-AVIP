@@ -101,6 +101,7 @@ phase.drop_objection(this);
 	   foreach(uartTxTransaction.transmissionData[i])
 	      $display("MONITOR HAS received %b",uartTxPacketStruct.transmissionData[i]);
 	        $display("********parity result is %b*************",uartTxTransaction.parity);
+	      ->monitorSynchronizer;
        end 
   end 
  join_any
