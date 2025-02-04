@@ -1,6 +1,7 @@
 # vsim -vopt work.HvlTop work.HdlTop -voptargs="+acc=npr" -assertdebug "+UVM_TESTNAME=UartBaseTest" "+UVM_VERBOSITY=UVM_MEDIUM" "+define+UartBaseTest" -l UartBaseTest/UartBaseTest.log -sva -coverage -c -do "log -r /*; add wave -r /*; coverage save -onexit -assert -directive -cvg -codeAll UartBaseTest/UartBaseTest_coverage.ucdb; run -all; exit" -wlf UartBaseTest/waveform.wlf 
-# Start time: 12:05:11 on Feb 04,2025
-# ** Note: (vsim-8009) Loading existing optimized design _opt
+# Start time: 14:24:23 on Feb 04,2025
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: ../../src/hvlTop/tb/UartBaseTest.sv(75): (vopt-2240) Treating stand-alone use of function 'randomize' as an implicit VOID cast.
 # //  Questa Sim
 # //  Version 10.6c linux Jul 25 2017
 # //
@@ -161,17 +162,29 @@
 # ----------------------------------------------------------------------------------------------------------------------------------------------------
 # Name                           Type               Size  Value                                                                                       
 # ----------------------------------------------------------------------------------------------------------------------------------------------------
-# req                            UartTxTransaction  -     @1020                                                                                       
+# req                            UartTxTransaction  -     @1021                                                                                       
 #   begin_time                   time               64    1100                                                                                        
 #   depth                        int                32    'd3                                                                                         
 #   parent sequence (name)       string             18    uartTxBaseSequence                                                                          
 #   parent sequence (full name)  string             92    uvm_test_top.uartEnv.uartVirtualSequencer.uartVirtualTransmissionSequence.uartTxBaseSequence
 #   sequencer                    string             48    uvm_test_top.uartEnv.uartTxAgent.uartTxSequencer                                            
 #   transmissionData[0]          integral           8     'b100000                                                                                    
+#   transmissionData[1]          integral           8     'b10100010                                                                                  
+#   transmissionData[2]          integral           8     'b10111011                                                                                  
+#   transmissionData[3]          integral           8     'b1001000                                                                                   
+#   transmissionData[4]          integral           8     'b1100101                                                                                   
+#   transmissionData[5]          integral           8     'b1011111                                                                                   
+#   transmissionData[6]          integral           8     'b1000010                                                                                   
+#   transmissionData[7]          integral           8     'b10101010                                                                                  
+#   transmissionData[8]          integral           8     'b11010001                                                                                  
+#   transmissionData[9]          integral           8     'b11100000                                                                                  
+#   transmissionData[10]         integral           8     'b1010001                                                                                   
+#   transmissionData[11]         integral           8     'b1100100                                                                                   
+#   transmissionData[12]         integral           8     'b111100                                                                                    
 #   parity                       integral           5     'b0                                                                                         
 # ----------------------------------------------------------------------------------------------------------------------------------------------------
 # UVM_INFO ../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv(135) @ 1100: reporter [UART_TRANSMITTER_DRIVER_BFM] data_packet=
-# '{transmissionData:'{x, x, x, x, X}, parity:0, parityResult:0}
+# '{transmissionData:'{X, X, X, X, X}, parity:0, parityResult:0}
 # UVM_INFO ../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv(136) @ 1100: reporter [UART_TRANSMITTER_DRIVER_BFM] DRIVE TO BFM TASK
 # inside overclk task count value is 0 baud clock is 0
 # DATA IS BEING SENT  1
@@ -191,73 +204,72 @@
 # DATA IS BEING SENT  1
 # DATA IS BEING RECEIVED 0
 # DATA IS BEING SENT  0
-# tx here is x
-# DATA IS BEING RECEIVED x
-# DATA IS BEING SENT  x
-# tx here is x
-# DATA IS BEING SENT  x
-# tx here is x
-# DATA IS BEING SENT  x
-# tx here is x
-# DATA IS BEING SENT  x
-# tx here is x
-# DATA IS BEING SENT  x
+# tx here is 0
+# DATA IS BEING SENT  0
+# tx here is 1
+# DATA IS BEING RECEIVED 1
+# DATA IS BEING SENT  1
+# tx here is 0
+# DATA IS BEING RECEIVED 0
+# DATA IS BEING SENT  0
+# tx here is 0
+# DATA IS BEING SENT  0
+# tx here is 0
+# DATA IS BEING SENT  0
 # DATA IS BEING RECEIVED 1
 # DATA IS BEING SENT  1
 # DATA IS BEING RECEIVED 0
 # DATA IS BEING SENT  0
-# tx here is x
-# DATA IS BEING RECEIVED x
-# DATA IS BEING SENT  x
-# tx here is x
-# DATA IS BEING SENT  x
-# tx here is x
-# DATA IS BEING SENT  x
-# tx here is x
-# DATA IS BEING SENT  x
-# tx here is x
-# DATA IS BEING SENT  x
+# tx here is 1
+# DATA IS BEING RECEIVED 1
+# DATA IS BEING SENT  1
+# tx here is 1
+# DATA IS BEING SENT  1
+# tx here is 0
+# DATA IS BEING RECEIVED 0
+# DATA IS BEING SENT  0
+# tx here is 1
+# DATA IS BEING RECEIVED 1
+# DATA IS BEING SENT  1
+# tx here is 1
+# DATA IS BEING SENT  1
+# DATA IS BEING SENT  1
+# DATA IS BEING RECEIVED 0
+# DATA IS BEING SENT  0
+# tx here is 0
+# DATA IS BEING SENT  0
+# tx here is 0
+# DATA IS BEING SENT  0
+# tx here is 0
+# DATA IS BEING SENT  0
+# tx here is 1
+# DATA IS BEING RECEIVED 1
+# DATA IS BEING SENT  1
+# tx here is 0
+# DATA IS BEING RECEIVED 0
+# DATA IS BEING SENT  0
 # DATA IS BEING RECEIVED 1
 # DATA IS BEING SENT  1
 # DATA IS BEING RECEIVED 0
 # DATA IS BEING SENT  0
-# tx here is x
-# DATA IS BEING RECEIVED x
-# DATA IS BEING SENT  x
-# tx here is x
-# DATA IS BEING SENT  x
-# tx here is x
-# DATA IS BEING SENT  x
-# tx here is x
-# DATA IS BEING SENT  x
-# tx here is x
-# DATA IS BEING SENT  x
+# tx here is 1
 # DATA IS BEING RECEIVED 1
 # DATA IS BEING SENT  1
+# tx here is 0
 # DATA IS BEING RECEIVED 0
 # DATA IS BEING SENT  0
-# tx here is x
-# DATA IS BEING RECEIVED x
-# DATA IS BEING SENT  x
-# tx here is x
-# DATA IS BEING SENT  x
-# tx here is x
-# DATA IS BEING SENT  x
-# tx here is x
-# DATA IS BEING SENT  x
-# tx here is x
-# DATA IS BEING SENT  x
+# tx here is 1
 # DATA IS BEING RECEIVED 1
-# **********************I AM HERE****************
-# MONITOR HAS received xxx00000
-# MONITOR HAS received xxxxxxxx
-# MONITOR HAS received xxxxxxxx
-# MONITOR HAS received xxxxxxxx
-# MONITOR HAS received xxxxxxxx
-# ********parity result is 00000*************
-# UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_objection.svh(1268) @ 3641900: reporter [TEST_DONE] 'run' phase is ready to proceed to the 'extract' phase
-# UVM_INFO ../../src/hvlTop/uartRxAgent/UartRxCoverage.sv(105) @ 3641900: uvm_test_top.uartEnv.uartRxAgent.uartRxCoverage [UartRxCoverage] UART RX Agent Coverage = 0.00 %
-# UVM_INFO ../../src/hvlTop/uartTxAgent//UartTxCoverage.sv(98) @ 3641900: uvm_test_top.uartEnv.uartTxAgent.uartTxCoverage [UartTxCoverage] UART TX Agent Coverage = 0.00 %
+# DATA IS BEING SENT  1
+# tx here is 0
+# DATA IS BEING RECEIVED 0
+# DATA IS BEING SENT  0
+# tx here is 0
+# DATA IS BEING SENT  0
+# DATA IS BEING RECEIVED 1
+# UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_objection.svh(1268) @ 3640300: reporter [TEST_DONE] 'run' phase is ready to proceed to the 'extract' phase
+# UVM_INFO ../../src/hvlTop/uartRxAgent/UartRxCoverage.sv(105) @ 3640300: uvm_test_top.uartEnv.uartRxAgent.uartRxCoverage [UartRxCoverage] UART RX Agent Coverage = 0.00 %
+# UVM_INFO ../../src/hvlTop/uartTxAgent//UartTxCoverage.sv(98) @ 3640300: uvm_test_top.uartEnv.uartTxAgent.uartTxCoverage [UartTxCoverage] UART TX Agent Coverage = 0.00 %
 # 
 # --- UVM Report Summary ---
 # 
@@ -282,7 +294,7 @@
 # [uart transmitter agent bfm]     2
 # [uvm_sequence_base]     2
 # ** Note: $finish    : /tools/mentor/questasim_10.6c/questasim/linux/../verilog_src/uvm-1.1d/src/base/uvm_root.svh(430)
-#    Time: 3641900 ps  Iteration: 54  Instance: /HvlTop
+#    Time: 3640300 ps  Iteration: 54  Instance: /HvlTop
 # Saving coverage database on exit...
-# End time: 12:05:13 on Feb 04,2025, Elapsed time: 0:00:02
-# Errors: 0, Warnings: 10
+# End time: 14:24:30 on Feb 04,2025, Elapsed time: 0:00:07
+# Errors: 0, Warnings: 11

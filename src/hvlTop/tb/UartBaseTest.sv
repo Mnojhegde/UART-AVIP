@@ -81,7 +81,7 @@ endfunction : setupUartEnvConfig
   uartEnvConfig.uartTxAgentConfig.uartDataType = FIVE_BIT;
   uartEnvConfig.uartTxAgentConfig.uartParityType = EVEN_PARITY;
   uartEnvConfig.uartTxAgentConfig.parityErrorInjection = 0;
-  uvm_config_db #(UartTxAgentConfig) :: set(this,"*", "uartTxAgentConfig",uartEnvConfig.uartTxAgentConfig);
+  uvm_config_db #(UartTxAgentConfig) :: set(null,"*", "uartTxAgentConfig",uartEnvConfig.uartTxAgentConfig);
 
 endfunction : setupUartTxAgentConfig
    
@@ -95,7 +95,7 @@ endfunction : setupUartTxAgentConfig
   uartEnvConfig.uartRxAgentConfig.is_active = UVM_PASSIVE;
   uartEnvConfig.uartRxAgentConfig.hasCoverage = 1;
   uartEnvConfig.uartRxAgentConfig.hasParity = PARITY_ENABLED;
-  uvm_config_db#(UartRxAgentConfig) :: set(this, "*" , "uartRxAgentConfig", uartEnvConfig.uartRxAgentConfig);
+  uvm_config_db#(UartRxAgentConfig) :: set(null, "*" , "uartRxAgentConfig", uartEnvConfig.uartRxAgentConfig);
 
 endfunction : setupUartRxAgentConfig
    
@@ -123,7 +123,7 @@ endfunction : end_of_elaboration_phase
   uartVirtualTransmissionSequence = UartVirtualTransmissionSequence :: type_id :: create("uartVirtualTransmissionSequence");
   phase.raise_objection(this);
    uartVirtualTransmissionSequence.start(uartEnv.uartVirtualSequencer);
-   #1700;
+   #100;
   phase.drop_objection(this);
 
 endtask : run_phase

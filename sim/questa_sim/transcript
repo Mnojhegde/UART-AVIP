@@ -15,3 +15,4 @@
 # UartBaseTest/waveform.wlf opened as dataset "waveform"
 add wave -position insertpoint waveform:/HdlTop/uartTxAgentBfm/uartTxDriverBfm/*
 add wave -position insertpoint waveform:/HdlTop/uartTxAgentBfm/uartTxMonitorBfm/*
+quit

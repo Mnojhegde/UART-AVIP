@@ -187,11 +187,21 @@ endtask
 	  @(posedge oversamplingClk)
 	  tx =~^(uartTxPacketStruct.transmissionData[transmission_number]);
         end 
+       end
+       else begin 
+         if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
+	   @(posedge oversamplingClk)
+	   tx = ~^(uartTxPacketStruct.transmissionData[transmission_number]);
+         end 
+	 else if(uartConfigStruct.uartParityType == ODD_PARITY) begin
+           @(posedge oversamplingClk)
+           tx =^(uartTxPacketStruct.transmissionData[transmission_number]);
+	 end 
        end 
       end 
       @(posedge oversamplingClk)
       tx = STOP_BIT;  
-    end
+    end//packet for
   endtask 
   always@(posedge oversamplingClk) 
   $display("DATA IS BEING SENT  %b",tx);

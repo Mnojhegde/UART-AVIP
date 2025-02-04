@@ -10,7 +10,7 @@ class UartVirtualTransmissionSequence extends UartVirtualBaseSequence;
   
   UartTxBaseSequence uartTxBaseSequence;
   UartRxBaseSequence uartRxBaseSequence;
-
+  UartTxAgentConfig uartTxAgentConfig;
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
@@ -42,10 +42,11 @@ task UartVirtualTransmissionSequence :: body();
   super.body();
   uartTxBaseSequence = UartTxBaseSequence :: type_id :: create("uartTxBaseSequence");
   uartRxBaseSequence = UartRxBaseSequence :: type_id :: create("uartRxBaseSequence");
-
+  if(!(uvm_config_db#(UartTxAgentConfig) :: get(null,"","uartTxAgentConfig",uartTxAgentConfig)))
+    `uvm_fatal("[VIRTUAL SEQUENCE]",$sformatf("failed to get the config"))
   begin 
  //   uartTxBaseSequence.start(p_sequencer.uartTxSequencer);
-     `uvm_do_on_with(uartTxBaseSequence , p_sequencer.uartTxSequencer,{array_size ==1;})
+     `uvm_do_on_with(uartTxBaseSequence , p_sequencer.uartTxSequencer,{array_size ==uartTxAgentConfig.packetsNeeded;})
  //  uartRxBaseSequence.start(p_sequencer.uartRxSequencer);
   end 
 
