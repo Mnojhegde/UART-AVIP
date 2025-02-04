@@ -93,6 +93,7 @@ fork
         UartTxConfigConverter::from_Class(uartTxAgentConfig , uartConfigStruct);
 	  UartTxSeqItemConverter :: fromTxClass(req,uartTxAgentConfig,uartTxPacketStruct);
 	     uartTxDriverBfm.DriveToBfm(uartTxPacketStruct , uartConfigStruct);
+	    wait(driverSynchronizer.triggered);
 	     seq_item_port.item_done();
   end
   end 
