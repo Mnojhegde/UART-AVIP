@@ -92,10 +92,16 @@ endfunction : setupUartTxAgentConfig
 //--------------------------------------------------------------------------------------------
  function void UartBaseTest :: setupUartRxAgentConfig();
   uartEnvConfig.uartRxAgentConfig = UartRxAgentConfig :: type_id :: create("uartRxAgentConfig");
+  uartEnvConfig.uartRxAgentConfig.randomize() with{packetsNeeded inside {[5:15]};};
   uartEnvConfig.uartRxAgentConfig.is_active = UVM_PASSIVE;
   uartEnvConfig.uartRxAgentConfig.hasCoverage = 1;
   uartEnvConfig.uartRxAgentConfig.hasParity = PARITY_ENABLED;
-  uvm_config_db#(UartRxAgentConfig) :: set(null, "*" , "uartRxAgentConfig", uartEnvConfig.uartRxAgentConfig);
+  uartEnvConfig.uartRxAgentConfig.uartOverSamplingMethod = OVERSAMPLING_16;
+  uartEnvConfig.uartRxAgentConfig.uartBaudRate = BAUD_9600;
+  uartEnvConfig.uartRxAgentConfig.uartDataType = FIVE_BIT;
+  uartEnvConfig.uartRxAgentConfig.uartParityType = EVEN_PARITY;
+  uartEnvConfig.uartRxAgentConfig.parityErrorInjection = 0;
+  uvm_config_db #(UartRxAgentConfig) :: set(null,"*", "uartRxAgentConfig",uartEnvConfig.uartRxAgentConfig);
 
 endfunction : setupUartRxAgentConfig
    
