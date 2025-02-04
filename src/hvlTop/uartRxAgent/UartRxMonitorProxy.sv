@@ -13,6 +13,9 @@ class UartRxMonitorProxy extends uvm_monitor;
   // Handle for receiver monitor bfm
   virtual UartRxMonitorBfm uartRxMonitorBfm;
 
+  UartRxAgentConfig uartRxAgentConfig;
+  UartRxPacketStruct uartRxPacketStruct;
+
   //Declaring Monitor Analysis Import
   uvm_analysis_port#(UartRxTransaction) uartRxMonitorAnalysisPort;
 
@@ -48,7 +51,11 @@ function void UartRxMonitorProxy :: build_phase( uvm_phase phase);
   super.build_phase(phase);
   if(!(uvm_config_db #(virtual UartRxMonitorBfm) :: get(this, "" , "uartRxMonitorBfm",uartRxMonitorBfm))) begin 
     `uvm_fatal(get_type_name(),$sformatf("FAILED TO GET VIRTUAL BFM HANDLE "))
-  end 
+  end
+  if(!(uvm_config_db #(UartRxAgentConfig) :: get(this, "" ,"uartRxAgentConfig",uartRxAgentConfig)))
+    begin 
+      `uvm_fatal(get_type_name(),$sformatf("FAILED TO GET AGENT CONFIG"))
+    end  
 endfunction : build_phase
 
 //--------------------------------------------------------------------------------------------
@@ -61,8 +68,30 @@ endfunction : build_phase
     
 task UartRxMonitorProxy :: run_phase(uvm_phase phase);
   UartRxTransaction uartRxTransaction;
-  `uvm_info(get_type_name(), $sformatf("Inside the RX_monitor_proxy"), UVM_LOW);
+  UartConfigStruct uartConfigStruct;
+
   uartRxTransaction = UartRxTransaction::type_id::create("uartRxTransaction");
-  	
+  
+  UartRxConfigConverter::from_Class(uartRxAgentConfig , uartConfigStruct);
+   uartRxMonitorBfm.WaitForReset();
+  
+  fork 
+       uartRxMonitorBfm.GenerateBaudClk(uartConfigStruct);
+   join_none
+
+   forever begin
+     UartRxSeqItemConverter :: fromRxClass(uartRxTransaction,uartRxAgentConfig,uartRxPacketStruct);
+     UartRxConfigConverter::from_Class(uartRxAgentConfig , uartConfigStruct);
+     uartRxMonitorBfm.Deserializer(uartRxPacketStruct, uartConfigStruct);
+
+     UartRxSeqItemConverter::toRxClass(uartRxPacketStruct,uartRxAgentConfig,uartRxTransaction);
+
+     `uvm_info("Rx_Monitor_BFM",$sformatf("data in Rx monitor proxy is %p",uartRxTransaction.receivingData),UVM_LOW)
+     `uvm_info("Rx_Monitor_BFM",$sformatf("parity in Rx monitor proxy is %p",uartRxTransaction.parity),UVM_LOW)
+      
+     uartRxMonitorAnalysisPort.write(uartRxTransaction);
+   
+   end
+
 endtask : run_phase
 `endif
