@@ -6,7 +6,7 @@ package UartGlobalPkg;
   parameter DATA_WIDTH=8;
 
   // No. of packets to be transferred
-  parameter NO_OF_PACKETS = 5;
+  parameter NO_OF_PACKETS = 100; 
 
   // can enable or disable parity
   parameter PARITY_ENABLED = 1'b 0;

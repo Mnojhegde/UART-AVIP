@@ -1,8 +1,8 @@
 var g_data = {
 b79:[{dummy:0},
 {anchor:'cvg80',items:[{z:'        if(count == (baudDivisor-1))begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'105',c:'G',p:'100.00'}
-,{cr:'c',t:'I',z:'        if(count == (baudDivisor-1))begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'105',h:'1103',c:'g'}
-,{cr:'c',t:'E',z:'        else begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'109',h:'35297',c:'g'}
+,{cr:'c',t:'I',z:'        if(count == (baudDivisor-1))begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'105',h:'2671',c:'g'}
+,{cr:'c',t:'E',z:'        else begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'109',h:'85473',c:'g'}
 ]}],
 b81:[{dummy:0},
 {anchor:'cvg82',items:[{z:'	  `uvm_info(name,$sformatf(&#34;RESET DETECTED&#34;),UVM_LOW);',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'123',c:'Y',p:'50.00'}
@@ -24,13 +24,13 @@ b84:[{dummy:0},
 ]}],
 b87:[{dummy:0},
 {anchor:'cvg88',items:[{z:'	if(countbClk == (uartOverSamplingMethod/2)-1) begin',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'155',c:'G',p:'100.00'}
-,{cr:'c',t:'I',z:'	if(countbClk == (uartOverSamplingMethod/2)-1) begin',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'155',h:'69',c:'g'}
-,{cr:'c',t:'E',z:'      	else begin',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'159',h:'483',c:'g'}
+,{cr:'c',t:'I',z:'	if(countbClk == (uartOverSamplingMethod/2)-1) begin',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'155',h:'167',c:'g'}
+,{cr:'c',t:'E',z:'      	else begin',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'159',h:'1169',c:'g'}
 ]}],
 b89:[{dummy:0},
 {anchor:'cvg90',items:[{z:'      if(uartConfigStruct.uartParityEnable ==1) begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'180',c:'Y',p:'50.00'}
 ,{cr:'m',t:'I',z:'      if(uartConfigStruct.uartParityEnable ==1) begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'180',h:'0',c:'r'}
-,{cr:'c',t:'A',z:'      if(uartConfigStruct.uartParityEnable ==1) begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'180',h:'5',c:'g'}
+,{cr:'c',t:'A',z:'      if(uartConfigStruct.uartParityEnable ==1) begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'180',h:'12',c:'g'}
 ]},
 {anchor:'cvg91',items:[{z:'       if(uartConfigStruct.uartParityErrorInjection==0) begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'181',c:'R',p:'0.00'}
 ,{cr:'m',t:'I',z:'       if(uartConfigStruct.uartParityErrorInjection==0) begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'181',h:'0',c:'r'}
@@ -53,13 +53,13 @@ b38:[{dummy:0},
 ]}],
 b102:[{dummy:0},
 {anchor:'cvg103',items:[{z:'        if(count == (baudDiv-1))begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'98',c:'G',p:'100.00'}
-,{cr:'c',t:'I',z:'        if(count == (baudDiv-1))begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'98',h:'1103',c:'g'}
-,{cr:'c',t:'E',z:'        else begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'102',h:'35297',c:'g'}
+,{cr:'c',t:'I',z:'        if(count == (baudDiv-1))begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'98',h:'2671',c:'g'}
+,{cr:'c',t:'E',z:'        else begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'102',h:'85473',c:'g'}
 ]}],
 b104:[{dummy:0},
 {anchor:'cvg105',items:[{z:'	if(countbClk == (uartOverSamplingMethod/2)-1) begin',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'117',c:'G',p:'100.00'}
-,{cr:'c',t:'I',z:'	if(countbClk == (uartOverSamplingMethod/2)-1) begin',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'117',h:'69',c:'g'}
-,{cr:'c',t:'E',z:'      	else begin',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'121',h:'483',c:'g'}
+,{cr:'c',t:'I',z:'	if(countbClk == (uartOverSamplingMethod/2)-1) begin',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'117',h:'167',c:'g'}
+,{cr:'c',t:'E',z:'      	else begin',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'121',h:'1169',c:'g'}
 ]}],
 b106:[{dummy:0},
 {anchor:'cvg107',items:[{z:'    `uvm_info(name, $sformatf(&#34;system reset activated&#34;), UVM_LOW)',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'136',c:'Y',p:'50.00'}
@@ -73,7 +73,7 @@ b106:[{dummy:0},
 b110:[{dummy:0},
 {anchor:'cvg111',items:[{z:'       if(uartConfigStruct.uartParityEnable ==1) begin   ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'164',c:'Y',p:'50.00'}
 ,{cr:'m',t:'I',z:'       if(uartConfigStruct.uartParityEnable ==1) begin   ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'164',h:'0',c:'r'}
-,{cr:'c',t:'A',z:'       if(uartConfigStruct.uartParityEnable ==1) begin   ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'164',h:'5',c:'g'}
+,{cr:'c',t:'A',z:'       if(uartConfigStruct.uartParityEnable ==1) begin   ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'164',h:'12',c:'g'}
 ]}],
 b94:[{dummy:0},
 {anchor:'cvg95',items:[{z:'    `uvm_info(name, $sformatf(name),UVM_LOW)',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'62',c:'Y',p:'50.00'}
@@ -894,8 +894,8 @@ b1521:[{dummy:0},
 ]}],
 b1565:[{dummy:0},
 {anchor:'cvg1566',items:[{z:'        if(count == (baudDivisor-1))begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'105',c:'G',p:'100.00'}
-,{cr:'c',t:'I',z:'        if(count == (baudDivisor-1))begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'105',h:'1103',c:'g'}
-,{cr:'c',t:'E',z:'        else begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'109',h:'35297',c:'g'}
+,{cr:'c',t:'I',z:'        if(count == (baudDivisor-1))begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'105',h:'2671',c:'g'}
+,{cr:'c',t:'E',z:'        else begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'109',h:'85473',c:'g'}
 ]}],
 b1567:[{dummy:0},
 {anchor:'cvg1568',items:[{z:'	  `uvm_info(name,$sformatf(&#34;RESET DETECTED&#34;),UVM_LOW);',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'123',c:'Y',p:'50.00'}
@@ -917,13 +917,13 @@ b1570:[{dummy:0},
 ]}],
 b1573:[{dummy:0},
 {anchor:'cvg1574',items:[{z:'	if(countbClk == (uartOverSamplingMethod/2)-1) begin',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'155',c:'G',p:'100.00'}
-,{cr:'c',t:'I',z:'	if(countbClk == (uartOverSamplingMethod/2)-1) begin',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'155',h:'69',c:'g'}
-,{cr:'c',t:'E',z:'      	else begin',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'159',h:'483',c:'g'}
+,{cr:'c',t:'I',z:'	if(countbClk == (uartOverSamplingMethod/2)-1) begin',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'155',h:'167',c:'g'}
+,{cr:'c',t:'E',z:'      	else begin',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'159',h:'1169',c:'g'}
 ]}],
 b1575:[{dummy:0},
 {anchor:'cvg1576',items:[{z:'      if(uartConfigStruct.uartParityEnable ==1) begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'180',c:'Y',p:'50.00'}
 ,{cr:'m',t:'I',z:'      if(uartConfigStruct.uartParityEnable ==1) begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'180',h:'0',c:'r'}
-,{cr:'c',t:'A',z:'      if(uartConfigStruct.uartParityEnable ==1) begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'180',h:'5',c:'g'}
+,{cr:'c',t:'A',z:'      if(uartConfigStruct.uartParityEnable ==1) begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'180',h:'12',c:'g'}
 ]},
 {anchor:'cvg1577',items:[{z:'       if(uartConfigStruct.uartParityErrorInjection==0) begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'181',c:'R',p:'0.00'}
 ,{cr:'m',t:'I',z:'       if(uartConfigStruct.uartParityErrorInjection==0) begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv',l:'181',h:'0',c:'r'}
@@ -946,13 +946,13 @@ b8:[{dummy:0},
 ]}],
 b1588:[{dummy:0},
 {anchor:'cvg1589',items:[{z:'        if(count == (baudDiv-1))begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'98',c:'G',p:'100.00'}
-,{cr:'c',t:'I',z:'        if(count == (baudDiv-1))begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'98',h:'1103',c:'g'}
-,{cr:'c',t:'E',z:'        else begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'102',h:'35297',c:'g'}
+,{cr:'c',t:'I',z:'        if(count == (baudDiv-1))begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'98',h:'2671',c:'g'}
+,{cr:'c',t:'E',z:'        else begin ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'102',h:'85473',c:'g'}
 ]}],
 b1590:[{dummy:0},
 {anchor:'cvg1591',items:[{z:'	if(countbClk == (uartOverSamplingMethod/2)-1) begin',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'117',c:'G',p:'100.00'}
-,{cr:'c',t:'I',z:'	if(countbClk == (uartOverSamplingMethod/2)-1) begin',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'117',h:'69',c:'g'}
-,{cr:'c',t:'E',z:'      	else begin',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'121',h:'483',c:'g'}
+,{cr:'c',t:'I',z:'	if(countbClk == (uartOverSamplingMethod/2)-1) begin',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'117',h:'167',c:'g'}
+,{cr:'c',t:'E',z:'      	else begin',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'121',h:'1169',c:'g'}
 ]}],
 b1592:[{dummy:0},
 {anchor:'cvg1593',items:[{z:'    `uvm_info(name, $sformatf(&#34;system reset activated&#34;), UVM_LOW)',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'136',c:'Y',p:'50.00'}
@@ -966,7 +966,7 @@ b1592:[{dummy:0},
 b1596:[{dummy:0},
 {anchor:'cvg1597',items:[{z:'       if(uartConfigStruct.uartParityEnable ==1) begin   ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'164',c:'Y',p:'50.00'}
 ,{cr:'m',t:'I',z:'       if(uartConfigStruct.uartParityEnable ==1) begin   ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'164',h:'0',c:'r'}
-,{cr:'c',t:'A',z:'       if(uartConfigStruct.uartParityEnable ==1) begin   ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'164',h:'5',c:'g'}
+,{cr:'c',t:'A',z:'       if(uartConfigStruct.uartParityEnable ==1) begin   ',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'164',h:'12',c:'g'}
 ]}],
 b9:[{dummy:0},
 {anchor:'cvg1581',items:[{z:'    `uvm_info(name, $sformatf(name),UVM_LOW)',f:'../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv',l:'62',c:'Y',p:'50.00'}
