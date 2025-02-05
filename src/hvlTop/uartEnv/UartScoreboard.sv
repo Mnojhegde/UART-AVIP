@@ -62,6 +62,7 @@ class UartScoreboard extends uvm_scoreboard;
   extern virtual function void build_phase(uvm_phase phase);
   extern virtual function void connect_phase(uvm_phase phase);
   extern virtual task run_phase(uvm_phase phase);
+  extern task compareTxRx(UartTxTransaction uartTxTransaction,UartRxTransaction uartRxTransaction);
   // extern virtual task compareTxRx();
  endclass : UartScoreboard
  
