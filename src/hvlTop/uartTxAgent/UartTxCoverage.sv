@@ -10,41 +10,56 @@ class UartTxCoverage extends uvm_subscriber #(UartTxTransaction);
 
   //Declaring handle for tx agent configuration class 
   UartTxAgentConfig uartTxAgentConfig;
-  
+
+  //Declating a variable to store the transmission data
+  bit[DATA_WIDTH-1:0] a; 
   //-------------------------------------------------------
   // Covergroup: UartTxCovergroup
   //  Covergroup consists of the various coverpoints based on
   //  no. of the variables used to improve the coverage.
   //-------------------------------------------------------
   covergroup UartTxCovergroup with function sample (UartTxAgentConfig uartTxAgentConfig, UartTxTransaction uartTxTransaction);
-    TX_CP : coverpoint uartTxTransaction.transmissionData{
+    TX_CP : coverpoint a{
      option.comment = "tx";
-     bins UART_TX = {[1:$]};}
+     bins UART_TX  = {[0:255]};}
 
-    // DATA_WIDTH_CP : coverpoint uartTxAgentConfig.data_type{
-    //   option.comment = "data_width";
-    //   bins TRANSFER_BIT_5 = {5};
-    //   bins TRANSFER_BIT_6 = {6};
-    //   bins TRANSFER_BIT_7 = {7};
-    //   bins TRANSFER_BIT_8 = {8};
-    // }
+     DATA_WIDTH_CP : coverpoint uartTxAgentConfig.uartDataType{
+       option.comment = "data_width";
+       bins TRANSFER_BIT_5 = {5};
+       bins TRANSFER_BIT_6 = {6};
+       bins TRANSFER_BIT_7 = {7};
+       bins TRANSFER_BIT_8 = {8};
+     }
 
-    // PARITY_CP : coverpoint uartTxAgentConfig.parity_type{
-    //   option.comment = "parity_type";
-    //   bins EVEN_PARITY = {0};
-    //   bins ODD_PARITY = {1};
-    // }
+     PARITY_CP : coverpoint uartTxAgentConfig.uartParityType{
+       option.comment = "parity_type";
+       bins EVEN_PARITY = {0};
+       bins ODD_PARITY = {1};
+     }
 
     // STOP_BIT_CP : coverpoint uartTxAgentConfig.stop_bit{
-    //   option.comment = "stop bit width";
-    //   bins STOP_BIT_1 = {1};
-    //   bins STOP_BIT_2 = {2};
+     //  option.comment = "stop bit width";
+     //  bins STOP_BIT_1 = {1};
+      // bins STOP_BIT_2 = {2};
     // }
+    //
+     
+       BAUD_RATE : coverpoint uartTxAgentConfig.uartBaudRate{
+       option.comment = "baud rate";
+       bins BAUD_4800 = {4800};
+       bins BAUD_9600 = {9600};
+       bins BAUD_19200 = {19200}; }
 
-    // DATA_WIDTH_CP_PARITY_CP : cross DATA_WIDTH_CP,PARITY_CP;
+       OVER_SAMPLING : coverpoint uartTxAgentConfig.uartOverSamplingMethod{
+       option.comment = "over sampling";
+       bins OVERSAMPLING_16 = {16};
+       bins OVERSAMPLING_13 = {13};}
+
+
+     DATA_WIDTH_CP_PARITY_CP : cross DATA_WIDTH_CP,PARITY_CP;
     // DATA_WIDTH_CP_STOP_BIT_CP :cross DATA_WIDTH_CP,STOP_BIT_CP;
     
- endgroup: UartTxCovergroup
+ endgroup: UartTxCovergroup 
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
@@ -83,11 +98,17 @@ endfunction : build_phase
 // Overriding the write method declared in the parent class
 //--------------------------------------------------------------------------------------------
 function void UartTxCoverage::write(UartTxTransaction t);
-  `uvm_info(get_type_name(),$sformatf("Before calling SAMPLE METHOD"),UVM_HIGH);
+
+
+  `uvm_info(get_type_name(),$sformatf("Before calling SAMPLE METHOD"),UVM_NONE);
   foreach(t.transmissionData[i]) begin
-    UartTxCovergroup.sample(uartTxAgentConfig,t);
+    foreach(t.transmissionData[j]) begin
+      a =  t.transmissionData[j];
+     // $display("inside j a = %d  tras[%0d] = %0d",a,j,t.transmissionData[j]); 
+      UartTxCovergroup.sample(uartTxAgentConfig,t);
+    end
   end
-  `uvm_info(get_type_name(),"After calling SAMPLE METHOD",UVM_HIGH);
+`uvm_info(get_type_name(),"After calling SAMPLE METHOD",UVM_NONE);
 endfunction : write
 
 //--------------------------------------------------------------------------------------------
@@ -95,7 +116,8 @@ endfunction : write
 // Used for reporting the coverage instance percentage values
 //--------------------------------------------------------------------------------------------
 function void  UartTxCoverage::report_phase(uvm_phase phase);
-  `uvm_info(get_type_name(), $sformatf("UART TX Agent Coverage = %0.2f %%",  UartTxCovergroup.get_coverage()), UVM_NONE);
+  `uvm_info(get_type_name(), $sformatf("******************** UART TX Agent Coverage = %0.2f %% *********************",  UartTxCovergroup.get_coverage()), UVM_NONE);
 endfunction: report_phase
 
 `endif
+
