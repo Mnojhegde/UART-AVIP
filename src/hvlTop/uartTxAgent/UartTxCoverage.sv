@@ -58,6 +58,7 @@ class UartTxCoverage extends uvm_subscriber #(UartTxTransaction);
 
      DATA_WIDTH_CP_PARITY_CP : cross DATA_WIDTH_CP,PARITY_CP;
     // DATA_WIDTH_CP_STOP_BIT_CP :cross DATA_WIDTH_CP,STOP_BIT_CP;
+    BAUD_RATE_OVER_SAMPLING : cross BAUD_RATE,OVER_SAMPLING;
     
  endgroup: UartTxCovergroup 
 
