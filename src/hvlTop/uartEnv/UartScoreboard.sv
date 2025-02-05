@@ -132,6 +132,7 @@ task UartScoreboard :: run_phase(uvm_phase phase);
   join
 
   compareTxRx(uartTxTransaction,uartRxTransaction);
+  end
  
 endtask : run_phase
  
