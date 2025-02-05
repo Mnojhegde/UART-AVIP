@@ -125,10 +125,10 @@ task UartScoreboard :: run_phase(uvm_phase phase);
   fork 
     begin
       uartScoreboardTxAnalysisFifo.get(uartTxTransaction);
-      `uvm_info(get_type_name(),$sformatf("Printing transmissionData[%p]= %p",i, transmissionData[i]),UVM_HIGH)
+     `uvm_info(get_type_name(),$sformatf("Printing transmissionData= %p", uartTxTransaction.transmissionData),UVM_HIGH)
 
       uartScoreboardRxAnalysisFifo.get(uartRxTranscation);
-     `uvm_info(get_type_name(),$sformatf("Printing receivingData[%p]=%p",i, receivingData[i]),UVM_HIGH)
+     `uvm_info(get_type_name(),$sformatf("Printing transmissionData= %p", uartTxTransaction.transmissionData),UVM_HIGH)
     end
   join
 
