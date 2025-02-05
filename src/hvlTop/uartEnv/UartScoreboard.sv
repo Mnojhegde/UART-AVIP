@@ -127,6 +127,7 @@ task UartScoreboard :: run_phase(uvm_phase phase);
      uartScoreboardRxAnalysisFifo.get(uartRxTransaction);
      //uartRxTransaction.print();
      `uvm_info(get_type_name(),$sformatf("Printing receivingData = %p", uartRxTransaction.receivingData),UVM_HIGH)
+     $display("recieved packet rx in scoreboard %p",uartRxTransaction.receivingData);
      
     end
   join
