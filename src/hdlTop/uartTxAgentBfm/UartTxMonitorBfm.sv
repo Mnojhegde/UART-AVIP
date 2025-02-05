@@ -163,7 +163,7 @@ endtask
        end
        if(uartConfigStruct.uartParityEnable ==1) begin   
 	   @(posedge oversamplingClk)
-	   uartTxPacketStruct.parityResult[transmission_number] = tx;
+	   uartTxPacketStruct.parity[transmission_number] = tx;
          end
 /*	
         @(posedge oversamplingClk) begin
