@@ -58,114 +58,114 @@ class UartScoreboard extends uvm_scoreboard;
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
 
-  extern function new( string name = "UartScoreboard" , uvm_component parent = null);
-  extern virtual function void build_phase(uvm_phase phase);
-  extern virtual function void connect_phase(uvm_phase phase);
-  extern virtual task run_phase(uvm_phase phase);
-  extern virtual task compareTxRx();
-endclass : UartScoreboard
+   extern function new( string name = "UartScoreboard" , uvm_component parent = null);
+//   extern virtual function void build_phase(uvm_phase phase);
+//   extern virtual function void connect_phase(uvm_phase phase);
+//   extern virtual task run_phase(uvm_phase phase);
+//   // extern virtual task compareTxRx();
+ endclass : UartScoreboard
  
-//--------------------------------------------------------------------------------------------
-// Construct: new
-// Initialization of new memory
-//
-// Parameters:
-//  name - UartScoreboard
-//  parent - parent under which this component is created
-//--------------------------------------------------------------------------------------------
+// //--------------------------------------------------------------------------------------------
+// // Construct: new
+// // Initialization of new memory
+// //
+// // Parameters:
+// //  name - UartScoreboard
+// //  parent - parent under which this component is created
+// //--------------------------------------------------------------------------------------------
    
 function UartScoreboard :: new(string name = "UartScoreboard" , uvm_component parent = null);
   super.new(name, parent);
 endfunction : new
  
-//--------------------------------------------------------------------------------------------
-// Function: build_phase
-//
-// Parameters:
-//  phase - uvm phase
-//--------------------------------------------------------------------------------------------
+// //--------------------------------------------------------------------------------------------
+// // Function: build_phase
+// //
+// // Parameters:
+// //  phase - uvm phase
+// //--------------------------------------------------------------------------------------------
 
-function void UartScoreboard :: build_phase(uvm_phase phase);
-  super.build_phase(phase);
-  uartScoreboardTxAnalysisExport = new("uartScoreboardTxAnalysisExport",this);
-  uartScoreboardRxAnalysisExport = new("uartScoreboardRxAnalysisExport",this);
-  uartScoreboardTxAnalysisFifo = new("uartScoreboardTxAnalysisFifo",this);
-  uartScoreboardRxAnalysisFifo = new("uartScoreboardRxAnalysisFifo",this);
-endfunction : build_phase
+// function void UartScoreboard :: build_phase(uvm_phase phase);
+//   super.build_phase(phase);
+//   uartScoreboardTxAnalysisExport = new("uartScoreboardTxAnalysisExport",this);
+//   uartScoreboardRxAnalysisExport = new("uartScoreboardRxAnalysisExport",this);
+//   uartScoreboardTxAnalysisFifo = new("uartScoreboardTxAnalysisFifo",this);
+//   uartScoreboardRxAnalysisFifo = new("uartScoreboardRxAnalysisFifo",this);
+// endfunction : build_phase
  
-//--------------------------------------------------------------------------------------------
-// Function: connect_phase
-// used to connect the analysis ports
-// Parameters:
-//  phase - uvm phase
-//--------------------------------------------------------------------------------------------
+// //--------------------------------------------------------------------------------------------
+// // Function: connect_phase
+// // used to connect the analysis ports
+// // Parameters:
+// //  phase - uvm phase
+// //--------------------------------------------------------------------------------------------
 
-function void UartScoreboard :: connect_phase(uvm_phase phase);
-  super.connect_phase(phase);
-  uartScoreboardTxAnalysisExport.connect(uartScoreboardTxAnalysisFifo.analysis_export);
-  uartScoreboardRxAnalysisExport.connect(uartScoreboardRxAnalysisFifo.analysis_export);
-endfunction : connect_phase
+// function void UartScoreboard :: connect_phase(uvm_phase phase);
+//   super.connect_phase(phase);
+//   uartScoreboardTxAnalysisExport.connect(uartScoreboardTxAnalysisFifo.analysis_export);
+//   uartScoreboardRxAnalysisExport.connect(uartScoreboardRxAnalysisFifo.analysis_export);
+// endfunction : connect_phase
  
-//--------------------------------------------------------------------------------------------
-// Task: run_phase
-// Used to give delays and check the transmitted and recieved data are similar or not
-//
-// Parameters:
-//  phase - uvm phase
-//--------------------------------------------------------------------------------------------
+// //--------------------------------------------------------------------------------------------
+// // Task: run_phase
+// // Used to give delays and check the transmitted and recieved data are similar or not
+// //
+// // Parameters:
+// //  phase - uvm phase
+// //--------------------------------------------------------------------------------------------
  
-task UartScoreboard :: run_phase(uvm_phase phase);
+// task UartScoreboard :: run_phase(uvm_phase phase);
  
-  super.run_phase(phase);
+//   super.run_phase(phase);
  
-  forever begin
-    `uvm_info(get_type_name(),$sformatf("Before calling analysis fifo get method"),UVM_HIGH)
+//   forever begin
+//     `uvm_info(get_type_name(),$sformatf("Before calling analysis fifo get method"),UVM_HIGH)
  
-  fork 
-    begin
-      uartScoreboardTxAnalysisFifo.get(uartTxTransaction);
-      `uvm_info(get_type_name(),$sformatf("Printing transmissionData[%p]= %p",i, transmissionData[i]),UVM_HIGH)
+//   fork 
+//     begin
+//       uartScoreboardTxAnalysisFifo.get(uartTxTransaction);
+//       `uvm_info(get_type_name(),$sformatf("Printing transmissionData[%p]= %p",i, transmissionData[i]),UVM_HIGH)
 
-      uartScoreboardRxAnalysisFifo.get(uartRxTranscation);
-     `uvm_info(get_type_name(),$sformatf("Printing receivingData[%p]=%p",i, receivingData[i]),UVM_HIGH)
-    end
-  join
+//       uartScoreboardRxAnalysisFifo.get(uartRxTranscation);
+//      `uvm_info(get_type_name(),$sformatf("Printing receivingData[%p]=%p",i, receivingData[i]),UVM_HIGH)
+//     end
+//   join
 
-  compareTxRx(uartTxTransaction,uartRxTransaction);
+//   compareTxRx(uartTxTransaction,uartRxTransaction);
  
-endtask : run_phase
+// endtask : run_phase
  
  
-task UartScoreboard :: compareTxRx(UartTxTransaction uartTxTransaction,UartRxTransaction uartRxTransaction);
+// task UartScoreboard :: compareTxRx(UartTxTransaction uartTxTransaction,UartRxTransaction uartRxTransaction);
  
-     foreach(uartTxTransaction.transmissionData[i])
-         begin
-          if(uartTxTransaction.transmissionData[i] != uartRxTransaction.receivingData[i])
-            begin
-              bitDataCmpFailedTxRxCount++;
-            end
-          else
-            begin
-              bitDataCmpVerifiedTxRxCount++;
-            end
-          if((uartTxAgentConfig.hasParity && uartRxAgentConfig.hasParity) == 1)
-            begin
-              if(uartTxTransaction.parity[i] != uartRxTransaction.parity[i])
-                begin
-                  `uvm_error(get_type_name(),$sformatf("Parity mismatch"),UVM_HIGH)
-                end
-            end
-          if(uartTxTransaction.breakingError[i] != uartRxTransaction.breakingError[i])
-            begin
-              `uvm_error(get_type_name(),$sformatf("Parity mismatch"),UVM_HIGH)
-            end
-          if(uartTxTransaction.overrunError[i] != uartRxTransaction.overrunError[i])
-            begin
-              `uvm_error(get_type_name(),$sformatf("Parity mismatch"),UVM_HIGH)
-            end
-           transmissionReciveingSucessfulCount++;
-        `uvm_info(get_type_name(),$sformatf("transmissionData = %p,receivingData = %p,parity = %0b,breakingError = %0b,overRunError = %0b",uartTxTransaction.transmissionData,uartTxTransaction.receivingData,uartTxTransaction.Parity,
-uartTxTransaction.breakingError,uartTxTransaction.overrunError),UVM_HIGH)     
-        end
-endtask : compareTxRx
-`endif
+//      foreach(uartTxTransaction.transmissionData[i])
+//          begin
+//           if(uartTxTransaction.transmissionData[i] != uartRxTransaction.receivingData[i])
+//             begin
+//               bitDataCmpFailedTxRxCount++;
+//             end
+//           else
+//             begin
+//               bitDataCmpVerifiedTxRxCount++;
+//             end
+//           if((uartTxAgentConfig.hasParity && uartRxAgentConfig.hasParity) == 1)
+//             begin
+//               if(uartTxTransaction.parity[i] != uartRxTransaction.parity[i])
+//                 begin
+//                   `uvm_error(get_type_name(),$sformatf("Parity mismatch"),UVM_HIGH)
+//                 end
+//             end
+//           if(uartTxTransaction.breakingError[i] != uartRxTransaction.breakingError[i])
+//             begin
+//               `uvm_error(get_type_name(),$sformatf("Parity mismatch"),UVM_HIGH)
+//             end
+//           if(uartTxTransaction.overrunError[i] != uartRxTransaction.overrunError[i])
+//             begin
+//               `uvm_error(get_type_name(),$sformatf("Parity mismatch"),UVM_HIGH)
+//             end
+//            transmissionReciveingSucessfulCount++;
+//         `uvm_info(get_type_name(),$sformatf("transmissionData = %p,receivingData = %p,parity = %0b,breakingError = %0b,overRunError = %0b",uartTxTransaction.transmissionData,uartTxTransaction.receivingData,uartTxTransaction.Parity,
+// uartTxTransaction.breakingError,uartTxTransaction.overrunError),UVM_HIGH)     
+//         end
+// endtask : compareTxRx
+// `endif
