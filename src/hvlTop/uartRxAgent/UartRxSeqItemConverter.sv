@@ -63,4 +63,5 @@ endfunction : fromRxClass
     end
     uartRxTransaction.parity[receiving_number] = uartRxPacketStruct.parity[receiving_number];
   end
+  endfunction
 `endif
