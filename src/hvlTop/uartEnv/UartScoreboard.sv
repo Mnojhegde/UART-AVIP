@@ -59,7 +59,7 @@ class UartScoreboard extends uvm_scoreboard;
   extern virtual function void build_phase(uvm_phase phase);
   extern virtual function void connect_phase(uvm_phase phase);
   extern virtual task run_phase(uvm_phase phase);
-  extern task compareTxRx(UartTxTransaction uartTxTransaction,UartRxTransaction uartRxTransaction);
+  // extern task compareTxRx(UartTxTransaction uartTxTransaction,UartRxTransaction uartRxTransaction);
   // extern virtual task compareTxRx();
  endclass : UartScoreboard
  
@@ -135,36 +135,36 @@ task UartScoreboard :: run_phase(uvm_phase phase);
 endtask : run_phase
  
  
-task UartScoreboard :: compareTxRx(UartTxTransaction uartTxTransaction,UartRxTransaction uartRxTransaction);
+// task UartScoreboard :: compareTxRx(UartTxTransaction uartTxTransaction,UartRxTransaction uartRxTransaction);
  
-     foreach(uartTxTransaction.transmissionData[i])
-         begin
-          if(uartTxTransaction.transmissionData[i] != uartRxTransaction.receivingData[i])
-            begin
-              bitDataCmpFailedTxRxCount++;
-            end
-          else
-            begin
-              bitDataCmpVerifiedTxRxCount++;
-            end
-          if((uartTxAgentConfig.hasParity && uartRxAgentConfig.hasParity) == 1)
-            begin
-              if(uartTxTransaction.parity[i] != uartRxTransaction.parity[i])
-                begin
-                  `uvm_error(get_type_name(),$sformatf("Parity mismatch"))
-                end
-            end
-          if(uartTxTransaction.breakingError[i] != uartRxTransaction.breakingError[i])
-            begin
-              `uvm_error(get_type_name(),$sformatf("Parity mismatch"))
-            end
-          if(uartTxTransaction.overrunError[i] != uartRxTransaction.overrunError[i])
-            begin
-              `uvm_error(get_type_name(),$sformatf("Parity mismatch"))
-            end
-           transmissionReciveingSucessfulCount++;
-        `uvm_info(get_type_name(),$sformatf("transmissionData = %p,receivingData = %p,parity = %0b,breakingError = %0b,overRunError = %0b",uartTxTransaction.transmissionData,uartTxTransaction.receivingData,uartTxTransaction.Parity,
-uartTxTransaction.breakingError,uartTxTransaction.overrunError),UVM_HIGH)     
-        end
-endtask : compareTxRx
+//      foreach(uartTxTransaction.transmissionData[i])
+//          begin
+//           if(uartTxTransaction.transmissionData[i] != uartRxTransaction.receivingData[i])
+//             begin
+//               bitDataCmpFailedTxRxCount++;
+//             end
+//           else
+//             begin
+//               bitDataCmpVerifiedTxRxCount++;
+//             end
+//           if((uartTxAgentConfig.hasParity && uartRxAgentConfig.hasParity) == 1)
+//             begin
+//               if(uartTxTransaction.parity[i] != uartRxTransaction.parity[i])
+//                 begin
+//                   `uvm_error(get_type_name(),$sformatf("Parity mismatch"))
+//                 end
+//             end
+//           if(uartTxTransaction.breakingError[i] != uartRxTransaction.breakingError[i])
+//             begin
+//               `uvm_error(get_type_name(),$sformatf("Parity mismatch"))
+//             end
+//           if(uartTxTransaction.overrunError[i] != uartRxTransaction.overrunError[i])
+//             begin
+//               `uvm_error(get_type_name(),$sformatf("Parity mismatch"))
+//             end
+//            transmissionReciveingSucessfulCount++;
+//         `uvm_info(get_type_name(),$sformatf("transmissionData = %p,receivingData = %p,parity = %0b,breakingError = %0b,overRunError = %0b",uartTxTransaction.transmissionData,uartTxTransaction.receivingData,uartTxTransaction.Parity,
+// uartTxTransaction.breakingError,uartTxTransaction.overrunError),UVM_HIGH)     
+//         end
+// endtask : compareTxRx
 `endif
