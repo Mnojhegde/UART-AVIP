@@ -1,22 +1,22 @@
 `ifndef TXODDPAR8BSTOP113XSEQ_INCLUDED_
 `define TXODDPAR8BSTOP113XSEQ_INCLUDED_
 
-class tx_odd_par_8b_stop_1_13x_seq extends UartTxBaseSequence;
-  `uvm_object_utils(tx_odd_par_8b_stop_1_13x_seq)
+class TxOddPar8b1stop13xSeq extends UartTxBaseSequence;
+  `uvm_object_utils(TxOddPar8b1stop13xSeq)
 
-   extern function new(string name = "tx_odd_par_8b_stop_1_13x_seq");
+   extern function new(string name = "TxOddPar8b1stop13xSeq");
   extern virtual task body();
 
-endclass : tx_odd_par_8b_stop_1_13x_seq
+endclass : TxOddPar8b1stop13xSeq
 
-function  tx_odd_par_8b_stop_1_13x_seq :: new(string name= "tx_odd_par_8b_stop_1_13x_seq");
+function  TxOddPar8b1stop13xSeq :: new(string name= "TxOddPar8b1stop13xSeq");
   super.new(name);
 endfunction : new
 
-task tx_odd_par_8b_stop_1_13x_seq :: body();
+task TxOddPar8b1stop13xSeq :: body();
   super.body();
  
-  `uvm_info(get_type_name(),$sformatf("tx_odd_par_8b_stop_1_13x_seq"),UVM_LOW);
+  `uvm_info(get_type_name(),$sformatf("TxOddPar8b1stop13xSeq"),UVM_LOW);
 
   req = UartTxTransaction :: type_id :: create("req");
 
