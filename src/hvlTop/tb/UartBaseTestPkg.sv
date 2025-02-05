@@ -24,5 +24,6 @@ package UartBaseTestPkg;
   
   //including base_test for testing
   `include "UartBaseTest.sv"
+  `include "UartEvenParityTest.sv"
 endpackage : UartBaseTestPkg
 `endif
