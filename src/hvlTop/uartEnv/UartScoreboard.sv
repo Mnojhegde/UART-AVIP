@@ -11,7 +11,7 @@ class UartScoreboard extends uvm_scoreboard;
  
    //Declaring Tx class handle and Rx class hamdle 
    UartTxTransaction uartTxTransaction;
-   UartRxTransaction uartRxTranscation;
+   UartRxTransaction uartRxTransaction;
 
   //Variable: uartScoreboardTxAnalysisExport
   //Declaring analysis export for transmitting  Tx transaction object to scoreboard
@@ -124,7 +124,7 @@ task UartScoreboard :: run_phase(uvm_phase phase);
       uartScoreboardTxAnalysisFifo.get(uartTxTransaction);
      `uvm_info(get_type_name(),$sformatf("Printing transmissionData= %p", uartTxTransaction.transmissionData),UVM_HIGH)
 
-      uartScoreboardRxAnalysisFifo.get(uartRxTranscation);
+     uartScoreboardRxAnalysisFifo.get(uartRxTransaction);
      uartRxTranscation.print();
      `uvm_info(get_type_name(),$sformatf("Printing receivingData = %p", uartRxTransaction.receivingData),UVM_HIGH)
      
