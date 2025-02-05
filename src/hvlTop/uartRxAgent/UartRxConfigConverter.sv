@@ -29,11 +29,8 @@
 
 
 
-  `ifndef UARTTXCONFIGCONVERTER_INCLUDED_
-`define UARTTXCONFIGCONVERTER_INCLUDED_
-
-`include "uvm_macros.svh"
-import uvm_pkg::*;
+// `ifndef UARTTXCONFIGCONVERTER_INCLUDED_
+// `define UARTTXCONFIGCONVERTER_INCLUDED_
 
 class UartTxConfigConverter extends uvm_object;
   `uvm_object_utils(UartTxConfigConverter)
@@ -55,4 +52,4 @@ function void UartTxConfigConverter::from_Class(ref UartTxAgentConfig uartTxAgen
   uartConfigStruct.uartParityErrorInjection = uartTxAgentConfig.parityErrorInjection;
 endfunction : from_Class
 
-`endif
+// `endif
