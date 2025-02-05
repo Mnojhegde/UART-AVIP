@@ -72,7 +72,7 @@ task UartRxMonitorProxy :: run_phase(uvm_phase phase);
 
   uartRxTransaction = UartRxTransaction::type_id::create("uartRxTransaction");
   
-  // UartRxConfigConverter::from_Class(uartRxAgentConfig , uartConfigStruct);
+   UartRxConfigConverter::from_Class(uartRxAgentConfig , uartConfigStruct);
    uartRxMonitorBfm.WaitForReset();
   
   fork 
