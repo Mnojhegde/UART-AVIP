@@ -18,6 +18,7 @@ class UartTxAgentConfig extends uvm_object;
   BAUD_RATE_E uartBaudRate;
   DATA_TYPE_E uartDataType;/* these enum can be randomized and can apply inline constraint in test file*/
   PARITY_TYPE_E uartParityType;
+  STOP_BIT_E uartStopBit;
   rand int packetsNeeded;
   bit parityErrorInjection;
 //-------------------------------------------------------
