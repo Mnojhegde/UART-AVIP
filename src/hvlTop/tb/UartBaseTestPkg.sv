@@ -23,7 +23,12 @@ package UartBaseTestPkg;
   import UartVirtualSequencePkg::*;
   
   //including base_test for testing
+  
   `include "UartBaseTest.sv"
   `include "UartEvenParityTest.sv"
+  `include "UartOddParityTest.sv"
+  `include "UartEvenParityWithErrorTest.sv"
+  `include "UartOddParityWithErrorTest.sv"
+
 endpackage : UartBaseTestPkg
 `endif
