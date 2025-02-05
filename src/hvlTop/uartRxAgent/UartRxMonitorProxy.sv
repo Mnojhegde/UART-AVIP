@@ -73,13 +73,14 @@ task UartRxMonitorProxy :: run_phase(uvm_phase phase);
   uartRxTransaction = UartRxTransaction::type_id::create("uartRxTransaction");
   
    UartRxConfigConverter::from_Class(uartRxAgentConfig , uartConfigStruct);
-   uartRxMonitorBfm.WaitForReset();
+   
   
   fork 
        uartRxMonitorBfm.GenerateBaudClk(uartConfigStruct);
    join_none
 
    forever begin
+     uartRxMonitorBfm.WaitForReset();
      UartRxSeqItemConverter :: fromRxClass(uartRxTransaction,uartRxAgentConfig,uartRxPacketStruct);
      UartRxConfigConverter::from_Class(uartRxAgentConfig , uartConfigStruct);
      uartRxMonitorBfm.StartMonitoring(uartRxPacketStruct, uartConfigStruct);
