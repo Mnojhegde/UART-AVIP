@@ -4,7 +4,7 @@
 import UartGlobalPkg::*;
 
 //--------------------------------------------------------------------------------------------
-// Interface : UartTxMonitorBfm
+// Interface : UartRxMonitorBfm
 //  Connects the master monitor bfm with the master monitor prox
 //--------------------------------------------------------------------------------------------
 
@@ -22,7 +22,7 @@ interface UartRxMonitorBfm (input  logic   clk,
   //-------------------------------------------------------
   // Importing the Transmitter package file
   //-------------------------------------------------------
-  //import UartTxPkg:: UartTxMonitorProxy;
+  //import UartRxPkg:: UartRxMonitorProxy;
   
   //Variable: name
   //Used to store the name of the interface
@@ -52,7 +52,7 @@ interface UartRxMonitorBfm (input  logic   clk,
 
  //Creating the handle for the proxy_driver
 
- // UartTxMonitorProxy uartTxMonitorProxy;
+ // UartRxMonitorProxy uartRxMonitorProxy;
    
 
   //-------------------------------------------------------
@@ -138,10 +138,10 @@ interface UartRxMonitorBfm (input  logic   clk,
     `uvm_info(name, $sformatf("system reset deactivated"), UVM_LOW)
   endtask: WaitForReset
 
- task StartMonitoring(inout UartTxPacketStruct uartTxPacketStruct , inout UartConfigStruct uartConfigStruct);
+ task StartMonitoring(inout UartRxPacketStruct uartRxPacketStruct , inout UartConfigStruct uartConfigStruct);
    fork 
      BclkCounter(uartConfigStruct.uartOverSamplingMethod);
-     Deserializer(uartTxPacketStruct,uartConfigStruct);
+     Deserializer(uartRxPacketStruct,uartConfigStruct);
    join_any
    disable fork ;
 endtask 
@@ -151,23 +151,23 @@ endtask
   //  converts serial data to parallel
   //-------------------------------------------------------
 
-  task Deserializer(inout UartTxPacketStruct uartTxPacketStruct, inout UartConfigStruct uartConfigStruct);
+  task Deserializer(inout UartRxPacketStruct uartRxPacketStruct, inout UartConfigStruct uartConfigStruct);
     static int total_transmission = NO_OF_PACKETS;
      for(int transmission_number=0 ; transmission_number < total_transmission; transmission_number++)begin 
        @(negedge rx);
        repeat(1) @(posedge oversamplingClk);//needs this posedge or 1 cycle delay to avoid race around or delay in output
        for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
      	@(posedge oversamplingClk) begin
-	  		uartTxPacketStruct.transmissionData[transmission_number][i] = rx;
+	  		uartRxPacketStruct.transmissionData[transmission_number][i] = rx;
          end
        end
        if(uartConfigStruct.uartParityEnable ==1) begin   
 	   @(posedge oversamplingClk)
-	      uartTxPacketStruct.parityResult[transmission_number] = rx;
+	      uartRxPacketStruct.parity[transmission_number] = rx;
          end
 /*	
         @(posedge oversamplingClk) begin
-	StopBitCheck (uartTxPacketStruct,tx,transmission_number );
+	StopBitCheck (uartRxPacketStruct,rx,transmission_number );
     end*/
 
         @(posedge oversamplingClk);
@@ -181,8 +181,8 @@ end
   // Task: StopBitCheck
   // to check valid stop bit and framing error occurs when a received character does not have a valid STOP bit.
   //-------------------------------------------------------
-  //task StopBitCheck (inout  UartTxPacketStruct uartTxPacketStruct,input bit tx,input int transmission_number);
- //		if (tx == 1) begin
+  //task StopBitCheck (inout  UartRxPacketStruct uartRxPacketStruct,input bit rx,input int transmission_number);
+ //		if (rx == 1) begin
   //			FramingError = 0;
   //			`uvm_info(name, $sformatf("Stop bit detected"), UVM_HIGH)
   //		end
@@ -195,18 +195,18 @@ end
   // Task: parityCheck
   //  The parityCheck task checks for parity errors in the transmitted data 
   //-------------------------------------------------------
-  // task parityCheck(inout UartTxPacketStruct uartTxPacketStruct,input bit tx,input int transmission_number);
+  // task parityCheck(inout UartRxPacketStruct uartRxPacketStruct,input bit rx,input int transmission_number);
     
    // int cal_parity;
     
    //if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
-  //	cal_parity = ^uartTxPacketStruct.transmissionData[transmission_number];
+  //	cal_parity = ^uartRxPacketStruct.transmissionData[transmission_number];
 //      end
 	
 //	   else begin 
-//	      cal_parity = ~^uartTxPacketStruct.transmissionData[transmission_number];
+//	      cal_parity = ~^uartRxPacketStruct.transmissionData[transmission_number];
  //       end 
- //   if(tx==cal_parity)
+ //   if(rx==cal_parity)
   //    begin
     //    parity_error==0;
      // end
