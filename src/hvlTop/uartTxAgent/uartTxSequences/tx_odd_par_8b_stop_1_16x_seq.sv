@@ -1,7 +1,7 @@
 `ifndef TXODDPAR8BSTOP116XSEQ_INCLUDED_
 `define TXODDPAR8BSTOP116XSEQ_INCLUDED_
 
-class tx_odd_par_8b_stop_1_16x_seq extends UartTxBaseSequence;
+class TxOddPar8b1Stop16xSeqextends UartTxBaseSequence;
   `uvm_object_utils(tx_odd_par_8b_stop_1_16x_seq)
 
    extern function new(string name = "tx_odd_par_8b_stop_1_16x_seq");
@@ -9,11 +9,11 @@ class tx_odd_par_8b_stop_1_16x_seq extends UartTxBaseSequence;
 
 endclass : tx_odd_par_8b_stop_1_16x_seq
 
-function  tx_odd_par_8b_stop_1_16x_seq :: new(string name= "tx_odd_par_8b_stop_1_16x_seq");
+function  TxOddPar8b1Stop16xSeq:: new(string name= "tx_odd_par_8b_stop_1_16x_seq");
   super.new(name);
 endfunction : new
 
-task tx_odd_par_8b_stop_1_16x_seq :: body();
+task TxOddPar8b1Stop16xSeq:: body();
   super.body();
  
   `uvm_info(get_type_name(),$sformatf("tx_odd_par_8b_stop_1_16x_seq"),UVM_LOW);
