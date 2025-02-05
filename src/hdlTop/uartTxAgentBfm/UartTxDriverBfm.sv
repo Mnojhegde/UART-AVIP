@@ -168,7 +168,8 @@ endtask
   //--------------------------------------------------------------------------------------------
   
   task SampleData(inout UartTxPacketStruct uartTxPacketStruct , inout UartConfigStruct uartConfigStruct);
-    static int total_transmission = $size(uartTxPacketStruct.transmissionData);	  
+    static int total_transmission = $size(uartTxPacketStruct.transmissionData);	 
+   static int uartType = 5;
     for(int transmission_number=0 ; transmission_number < total_transmission; transmission_number++)begin 
     @(posedge oversamplingClk);
       tx = START_BIT;
@@ -181,21 +182,41 @@ endtask
        if(uartConfigStruct.uartParityErrorInjection==0) begin 
 	if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
 	  @(posedge oversamplingClk)
-	  tx = ^(uartTxPacketStruct.transmissionData[transmission_number]);
+	  case(uartConfigStruct.uartDataType)
+            FIVE_BIT: tx = ^(uartTxPacketStruct.transmissionData[transmission_number][4:0]);
+            SIX_BIT :tx = ^(uartTxPacketStruct.transmissionData[transmission_number][5:0]);
+            SEVEN_BIT: tx = ^(uartTxPacketStruct.transmissionData[transmission_number][6:0]);
+            EIGHT_BIT : tx = ^(uartTxPacketStruct.transmissionData[transmission_number][7:0]);
+	  endcase  
         end
 	else if (uartConfigStruct.uartParityType == ODD_PARITY) begin 
 	  @(posedge oversamplingClk)
-	  tx =~^(uartTxPacketStruct.transmissionData[transmission_number]);
+            case(uartConfigStruct.uartDataType)
+	      FIVE_BIT: tx = ~^(uartTxPacketStruct.transmissionData[transmission_number][4:0]);
+	      SIX_BIT :tx = ~^(uartTxPacketStruct.transmissionData[transmission_number][5:0]);
+	      SEVEN_BIT: tx = ~^(uartTxPacketStruct.transmissionData[transmission_number][6:0]);
+	      EIGHT_BIT : tx = ~^(uartTxPacketStruct.transmissionData[transmission_number][7:0]);
+	    endcase  
         end 
        end
        else begin 
          if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
 	   @(posedge oversamplingClk)
-	   tx = ~^(uartTxPacketStruct.transmissionData[transmission_number]);
-         end 
+           case(uartConfigStruct.uartDataType)
+	     FIVE_BIT: tx = ~^(uartTxPacketStruct.transmissionData[transmission_number][4:0]);
+	     SIX_BIT :tx = ~^(uartTxPacketStruct.transmissionData[transmission_number][5:0]);
+	     SEVEN_BIT: tx = ~^(uartTxPacketStruct.transmissionData[transmission_number][6:0]);
+	     EIGHT_BIT : tx = ~^(uartTxPacketStruct.transmissionData[transmission_number][7:0]);
+           endcase	 
+	 end 
 	 else if(uartConfigStruct.uartParityType == ODD_PARITY) begin
            @(posedge oversamplingClk)
-           tx =^(uartTxPacketStruct.transmissionData[transmission_number]);
+	    case(uartConfigStruct.uartDataType)
+	      FIVE_BIT: tx = ^(uartTxPacketStruct.transmissionData[transmission_number][4:0]);
+	      SIX_BIT :tx = ^(uartTxPacketStruct.transmissionData[transmission_number][5:0]);
+	      SEVEN_BIT: tx = ^(uartTxPacketStruct.transmissionData[transmission_number][6:0]);
+	      EIGHT_BIT : tx = ^(uartTxPacketStruct.transmissionData[transmission_number][7:0]);
+	    endcase 
 	 end 
        end 
       end 
