@@ -158,7 +158,7 @@ endtask
        repeat(1) @(posedge oversamplingClk);//needs this posedge or 1 cycle delay to avoid race around or delay in output
        for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
      	@(posedge oversamplingClk) begin
-	  		uartRxPacketStruct.transmissionData[transmission_number][i] = rx;
+	  		uartRxPacketStruct.receivingData[transmission_number][i] = rx;
          end
        end
        if(uartConfigStruct.uartParityEnable ==1) begin   
@@ -200,11 +200,11 @@ end
    // int cal_parity;
     
    //if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
-  //	cal_parity = ^uartRxPacketStruct.transmissionData[transmission_number];
+  //	cal_parity = ^uartRxPacketStruct.receivingData[transmission_number];
 //      end
 	
 //	   else begin 
-//	      cal_parity = ~^uartRxPacketStruct.transmissionData[transmission_number];
+//	      cal_parity = ~^uartRxPacketStruct.receivingData[transmission_number];
  //       end 
  //   if(rx==cal_parity)
   //    begin
