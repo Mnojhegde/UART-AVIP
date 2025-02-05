@@ -2,8 +2,8 @@
 `define UARTRXCONFIGCONVERTER_INCLUDED_
 
 class UartRxConfigConverter extends uvm_object;
-  `uvm_object_utils(UartRxConfigConverter)
-  extern function new( string name = "UartRxConfigConverter");
+  `uvm_object_utils(uartRxConfigConverter)
+  extern function new( string name = "uartRxConfigConverter");
   extern static function void from_Class(input UartRxAgentConfig uartRxAgentConfig, output UartConfigStruct uartConfigStruct);
 endclass :UartRxConfigConverter
     
