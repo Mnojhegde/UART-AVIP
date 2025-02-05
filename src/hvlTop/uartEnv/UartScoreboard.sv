@@ -126,6 +126,8 @@ task UartScoreboard :: run_phase(uvm_phase phase);
 
       uartScoreboardRxAnalysisFifo.get(uartRxTranscation);
      uartRxTranscation.print();
+     `uvm_info(get_type_name(),$sformatf("Printing receivingData = %p", uartRxTransaction.receivingData),UVM_HIGH)
+     
     end
   join
 
