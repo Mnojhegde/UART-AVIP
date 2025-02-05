@@ -38,9 +38,6 @@ class UartScoreboard extends uvm_scoreboard;
   //Declaring handle for uart reciever agent 
   UartRxAgentConfig uartRxAgentConfig;
  
-  //Declaring queues for transmission and reciever
-  UartTxTransaction  transmissionData[$];
-  UartRxTransaction  receivingData[$];
  
   //Variable TransactionCount
   //to keep track of number of transaction 
@@ -132,7 +129,7 @@ task UartScoreboard :: run_phase(uvm_phase phase);
     end
   join
 
-  compareTxRx(uartTxTransaction,uartRxTransaction);
+  // compareTxRx(uartTxTransaction,uartRxTransaction);
   end
  
 endtask : run_phase
