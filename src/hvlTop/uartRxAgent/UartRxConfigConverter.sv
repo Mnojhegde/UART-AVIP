@@ -24,6 +24,5 @@ function void UartRxConfigConverter :: from_Class(input UartRxAgentConfig uartRx
   uartConfigStruct.uartParityEnable = uartRxAgentConfig.hasParity;
   uartConfigStruct.uartParityErrorInjection = uartRxAgentConfig.parityErrorInjection;
 endfunction : from_Class
-
-
+    
 `endif   
