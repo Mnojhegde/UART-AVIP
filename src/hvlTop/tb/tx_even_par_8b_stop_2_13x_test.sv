@@ -1,8 +1,8 @@
 `ifndef TXEVENPAR8BSTOP213XTEST_INCLUDED_
 `define TXEVENPAR8BSTOP213XTEST_INCLUDED_
 
-class tx_even_par_8b_stop_2_13x_test extends UartBaseTest ;
-  `uvm_component_utils(tx_even_par_8b_stop_2_13x_test)
+class TxEvenPar8b2Stop13xTest extends UartBaseTest ;
+  `uvm_component_utils(TxEvenPar8b2Stop13xTest)
   
   tx_even_par_8b_stop_2_13x_vseq tx_even_par_8b_stop_2_13x_vseq_h;
 
@@ -12,30 +12,30 @@ class tx_even_par_8b_stop_2_13x_test extends UartBaseTest ;
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
-  extern function new(string name = "tx_even_par_8b_stop_2_13x_test", uvm_component parent = null);
+  extern function new(string name = "TxEvenPar8b2Stop13xTest", uvm_component parent = null);
   extern task run_phase(uvm_phase phase);
   extern  function void  build_phase(uvm_phase phase);
   extern  function void  setupUartEnvConfig();
   extern  function void  setupUartTxAgentConfig();
   extern  function void  setupUartRxAgentConfig();
 
-endclass : tx_even_par_8b_stop_2_13x_test
+endclass : TxEvenPar8b2Stop13xTest
 
-function tx_even_par_8b_stop_2_13x_test::new(string name = "tx_odd_par_8b_stop_1_16x_test", uvm_component parent = null);
+function TxEvenPar8b2Stop13xTest::new(string name = "tx_odd_par_8b_stop_1_16x_test", uvm_component parent = null);
   super.new(name, parent);
 endfunction : new
 
-function void tx_even_par_8b_stop_2_13x_test :: build_phase(uvm_phase phase);
+function void TxEvenPar8b2Stop13xTest :: build_phase(uvm_phase phase);
   super.build_phase(phase);
   setupUartEnvConfig();
   uartEnv = UartEnv :: type_id :: create("uartEnv" , this);
 endfunction  : build_phase
 
- function void tx_even_par_8b_stop_2_13x_test :: setupUartEnvConfig();
+ function void TxEvenPar8b2Stop13xTest :: setupUartEnvConfig();
    super.setupUartEnvConfig();
 endfunction : setupUartEnvConfig 
 
- function void tx_even_par_8b_stop_2_13x_test :: setupUartTxAgentConfig();
+ function void TxEvenPar8b2Stop13xTest :: setupUartTxAgentConfig();
   
   uartEnvConfig.uartTxAgentConfig = UartTxAgentConfig :: type_id :: create("uartTxAgentConfig");
   uartEnvConfig.uartTxAgentConfig.is_active = UVM_ACTIVE;
@@ -49,15 +49,15 @@ endfunction : setupUartEnvConfig
 
 endfunction : setupUartTxAgentConfig
 
-function void tx_even_par_8b_stop_2_13x_test :: setupUartRxAgentConfig();
+function void TxEvenPar8b2Stop13xTest :: setupUartRxAgentConfig();
 super.setupUartRxAgentConfig();
 
 endfunction : setupUartRxAgentConfig
 
-task tx_even_par_8b_stop_2_13x_test::run_phase(uvm_phase phase);
+task TxEvenPar8b2Stop13xTest::run_phase(uvm_phase phase);
   
  tx_even_par_8b_stop_2_13x_vseq_h = tx_even_par_8b_stop_2_13x_vseq::type_id::create("tx_even_par_8b_stop_2_13x_vseq_h");
-  `uvm_info(get_type_name(),$sformatf("tx_even_par_8b_stop_2_13x_test"),UVM_LOW);
+  `uvm_info(get_type_name(),$sformatf("TxEvenPar8b2Stop13xTest"),UVM_LOW);
   phase.raise_objection(this);
     tx_even_par_8b_stop_2_13x_vseq_h.start(uartEnv.uartVirtualSequencer);
   phase.drop_objection(this);
