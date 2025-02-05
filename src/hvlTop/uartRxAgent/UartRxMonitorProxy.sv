@@ -16,6 +16,8 @@ class UartRxMonitorProxy extends uvm_monitor;
   UartRxAgentConfig uartRxAgentConfig;
   UartRxPacketStruct uartRxPacketStruct;
 
+  UartRxTransaction uartRxTransaction;
+
   //Declaring Monitor Analysis Import
   uvm_analysis_port#(UartRxTransaction) uartRxMonitorAnalysisPort;
 
@@ -67,7 +69,6 @@ endfunction : build_phase
 //--------------------------------------------------------------------------------------------
     
 task UartRxMonitorProxy :: run_phase(uvm_phase phase);
-  UartRxTransaction uartRxTransaction;
   UartConfigStruct uartConfigStruct;
 
   uartRxTransaction = UartRxTransaction::type_id::create("uartRxTransaction");
@@ -80,6 +81,7 @@ task UartRxMonitorProxy :: run_phase(uvm_phase phase);
    join_none
    uartRxMonitorBfm.WaitForReset();
    forever begin
+     UartRxTransaction uartRxTransaction_clone;
      UartRxSeqItemConverter :: fromRxClass(uartRxTransaction,uartRxAgentConfig,uartRxPacketStruct);
      UartRxConfigConverter::from_Class(uartRxAgentConfig , uartConfigStruct);
      uartRxMonitorBfm.StartMonitoring(uartRxPacketStruct, uartConfigStruct);
@@ -89,7 +91,8 @@ task UartRxMonitorProxy :: run_phase(uvm_phase phase);
      `uvm_info("Rx_Monitor_BFM",$sformatf("data in Rx monitor proxy is %p",uartRxTransaction.receivingData),UVM_LOW)
      `uvm_info("Rx_Monitor_BFM",$sformatf("parity in Rx monitor proxy is %p",uartRxTransaction.parity),UVM_LOW)
       
-     uartRxMonitorAnalysisPort.write(uartRxTransaction);
+     $cast(uartRxTransaction_clone, uartRxTransaction.clone());  
+     uartRxMonitorAnalysisPort.write(uartRxTransaction_clone);
    
    end
 
