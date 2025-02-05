@@ -154,7 +154,7 @@ endtask
   task Deserializer(inout UartTxPacketStruct uartTxPacketStruct, inout UartConfigStruct uartConfigStruct);
     static int total_transmission = NO_OF_PACKETS;
      for(int transmission_number=0 ; transmission_number < total_transmission; transmission_number++)begin 
-       @(negedge tx);
+       @(negedge rx);
        repeat(1) @(posedge oversamplingClk);//needs this posedge or 1 cycle delay to avoid race around or delay in output
        for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
      	@(posedge oversamplingClk) begin
@@ -215,4 +215,4 @@ end
      // parity_error==1;
      // end
   // endtask:parityCheck
- endinterface : UartTxMonitorBfm
+ endinterface : UartRxMonitorBfm
