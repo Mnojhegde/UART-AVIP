@@ -51,7 +51,7 @@ function void UartTxSeqItemConverter :: toTxClass(input UartTxPacketStruct uartT
     for( int i=0 ; i<uartTxAgentConfig.uartDataType ; i++) begin
       uartTxTransaction.transmissionData[transmission_number][i] = uartTxPacketStruct.transmissionData[transmission_number][i];
     end
-     uartTxTransaction.parity[transmission_number] = uartTxPacketStruct.parityResult[transmission_number];
+     uartTxTransaction.parity[transmission_number] = uartTxPacketStruct.parity[transmission_number];
   end 
 endfunction : toTxClass
 
