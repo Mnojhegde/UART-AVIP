@@ -1,7 +1,7 @@
 `ifndef TXODDPAR8BSTOP116XSEQ_INCLUDED_
 `define TXODDPAR8BSTOP116XSEQ_INCLUDED_
 
-class TxOddPar8b1Stop16xSeqextends UartTxBaseSequence;
+class TxOddPar8b1Stop16xSeq extends UartTxBaseSequence;
   `uvm_object_utils(tx_odd_par_8b_stop_1_16x_seq)
 
    extern function new(string name = "tx_odd_par_8b_stop_1_16x_seq");
