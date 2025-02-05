@@ -154,16 +154,16 @@ task UartScoreboard :: compareTxRx(UartTxTransaction uartTxTransaction,UartRxTra
             begin
               if(uartTxTransaction.parity[i] != uartRxTransaction.parity[i])
                 begin
-                  `uvm_error(get_type_name(),$sformatf("Parity mismatch"),UVM_HIGH)
+                  `uvm_error(get_type_name(),$sformatf("Parity mismatch"))
                 end
             end
           if(uartTxTransaction.breakingError[i] != uartRxTransaction.breakingError[i])
             begin
-              `uvm_error(get_type_name(),$sformatf("Parity mismatch"),UVM_HIGH)
+              `uvm_error(get_type_name(),$sformatf("Parity mismatch"))
             end
           if(uartTxTransaction.overrunError[i] != uartRxTransaction.overrunError[i])
             begin
-              `uvm_error(get_type_name(),$sformatf("Parity mismatch"),UVM_HIGH)
+              `uvm_error(get_type_name(),$sformatf("Parity mismatch"))
             end
            transmissionReciveingSucessfulCount++;
         `uvm_info(get_type_name(),$sformatf("transmissionData = %p,receivingData = %p,parity = %0b,breakingError = %0b,overRunError = %0b",uartTxTransaction.transmissionData,uartTxTransaction.receivingData,uartTxTransaction.Parity,
