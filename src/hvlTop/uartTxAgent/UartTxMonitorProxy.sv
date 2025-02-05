@@ -97,11 +97,10 @@ phase.drop_objection(this);
         $display("**********************I AM HERE****************");
 
 
-	 UartTxSeqItemConverter::toTxClass(uartTxPacketStruct , uartTxAgentConfig , uartTxTransaction);
-	   foreach(uartTxTransaction.transmissionData[i])
-	      $display("MONITOR HAS received %b",uartTxPacketStruct.transmissionData[i]);
-	        $display("********parity result is %b*************",uartTxTransaction.parity);
-	      ->monitorSynchronizer;
+	UartTxSeqItemConverter::toTxClass(uartTxPacketStruct , uartTxAgentConfig , uartTxTransaction);
+	$display("MONITOR HAS received %p",uartTxPacketStruct.transmissionData);
+	$display("********parity result is %p*************",uartTxTransaction.parity);
+	->monitorSynchronizer;
        end 
   end 
  join_any
