@@ -65,6 +65,7 @@ endfunction : build_phase
 //--------------------------------------------------------------------------------------------
 task UartTxMonitorProxy :: run_phase(uvm_phase phase);
  UartConfigStruct uartConfigStruct;
+ uartTxTransaction = UartTxTransaction::type_id::create("uartTxTransaction");
  UartTxConfigConverter :: from_Class(uartTxAgentConfig,uartConfigStruct);
 // phase.raise_objection(this);
  //uartTxMonitorBfm.WaitForReset();
@@ -92,12 +93,15 @@ phase.drop_objection(this);
   end 
   begin 
       forever begin
+       UartTxTransaction uartTxTransaction_clone;
        uartTxMonitorBfm.WaitForReset();
        uartTxMonitorBfm.StartMonitoring(uartTxPacketStruct , uartConfigStruct);
         $display("**********************I AM HERE****************");
 
 
 	UartTxSeqItemConverter::toTxClass(uartTxPacketStruct , uartTxAgentConfig , uartTxTransaction);
+	$cast(uartTxTransaction_clone, uartTxTransaction.clone());
+    	uartTxMonitorAnalysisPort.write(uartTxTransaction_clone);
 	$display("MONITOR HAS received %p",uartTxPacketStruct.transmissionData);
 	$display("********parity result is %p*************",uartTxTransaction.parity);
 	->monitorSynchronizer;
