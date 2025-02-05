@@ -82,7 +82,7 @@ task UartRxMonitorProxy :: run_phase(uvm_phase phase);
    forever begin
      UartRxSeqItemConverter :: fromRxClass(uartRxTransaction,uartRxAgentConfig,uartRxPacketStruct);
      UartRxConfigConverter::from_Class(uartRxAgentConfig , uartConfigStruct);
-     uartRxMonitorBfm.Deserializer(uartRxPacketStruct, uartConfigStruct);
+     uartRxMonitorBfm.StartMonitoring(uartRxPacketStruct, uartConfigStruct);
 
      UartRxSeqItemConverter::toRxClass(uartRxPacketStruct,uartRxAgentConfig,uartRxTransaction);
 
