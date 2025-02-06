@@ -1,4 +1,4 @@
-//-------------------------------------------------------
+/-------------------------------------------------------
 // Importing Uart global package
 //-------------------------------------------------------
 import UartGlobalPkg::*;
@@ -122,26 +122,20 @@ interface UartTxMonitorBfm (input  logic   clk,
   //  converts serial data to parallel
   //-------------------------------------------------------
   task Deserializer(inout UartTxPacketStruct uartTxPacketStruct, inout UartConfigStruct uartConfigStruct);
-    static int total_transmission = NO_OF_PACKETS;
-    	for(int transmission_number=0 ; transmission_number < total_transmission; transmission_number++)begin 
       	@(negedge tx);
        	repeat(1) @(posedge oversamplingClk);//needs this posedge or 1 cycle delay to avoid race around or delay in output
        	for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
      			@(posedge oversamplingClk) begin
-        		uartTxPacketStruct.transmissionData[transmission_number][i] = tx;
+        		uartTxPacketStruct.transmissionData[i] = tx;
         	end
        	end
       	if(uartConfigStruct.uartParityEnable ==1) begin   
 	   			@(posedge oversamplingClk)
-	   			uartTxPacketStruct.parity[transmission_number] = tx;
+	   			uartTxPacketStruct.parity = tx;
       	end
       	@(posedge oversamplingClk);
-  		end
   	endtask
 			
-	initial begin 
-		$monitor("DATA IS BEING RECEIVED %b",tx);
-	end 
 
   //-------------------------------------------------------
   // Task: StopBitCheck
