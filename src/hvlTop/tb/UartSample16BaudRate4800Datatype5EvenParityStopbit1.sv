@@ -1,5 +1,5 @@
-`ifndef UARTODDPARITYTEST_INCLUDED_
-`define UARTODDPARITYTEST_INCLUDED_
+`ifndef UARTSAMPLE16BAUDRATE4800DATATYPE5EVENPARITYSTOPBIT1_INCLUDED_
+`define UARTSAMPLE16BAUDRATE4800DATATYPE5EVENPARITYSTOPBIT1_INCLUDED_
 
 //--------------------------------------------------------------------------------------------
 // Class:  UartBaseTest
@@ -8,7 +8,7 @@
 //--------------------------------------------------------------------------------------------
 class UartSample16BaudRate4800Datatype5EvenParityStopbit1 extends UartBaseTest;
  
-   `uvm_component_utils(UartOddParityTest)
+   `uvm_component_utils(UartSample16BaudRate4800Datatype5EvenParityStopbit1)
     
     UartVirtualBaseSequence uartVirtualBaseSequence;
     //-------------------------------------------------------
@@ -27,7 +27,7 @@ endclass : UartOddParityTest
 //
 // parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
-function UartOddParityTest :: new(string name = "UartSample16BaudRate4800Datatype5EvenParityStopbit1" , uvm_component parent = null);
+function UartSample16BaudRate4800Datatype5EvenParityStopbit1 :: new(string name = "UartSample16BaudRate4800Datatype5EvenParityStopbit1" , uvm_component parent = null);
   super.new(name,parent);
 endfunction  : new
 		          
@@ -38,7 +38,7 @@ endfunction  : new
 // Parameters:
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
-function void UartOddParityTest :: build_phase(uvm_phase phase);
+function void UartSample16BaudRate4800Datatype5EvenParityStopbit1 :: build_phase(uvm_phase phase);
   super.build_phase(phase);
   uartEnvConfig.uartTxAgentConfig.hasParity=1;
   uartEnvConfig.uartTxAgentConfig.uartParityType = EVEN_PARITY;
@@ -56,7 +56,7 @@ endfunction  : build_phase
 // Parameters:
 // phase - stores the current phase
 //------------------------------------------------------------------------------------------
-task UartOddParityTest :: run_phase(uvm_phase phase);
+task UartSample16BaudRate4800Datatype5EvenParityStopbit1 :: run_phase(uvm_phase phase);
   UartVirtualBaseSequence :: type_id ::set_type_override(UartVirtualTransmissionSequence::get_type());
   uartVirtualBaseSequence = UartVirtualBaseSequence :: type_id :: create("uartVirtualBaseSequence");
   uartVirtualBaseSequence.print();
