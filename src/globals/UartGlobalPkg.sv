@@ -61,5 +61,7 @@ package UartGlobalPkg;
 												  bit uartParityErrorInjection;
 												  bit OverSampledBaudFrequencyClk;} UartConfigStruct;
 
+
+typedef enum{RESET,STARTBIT ,DATABITTRANSFER ,PARITYBIT, STOPBIT}UartTransmitterStateEnum;
 endpackage : UartGlobalPkg
 `endif 
