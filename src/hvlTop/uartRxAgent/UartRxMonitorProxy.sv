@@ -66,9 +66,11 @@ task UartRxMonitorProxy :: run_phase(uvm_phase phase);
   UartRxConfigConverter::from_Class(uartRxAgentConfig , uartConfigStruct);
   
   fork 
+    begin 
     // generating baud clck
     uartRxMonitorBfm.GenerateBaudClk(uartConfigStruct);
-  join_none
+    end 
+    begin 
   uartRxMonitorBfm.WaitForReset();
   forever begin
     UartRxTransaction uartRxTransaction_clone;
@@ -84,6 +86,8 @@ task UartRxMonitorProxy :: run_phase(uvm_phase phase);
     uartRxMonitorAnalysisPort.write(uartRxTransaction_clone);
   
   end
+ end 
+join_any
 
 endtask : run_phase
 `endif
