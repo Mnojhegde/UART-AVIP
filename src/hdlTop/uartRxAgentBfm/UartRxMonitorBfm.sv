@@ -1,4 +1,4 @@
-//-------------------------------------------------------
+/-------------------------------------------------------
 // Importing Uart global package
 //-------------------------------------------------------
 import UartGlobalPkg::*;
@@ -124,21 +124,18 @@ interface UartRxMonitorBfm (input  logic   clk,
   //-------------------------------------------------------
 
   task Deserializer(inout UartRxPacketStruct uartRxPacketStruct, inout UartConfigStruct uartConfigStruct);
-  	static int total_transmission = NO_OF_PACKETS;
-    for(int transmission_number=0 ; transmission_number < total_transmission; transmission_number++)begin 
     	@(negedge rx);
       repeat(1) @(posedge oversamplingClk);//needs this posedge or 1 cycle delay to avoid race around or delay in output
       for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
      		@(posedge oversamplingClk) begin
-	  			uartRxPacketStruct.receivingData[transmission_number][i] = rx;
+	  			uartRxPacketStruct.receivingData[i] = rx;
       	end
     	end
     	if(uartConfigStruct.uartParityEnable ==1) begin   
 	  		@(posedge oversamplingClk)
-	    	uartRxPacketStruct.parity[transmission_number] = rx;
+	    	uartRxPacketStruct.parity = rx;
     	end
     	@(posedge oversamplingClk);
-  	end
   endtask
 			
 
