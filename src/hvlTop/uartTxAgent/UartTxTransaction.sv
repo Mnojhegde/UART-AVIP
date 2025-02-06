@@ -8,17 +8,17 @@ class UartTxTransaction extends uvm_sequence_item;
 	`uvm_object_utils(UartTxTransaction)
    
    //input signals
-	rand bit [DATA_WIDTH-1 : 0] transmissionData[];
-  bit [NO_OF_PACKETS-1:0] parity;
-	bit [NO_OF_PACKETS-1:0]parityError; 
-	bit [NO_OF_PACKETS-1:0]breakingError; 
-	bit [NO_OF_PACKETS-1:0]overrunError;
+	rand logic [DATA_WIDTH-1 : 0] transmissionData;
+         logic  parity;
+	logic parityError; 
+	logic breakingError; 
+	logic overrunError;
    
 
    //-------------------------------------------------------
    // constraints for uart
    //-------------------------------------------------------
-   constraint set_transmissionData_range{ foreach(transmissionData[i]) transmissionData[i] inside{[1:$]};}
+   constraint set_transmissionData_range{ transmissionData inside{[1:$]};}
 	
    //-------------------------------------------------------
    // Externally defined Tasks and Functions
