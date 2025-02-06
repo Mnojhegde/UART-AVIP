@@ -80,8 +80,13 @@ interface UartTxDriverBfm (input  logic   clk,
       clkPeriod = clkPeriodStopTime - clkPeriodStartTime;
       clkFrequency = ( 10 **9 )/ clkPeriod;
 
-      baudDivisor = (clkFrequency)/(uartConfigStruct.uartOverSamplingMethod * uartConfigStruct.uartBaudRate); 
-
+      if(uartConfigStruct.OverSampledBaudFrequencyClk ==1)begin
+       baudDivisor = (clkFrequency)/(uartConfigStruct.uartOverSamplingMethod * uartConfigStruct.uartBaudRate); 
+      end 
+      else begin 
+        baudDivisor = (clkFrequency)/(uartConfigStruct.uartBaudRate);
+      end 
+        
      BaudClkGenerator(baudDivisor);
 
     endtask
@@ -125,8 +130,6 @@ interface UartTxDriverBfm (input  logic   clk,
   //--------------------------------------------------------------------------------------------
 
   task DriveToBfm(inout UartTxPacketStruct uartTxPacketStruct , inout UartConfigStruct uartConfigStruct);
-    	`uvm_info(name,$sformatf("data_packet=\n%p",uartTxPacketStruct),UVM_LOW);
-    	`uvm_info(name,$sformatf("DRIVE TO BFM TASK"),UVM_LOW);
 	fork
 		BclkCounter(uartConfigStruct.uartOverSamplingMethod);
 		SampleData(uartTxPacketStruct , uartConfigStruct);
@@ -140,7 +143,6 @@ interface UartTxDriverBfm (input  logic   clk,
 
   task BclkCounter(input int uartOverSamplingMethod);
 		static int countbClk = 0;
-		$display("inside overclk task count value is %0d baud clock is %b",countbClk,baudClk);
 		forever begin
 			@(posedge baudClk)
 			if(countbClk == (uartOverSamplingMethod/2)-1) begin
@@ -158,34 +160,30 @@ interface UartTxDriverBfm (input  logic   clk,
   //  This task will send the data to the uart interface based on oversamplingClk
   //--------------------------------------------------------------------------------------------
 task SampleData(inout UartTxPacketStruct uartTxPacketStruct , inout UartConfigStruct uartConfigStruct);
-	static int total_transmission = $size(uartTxPacketStruct.transmissionData);	 
-	static int uartType = 5;
-	for(int transmission_number=0 ; transmission_number < total_transmission; transmission_number++)begin 
 		@(posedge oversamplingClk);
 		tx = START_BIT;
 		for( int i=0 ; i< uartConfigStruct.uartDataType ; i++) begin
 			@(posedge oversamplingClk)
-				tx = uartTxPacketStruct.transmissionData[transmission_number][i];
-				$display("tx here is %b",tx);
+				tx = uartTxPacketStruct.transmissionData[i];
 		end
 		if(uartConfigStruct.uartParityEnable ==1) begin 
 			if(uartConfigStruct.uartParityErrorInjection==0) begin 
 				if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
 					@(posedge oversamplingClk)
 					case(uartConfigStruct.uartDataType)
-						FIVE_BIT: tx = ^(uartTxPacketStruct.transmissionData[transmission_number][4:0]);
-						SIX_BIT :tx = ^(uartTxPacketStruct.transmissionData[transmission_number][5:0]);
-						SEVEN_BIT: tx = ^(uartTxPacketStruct.transmissionData[transmission_number][6:0]);
-						EIGHT_BIT : tx = ^(uartTxPacketStruct.transmissionData[transmission_number][7:0]);
+						FIVE_BIT: tx = ^(uartTxPacketStruct.transmissionData[4:0]);
+						SIX_BIT :tx = ^(uartTxPacketStruct.transmissionData[5:0]);
+						SEVEN_BIT: tx = ^(uartTxPacketStruct.transmissionData[6:0]);
+						EIGHT_BIT : tx = ^(uartTxPacketStruct.transmissionData[7:0]);
 					endcase  
 				end
 				else if (uartConfigStruct.uartParityType == ODD_PARITY) begin 
 				@(posedge oversamplingClk)
 					case(uartConfigStruct.uartDataType)
-						FIVE_BIT: tx = ~^(uartTxPacketStruct.transmissionData[transmission_number][4:0]);
-						SIX_BIT :tx = ~^(uartTxPacketStruct.transmissionData[transmission_number][5:0]);
-						SEVEN_BIT: tx = ~^(uartTxPacketStruct.transmissionData[transmission_number][6:0]);
-						EIGHT_BIT : tx = ~^(uartTxPacketStruct.transmissionData[transmission_number][7:0]);
+						FIVE_BIT: tx = ~^(uartTxPacketStruct.transmissionData[4:0]);
+						SIX_BIT :tx = ~^(uartTxPacketStruct.transmissionData[5:0]);
+						SEVEN_BIT: tx = ~^(uartTxPacketStruct.transmissionData[6:0]);
+						EIGHT_BIT : tx = ~^(uartTxPacketStruct.transmissionData[7:0]);
 					endcase  
 				end 
 			end
@@ -193,25 +191,24 @@ task SampleData(inout UartTxPacketStruct uartTxPacketStruct , inout UartConfigSt
 			if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
 			@(posedge oversamplingClk)
 			case(uartConfigStruct.uartDataType)
-				FIVE_BIT: tx = ~^(uartTxPacketStruct.transmissionData[transmission_number][4:0]);
-				SIX_BIT :tx = ~^(uartTxPacketStruct.transmissionData[transmission_number][5:0]);
-				SEVEN_BIT: tx = ~^(uartTxPacketStruct.transmissionData[transmission_number][6:0]);
-				EIGHT_BIT : tx = ~^(uartTxPacketStruct.transmissionData[transmission_number][7:0]);
+				FIVE_BIT: tx = ~^(uartTxPacketStruct.transmissionData[4:0]);
+				SIX_BIT :tx = ~^(uartTxPacketStruct.transmissionData[5:0]);
+				SEVEN_BIT: tx = ~^(uartTxPacketStruct.transmissionData[6:0]);
+				EIGHT_BIT : tx = ~^(uartTxPacketStruct.transmissionData[7:0]);
 			endcase	 
 			end 
 			else if(uartConfigStruct.uartParityType == ODD_PARITY) begin
 			@(posedge oversamplingClk)
 			case(uartConfigStruct.uartDataType)
-				FIVE_BIT: tx = ^(uartTxPacketStruct.transmissionData[transmission_number][4:0]);
-				SIX_BIT :tx = ^(uartTxPacketStruct.transmissionData[transmission_number][5:0]);
-				SEVEN_BIT: tx = ^(uartTxPacketStruct.transmissionData[transmission_number][6:0]);
-				EIGHT_BIT : tx = ^(uartTxPacketStruct.transmissionData[transmission_number][7:0]);
+				FIVE_BIT: tx = ^(uartTxPacketStruct.transmissionData[4:0]);
+				SIX_BIT :tx = ^(uartTxPacketStruct.transmissionData[5:0]);
+				SEVEN_BIT: tx = ^(uartTxPacketStruct.transmissionData[6:0]);
+				EIGHT_BIT : tx = ^(uartTxPacketStruct.transmissionData[7:0]);
 			endcase 
 			end 
 		end 
 	end 
 	@(posedge oversamplingClk)
 		tx = STOP_BIT;  
-	end
 endtask 
 endinterface : UartTxDriverBfm
