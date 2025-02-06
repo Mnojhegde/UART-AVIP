@@ -51,7 +51,8 @@ interface UartTxDriverBfm (input  logic   clk,
   
   //Creating the handle for the proxy_driver
   UartTxDriverProxy uartTxDriverProxy;
-   
+
+  UartTransmitterStateEnum uartTransmitterState;
   //-------------------------------------------------------
   // Used to display the name of the interface
   //-------------------------------------------------------
@@ -119,6 +120,7 @@ interface UartTxDriverBfm (input  logic   clk,
   task WaitForReset();
 	  @(negedge reset);
 	  `uvm_info(name,$sformatf("RESET DETECTED"),UVM_LOW);
+	  uartTransmitterState = RESET;
 	  tx = 1; //DRIVE THE UART TO IDEAL STATE
 	  @(posedge reset);
 	  `uvm_info(name,$sformatf("RESET DEASSERTED"),UVM_LOW);
@@ -162,11 +164,15 @@ interface UartTxDriverBfm (input  logic   clk,
 task SampleData(inout UartTxPacketStruct uartTxPacketStruct , inout UartConfigStruct uartConfigStruct);
 		@(posedge oversamplingClk);
 		tx = START_BIT;
+		uartTransmitterState = STARTBIT;
 		for( int i=0 ; i< uartConfigStruct.uartDataType ; i++) begin
 			@(posedge oversamplingClk)
 				tx = uartTxPacketStruct.transmissionData[i];
+				uartTransmitterState = DATABITTRANSFER;
+
 		end
 		if(uartConfigStruct.uartParityEnable ==1) begin 
+		  uartTransmitterState=PARITYBIT;
 			if(uartConfigStruct.uartParityErrorInjection==0) begin 
 				if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
 					@(posedge oversamplingClk)
@@ -210,5 +216,6 @@ task SampleData(inout UartTxPacketStruct uartTxPacketStruct , inout UartConfigSt
 	end 
 	@(posedge oversamplingClk)
 		tx = STOP_BIT;  
+		uartTransmitterState = STOPBIT;
 endtask 
 endinterface : UartTxDriverBfm
