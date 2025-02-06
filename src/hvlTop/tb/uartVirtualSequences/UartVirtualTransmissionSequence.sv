@@ -46,7 +46,7 @@ task UartVirtualTransmissionSequence :: body();
     `uvm_fatal("[VIRTUAL SEQUENCE]",$sformatf("failed to get the config"))
   begin 
  //   uartTxBaseSequence.start(p_sequencer.uartTxSequencer);
-     `uvm_do_on_with(uartTxBaseSequence , p_sequencer.uartTxSequencer,{array_size ==uartTxAgentConfig.packetsNeeded;})
+     `uvm_do_on_with(uartTxBaseSequence , p_sequencer.uartTxSequencer,{packetsNeeded ==uartTxAgentConfig.packetsNeeded;})
  //  uartRxBaseSequence.start(p_sequencer.uartRxSequencer);
   end 
 
@@ -54,4 +54,3 @@ task UartVirtualTransmissionSequence :: body();
 endtask : body
 
 `endif
-
