@@ -72,7 +72,7 @@ endfunction : setupUartEnvConfig
  function void UartBaseTest :: setupUartTxAgentConfig();
    
   uartEnvConfig.uartTxAgentConfig = UartTxAgentConfig :: type_id :: create("uartTxAgentConfig");
-  uartEnvConfig.uartTxAgentConfig.randomize() with{packetsNeeded inside {[5:15]};};
+  uartEnvConfig.uartTxAgentConfig.packetsNeeded=NO_OF_PACKETS;
   uartEnvConfig.uartTxAgentConfig.is_active = UVM_ACTIVE;
   uartEnvConfig.uartTxAgentConfig.hasCoverage = 1;
   uartEnvConfig.uartTxAgentConfig.hasParity = PARITY_ENABLED;
@@ -81,6 +81,7 @@ endfunction : setupUartEnvConfig
   uartEnvConfig.uartTxAgentConfig.uartDataType = FIVE_BIT;
   uartEnvConfig.uartTxAgentConfig.uartParityType = EVEN_PARITY;
   uartEnvConfig.uartTxAgentConfig.parityErrorInjection = 0;
+  uartEnvConfig.uartTxAgentConfig.OverSampledBaudFrequencyClk =1;
   uvm_config_db #(UartTxAgentConfig) :: set(null,"*", "uartTxAgentConfig",uartEnvConfig.uartTxAgentConfig);
 
 endfunction : setupUartTxAgentConfig
@@ -92,7 +93,7 @@ endfunction : setupUartTxAgentConfig
 //--------------------------------------------------------------------------------------------
  function void UartBaseTest :: setupUartRxAgentConfig();
   uartEnvConfig.uartRxAgentConfig = UartRxAgentConfig :: type_id :: create("uartRxAgentConfig");
-  uartEnvConfig.uartRxAgentConfig.randomize() with{packetsNeeded inside {[5:15]};};
+  uartEnvConfig.uartRxAgentConfig.packetsNeeded=NO_OF_PACKETS;
   uartEnvConfig.uartRxAgentConfig.is_active = UVM_PASSIVE;
   uartEnvConfig.uartRxAgentConfig.hasCoverage = 1;
   uartEnvConfig.uartRxAgentConfig.hasParity = PARITY_ENABLED;
@@ -136,4 +137,3 @@ endtask : run_phase
 
 `endif  
 
-  
