@@ -72,15 +72,18 @@ task UartTxMonitorProxy :: run_phase(uvm_phase phase);
 		begin 
 			uartTxMonitorBfm.GenerateBaudClk(uartConfigStruct);
 		end 
-		begin 
+		begin
+		  uartTxMonitorBfm.WaitForReset();
       forever begin
 				UartTxTransaction uartTxTransaction_clone;
-				uartTxMonitorBfm.WaitForReset();
 				uartTxMonitorBfm.StartMonitoring(uartTxPacketStruct , uartConfigStruct);
 				UartTxSeqItemConverter::toTxClass(uartTxPacketStruct , uartTxAgentConfig , uartTxTransaction);
 				uartTxMonitorAnalysisPort.write(uartTxTransaction);
-				$display("Tx MONITOR HAS received %p",uartTxPacketStruct.transmissionData);
-				$display("parity is %b",uartTxTransaction.parity);
+
+				`uvm_info("[MONITOR PROXY]","MONITOR HAS RECEIVED FOLLOWING PACKET FROM TRANSMISTTER PROXY",UVM_LOW);
+	      for(int i=0;i<uartTxAgentConfig.uartDataType;i++)
+	        $write("%b",uartTxPacketStruct.transmissionData[i]);
+	      $display("\n parity of the packet obtained is %b",uartTxTransaction.parity);
 
 				$cast(uartTxTransaction_clone, uartTxTransaction.clone());  
     		uartTxMonitorAnalysisPort.write(uartTxTransaction_clone);
@@ -91,4 +94,3 @@ task UartTxMonitorProxy :: run_phase(uvm_phase phase);
 	join_any
 endtask : run_phase
 `endif
- 
