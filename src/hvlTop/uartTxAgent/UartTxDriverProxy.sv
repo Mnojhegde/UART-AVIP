@@ -1,4 +1,3 @@
-
 `ifndef UARTTxDRIVERPROXY_INCLUDED_
 `define UARTTxDRIVERPROXY_INCLUDED_
 
@@ -75,6 +74,12 @@ task UartTxDriverProxy :: run_phase(uvm_phase phase);
 				forever begin
 					seq_item_port.get_next_item(req);
 					UartTxConfigConverter::from_Class(uartTxAgentConfig , uartConfigStruct);
+`uvm_info("[DRIVER PROXY]",$sformatf("The UartDataType is %s \nThe baudrate of Uart is %0d \nThe parity enable=%b",uartTxAgentConfig.uartDataType.name(),uartTxAgentConfig.uartBaudRate,uartTxAgentConfig.hasParity),UVM_LOW);
+
+`uvm_info("[Driver PROXY]","DATA BEING SENT FROM TRANSMITTER DRIVER PROXY IS:\t",UVM_LOW);
+  for(int i=0;i<uartTxAgentConfig.uartDataType;i++)
+   $write("%b",req.transmissionData[i]);
+   $display(" ");
 					UartTxSeqItemConverter :: fromTxClass(req,uartTxAgentConfig,uartTxPacketStruct);
 					uartTxDriverBfm.DriveToBfm(uartTxPacketStruct , uartConfigStruct);
 					wait(driverSynchronizer.triggered);
