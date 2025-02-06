@@ -31,12 +31,9 @@ endfunction : new
 // Converting seq_item transactions into struct data items
 //--------------------------------------------------------------------------------------------
 function void UartTxSeqItemConverter :: fromTxClass(input UartTxTransaction uartTxTransaction,input UartTxAgentConfig uartTxAgentConfig, output UartTxPacketStruct uartTxPacketStruct);
-  int total_transmission = uartTxTransaction.transmissionData.size();
-  for(int transmission_number=0 ; transmission_number < total_transmission; transmission_number++)begin 
     for( int i=0 ; i< uartTxAgentConfig.uartDataType ; i++) begin  
-      uartTxPacketStruct.transmissionData[transmission_number][i] = uartTxTransaction.transmissionData[transmission_number][i];
+      uartTxPacketStruct.transmissionData[i] = uartTxTransaction.transmissionData[i];
     end 
-  end 
 endfunction : fromTxClass
 
 //--------------------------------------------------------------------------------------------
@@ -44,17 +41,11 @@ endfunction : fromTxClass
 // Converting struct data items into seq_item transactions
 //--------------------------------------------------------------------------------------------
 function void UartTxSeqItemConverter :: toTxClass(input UartTxPacketStruct uartTxPacketStruct,input UartTxAgentConfig uartTxAgentConfig,inout UartTxTransaction uartTxTransaction);
-  int total_transmission = $size(uartTxPacketStruct.transmissionData);	
-  uartTxTransaction.transmissionData = new[total_transmission];
-  for(int transmission_number=0 ; transmission_number < total_transmission; transmission_number++)begin 
     for( int i=0 ; i<uartTxAgentConfig.uartDataType ; i++) begin
-      uartTxTransaction.transmissionData[transmission_number][i] = uartTxPacketStruct.transmissionData[transmission_number][i];
+      uartTxTransaction.transmissionData[i] = uartTxPacketStruct.transmissionData[i];
     end
-    uartTxTransaction.parity[transmission_number] = uartTxPacketStruct.parity[transmission_number];
-  end 
+    uartTxTransaction.parity = uartTxPacketStruct.parity;
+   
 endfunction : toTxClass
 
 `endif
- 
-
-
