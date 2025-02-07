@@ -78,7 +78,7 @@ task UartTxMonitorProxy :: run_phase(uvm_phase phase);
 				UartTxTransaction uartTxTransaction_clone;
 				uartTxMonitorBfm.StartMonitoring(uartTxPacketStruct , uartConfigStruct);
 				UartTxSeqItemConverter::toTxClass(uartTxPacketStruct , uartTxAgentConfig , uartTxTransaction);
-				uartTxMonitorAnalysisPort.write(uartTxTransaction);
+				
 
 				`uvm_info("[MONITOR PROXY]","MONITOR HAS RECEIVED FOLLOWING PACKET FROM TRANSMISTTER PROXY",UVM_LOW);
 	      for(int i=0;i<uartTxAgentConfig.uartDataType;i++)
