@@ -119,10 +119,10 @@ task UartScoreboard :: run_phase(uvm_phase phase);
    `uvm_info(get_type_name(),$sformatf("Before calling analysis fifo get method"),UVM_LOW)
 
       uartScoreboardTxAnalysisFifo.get(uartTxTransaction);
-   `uvm_info(get_type_name(),$sformatf("Printing transmissionData= %p", uartTxTransaction.transmissionData),UVM_LOW)
-
+    `uvm_info(get_type_name(),$sformatf("Printing transmissionData= %b", uartTxTransaction.transmissionData),UVM_LOW)
+      
       uartScoreboardRxAnalysisFifo.get(uartRxTransaction);
-   `uvm_info(get_type_name(),$sformatf("Printing receivingData= %p", uartRxTransaction.receivingData),UVM_LOW)
+   `uvm_info(get_type_name(),$sformatf("Printing receivingData= %b", uartRxTransaction.receivingData),UVM_LOW)
 
     compareTxRx(uartTxTransaction,uartRxTransaction);
   end
@@ -138,13 +138,13 @@ endtask : run_phase
              begin
                bitDataCmpFailedTxRxCount++;
                `uvm_info(get_type_name(),$sformatf("Data Mismatch"),UVM_LOW)
-              //`uvm_info(get_type_name(),$sformatf("TransmissionData = %p,RecievingData = %p",uartTxTransaction.transmissionData[i],uartRxTransaction.receivingData[i]),UVM_LOW)
+              `uvm_info(get_type_name(),$sformatf("TransmissionData = %b,RecievingData = %b",uartTxTransaction.transmissionData[i],uartRxTransaction.receivingData[i]),UVM_LOW)
              end
            else
              begin
                bitDataCmpVerifiedTxRxCount++;
                `uvm_info(get_type_name(),$sformatf("Data Match"),UVM_LOW)
-               //`uvm_info(get_type_name(),$sformatf("TransmissionData = %b,RecievingData = %b",uartTxTransaction.transmissionData[i],uartRxTransaction.receivingData[i]),UVM_LOW)
+               `uvm_info(get_type_name(),$sformatf("TransmissionData = %b,RecievingData = %b",uartTxTransaction.transmissionData[i],uartRxTransaction.receivingData[i]),UVM_LOW)
              end/*
            if((uartTxAgentConfig.hasParity && uartRxAgentConfig.hasParity) == 1)
              begin
@@ -162,7 +162,7 @@ endtask : run_phase
                `uvm_error(get_type_name(),$sformatf("Parity mismatch"))
              end*/
             transmissionReciveingSucessfulCount++;
-            `uvm_info(get_type_name(),$sformatf("transmissionData = %p\n, receivingData = %p\n, tx parity = %0b\n rx parity=%0b",uartTxTransaction.transmissionData,uartRxTransaction.receivingData,uartTxTransaction.parity,uartRxTransaction.parity),UVM_LOW)
+            `uvm_info(get_type_name(),$sformatf("transmissionData = %b\n, receivingData = %b\n, tx parity = %0b\n rx parity=%0b",uartTxTransaction.transmissionData,uartRxTransaction.receivingData,uartTxTransaction.parity,uartRxTransaction.parity),UVM_LOW)
           // uartTxTransaction.print(); 
           // uartRxTransaction.print();
          end
