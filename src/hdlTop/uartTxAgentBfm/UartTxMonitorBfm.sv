@@ -1,4 +1,3 @@
-
 // Importing Uart global package
 //-------------------------------------------------------
 import UartGlobalPkg::*;
@@ -54,9 +53,13 @@ interface UartTxMonitorBfm (input  logic   clk,
       clkPeriodStopTime = $realtime; 
       clkPeriod = clkPeriodStopTime - clkPeriodStartTime;
       clkFrequency = ( 10 **9 )/ clkPeriod;
-
+       
+      if(uartConfigStruct.OverSampledBaudFrequencyClk==1)begin 
       baudDivisor = (clkFrequency)/(uartConfigStruct.uartOverSamplingMethod * uartConfigStruct.uartBaudRate); 
-
+      end 
+      else begin 
+      baudDivisor = (clkFrequency)/(uartConfigStruct.uartBaudRate);
+      end 
       BaudClkGenerator(baudDivisor);
     endtask
 
@@ -123,7 +126,8 @@ interface UartTxMonitorBfm (input  logic   clk,
   //-------------------------------------------------------
   task Deserializer(inout UartTxPacketStruct uartTxPacketStruct, inout UartConfigStruct uartConfigStruct);
       	@(negedge tx);
-       	repeat(1) @(posedge oversamplingClk);//needs this posedge or 1 cycle delay to avoid race around or delay in output
+       	if(uartConfigStruct.OverSampledBaudFrequencyClk==1)begin 
+	repeat(1) @(posedge oversamplingClk);//needs this posedge or 1 cycle delay to avoid race around or delay in output
        	for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
      			@(posedge oversamplingClk) begin
         		uartTxPacketStruct.transmissionData[i] = tx;
@@ -134,6 +138,22 @@ interface UartTxMonitorBfm (input  logic   clk,
 	   			uartTxPacketStruct.parity = tx;
       	end
       	@(posedge oversamplingClk);
+
+	end 
+	else if(uartConfigStruct.OverSampledBaudFrequencyClk==0)begin 
+         repeat(1)@(posedge baudClk);
+          for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
+	  @(posedge baudClk)begin 
+            uartTxPacketStruct.transmissionData[i] = tx;
+	  end
+         end 
+	 if(uartConfigStruct.uartParityEnable ==1) begin   
+	 @(posedge baudClk)
+	 uartTxPacketStruct.parity = tx;
+	 end 
+	 @(posedge baudClk);
+
+	end 
   	endtask
 			
 
