@@ -45,4 +45,6 @@ module UartTxAgentBfm(UartIf uartIf);
     uvm_config_db#(virtual UartTxMonitorBfm)::set(null,"*","uartTxMonitorBfm",uartTxMonitorBfm);
   end
 
+//  bind UartTxMonitorBfm UartTxAssertions TransmissionAssertions(.uartClk(oversamplingClk),.uartTx(tx));
+
 endmodule : UartTxAgentBfm
