@@ -2,7 +2,7 @@
 `define UARTTXASSERTIONS_INCLUDED_
 
 //import UartGlobalPkg :: *;
-import UartTxCoverParameter :: *;
+//import UartTxCoverParameter :: *;
 interface UartTxAssertions ( input bit uartClk , input logic uartTx);
   import uvm_pkg :: *;
   `include "uvm_macros.svh"
@@ -14,7 +14,7 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
   bit uartEvenParityDetectionInitiation = 0;
   bit uartOddParityDetectionInitiation = 0;
   PARITY_TYPE uartEvenOddParity = ODD_PARITY;
-  bit [DATA_WIDTH-1 :0]uartLocalData;
+  bit [ :0]uartLocalData;
 
   always@(posedge uartClk) begin 
     if(!(uartStartDetectInitiation))begin 
