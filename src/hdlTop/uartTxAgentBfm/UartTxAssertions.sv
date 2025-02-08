@@ -9,23 +9,25 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
   import UartTxPkg ::UartTxAgentConfig;
   UartTxAgentConfig uartTxAgentConfig;
   int localWidth = 0;
-  bit uartParityEnabled = uartTxAgentConfig.hasParity;
   bit uartStopDetectInitiation;
-  bit uartStartDetectInitiation = uartTxAgentConfig.uartStartBitDetectionStart;
   bit uartDataWidthDetectInitiation;
   bit uartEvenParityDetectionInitiation;
   bit uartOddParityDetectionInitiation;
-  parityTypeEnum uartEvenOddParity = uartTxAgentConfig.uartParityType;
   bit [ DATA_WIDTH-1:0]uartLocalData;
-
+  bit uartParityEnabled;
+  bit uartStartDetectInitiation;
+  parityTypeEnum uartEvenOddParity;
   initial begin 
   start_of_simulation_ph.wait_for_state(UVM_PHASE_STARTED);
     if(!(uvm_config_db#(UartTxAgentConfig) :: get(null,"","uartTxAgentConfig",uartTxAgentConfig)))
       `uvm_fatal("[TX ASSERTION]","FAILED TO GET CONFIG OBJECT")
+     uartParityEnabled = uartTxAgentConfig.hasParity;
+     uartStartDetectInitiation = uartTxAgentConfig.uartStartBitDetectionStart;
+     uartEvenOddParity = uartTxAgentConfig.uartParityType; 
   end 
 
   always@(posedge uartClk) begin 
-    if(!(uartStartDetectInitiation))begin 
+    if(!(uartStartDetectInitiation))begin
       localWidth++;
       if(uartTxAgentConfig.uartDataType !=localWidth)begin 
       uartLocalData = {uartLocalData,uartTx};
@@ -59,7 +61,7 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
   endproperty
 
   IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS: assert property (start_bit_detection_property)begin 
-    $info("START BIT DETECTED : ASSERTION PASS");
+    $info("*******************************START BIT DETECTED : ASSERTION PASS");
     uartStartDetectInitiation = 0;
     end 
     else 
@@ -71,7 +73,7 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
   endproperty 
 
   CHECK_FOR_DATA_WIDTH_LENGTH : assert property (data_width_check_property)begin
-    $info("DATA WIDTH IS MATCHING : ASSERTION PASS ");
+    $info("*****************************DATA WIDTH IS MATCHING : ASSERTION PASS ");
     uartDataWidthDetectInitiation = 0;
     end 
     else begin
@@ -85,7 +87,7 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
   endproperty 
     
   CHECK_FOR_EVEN_PROPERTY : assert property (even_parity_check)begin 
-    $info("EVEN PARITY IS DETECTED : ASSERTION PASS ");
+    $info("*********************EVEN PARITY IS DETECTED : ASSERTION PASS ");
     uartEvenParityDetectionInitiation = 0;
     end 
     else begin 
@@ -99,7 +101,7 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
   endproperty 
     
   CHECK_FOR_ODD_PROPERTY : assert property (odd_parity_check)begin 
-    $info("ODD PARITY IS DETECTED : ASSERTION PASS ");
+    $info("***********************8ODD PARITY IS DETECTED : ASSERTION PASS ");
     uartOddParityDetectionInitiation = 0;
     end 
     else begin 
@@ -115,12 +117,18 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
     $info("STOP BIT IS BEING DETECTED : ASSERTION PASS ");
     uartStopDetectInitiation = 0;
     uartStartDetectInitiation = 1;
+    localWidth=0;
+    uartLocalData=0;
     end 
     else begin 
       $error(" FAILED TO DETECT STOP BIT : ASSERTION FAIL ");
       uartStopDetectInitiation = 0;
-    end 
+      localWidth=0;
+      uartLocalData=0;
+    end
+
+    always@(posedge uartClk)
+     $display("THE VALUE OF TX IS%b  localwidth is %0d",uartTx,localWidth);
 endinterface : UartTxAssertions
 
 `endif
-  
