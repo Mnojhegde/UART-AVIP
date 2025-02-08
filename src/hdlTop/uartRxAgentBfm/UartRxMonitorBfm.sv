@@ -130,7 +130,7 @@ interface UartRxMonitorBfm (input  logic   clk,
 	repeat(1) @(posedge oversamplingClk);//needs this posedge or 1 cycle delay to avoid race around or delay in output
        	for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
      			@(posedge oversamplingClk) begin
-        		uartRxPacketStruct.transmissionData[i] = rx;
+        		uartRxPacketStruct.receivingData[i] = rx;
         	end
        	end
       	if(uartConfigStruct.uartParityEnable ==1) begin   
@@ -144,7 +144,7 @@ interface UartRxMonitorBfm (input  logic   clk,
          repeat(1)@(posedge baudClk);
           for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
 	  @(posedge baudClk)begin 
-            uartRxPacketStruct.transmissionData[i] = rx;
+            uartRxPacketStruct.receivingData[i] = rx;
 	  end
          end 
 	 if(uartConfigStruct.uartParityEnable ==1) begin   
@@ -195,4 +195,4 @@ interface UartRxMonitorBfm (input  logic   clk,
      // parity_error==1;
      // end
   // endtask:parityCheck
-endinterface : UartrxMonitorBfm
+endinterface : UartRxMonitorBfm

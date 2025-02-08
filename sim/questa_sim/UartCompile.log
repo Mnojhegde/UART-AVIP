@@ -1,5 +1,5 @@
 QuestaSim vlog 10.6c Compiler 2017.07 Jul 25 2017
-Start time: 16:27:59 on Feb 06,2025
+Start time: 00:23:49 on Feb 08,2025
 vlog -sv "+acc" "+cover" "+fcover" -l UartCompile.log -f ../UartCompile.f 
 -- Compiling package UartGlobalPkg
 -- Compiling package UartTxPkg
@@ -18,8 +18,6 @@ vlog -sv "+acc" "+cover" "+fcover" -l UartCompile.log -f ../UartCompile.f
 -- Importing package UartRxSequencePkg
 -- Compiling package UartBaseTestPkg
 -- Importing package UartVirtualSequencePkg
-** Warning: ../../src/hvlTop/tb/UartBaseTest.sv(75): (vlog-2240) Treating stand-alone use of function 'randomize' as an implicit VOID cast.
-** Warning: ../../src/hvlTop/tb/UartBaseTest.sv(95): (vlog-2240) Treating stand-alone use of function 'randomize' as an implicit VOID cast.
 -- Compiling package UartInterface_sv_unit
 -- Importing package UartGlobalPkg
 -- Compiling interface UartIf
@@ -56,5 +54,5 @@ vlog -sv "+acc" "+cover" "+fcover" -l UartCompile.log -f ../UartCompile.f
 Top level modules:
 	HdlTop
 	HvlTop
-End time: 16:28:01 on Feb 06,2025, Elapsed time: 0:00:02
-Errors: 0, Warnings: 2
+End time: 00:23:52 on Feb 08,2025, Elapsed time: 0:00:03
+Errors: 0, Warnings: 0

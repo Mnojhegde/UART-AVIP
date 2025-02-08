@@ -81,7 +81,7 @@ endfunction : setupUartEnvConfig
   uartEnvConfig.uartTxAgentConfig.uartDataType = FIVE_BIT;
   uartEnvConfig.uartTxAgentConfig.uartParityType = EVEN_PARITY;
   uartEnvConfig.uartTxAgentConfig.parityErrorInjection = 0;
-  uartEnvConfig.uartTxAgentConfig.OverSampledBaudFrequencyClk =1;
+  uartEnvConfig.uartTxAgentConfig.OverSampledBaudFrequencyClk =0;
   uvm_config_db #(UartTxAgentConfig) :: set(null,"*", "uartTxAgentConfig",uartEnvConfig.uartTxAgentConfig);
 
 endfunction : setupUartTxAgentConfig
