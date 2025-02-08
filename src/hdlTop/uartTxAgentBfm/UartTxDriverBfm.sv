@@ -231,26 +231,26 @@ task SampleData(inout UartTxPacketStruct uartTxPacketStruct , inout UartConfigSt
       uartTransmitterState=PARITYBIT;
       if(uartConfigStruct.uartParityErrorInjection==0) begin
         if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
-	  @(posedge oversamplingClk)
+	  @(posedge baudClk)
 	  evenParityCompute(uartConfigStruct,uartTxPacketStruct,tx);
 	end 
 	else if(uartConfigStruct.uartParityType == ODD_PARITY) begin
-	  @(posedge oversamplingClk)
+	  @(posedge baudClk)
 	  oddParityCompute(uartConfigStruct,uartTxPacketStruct,tx);
 	end 
       end 
       else begin 
         if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
-	  @(posedge oversamplingClk)
+	  @(posedge baudClk)
 	  oddParityCompute(uartConfigStruct,uartTxPacketStruct,tx);
         end 
 	else if(uartConfigStruct.uartParityType == ODD_PARITY) begin
-	  @(posedge oversamplingClk)
+	  @(posedge baudClk)
 	  evenParityCompute(uartConfigStruct,uartTxPacketStruct,tx);
 	end 
       end 
     end 
-    @(posedge oversamplingClk)
+    @(posedge baudClk)
     tx =STOP_BIT;
     uartTransmitterState = STOPBIT;
   end 
