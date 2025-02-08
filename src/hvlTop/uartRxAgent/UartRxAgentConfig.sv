@@ -19,7 +19,7 @@ class UartRxAgentConfig extends uvm_object;
   stopBitEnum  uartStopbit;
   rand int packetsNeeded;
   bit parityErrorInjection;
-
+  bit uartStartBitDetectionStart=1;
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
