@@ -78,8 +78,10 @@ task UartRxMonitorProxy :: run_phase(uvm_phase phase);
     UartRxConfigConverter::from_Class(uartRxAgentConfig , uartConfigStruct);
     uartRxMonitorBfm.StartMonitoring(uartRxPacketStruct, uartConfigStruct);
     UartRxSeqItemConverter::toRxClass(uartRxPacketStruct,uartRxAgentConfig,uartRxTransaction);
-    
-	  $display("Rx MONITOR HAS received %p",uartRxPacketStruct.receivingData);
+	  `uvm_info("[receciever monitor PROXY]","DATA BEING Sreceived FROM TRANSMITTER DRIVER PROXY IS:\t",UVM_LOW);
+	  for(int i=0;i<uartRxAgentConfig.uartDataType;i++)
+		  $write("%b",uartRxTransaction.receivingData[i]);
+                 $display(" ");
 		$display("parity is %b",uartRxTransaction.parity);
 
     $cast(uartRxTransaction_clone, uartRxTransaction.clone());  
