@@ -6,7 +6,7 @@
 
 $basepath/uartTxAgent/UartTxCoverParameter.sv
 $basepath/uartRxAgent/UartRxCoverParameter.sv
-$basepath/uartTxAgent/UartTxAssertions.sv
-$basepath/uartRxAgent/UartRxAssertions.sv
+$basepath/../hdlTop/uartTxAgentBfm/UartTxAssertions.sv
+$basepath/../hdlTop/uartRxAgentBfm/UartRxAssertions.sv
 $basepath/tb/uartLocalAssertionTest/UartTxAssertionTB.sv
 $basepath/tb/uartLocalAssertionTest/UartRxAssertionTB.sv
