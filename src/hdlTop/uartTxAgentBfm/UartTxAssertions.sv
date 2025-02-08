@@ -1,26 +1,36 @@
 `ifndef UARTTXASSERTIONS_INCLUDED_
 `define UARTTXASSERTIONS_INCLUDED_
 
-//import UartGlobalPkg :: *;
+import UartGlobalPkg :: *;
 //import UartTxCoverParameter :: *;
 interface UartTxAssertions ( input bit uartClk , input logic uartTx);
   import uvm_pkg :: *;
   `include "uvm_macros.svh"
+  import UartTxPkg ::UartTxAgentConfig;
+  UartTxAgentConfig uartTxAgentConfig;
   int localWidth = 0;
-  bit uartParityEnabled = PARITY_ENABLED;
-  bit uartStopDetectInitiation = 0;
-  bit uartStartDetectInitiation = 1;
-  bit uartDataWidthDetectInitiation = 0;
-  bit uartEvenParityDetectionInitiation = 0;
-  bit uartOddParityDetectionInitiation = 0;
-  PARITY_TYPE uartEvenOddParity = ODD_PARITY;
-  bit [ :0]uartLocalData;
+  bit uartParityEnabled = uartTxAgentConfig.hasParity;
+  bit uartStopDetectInitiation;
+  bit uartStartDetectInitiation = uartTxAgentConfig.uartStartBitDetectionStart;
+  bit uartDataWidthDetectInitiation;
+  bit uartEvenParityDetectionInitiation;
+  bit uartOddParityDetectionInitiation;
+  parityTypeEnum uartEvenOddParity = uartTxAgentConfig.uartParityType;
+  bit [ DATA_WIDTH-1:0]uartLocalData;
+
+  initial begin 
+  start_of_simulation_ph.wait_for_state(UVM_PHASE_STARTED);
+    if(!(uvm_config_db#(UartTxAgentConfig) :: get(null,"","uartTxAgentConfig",uartTxAgentConfig)))
+      `uvm_fatal("[TX ASSERTION]","FAILED TO GET CONFIG OBJECT")
+  end 
 
   always@(posedge uartClk) begin 
     if(!(uartStartDetectInitiation))begin 
       localWidth++;
+      if(uartTxAgentConfig.uartDataType !=localWidth)begin 
       uartLocalData = {uartLocalData,uartTx};
       $display("%b",uartLocalData);
+      end  
       if(localWidth == DATA_WIDTH)begin 
         if(uartParityEnabled == 1)begin 
           if(uartEvenOddParity == EVEN_PARITY)begin
