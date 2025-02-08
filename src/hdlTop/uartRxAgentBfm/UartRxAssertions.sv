@@ -1,26 +1,36 @@
 `ifndef UARTRXASSERTIONS_INCLUDED_
 `define UARTRXASSERTIONS_INCLUDED_
 
-//import UartGlobalPkg :: *;
-import UartRxCoverParameter :: *;
+import UartGlobalPkg :: *;
+//import UartRxCoverParameter :: *;
 interface UartRxAssertions ( input bit uartClk , input logic uartRx);
   import uvm_pkg :: *;
   `include "uvm_macros.svh"
+  import UartRxPkg ::UartRxAgentConfig;
+  UartRxAgentConfig uartRxAgentConfig;
   int localWidth = 0;
-  bit uartParityEnabled = PARITY_ENABLED;
-  bit uartStopDetectInitiation = 0;
-  bit uartStartDetectInitiation = 1;
-  bit uartDataWidthDetectInitiation = 0;
-  bit uartEvenParityDetectionInitiation = 0;
-  bit uartOddParityDetectionInitiation = 0;
-  PARITY_TYPE uartEvenOddParity = EVEN_PARITY;
-  bit [DATA_WIDTH-1 :0]uartLocalData;
+  bit uartParityEnabled = uartRxAgentConfig.hasParity;
+  bit uartStopDetectInitiation;
+  bit uartStartDetectInitiation = uartRxAgentConfig.uartStartBitDetectionStart;
+  bit uartDataWidthDetectInitiation;
+  bit uartEvenParityDetectionInitiation;
+  bit uartOddParityDetectionInitiation;
+  parityTypeEnum uartEvenOddParity = uartRxAgentConfig.uartParityType;
+  bit [ DATA_WIDTH-1:0]uartLocalData;
+
+  initial begin 
+  start_of_simulation_ph.wait_for_state(UVM_PHASE_STARTED);
+    if(!(uvm_config_db#(UartRxAgentConfig) :: get(null,"","uartRxAgentConfig",uartRxAgentConfig)))
+      `uvm_fatal("[Rx ASSERTION]","FAILED TO GET CONFIG OBJECT")
+  end 
 
   always@(posedge uartClk) begin 
     if(!(uartStartDetectInitiation))begin 
       localWidth++;
+      if(uartRxAgentConfig.uartDataType !=localWidth)begin 
       uartLocalData = {uartLocalData,uartRx};
       $display("%b",uartLocalData);
+      end  
       if(localWidth == DATA_WIDTH)begin 
         if(uartParityEnabled == 1)begin 
           if(uartEvenOddParity == EVEN_PARITY)begin
@@ -53,7 +63,7 @@ interface UartRxAssertions ( input bit uartClk , input logic uartRx);
     uartStartDetectInitiation = 0;
     end 
     else 
-      $error("FAILED TO DETECT STOP BIT : ASSERTION FAILED");
+      $error("FAILED TO DETECT START BIT : ASSERTION FAILED");
     
   property data_width_check_property;
     @(posedge uartClk) disable iff(!(uartDataWidthDetectInitiation))
