@@ -16,9 +16,11 @@
 ../../src/hvlTop/tb/UartBaseTestPkg.sv
 ../../src/hdlTop/uartInterface/UartInterface.sv
 ../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv
+../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv
 ../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv
 ../../src/hdlTop/uartTxAgentBfm/UartTxAgentBfm.sv
 ../../src/hdlTop/uartRxAgentBfm/UartRxDriverBfm.sv
+../../src/hdlTop/uartTxAgentBfm/UartRxAssertions.sv
 ../../src/hdlTop/uartRxAgentBfm/UartRxMonitorBfm.sv
 ../../src/hdlTop/uartRxAgentBfm/UartRxAgentBfm.sv
 ../../src/hdlTop/UartHdlTop.sv
