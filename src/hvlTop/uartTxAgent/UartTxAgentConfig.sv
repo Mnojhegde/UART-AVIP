@@ -22,6 +22,7 @@ class UartTxAgentConfig extends uvm_object;
   rand int packetsNeeded;
   bit parityErrorInjection;
   bit OverSampledBaudFrequencyClk;  
+  bit uartStartBitDetectionStart=1;
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
