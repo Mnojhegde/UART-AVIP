@@ -16,6 +16,7 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
   logic [ DATA_WIDTH-1:0]uartLocalData;
   bit uartParityEnabled;
   bit uartStartDetectInitiation;
+  bit parity;
   int uartLegalDataWidth;
   parityTypeEnum uartEvenOddParity;
   initial begin 
@@ -27,6 +28,29 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
      uartEvenOddParity = uartTxAgentConfig.uartParityType;
      uartLegalDataWidth = uartTxAgentConfig.uartDataType;
   end 
+
+  function evenParityCompute();
+    case(uartTxAgentConfig.uartDataType)
+    FIVE_BIT : parity=^(uartLocalData[4:0]);
+    SIX_BIT : parity=^(uartLocalData[5:0]);
+    SEVEN_BIT : parity=^(uartLocalData[6:0]);
+    EIGHT_BIT : parity=^(uartLocalData[7:0]);
+    endcase
+    $display("PARITY IN ASSERTION IS %b",parity);
+    return parity;
+  endfunction 
+  
+  
+  function oddParityCompute();
+    case(uartTxAgentConfig.uartDataType)
+      FIVE_BIT : parity=~^(uartLocalData[4:0]);
+      SIX_BIT : parity=~^(uartLocalData[5:0]);
+      SEVEN_BIT : parity=~^(uartLocalData[6:0]);
+      EIGHT_BIT : parity=~^(uartLocalData[7:0]);
+    endcase
+    $display("PARITY IN ASSERTION IS %b",parity);
+    return parity;
+  endfunction 
 
   always@(posedge uartClk) begin 
     if(!(uartStartDetectInitiation))begin
@@ -92,7 +116,7 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
 
   property even_parity_check;
     @(posedge uartClk) disable iff(!(uartEvenParityDetectionInitiation))
-    ##1 uartTx == ^(uartLocalData);
+    ##1 uartTx == evenParityCompute();
   endproperty 
     
   CHECK_FOR_EVEN_PROPERTY : assert property (even_parity_check)begin 
@@ -107,7 +131,7 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
 
   property odd_parity_check;
     @(posedge uartClk) disable iff(!(uartOddParityDetectionInitiation))
-    ##1 !uartTx == ^(uartLocalData);
+    ##1 uartTx == oddParityCompute();
   endproperty 
     
   CHECK_FOR_ODD_PROPERTY : assert property (odd_parity_check)begin 
