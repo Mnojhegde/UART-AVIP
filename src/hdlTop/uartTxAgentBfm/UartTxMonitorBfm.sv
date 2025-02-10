@@ -122,6 +122,30 @@ interface UartTxMonitorBfm (input  logic   clk,
    	disable fork ;
 	endtask 
 
+
+function evenParityCompute(input UartConfigStruct uartConfigStruct,input UartTxPacketStruct uartTxPacketStruct);
+  bit parity;	
+  case(uartConfigStruct.uartDataType)
+    FIVE_BIT: parity = ^(uartTxPacketStruct.transmissionData[4:0]);
+    SIX_BIT :parity = ^(uartTxPacketStruct.transmissionData[5:0]);
+    SEVEN_BIT: parity = ^(uartTxPacketStruct.transmissionData[6:0]);
+    EIGHT_BIT : parity = ^(uartTxPacketStruct.transmissionData[7:0]);
+  endcase
+return tx;	
+
+endtask 
+
+function oddParityCompute(input UartConfigStruct uartConfigStruct,input UartTxPacketStruct uartTxPacketStruct);
+  bit parity;	
+  case(uartConfigStruct.uartDataType)
+      FIVE_BIT: parity = ~^(uartTxPacketStruct.transmissionData[4:0]);
+      SIX_BIT :parity = ~^(uartTxPacketStruct.transmissionData[5:0]);
+      SEVEN_BIT: parity = ~^(uartTxPacketStruct.transmissionData[6:0]);
+      EIGHT_BIT : parity = ~^(uartTxPacketStruct.transmissionData[7:0]);
+  endcase
+ return parity;
+endtask
+
   //-------------------------------------------------------
   // Task: DeSerializer
   //  converts serial data to parallel
@@ -152,49 +176,47 @@ interface UartTxMonitorBfm (input  logic   clk,
 	 if(uartConfigStruct.uartParityEnable ==1) begin   
 	 @(posedge baudClk)
 	 uartTxPacketStruct.parity = tx;
+		 parityCheck(uartTxPacketStruct,tx);
 	 end 
 	 @(posedge baudClk);
-
+		stopBitCheck(uartTxPacketStruct,tx);
 	end 
   	endtask
 			
-
-  //-------------------------------------------------------
-  // Task: StopBitCheck
-  // to check valid stop bit and framing error occurs when a received character does not have a valid STOP bit.
-  //-------------------------------------------------------
-  //task StopBitCheck (inout  UartTxPacketStruct uartTxPacketStruct,input bit tx,input int transmission_number);
- //		if (tx == 1) begin
-  //			FramingError = 0;
-  //			`uvm_info(name, $sformatf("Stop bit detected"), UVM_HIGH)
-  //		end
-  //		else begin
-  //			FramingError = 1;
-  //			`uvm_info(name, $sformatf("Stop bit not detected"), UVM_HIGH)
-  //		end
-  //endtask	
-  //-------------------------------------------------------
-  // Task: parityCheck
-  //  The parityCheck task checks for parity errors in the transmitted data 
-  //-------------------------------------------------------
-  // task parityCheck(inout UartTxPacketStruct uartTxPacketStruct,input bit tx,input int transmission_number);
+  -------------------------------------------------------
+  Task: StopBitCheck
+  to check valid stop bit and framing error occurs when a received character does not have a valid STOP bit.
+  -------------------------------------------------------
+  task stopBitCheck (inout  UartTxPacketStruct uartTxPacketStruct,input bit tx);
+ 		if (tx == 1) begin
+  			uartTxPackedStruct.framingError = 0;
+  			`uvm_info(name, $sformatf("Stop bit detected"), UVM_HIGH)
+  		end
+  		else begin
+  			uartTxPackedStruct.framingError = 1;
+  			`uvm_info(name, $sformatf("Stop bit not detected"), UVM_HIGH)
+  		end
+  endtask	
+  -------------------------------------------------------
+  Task: parityCheck
+   The parityCheck task checks for parity errors in the transmitted data 
+  -------------------------------------------------------
+  task parityCheck(inout UartTxPacketStruct uartTxPacketStruct,input bit tx);
     
-   // int cal_parity;
+   int cal_parity;
     
-   //if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
-  //	cal_parity = ^uartTxPacketStruct.transmissionData[transmission_number];
-//      end
+   if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
+	   cal_parity = evenParityCompute();
+     end
 	
-//	   else begin 
-//	      cal_parity = ~^uartTxPacketStruct.transmissionData[transmission_number];
- //       end 
- //   if(tx==cal_parity)
-  //    begin
-    //    parity_error==0;
-     // end
-     //else
-      //begin
-     // parity_error==1;
-     // end
-  // endtask:parityCheck
+	   else begin 
+           cal_parity = oddParityCompute();
+       end 
+   if(tx==cal_parity)begin
+       uartTxPacketStruct.parityError==0;
+     end
+     else begin
+     uartTxPacketStruct.parityError==1;
+     end
+  endtask:parityCheck
 endinterface : UartTxMonitorBfm
