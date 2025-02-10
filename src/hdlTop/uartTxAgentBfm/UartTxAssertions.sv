@@ -13,7 +13,7 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
   bit uartDataWidthDetectInitiation;
   bit uartEvenParityDetectionInitiation;
   bit uartOddParityDetectionInitiation;
-  bit [ DATA_WIDTH-1:0]uartLocalData;
+  logic [ DATA_WIDTH-1:0]uartLocalData;
   bit uartParityEnabled;
   bit uartStartDetectInitiation;
   int uartLegalDataWidth;
@@ -127,7 +127,7 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
     $info("STOP BIT IS BEING DETECTED : ASSERTION PASS ");
     uartStopDetectInitiation = 0;
     uartStartDetectInitiation = 1;
-    uartLocalData=0;
+    uartLocalData='b x;
     localWidth=0; 
     end 
     else begin 
