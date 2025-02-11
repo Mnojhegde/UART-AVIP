@@ -34,7 +34,7 @@ function void UartSample13BaudRate4800Datatype6OddParityStopbit1 :: build_phase(
   super.build_phase(phase);
   uartEnvConfig.uartTxAgentConfig.uartOverSamplingMethod = 13;
   uartEnvConfig.uartTxAgentConfig.uartBaudRate = 4800;
-  uartEnvConfig.uartTxAgentConfig.uartDataType = 5;
+  uartEnvConfig.uartTxAgentConfig.uartDataType = 6;
   uartEnvConfig.uartTxAgentConfig.uartParityType = ODD_PARITY;
   uartEnvConfig.uartTxAgentConfig.uartstopbit = 1;
   uartEnvConfig.uartTxAgentConfig.hasParity=1;
