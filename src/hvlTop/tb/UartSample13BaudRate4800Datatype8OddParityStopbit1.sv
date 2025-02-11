@@ -3,12 +3,12 @@
 // A test for 13 sampling condition
 //--------------------------------------------------------------------------------------------
 classUartSample13BaudRate4800Datatype8OddParityStopbit1 extends UartBaseTest;
-   `uvm_component_utils(UartSample13BaudRate4800Datatype6OddParityStopbit1)
+   `uvm_component_utils(UartSample13BaudRate4800Datatype8OddParityStopbit1)
     UartVirtualBaseSequence uartVirtualBaseSequence;
     //-------------------------------------------------------
     // Externally defined Tasks and Functions
     //-------------------------------------------------------
-    extern function new(string name = "UartSample13BaudRate4800Datatype6OddParityStopbit1" , uvm_component parent = null);
+    extern function new(string name = "UartSample13BaudRate4800Datatype8OddParityStopbit1" , uvm_component parent = null);
     extern virtual function void  build_phase(uvm_phase phase);
     extern virtual task run_phase(uvm_phase phase);
  
@@ -20,7 +20,7 @@ endclass :UartSample13BaudRate4800Datatype8OddParityStopbit1
 //
 // parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
-functionUartSample13BaudRate4800Datatype8OddParityStopbit1:: new(string name = "UartSample13BaudRate4800Datatype6OddParityStopbit1" , uvm_component parent = null);
+functionUartSample13BaudRate4800Datatype8OddParityStopbit1:: new(string name = "UartSample13BaudRate4800Datatype8OddParityStopbit1" , uvm_component parent = null);
   super.new(name,parent);
 endfunction  : new
 //--------------------------------------------------------------------------------------------
@@ -48,7 +48,7 @@ endfunction  : build_phase
 // Parameters:
 // phase - stores the current phase
 //------------------------------------------------------------------------------------------
-taskUartSample13BaudRate4800Datatype6OddParityStopbit1:: run_phase(uvm_phase phase);
+taskUartSample13BaudRate4800Datatype8OddParityStopbit1:: run_phase(uvm_phase phase);
   UartVirtualBaseSequence :: type_id ::set_type_override(UartVirtualTransmissionSequence::get_type());
   uartVirtualBaseSequence = UartVirtualBaseSequence :: type_id :: create("uartVirtualBaseSequence");
   uartVirtualBaseSequence.print();
