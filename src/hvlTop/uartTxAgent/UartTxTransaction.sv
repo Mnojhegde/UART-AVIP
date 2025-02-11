@@ -13,6 +13,7 @@ class UartTxTransaction extends uvm_sequence_item;
 	logic parityError; 
 	logic breakingError; 
 	logic overrunError;
+	logic framingError;
    
 
    //-------------------------------------------------------
