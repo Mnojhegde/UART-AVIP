@@ -1,7 +1,7 @@
 // Importing Uart global package
 //-------------------------------------------------------
 import UartGlobalPkg::*;
- 
+
 //--------------------------------------------------------------------------------------------
 // Interface : UartTxMonitorBfm
 //  Connects the master monitor bfm with the master monitor prox
@@ -10,33 +10,33 @@ interface UartTxMonitorBfm (input  logic   clk,
                             input  logic reset,
                             input  logic   tx
                            );
- 
+
   //-------------------------------------------------------
   // Importing uvm package file
   //-------------------------------------------------------
   import uvm_pkg::*;
   `include "uvm_macros.svh"
- 
+
   //-------------------------------------------------------
   // Importing the Transmitter package file
   //-------------------------------------------------------
- 
+
   string name = "UART_TRANSMITTER_MONITOR_BFM";
- 
+
   //Variable: bclk
   //baud clock for uart transmisson/reception
         bit baudClk;
- 
+
         bit oversamplingClk;
- 
+
   //-------------------------------------------------------
   // Used to display the name of the interface
   //-------------------------------------------------------
   initial begin
     `uvm_info(name, $sformatf(name),UVM_LOW)
   end
- 
- 
+
+
   //------------------------------------------------------------------
   // Task: Baud_div
   // this task will calculate the baud divider based on sys clk frequency
@@ -53,7 +53,7 @@ interface UartTxMonitorBfm (input  logic   clk,
       clkPeriodStopTime = $realtime;
       clkPeriod = clkPeriodStopTime - clkPeriodStartTime;
       clkFrequency = ( 10 **9 )/ clkPeriod;
- 
+
       if(uartConfigStruct.OverSampledBaudFrequencyClk==1)begin
       baudDivisor = (clkFrequency)/(uartConfigStruct.uartOverSamplingMethod * uartConfigStruct.uartBaudRate);
       end
@@ -62,7 +62,7 @@ interface UartTxMonitorBfm (input  logic   clk,
       end
       BaudClkGenerator(baudDivisor);
     endtask
- 
+
   //------------------------------------------------------------------
   // Task: BaudClkGenerator
   // this task will generate baud clk based on baud divider
@@ -71,7 +71,7 @@ interface UartTxMonitorBfm (input  logic   clk,
       static int count=0;
       forever begin
         @(posedge clk or negedge clk)
- 
+
         if(count == (baudDiv-1))begin
           count <= 0;
           baudClk <= ~baudClk;
@@ -81,12 +81,12 @@ interface UartTxMonitorBfm (input  logic   clk,
         end
       end
     endtask
- 
+
   //--------------------------------------------------------------------------------------------
   // Task: bclk_counter
   //  This task will count the number of cycles of bclk and generate oversamplingClk to sample data
   //--------------------------------------------------------------------------------------------
- 
+
   task BclkCounter(input int uartOverSamplingMethod);
                 static int countbClk = 0;
                 forever begin
@@ -100,7 +100,7 @@ interface UartTxMonitorBfm (input  logic   clk,
                         end
           end
   endtask
- 
+
   //-------------------------------------------------------
   // Task: WaitForReset
   //  Waiting for the system reset
@@ -111,18 +111,16 @@ interface UartTxMonitorBfm (input  logic   clk,
     @(posedge reset);
     `uvm_info(name, $sformatf("system reset deactivated"), UVM_LOW)
   endtask: WaitForReset
- 
-        task StartMonitoring(inout UartTxPacketStruct uartTxPacketStruct , inout UartConfigStruct uartConfigStruct);
-        //BclkCounter(uartConfigStruct.uartOverSamplingMethod);
- 
-        fork
-        BclkCounter(uartConfigStruct.uartOverSamplingMethod);
-        Deserializer(uartTxPacketStruct,uartConfigStruct);
-                join_any
-        disable fork ;
-        endtask
- 
- 
+
+  task StartMonitoring(inout UartTxPacketStruct uartTxPacketStruct , inout UartConfigStruct uartConfigStruct);
+    fork
+      BclkCounter(uartConfigStruct.uartOverSamplingMethod);
+      Deserializer(uartTxPacketStruct,uartConfigStruct);
+     join_any
+     disable fork ;
+   endtask
+
+
 function evenParityCompute(input UartConfigStruct uartConfigStruct,input UartTxPacketStruct uartTxPacketStruct);
   bit parity;
   case(uartConfigStruct.uartDataType)
@@ -132,9 +130,9 @@ function evenParityCompute(input UartConfigStruct uartConfigStruct,input UartTxP
     EIGHT_BIT : parity = ^(uartTxPacketStruct.transmissionData[7:0]);
   endcase
 return tx;
- 
+
 endfunction
- 
+
 function oddParityCompute(input UartConfigStruct uartConfigStruct,input UartTxPacketStruct uartTxPacketStruct);
   bit parity;
   case(uartConfigStruct.uartDataType)
@@ -145,7 +143,39 @@ function oddParityCompute(input UartConfigStruct uartConfigStruct,input UartTxPa
   endcase
 return parity;
 endfunction
- 
+
+ task stopBitCheck (inout  UartTxPacketStruct uartTxPacketStruct,input bit tx);
+   if (tx == 1) begin
+   uartTxPacketStruct.framingError = 0;
+   $display("*****************checking stop bit *************************");
+   `uvm_info(name, $sformatf("Stop bit detected"), UVM_LOW)
+   end
+   else begin
+   $display("******************checking stop bit******************");
+   uartTxPacketStruct.framingError = 1;
+   `uvm_info(name, $sformatf("Stop bit not detected"), UVM_LOW)
+   end
+endtask
+
+
+
+task parityCheck(inout UartConfigStruct uartConfigStruct,inout UartTxPacketStruct uartTxPacketStruct,input bit tx);
+   int cal_parity;
+      if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
+         cal_parity = evenParityCompute(uartConfigStruct,uartTxPacketStruct);
+       end
+      
+       else begin
+          cal_parity = oddParityCompute(uartConfigStruct,uartTxPacketStruct);
+       end
+       if(tx==cal_parity)begin
+         uartTxPacketStruct.parityError=0;
+       end
+       else begin
+         uartTxPacketStruct.parityError=1;
+        end
+endtask:parityCheck
+
   //-------------------------------------------------------
   // Task: DeSerializer
   //  converts serial data to parallel
@@ -155,16 +185,18 @@ endfunction
         if(uartConfigStruct.OverSampledBaudFrequencyClk==1)begin
         repeat(1) @(posedge oversamplingClk);//needs this posedge or 1 cycle delay to avoid race around or delay in output
         for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
-                        @(posedge oversamplingClk) begin
-                        uartTxPacketStruct.transmissionData[i] = tx;
-                end
+            @(posedge oversamplingClk) begin
+            uartTxPacketStruct.transmissionData[i] = tx;
+            end
         end
         if(uartConfigStruct.uartParityEnable ==1) begin
-                                @(posedge oversamplingClk)
-                                uartTxPacketStruct.parity = tx;
+          @(posedge oversamplingClk)
+          uartTxPacketStruct.parity = tx;
+          parityCheck(uartConfigStruct,uartTxPacketStruct,tx);
+
         end
         @(posedge oversamplingClk);
- 
+           stopBitCheck(uartTxPacketStruct,tx);
         end
         else if(uartConfigStruct.OverSampledBaudFrequencyClk==0)begin
          repeat(1)@(posedge baudClk);
@@ -182,34 +214,6 @@ endfunction
                 stopBitCheck(uartTxPacketStruct,tx);
         end
         endtask
- 
-  task stopBitCheck (inout  UartTxPacketStruct uartTxPacketStruct,input bit tx);
-                if (tx == 1) begin
-                        uartTxPacketStruct.framingError = 0;
-                        `uvm_info(name, $sformatf("???????????????????????????????????Stop bit detected"), UVM_LOW)
-                end
-                else begin
-                        uartTxPacketStruct.framingError = 1;
-                        `uvm_info(name, $sformatf("??????????????????????????????????????????????Stop bit not detected"), UVM_LOW)
-                end
-  endtask
- 
-task parityCheck(inout UartConfigStruct uartConfigStruct,inout UartTxPacketStruct uartTxPacketStruct,input bit tx);
- 
-   int cal_parity;
- 
-   if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
-           cal_parity = evenParityCompute(uartConfigStruct,uartTxPacketStruct);
-     end
- 
-           else begin
-           cal_parity = oddParityCompute(uartConfigStruct,uartTxPacketStruct);
-       end
-   if(tx==cal_parity)begin
-       uartTxPacketStruct.parityError=0;
-     end
-     else begin
-     uartTxPacketStruct.parityError=1;
-     end
-  endtask:parityCheck
+
+
 endinterface : UartTxMonitorBfm
