@@ -43,7 +43,8 @@ package UartGlobalPkg;
 												  logic parity; 
 												  logic parityError; 
 												  logic breakingError; 
-												  logic overrunError;} UartTxPacketStruct;
+												  logic overrunError;
+			                    logic framingError; } UartTxPacketStruct;
 	
 	// required Rx struct packet
 	typedef struct packed { logic[DATA_WIDTH-1:0] receivingData;
