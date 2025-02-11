@@ -1,18 +1,18 @@
 //--------------------------------------------------------------------------------------------
-// Class:   UartSample16BaudRate9600Datatype7OddParityStopbit2
+// Class:   UartSample13BaudRate4800Datatype5EvenParityStopbit1
 // A test for 16 sampling condition
 //--------------------------------------------------------------------------------------------
 class  UartSample16BaudRate9600Datatype7OddParityStopbit2 extends UartBaseTest;
-   `uvm_component_utils( UartSample16BaudRate9600Datatype7OddParityStopbit2)
+   `uvm_component_utils( UartSample13BaudRate4800Datatype5EvenParityStopbit1)
     UartVirtualBaseSequence uartVirtualBaseSequence;
     //-------------------------------------------------------
     // Externally defined Tasks and Functions
     //-------------------------------------------------------
-    extern function new(string name = " UartSample16BaudRate9600Datatype7OddParityStopbit2" , uvm_component parent = null);
+    extern function new(string name = " UartSample13BaudRate4800Datatype5EvenParityStopbit1" , uvm_component parent = null);
     extern virtual function void  build_phase(uvm_phase phase);
     extern virtual task run_phase(uvm_phase phase);
  
-endclass :  UartSample16BaudRate9600Datatype7OddParityStopbit2
+endclass :  UartSample13BaudRate4800Datatype5EvenParityStopbit1
 //--------------------------------------------------------------------------------------------
 // Constructor:new
 //
@@ -20,7 +20,7 @@ endclass :  UartSample16BaudRate9600Datatype7OddParityStopbit2
 //
 // parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
-function  UartSample16BaudRate9600Datatype7OddParityStopbit2 :: new(string name = " UartSample16BaudRate9600Datatype7OddParityStopbit2" , uvm_component parent = null);
+function  UartSample13BaudRate4800Datatype5EvenParityStopbit1:: new(string name = " UartSample13BaudRate4800Datatype5EvenParityStopbit1" , uvm_component parent = null);
   super.new(name,parent);
 endfunction  : new
 //--------------------------------------------------------------------------------------------
@@ -30,13 +30,13 @@ endfunction  : new
 // Parameters:
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
-function void  UartSample16BaudRate9600Datatype7OddParityStopbit2 :: build_phase(uvm_phase phase);
+function void  UartSample13BaudRate4800Datatype5EvenParityStopbit1 :: build_phase(uvm_phase phase);
   super.build_phase(phase);
-  uartEnvConfig.uartTxAgentConfig.uartOverSamplingMethod = 16;
-  uartEnvConfig.uartTxAgentConfig.uartBaudRate = 9600;
-  uartEnvConfig.uartTxAgentConfig.uartDataType = 7;
-  uartEnvConfig.uartTxAgentConfig.uartParityType = ODD_PARITY;
-  uartEnvConfig.uartTxAgentConfig.uartstopbit = 2;
+  uartEnvConfig.uartTxAgentConfig.uartOverSamplingMethod = 13;
+  uartEnvConfig.uartTxAgentConfig.uartBaudRate = 4800;
+  uartEnvConfig.uartTxAgentConfig.uartDataType = 5;
+  uartEnvConfig.uartTxAgentConfig.uartParityType = EVEN_PARITY;
+  uartEnvConfig.uartTxAgentConfig.uartstopbit = 1;
   uartEnvConfig.uartTxAgentConfig.hasParity=1;
  
 endfunction  : build_phase
@@ -48,7 +48,7 @@ endfunction  : build_phase
 // Parameters:
 // phase - stores the current phase
 //------------------------------------------------------------------------------------------
-task  UartSample16BaudRate9600Datatype7OddParityStopbit2:: run_phase(uvm_phase phase);
+task UartSample13BaudRate4800Datatype5EvenParityStopbit1:: run_phase(uvm_phase phase);
   UartVirtualBaseSequence :: type_id ::set_type_override(UartVirtualTransmissionSequence::get_type());
   uartVirtualBaseSequence = UartVirtualBaseSequence :: type_id :: create("uartVirtualBaseSequence");
   uartVirtualBaseSequence.print();
@@ -57,6 +57,4 @@ task  UartSample16BaudRate9600Datatype7OddParityStopbit2:: run_phase(uvm_phase p
   #100000;
   phase.drop_objection(this);
   endtask : run_phase
-`endif  
-
-has context menu
+`endif 
