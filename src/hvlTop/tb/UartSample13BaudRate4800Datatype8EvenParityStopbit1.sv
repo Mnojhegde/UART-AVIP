@@ -1,3 +1,5 @@
+`ifndef UARTSAMPLE13BAUDRATE4800DATATYPE8EVENPARITYSTOPBIT1_INCLUDED_
+`define UARTSAMPLE13BAUDRATE4800DATATYPE8EVENPARITYSTOPBIT1_INCLUDED_
 //--------------------------------------------------------------------------------------------
 // Class:  UartSample13BaudRate4800Datatype8EvenParityStopbit1
 // A test for 13 sampling condition
