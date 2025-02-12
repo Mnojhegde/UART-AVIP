@@ -126,7 +126,7 @@ interface UartRxMonitorBfm (input  logic   clk,
 				for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
         	repeat(16) @(posedge baudClk); begin
 						uartRxPacketStruct.receivingData[i] = rx;
-						uartTransmitterState = DATABITTRANSFER;
+						uartTransmitterState = UartTransmitterStateEnum(i+3);
         	end
         end
 				
