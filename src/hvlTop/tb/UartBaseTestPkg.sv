@@ -29,6 +29,7 @@ package UartBaseTestPkg;
   `include "UartOddParityTest.sv"
   `include "UartEvenParityWithErrorTest.sv"
   `include "UartOddParityWithErrorTest.sv"
+  `include "UartSample13BaudRate4800Datatype5EvenParityStopbit1.sv"
 
 endpackage : UartBaseTestPkg
 `endif
