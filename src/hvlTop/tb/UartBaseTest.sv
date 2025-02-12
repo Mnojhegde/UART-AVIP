@@ -103,7 +103,8 @@ endfunction : setupUartTxAgentConfig
   uartEnvConfig.uartRxAgentConfig.uartBaudRate = BAUD_9600;
   uartEnvConfig.uartRxAgentConfig.uartDataType = FIVE_BIT;
   uartEnvConfig.uartRxAgentConfig.uartParityType = EVEN_PARITY;
-  uartEnvConfig.uartRxAgentConfig.parityErrorInjection = 1;
+  uartEnvConfig.uartRxAgentConfig.parityErrorInjection =0;
+  uartEnvConfig.uartRxAgentConfig.framingErrorInjection = 0;
   uartEnvConfig.uartRxAgentConfig.OverSampledBaudFrequencyClk =1;
   uvm_config_db #(UartRxAgentConfig) :: set(null,"*", "uartRxAgentConfig",uartEnvConfig.uartRxAgentConfig);
 
