@@ -95,7 +95,7 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
 
   property start_bit_detection_property;
     @(posedge  uartClk) disable iff(!(uartStartDetectInitiation))
-    (!($isunknown(uartTx)) && uartTx) |-> first_match( (##[1:$] $fell(uartTx)));
+    (!($isunknown(uartTx)) && uartTx) |-> first_match( (##[0:$] $fell(uartTx)));
 
   endproperty
 
