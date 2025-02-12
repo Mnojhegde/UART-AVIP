@@ -20,7 +20,7 @@ endclass :UartSample13BaudRate4800Datatype8OddParityStopbit1
 //
 // parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
-functionUartSample13BaudRate4800Datatype8OddParityStopbit1:: new(string name = "UartSample13BaudRate4800Datatype8OddParityStopbit1" , uvm_component parent = null);
+function UartSample13BaudRate4800Datatype8OddParityStopbit1:: new(string name = "UartSample13BaudRate4800Datatype8OddParityStopbit1" , uvm_component parent = null);
   super.new(name,parent);
 endfunction  : new
 //--------------------------------------------------------------------------------------------
