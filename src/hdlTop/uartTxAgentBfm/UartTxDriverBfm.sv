@@ -190,7 +190,7 @@ endtask
 
 task SampleData(inout UartTxPacketStruct uartTxPacketStruct , inout UartConfigStruct uartConfigStruct);
   if(uartConfigStruct.OverSampledBaudFrequencyClk ==1)begin 
-    repeat(8) @(posedge baudClk);
+    // repeat(8) @(posedge baudClk);
     tx = START_BIT;
     uartTransmitterState = STARTBIT;
     // repeat(8) @(posedge baudClk);
