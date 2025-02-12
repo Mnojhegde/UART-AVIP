@@ -13,7 +13,7 @@ class  UartSample13BaudRate4800Datatype5EvenParityStopbit1 extends UartBaseTest;
     extern function new(string name = " UartSample13BaudRate4800Datatype5EvenParityStopbit1" , uvm_component parent = null);
     extern virtual function void  build_phase(uvm_phase phase);
     extern virtual task run_phase(uvm_phase phase);
- 
+
 endclass :  UartSample13BaudRate4800Datatype5EvenParityStopbit1
 //--------------------------------------------------------------------------------------------
 // Constructor:new
@@ -34,13 +34,13 @@ endfunction  : new
 //--------------------------------------------------------------------------------------------
 function void  UartSample13BaudRate4800Datatype5EvenParityStopbit1 :: build_phase(uvm_phase phase);
   super.build_phase(phase);
-  uartEnvConfig.uartTxAgentConfig.uartOverSamplingMethod = 13;
-  uartEnvConfig.uartTxAgentConfig.uartBaudRate = 4800;
-  uartEnvConfig.uartTxAgentConfig.uartDataType = 5;
+  uartEnvConfig.uartTxAgentConfig.uartOverSamplingMethod =OVERSAMPLING_13;
+  uartEnvConfig.uartTxAgentConfig.uartBaudRate = BAUD_4800;
+  uartEnvConfig.uartTxAgentConfig.uartDataType = FIVE_BIT;
   uartEnvConfig.uartTxAgentConfig.uartParityType = EVEN_PARITY;
-  uartEnvConfig.uartTxAgentConfig.uartstopbit = 1;
+  uartEnvConfig.uartTxAgentConfig.uartStopBit = ONE_BIT;
   uartEnvConfig.uartTxAgentConfig.hasParity=1;
- 
+
 endfunction  : build_phase
 
 //--------------------------------------------------------------------------------------------
@@ -59,4 +59,4 @@ task UartSample13BaudRate4800Datatype5EvenParityStopbit1:: run_phase(uvm_phase p
   #100000;
   phase.drop_objection(this);
   endtask : run_phase
-`endif 
+`endif
