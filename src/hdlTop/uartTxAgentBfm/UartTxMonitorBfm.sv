@@ -109,20 +109,20 @@ interface UartRxMonitorBfm (input  logic   clk,
 function evenParityCompute(input UartConfigStruct uartConfigStruct,input UartRxPacketStruct uartRxPacketStruct);
   bit parity;
   case(uartConfigStruct.uartDataType)
-    FIVE_BIT: parity = ^(uartRxPacketStruct.transmissionData[4:0]);
-    SIX_BIT :parity = ^(uartRxPacketStruct.transmissionData[5:0]);
-    SEVEN_BIT: parity = ^(uartRxPacketStruct.transmissionData[6:0]);
-    EIGHT_BIT : parity = ^(uartRxPacketStruct.transmissionData[7:0]);
+    FIVE_BIT: parity = ^(uartRxPacketStruct.receivingData[4:0]);
+    SIX_BIT :parity = ^(uartRxPacketStruct.receivingData[5:0]);
+    SEVEN_BIT: parity = ^(uartRxPacketStruct.receivingData[6:0]);
+    EIGHT_BIT : parity = ^(uartRxPacketStruct.receivingData[7:0]);
   endcase
 return Rx;
 endfunction
 function oddParityCompute(input UartConfigStruct uartConfigStruct,input UartRxPacketStruct uartRxPacketStruct);
   bit parity;
   case(uartConfigStruct.uartDataType)
-      FIVE_BIT: parity = ~^(uartRxPacketStruct.transmissionData[4:0]);
-      SIX_BIT :parity = ~^(uartRxPacketStruct.transmissionData[5:0]);
-      SEVEN_BIT: parity = ~^(uartRxPacketStruct.transmissionData[6:0]);
-      EIGHT_BIT : parity = ~^(uartRxPacketStruct.transmissionData[7:0]);
+      FIVE_BIT: parity = ~^(uartRxPacketStruct.receivingData[4:0]);
+      SIX_BIT :parity = ~^(uartRxPacketStruct.receivingData[5:0]);
+      SEVEN_BIT: parity = ~^(uartRxPacketStruct.receivingData[6:0]);
+      EIGHT_BIT : parity = ~^(uartRxPacketStruct.receivingData[7:0]);
   endcase
 return parity;
 endfunction
@@ -136,7 +136,7 @@ endfunction
         repeat(1) @(posedge oversamplingClk);//needs this posedge or 1 cycle delay to avoid race around or delay in output
         for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
                         @(posedge oversamplingClk) begin
-                        uartRxPacketStruct.transmissionData[i] = Rx;
+                        uartRxPacketStruct.receivingData[i] = Rx;
                 end
         end
         if(uartConfigStruct.uartParityEnable ==1) begin
@@ -153,7 +153,7 @@ endfunction
          repeat(1)@(posedge baudClk);
           for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
           @(posedge baudClk)begin
-            uartRxPacketStruct.transmissionData[i] = Rx;
+            uartRxPacketStruct.receivingData[i] = Rx;
           end
          end
          if(uartConfigStruct.uartParityEnable ==1) begin
