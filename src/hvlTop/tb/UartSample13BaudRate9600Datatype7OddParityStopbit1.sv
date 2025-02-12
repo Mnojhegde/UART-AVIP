@@ -1,6 +1,8 @@
+`ifndef UARTSAMPLE13BAUDRATE9600DATATYPE7ODDPARITYSTOPBIT1_INCLUDED_
+`define UARTSAMPLE13BAUDRATE9600DATATYPE7ODDPARITYSTOPBIT1_INCLUDED_   
 //--------------------------------------------------------------------------------------------
 // Class: UartSample13BaudRate9600Datatype7OddParityStopbit1
-// A test for 16 sampling condition
+// A test for 13 sampling condition
 //--------------------------------------------------------------------------------------------
 class UartSample13BaudRate9600Datatype7OddParityStopbit1extends UartBaseTest;
    `uvm_component_utils( UartSample13BaudRate9600Datatype7OddParityStopbit1)
