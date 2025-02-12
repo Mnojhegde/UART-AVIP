@@ -18,7 +18,7 @@ class UartSample16BaudRate4800Datatype8OddParityStopbit2 extends UartBaseTest;
   extern virtual function void  build_phase(uvm_phase phase);
   extern virtual task run_phase(uvm_phase phase);
 
-endclass : UartSample16BaudRate4800Datatype8OddParityStopbit1
+endclass : UartSample16BaudRate4800Datatype8OddParityStopbit2
    
 //--------------------------------------------------------------------------------------------
 // Constructor:new
