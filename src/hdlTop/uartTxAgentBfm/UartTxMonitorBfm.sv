@@ -154,6 +154,7 @@ endfunction
         end
         repeat(16) @(posedge baudClk);
 		stopBitCheck(uartTxPacketStruct,tx);
+		uartTransmitterState = STOPBIT;
 		repeat(8) @(posedge baudClk);
 	uartTransmitterState = IDLE;
 
