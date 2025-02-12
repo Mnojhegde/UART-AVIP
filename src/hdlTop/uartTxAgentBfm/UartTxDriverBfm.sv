@@ -285,4 +285,4 @@ endtask
 // always@(posedge oversamplingClk)
 //  $display("TX IS %b in driver bfm @%t",tx,$time);
 
-
+endinterface : UartTxDriverBfm
