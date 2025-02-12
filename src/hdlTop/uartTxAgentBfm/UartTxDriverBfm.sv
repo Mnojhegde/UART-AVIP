@@ -197,7 +197,7 @@ task SampleData(inout UartTxPacketStruct uartTxPacketStruct , inout UartConfigSt
     for( int i=0 ; i< uartConfigStruct.uartDataType ; i++) begin
 	repeat(16) @(posedge baudClk);
       tx = uartTxPacketStruct.transmissionData[i];
-      UartTransmitterStateEnum'(i + 3);
+      uartTransmitterState = UartTransmitterStateEnum'(i + 3);
       //repeat(8) @(posedge baudClk);
     end
     if(uartConfigStruct.uartParityEnable ==1) begin 
