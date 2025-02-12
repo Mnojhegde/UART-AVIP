@@ -20,6 +20,8 @@ interface UartTxMonitorBfm (input  logic   clk,
   //baud clock for uart transmisson/reception
         bit baudClk;
         bit oversamplingClk;
+
+	UartTransmitterStateEnum uartTransmitterState;
   //-------------------------------------------------------
   // Used to display the name of the interface
   //-------------------------------------------------------
@@ -93,17 +95,19 @@ interface UartTxMonitorBfm (input  logic   clk,
   task WaitForReset();
     @(negedge reset);
     `uvm_info(name, $sformatf("system reset activated"), UVM_LOW)
+	      uartTransmitterState = RESET;
     @(posedge reset);
     `uvm_info(name, $sformatf("system reset deactivated"), UVM_LOW)
+	  uartTransmitterState = IDLE;
   endtask: WaitForReset
 	task StartMonitoring(inout UartTxPacketStruct uartTxPacketStruct , inout UartConfigStruct uartConfigStruct);
         //BclkCounter(uartConfigStruct.uartOverSamplingMethod);
-        fork
-        BclkCounter(uartConfigStruct.uartOverSamplingMethod);
+        // fork
+        // BclkCounter(uartConfigStruct.uartOverSamplingMethod);
         Deserializer(uartTxPacketStruct,uartConfigStruct);
-                join_any
-         @(negedge oversamplingClk);
-         disable fork ;
+         //        join_any
+         // @(negedge oversamplingClk);
+         // disable fork ;
         endtask
 
 function evenParityCompute(input UartConfigStruct uartConfigStruct,input UartTxPacketStruct uartTxPacketStruct);
@@ -133,20 +137,25 @@ endfunction
   task Deserializer(inout UartTxPacketStruct uartTxPacketStruct, inout UartConfigStruct uartConfigStruct);
 	  @(negedge tx);
         if(uartConfigStruct.OverSampledBaudFrequencyClk==1)begin
-        repeat(1) @(posedge oversamplingClk);//needs this posedge or 1 cycle delay to avoid race around or delay in output
+        repeat(8) @(posedge baudClk); //needs this posedge or 1 cycle delay to avoid race around or delay in output
+				uartTransmitterState = STARTBIT;
         for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
-                        @(posedge oversamplingClk) begin
+                        repeat(16) @(posedge baudClk); begin
 				uartTxPacketStruct.transmissionData[i] = tx;
+				uartTransmitterState = DATABITTRANSFER;
                 end
         end
         if(uartConfigStruct.uartParityEnable ==1) begin
-                                @(posedge oversamplingClk)
+                                repeat(16) @(posedge baudClk);
                                 uartTxPacketStruct.parity = tx;
+				uartTransmitterState = PARITYBIT;
 		parityCheck(uartConfigStruct,uartTxPacketStruct,tx);
 
         end
-        @(posedge oversamplingClk);
+        repeat(16) @(posedge baudClk);
 		stopBitCheck(uartTxPacketStruct,tx);
+	repeat(16) @(posedge baudClk);
+	uartTransmitterState = IDLE;
 
         end
         else if(uartConfigStruct.OverSampledBaudFrequencyClk==0)begin
