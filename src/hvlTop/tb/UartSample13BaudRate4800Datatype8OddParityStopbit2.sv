@@ -2,7 +2,7 @@
 // Class: UartSample13BaudRate4800Datatype8OddParityStopbit2
 // A test for 13 sampling condition
 //--------------------------------------------------------------------------------------------
-classUartSample13BaudRate4800Datatype8OddParityStopbit2 extends UartBaseTest;
+class UartSample13BaudRate4800Datatype8OddParityStopbit2 extends UartBaseTest;
    `uvm_component_utils(UartSample13BaudRate4800Datatype8OddParityStopbit2)
     UartVirtualBaseSequence uartVirtualBaseSequence;
     //-------------------------------------------------------
@@ -20,7 +20,7 @@ endclass :UartSample13BaudRate4800Datatype8OddParityStopbit2
 //
 // parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
-functionUartSample13BaudRate4800Datatype8OddParityStopbit2:: new(string name = "UartSample13BaudRate4800Datatype8OddParityStopbit2" , uvm_component parent = null);
+function UartSample13BaudRate4800Datatype8OddParityStopbit2:: new(string name = "UartSample13BaudRate4800Datatype8OddParityStopbit2" , uvm_component parent = null);
   super.new(name,parent);
 endfunction  : new
 //--------------------------------------------------------------------------------------------
@@ -48,7 +48,7 @@ endfunction  : build_phase
 // Parameters:
 // phase - stores the current phase
 //------------------------------------------------------------------------------------------
-taskUartSample13BaudRate4800Datatype8OddParityStopbit2:: run_phase(uvm_phase phase);
+task UartSample13BaudRate4800Datatype8OddParityStopbit2:: run_phase(uvm_phase phase);
   UartVirtualBaseSequence :: type_id ::set_type_override(UartVirtualTransmissionSequence::get_type());
   uartVirtualBaseSequence = UartVirtualBaseSequence :: type_id :: create("uartVirtualBaseSequence");
   uartVirtualBaseSequence.print();
