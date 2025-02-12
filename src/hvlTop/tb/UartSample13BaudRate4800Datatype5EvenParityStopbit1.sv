@@ -41,6 +41,13 @@ function void  UartSample13BaudRate4800Datatype5EvenParityStopbit1 :: build_phas
   uartEnvConfig.uartTxAgentConfig.uartStopBit = ONE_BIT;
   uartEnvConfig.uartTxAgentConfig.hasParity=1;
 
+     uartEnvConfig.uartRxAgentConfig.uartOverSamplingMethod =OVERSAMPLING_13;
+  uartEnvConfig.uartRxAgentConfig.uartBaudRate = BAUD_4800;
+  uartEnvConfig.uartRxAgentConfig.uartDataType = FIVE_BIT;
+  uartEnvConfig.uartRxAgentConfig.uartParityType = EVEN_PARITY;
+  uartEnvConfig.uartRxAgentConfig.uartStopBit = ONE_BIT;
+  uartEnvConfig.uartRxAgentConfig.hasParity=1;
+
 endfunction  : build_phase
 
 //--------------------------------------------------------------------------------------------
