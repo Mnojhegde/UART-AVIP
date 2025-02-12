@@ -5,7 +5,7 @@ import UartGlobalPkg::*;
 //--------------------------------------------------------------------------------------------
 interface UartTxMonitorBfm (input  logic   clk,
                             input  logic reset,
-                            input  logic   Tx
+                            input  logic   tx
                            );
   //-------------------------------------------------------
   // Importing uvm package file
@@ -74,7 +74,7 @@ interface UartTxMonitorBfm (input  logic   clk,
   //--------------------------------------------------------------------------------------------
   task BclkCounter(input int uartOverSamplingMethod);
                 static int countbClk = 0;
-				@(negedge Tx);
+	  @(negedge tx);
                 forever begin
                         @(posedge baudClk)
                         if(countbClk == (uartOverSamplingMethod/2)-1) begin
@@ -114,7 +114,7 @@ function evenParityCompute(input UartConfigStruct uartConfigStruct,input UartTxP
     SEVEN_BIT: parity = ^(uartTxPacketStruct.transmissionData[6:0]);
     EIGHT_BIT : parity = ^(uartTxPacketStruct.transmissionData[7:0]);
   endcase
-return Tx;
+return parity;
 endfunction
 function oddParityCompute(input UartConfigStruct uartConfigStruct,input UartTxPacketStruct uartTxPacketStruct);
   bit parity;
@@ -131,42 +131,42 @@ endfunction
   //  converts serial data to parallel
   //-------------------------------------------------------
   task Deserializer(inout UartTxPacketStruct uartTxPacketStruct, inout UartConfigStruct uartConfigStruct);
-        @(negedge Tx);
+	  @(negedge tx);
         if(uartConfigStruct.OverSampledBaudFrequencyClk==1)begin
         repeat(1) @(posedge oversamplingClk);//needs this posedge or 1 cycle delay to avoid race around or delay in output
         for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
                         @(posedge oversamplingClk) begin
-                        uartTxPacketStruct.transmissionData[i] = Tx;
+				uartTxPacketStruct.transmissionData[i] = tx;
                 end
         end
         if(uartConfigStruct.uartParityEnable ==1) begin
                                 @(posedge oversamplingClk)
-                                uartTxPacketStruct.parity = Tx;
-				parityCheck(uartConfigStruct,uartTxPacketStruct,Tx);
+                                uartTxPacketStruct.parity = tx;
+		parityCheck(uartConfigStruct,uartTxPacketStruct,tx);
 
         end
         @(posedge oversamplingClk);
-	stopBitCheck(uartTxPacketStruct,Tx);
+		stopBitCheck(uartTxPacketStruct,tx);
 
         end
         else if(uartConfigStruct.OverSampledBaudFrequencyClk==0)begin
          repeat(1)@(posedge baudClk);
           for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
           @(posedge baudClk)begin
-            uartTxPacketStruct.transmissionData[i] = Tx;
+		  uartTxPacketStruct.transmissionData[i] = tx;
           end
          end
          if(uartConfigStruct.uartParityEnable ==1) begin
          @(posedge baudClk)
-         uartTxPacketStruct.parity = Tx;
-                 parityCheck(uartConfigStruct,uartTxPacketStruct,Tx);
+         uartTxPacketStruct.parity = tx;
+		 parityCheck(uartConfigStruct,uartTxPacketStruct,tx);
          end
          @(posedge baudClk);
-                stopBitCheck(uartTxPacketStruct,Tx);
+		stopBitCheck(uartTxPacketStruct,tx);
         end
         endtask
-  task stopBitCheck (inout  UartTxPacketStruct uartTxPacketStruct,input bit Tx);
-                if (Tx == 1) begin
+		 task stopBitCheck (inout  UartTxPacketStruct uartTxPacketStruct,input bit tx);
+			 if (tx == 1) begin
                         uartTxPacketStruct.framingError = 0;
                         `uvm_info(name, $sformatf("???????????????????????????????????Stop bit detected"), UVM_LOW)
                 end
@@ -175,7 +175,7 @@ endfunction
                         `uvm_info(name, $sformatf("??????????????????????????????????????????????Stop bit not detected"), UVM_LOW)
                 end
   endtask
-task parityCheck(inout UartConfigStruct uartConfigStruct,inout UartTxPacketStruct uartTxPacketStruct,input bit Tx);
+		 task parityCheck(inout UartConfigStruct uartConfigStruct,inout UartTxPacketStruct uartTxPacketStruct,input bit tx);
    int cal_parity;
    if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
            cal_parity = evenParityCompute(uartConfigStruct,uartTxPacketStruct);
@@ -183,7 +183,7 @@ task parityCheck(inout UartConfigStruct uartConfigStruct,inout UartTxPacketStruc
            else begin
            cal_parity = oddParityCompute(uartConfigStruct,uartTxPacketStruct);
        end
-   if(Tx==cal_parity)begin
+			 if(tx==cal_parity)begin
        uartTxPacketStruct.parityError=0;
      end
      else begin
