@@ -155,7 +155,7 @@ endfunction
         repeat(16) @(posedge baudClk);
 		stopBitCheck(uartRxPacketStruct,rx);
 		uartTransmitterState = STOPBIT;
-	repeat(16) @(posedge baudClk);
+		repeat(8) @(posedge baudClk);
 	uartTransmitterState = IDLE;
         end
         else if(uartConfigStruct.OverSampledBaudFrequencyClk==0)begin
