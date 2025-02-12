@@ -1,6 +1,8 @@
+`ifndef UARTSAMPLE13BAUDRATE9600DATATYPE5ODDPARITYSTOPBIT1_INCLUDED_
+`define UARTSAMPLE13BAUDRATE9600DATATYPE5ODDPARITYSTOPBIT1_INCLUDED_   
 //--------------------------------------------------------------------------------------------
 // Class: UartSample13BaudRate9600Datatype5OddParityStopbit1
-// A test for 16 sampling condition
+// A test for 13 sampling condition
 //--------------------------------------------------------------------------------------------
 class UartSample13BaudRate9600Datatype5OddParityStopbit1 extends UartBaseTest;
    `uvm_component_utils(UartSample13BaudRate9600Datatype5OddParityStopbit1)
@@ -20,7 +22,7 @@ endclass :UartSample13BaudRate9600Datatype5OddParityStopbit1
 //
 // parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
-functionUartSample13BaudRate9600Datatype5OddParityStopbit1:: new(string name = "UartSample13BaudRate9600Datatype5OddParityStopbit1" , uvm_component parent = null);
+function UartSample13BaudRate9600Datatype5OddParityStopbit1:: new(string name = "UartSample13BaudRate9600Datatype5OddParityStopbit1" , uvm_component parent = null);
   super.new(name,parent);
 endfunction  : new
 //--------------------------------------------------------------------------------------------
@@ -48,7 +50,7 @@ endfunction  : build_phase
 // Parameters:
 // phase - stores the current phase
 //------------------------------------------------------------------------------------------
-taskUartSample13BaudRate9600Datatype5OddParityStopbit1:: run_phase(uvm_phase phase);
+task UartSample13BaudRate9600Datatype5OddParityStopbit1:: run_phase(uvm_phase phase);
   UartVirtualBaseSequence :: type_id ::set_type_override(UartVirtualTransmissionSequence::get_type());
   uartVirtualBaseSequence = UartVirtualBaseSequence :: type_id :: create("uartVirtualBaseSequence");
   uartVirtualBaseSequence.print();
