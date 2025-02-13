@@ -148,21 +148,27 @@ interface UartTxMonitorBfm (input  logic   clk,
         else if(uartConfigStruct.OverSampledBaudFrequencyClk==0)begin
 					// sampling start bit 
 					repeat(1)@(posedge baudClk);
+					uartTransmitterState = STARTBIT;
+					
+					// sampling data bits 
 					for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
           	@(posedge baudClk)begin
 		  				uartTxPacketStruct.transmissionData[i] = tx;
+							uartTransmitterState = UartTransmitterStateEnum'(i+3);
         		end
         	end
 
-					// sampling data bits 
+					// sampling parity bit 
 					if(uartConfigStruct.uartParityEnable ==1) begin
         		@(posedge baudClk)
          		uartTxPacketStruct.parity = tx;
+						uartTransmitterState = PARITYBIT;
 		 				parityCheck(uartConfigStruct,uartTxPacketStruct,tx);
         	end
 
 					// sampling stop bit	
         	@(posedge baudClk);
+					uartTransmitterState = STOPBIT;
 					stopBitCheck(uartTxPacketStruct,tx);
       	end
     endtask
