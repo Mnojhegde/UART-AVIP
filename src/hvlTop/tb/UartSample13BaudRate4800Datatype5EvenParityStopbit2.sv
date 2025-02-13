@@ -38,7 +38,7 @@ function void  UartSample13BaudRate4800Datatype5EvenParityStopbit2 :: build_phas
   uartEnvConfig.uartTxAgentConfig.uartBaudRate = BAUD_4800;
   uartEnvConfig.uartTxAgentConfig.uartDataType = FIVE_BIT;
   uartEnvConfig.uartTxAgentConfig.uartParityType = EVEN_PARITY;
-  uartEnvConfig.uartTxAgentConfig.uartstopbit = TWO_BIT;
+  uartEnvConfig.uartTxAgentConfig.uartStopBit = TWO_BIT;
   uartEnvConfig.uartTxAgentConfig.hasParity=1;
 
 
