@@ -43,14 +43,16 @@ endfunction : new
 // do_copy method
 //--------------------------------------------------------------------------------------------
 function void UartTxTransaction :: do_copy(uvm_object rhs);
-   UartTxTransaction rhs1;
-   if(! $cast(rhs1,rhs))
-      `uvm_fatal("do_copy","casting failed during copying");
-   super.copy(rhs);
-   this.transmissionData = rhs1.transmissionData;
-   this.parity = rhs1.parity;
-   this.framingError =rhs1.framingError;
-   this.parityError = rhs1.parityError;
+	UartTxTransaction rhs1;
+  if(! $cast(rhs1,rhs))
+  	`uvm_fatal("do_copy","casting failed during copying");
+  super.copy(rhs);
+  this.transmissionData = rhs1.transmissionData;
+  this.parity = rhs1.parity;
+  this.framingError =rhs1.framingError;
+  this.parityError = rhs1.parityError;
+	this.breakingError = rhs1.breakingError;
+	this.overrunError = rhs1.overrunError;
 endfunction : do_copy
 
 //--------------------------------------------------------------------------------------------
