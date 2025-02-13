@@ -1,5 +1,5 @@
 `ifndef   UARTSAMPLE16BAUDRATE9600DATATYPE8EVENPARITYSTOPBIT1_INCLUDED_
-`define   UARTSAMPLE16BAUDRATE9600DATATYPE8EVENPARITYSTOPBIT1_INCLUDED
+`define   UARTSAMPLE16BAUDRATE9600DATATYPE8EVENPARITYSTOPBIT1_INCLUDED_
 
 //--------------------------------------------------------------------------------------------
 // Class:   UartSample16BaudRate9600Datatype8EvenParityStopbit2
