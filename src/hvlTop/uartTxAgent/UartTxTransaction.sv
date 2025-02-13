@@ -9,7 +9,7 @@ class UartTxTransaction extends uvm_sequence_item;
    
    //input signals
 	rand logic [DATA_WIDTH-1 : 0] transmissionData;
-         logic  parity;
+  logic  parity;
 	logic parityError; 
 	logic breakingError; 
 	logic overrunError;
