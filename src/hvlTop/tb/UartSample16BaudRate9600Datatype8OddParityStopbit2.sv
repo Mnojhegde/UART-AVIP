@@ -1,6 +1,6 @@
 
-`ifndef  UARTSAMPLE16BAUDRATE9600DATATYPE7ODDPARITYSTOPBIT2_INCLUDED_
-`define  UARTSAMPLE16BAUDRATE9600DATATYPE7ODDPARITYSTOPBIT2_INCLUDED_
+`ifndef  UARTSAMPLE16BAUDRATE9600DATATYPE8ODDPARITYSTOPBIT2_INCLUDED_
+`define  UARTSAMPLE16BAUDRATE9600DATATYPE8ODDPARITYSTOPBIT2_INCLUDED_
 
 //--------------------------------------------------------------------------------------------
 // Class:   UartSample16BaudRate9600Datatype8OddParityStopbit2
@@ -43,14 +43,14 @@ function void   UartSample16BaudRate9600Datatype8OddParityStopbit2 :: build_phas
   super.build_phase(phase);
   uartEnvConfig.uartTxAgentConfig.uartOverSamplingMethod = OVERSAMPLING_16;
   uartEnvConfig.uartTxAgentConfig.uartBaudRate =   BAUD_9600;
-  uartEnvConfig.uartTxAgentConfig.uartDataType = SEVEN_BIT;
+  uartEnvConfig.uartTxAgentConfig.uartDataType = EIGHT_BIT;
   uartEnvConfig.uartTxAgentConfig.uartParityType = ODD_PARITY;
   uartEnvConfig.uartTxAgentConfig.uartStopBit = TWO_BIT;
   uartEnvConfig.uartTxAgentConfig.hasParity=1;
 
   uartEnvConfig.uartRxAgentConfig.uartOverSamplingMethod = OVERSAMPLING_16;
   uartEnvConfig.uartRxAgentConfig.uartBaudRate =   BAUD_9600;
-  uartEnvConfig.uartRxAgentConfig.uartDataType = SEVEN_BIT;
+  uartEnvConfig.uartRxAgentConfig.uartDataType = EIGHT_BIT;
   uartEnvConfig.uartRxAgentConfig.uartParityType = ODD_PARITY;
   uartEnvConfig.uartRxAgentConfig.uartStopBit = TWO_BIT;
   uartEnvConfig.uartRxAgentConfig.hasParity=1;
