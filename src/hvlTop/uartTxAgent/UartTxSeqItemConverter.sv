@@ -45,7 +45,10 @@ function void UartTxSeqItemConverter :: toTxClass(input UartTxPacketStruct uartT
       uartTxTransaction.transmissionData[i] = uartTxPacketStruct.transmissionData[i];
     end
     uartTxTransaction.parity = uartTxPacketStruct.parity;
-    uartTxTransaction.framingError = uartTxPacketStruct.framingError;   
+    uartTxTransaction.framingError = uartTxPacketStruct.framingError;
+    uartTxTransaction.parityError = uartTxPacketStruct.parityError;
+    uartTxTransaction.breakingError = uartTxPacketStruct.breakingError;
+    uartTxTransaction.overrunError = uartTxPacketStruct.overrunError;
 endfunction : toTxClass
 
 `endif
