@@ -140,7 +140,6 @@ interface UartTxDriverBfm (input  logic   clk,
 	    SEVEN_BIT: tx = ^(uartTxPacketStruct.transmissionData[6:0]);
 	    EIGHT_BIT : tx = ^(uartTxPacketStruct.transmissionData[7:0]);
 	  endcase
-	  $display("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&INSIDE THE PARITY BLOCK IN %t",$time);
 	endtask 
 
 	task oddParityCompute(input UartConfigStruct uartConfigStruct,input UartTxPacketStruct uartTxPacketStruct,output tx);
@@ -150,8 +149,6 @@ interface UartTxDriverBfm (input  logic   clk,
 	      SEVEN_BIT: tx = ~^(uartTxPacketStruct.transmissionData[6:0]);
 	      EIGHT_BIT : tx = ~^(uartTxPacketStruct.transmissionData[7:0]);
 	  endcase
-	  $display("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&INSIDE THE PARITY BLOCK IN %t",$time);
-	  $info("AFTERT STATE ASSIGNMENT");
 	endtask
 
 
