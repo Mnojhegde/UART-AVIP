@@ -54,8 +54,7 @@ class UartScoreboard extends uvm_scoreboard;
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
-
-   extern function new( string name = "UartScoreboard" , uvm_component parent = null);
+  extern function new( string name = "UartScoreboard" , uvm_component parent = null);
   extern virtual function void build_phase(uvm_phase phase);
   extern virtual function void connect_phase(uvm_phase phase);
   extern virtual task run_phase(uvm_phase phase);
@@ -65,8 +64,6 @@ class UartScoreboard extends uvm_scoreboard;
 //--------------------------------------------------------------------------------------------
 // Construct: new
 // Initialization of new memory
-//
-// Parameters:
 //  name - UartScoreboard
 //  parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
@@ -116,7 +113,6 @@ task UartScoreboard :: run_phase(uvm_phase phase);
   super.run_phase(phase);
 
   forever begin
-   `uvm_info(get_type_name(),$sformatf("Before calling analysis fifo get method"),UVM_LOW)
 
       uartScoreboardTxAnalysisFifo.get(uartTxTransaction);
     `uvm_info(get_type_name(),$sformatf("Printing transmissionData= %b", uartTxTransaction.transmissionData),UVM_LOW)
