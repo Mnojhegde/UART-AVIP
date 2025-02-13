@@ -28,7 +28,7 @@ endclass :UartSample16BaudRate19200Datatype6EvenParityStopbit1
 //
 // parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
-functionUartSample16BaudRate19200Datatype6EvenParityStopbit1 :: new(string name = "UartSample16BaudRate19200Datatype6EvenParityStopbit1" , uvm_component parent = null);
+function UartSample16BaudRate19200Datatype6EvenParityStopbit1 :: new(string name = "UartSample16BaudRate19200Datatype6EvenParityStopbit1" , uvm_component parent = null);
   super.new(name,parent);
 endfunction  : new
    
@@ -39,7 +39,7 @@ endfunction  : new
 // Parameters:
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
-function voidUartSample16BaudRate19200Datatype6EvenParityStopbit1 :: build_phase(uvm_phase phase);
+function void UartSample16BaudRate19200Datatype6EvenParityStopbit1 :: build_phase(uvm_phase phase);
   super.build_phase(phase);
   uartEnvConfig.uartTxAgentConfig.uartOverSamplingMethod = OVERSAMPLING_16;
   uartEnvConfig.uartTxAgentConfig.uartBaudRate =   BAUD_19200;
