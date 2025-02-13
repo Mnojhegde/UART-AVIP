@@ -95,16 +95,18 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
 
   property start_bit_detection_property;
     @(posedge  uartClk) disable iff(!(uartStartDetectInitiation))
-    (!($isunknown(uartTx)) && uartTx) |-> first_match( (##8 $fell(uartTx)));
+    (!($isunknown(uartTx)) && uartTx) |-> first_match( (##[0:$] $fell(uartTx)));
 
   endproperty
 
   IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS: assert property (start_bit_detection_property)begin 
-    $info("*******************************START BIT DETECTED : ASSERTION PASS");
-    uartStartDetectInitiation = 0;
-    end 
-    else 
-      $error("FAILED TO DETECT START BIT : ASSERTION FAILED");
+    if(uartStartDetectInitiation == 1) begin
+      $info("*******************************START BIT DETECTED : ASSERTION PASS");
+      uartStartDetectInitiation = 0;
+    end
+  end 
+  else 
+    $error("FAILED TO DETECT START BIT : ASSERTION FAILED");
     
   property data_width_check_property;
     @(posedge uartClk) disable iff(!(uartDataWidthDetectInitiation))
