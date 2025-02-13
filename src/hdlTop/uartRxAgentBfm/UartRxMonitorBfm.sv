@@ -120,27 +120,27 @@ interface UartRxMonitorBfm (input  logic   clk,
   task Deserializer(inout UartRxPacketStruct uartRxPacketStruct, inout UartConfigStruct uartConfigStruct);
 	  @(negedge rx);
     	if(uartConfigStruct.OverSampledBaudFrequencyClk==1)begin
-      	repeat(8) @(posedge baudClk);//needs this posedge or 1 cycle delay to avoid race around or delay in output
+      	repeat(uartConfigStruct.uartOverSamplingMethod/2) @(posedge baudClk);//needs this posedge or 1 cycle delay to avoid race around or delay in output
         uartTransmitterState = STARTBIT;
 		
 				for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
-        	repeat(16) @(posedge baudClk); begin
+        	repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk); begin
 						uartRxPacketStruct.receivingData[i] = rx;
 						uartTransmitterState = UartTransmitterStateEnum'(i+3);
         	end
         end
 				
         if(uartConfigStruct.uartParityEnable ==1) begin
-					repeat(16) @(posedge baudClk);
+					repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 					uartRxPacketStruct.parity = rx;
 					uartTransmitterState = PARITYBIT;
 					parityCheck(uartConfigStruct,uartRxPacketStruct,rx);
         end
 				
-        repeat(16) @(posedge baudClk);
+        repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 				stopBitCheck(uartRxPacketStruct,rx);
 				uartTransmitterState = STOPBIT;
-				repeat(8) @(posedge baudClk);
+				repeat(uartConfigStruct.uartOverSamplingMethod/2) @(posedge baudClk);
 				uartTransmitterState = IDLE;
       end
 		
