@@ -79,7 +79,7 @@ endfunction : setupUartEnvConfig
   uartEnvConfig.uartTxAgentConfig.uartOverSamplingMethod = OVERSAMPLING_16;
   uartEnvConfig.uartTxAgentConfig.uartBaudRate = BAUD_9600;
   uartEnvConfig.uartTxAgentConfig.uartDataType = FIVE_BIT;
-  uartEnvConfig.uartTxAgentConfig.uartParityType = ODD_PARITY;
+  uartEnvConfig.uartTxAgentConfig.uartParityType = EVEN_PARITY;
   uartEnvConfig.uartTxAgentConfig.parityErrorInjection = 0;
   uartEnvConfig.uartTxAgentConfig.framingErrorInjection = 0;
 
