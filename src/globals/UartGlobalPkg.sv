@@ -52,7 +52,7 @@ package UartGlobalPkg;
 												  logic parityError; 
 												  logic breakingError; 
 												  logic overrunError;
-			      logic framingError;} UartRxPacketStruct;
+			      							logic framingError;} UartRxPacketStruct;
 
 	// config parameter struct packet
 	typedef struct packed { overSamplingEnum uartOverSamplingMethod; 
