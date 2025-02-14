@@ -165,8 +165,9 @@ interface UartTxMonitorBfm (input  logic   clk,
 					$display("THE BREAKING ERROR IS %b",uartTxPacketStruct.breakingError);
 					concatData = 'b x;
 					numOfZeroes =0;
-					repeat(uartConfigStruct.uartOverSamplingMethod/2) @(posedge baudClk);
 					uartTransmitterState = IDLE;
+					repeat(uartConfigStruct.uartOverSamplingMethod/2) @(posedge baudClk);
+					
         end
 		
         else if(uartConfigStruct.OverSampledBaudFrequencyClk==0)begin
