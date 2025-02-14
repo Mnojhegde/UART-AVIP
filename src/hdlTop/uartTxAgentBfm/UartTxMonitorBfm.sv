@@ -148,6 +148,7 @@ interface UartTxMonitorBfm (input  logic   clk,
         repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 					stopBitCheck(uartTxPacketStruct,uartConfigStruct,tx);
 					uartTransmitterState = STOPBIT;
+					$display("STOP BIT IS BEING ASSIGNED IN  MONITOR AT %t",$time);
 					concatData={concatData,tx};
 					$display("THE CONCATED DATA IS %b",concatData);
 					numOfZeroes=$countones(~(concatData));
