@@ -4,7 +4,7 @@
 // Class: UartSample13BaudRate9600Datatype7OddParityStopbit1
 // A test for 13 sampling condition
 //--------------------------------------------------------------------------------------------
-class UartSample13BaudRate9600Datatype7OddParityStopbit1extends UartBaseTest;
+class UartSample13BaudRate9600Datatype7OddParityStopbit1 extends UartBaseTest;
    `uvm_component_utils( UartSample13BaudRate9600Datatype7OddParityStopbit1)
     UartVirtualBaseSequence uartVirtualBaseSequence;
     //-------------------------------------------------------
