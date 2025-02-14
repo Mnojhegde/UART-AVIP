@@ -154,7 +154,7 @@ interface UartTxDriverBfm (input  logic   clk,
 
 
 	task SampleData(inout UartTxPacketStruct uartTxPacketStruct , inout UartConfigStruct uartConfigStruct);
-		repeat(8) @(posedge baudClk);
+		repeat(1) @(posedge baudClk);
 		// driving start bit 
 	  if(uartConfigStruct.OverSampledBaudFrequencyClk ==1)begin 
 	    tx = START_BIT;
