@@ -199,6 +199,7 @@ interface UartTxMonitorBfm (input  logic   clk,
 	task stopBitCheck (inout  UartTxPacketStruct uartTxPacketStruct,input UartConfigStruct uartConfigStruct,input bit tx);
 			if (tx == 1) begin
 				uartTxPacketStruct.framingError = 0;
+				uartTransmitterState = STOPBIT;
 			end
 			else begin
 				uartTxPacketStruct.framingError = 1;
