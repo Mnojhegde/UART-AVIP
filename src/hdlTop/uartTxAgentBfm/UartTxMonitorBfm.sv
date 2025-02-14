@@ -153,7 +153,7 @@ interface UartTxMonitorBfm (input  logic   clk,
 					numOfZeroes=$countones(~(concatData));
 					breakZeroCount=uartTxAgentConfig.uartparityEnable ? (uartTxAgentConfig.uartDataType)+3 :(uartTxAgentConfig.uartDataType)+2;
 					$display("THE NUMBER OF ZEROES IS %0d",numOfZeroes);
-					if(numofZeroes == breakZeroCount)
+					if(numOfZeroes == breakZeroCount)
 						uartTxPacketStruct.breakingError =1;
 				  else 
 						uartTxPacketStruct.breakingError =0;
