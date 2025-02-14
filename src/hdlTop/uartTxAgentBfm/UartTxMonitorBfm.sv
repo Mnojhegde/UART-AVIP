@@ -149,7 +149,7 @@ interface UartTxMonitorBfm (input  logic   clk,
 					stopBitCheck(uartTxPacketStruct,uartConfigStruct,tx);
 					uartTransmitterState = STOPBIT;
 					concatData={concatData,tx};
-					
+					$display("THE CONCATED DATA IS %b",concatData);
 					numOfZeroes=$countones(~(concatData));
 					breakZeroCount=uartConfigStruct.uartParityEnable ? (uartConfigStruct.uartDataType)+3 :(uartConfigStruct.uartDataType)+2;
 					$display("THE NUMBER OF ZEROES IS %0d",numOfZeroes);
