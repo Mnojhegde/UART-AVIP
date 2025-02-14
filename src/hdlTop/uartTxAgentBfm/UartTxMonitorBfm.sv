@@ -139,7 +139,7 @@ interface UartTxMonitorBfm (input  logic   clk,
 
 				// sampling stop bit	
         repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
-					stopBitCheck(uartTxPacketStruct,tx);
+					stopBitCheck(uartTxPacketStruct,uartConfigStruct,tx);
 					uartTransmitterState = STOPBIT;
 					repeat(uartConfigStruct.uartOverSamplingMethod/2) @(posedge baudClk);
 					uartTransmitterState = IDLE;
