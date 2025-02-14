@@ -1,3 +1,5 @@
+`ifndef UARTSCOREBOARD_INCLUDED_
+`define UARTSCOREBOARD_INCLUDED_
 class UartScoreboard extends uvm_scoreboard;
   `uvm_component_utils(UartScoreboard)
 
