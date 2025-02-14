@@ -77,6 +77,7 @@ package UartGlobalPkg;
 							 BIT6, 
 							 BIT7, 
 							 PARITYBIT, 
+		     			 INVALIDSTOPBIT,
 							 STOPBIT } UartTransmitterStateEnum;
 	
 endpackage : UartGlobalPkg
