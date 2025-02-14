@@ -10,11 +10,11 @@ class UartSample13BaudRate9600Datatype7OddParityStopbit1extends UartBaseTest;
     //-------------------------------------------------------
     // Externally defined Tasks and Functions
     //-------------------------------------------------------
-    extern function new(string name = " UartSample13BaudRate9600Datatype7OddParityStopbit1" , uvm_component parent = null);
+    extern function new(string name = "UartSample13BaudRate9600Datatype7OddParityStopbit1" , uvm_component parent = null);
     extern virtual function void  build_phase(uvm_phase phase);
     extern virtual task run_phase(uvm_phase phase);
  
-endclass : UartSample13BaudRate9600Datatype7OddParityStopbit1
+endclass :UartSample13BaudRate9600Datatype7OddParityStopbit1
 //--------------------------------------------------------------------------------------------
 // Constructor:new
 //
@@ -22,7 +22,7 @@ endclass : UartSample13BaudRate9600Datatype7OddParityStopbit1
 //
 // parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
-function UartSample13BaudRate9600Datatype7OddParityStopbit1:: new(string name = " UartSample13BaudRate9600Datatype7OddParityStopbit1" , uvm_component parent = null);
+function UartSample13BaudRate9600Datatype7OddParityStopbit1:: new(string name = "UartSample13BaudRate9600Datatype7OddParityStopbit1" , uvm_component parent = null);
   super.new(name,parent);
 endfunction  : new
 //--------------------------------------------------------------------------------------------
