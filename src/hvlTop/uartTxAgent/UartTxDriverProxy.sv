@@ -77,6 +77,7 @@ task UartTxDriverProxy :: run_phase(uvm_phase phase);
 					`uvm_info("[DRIVER PROXY]",$sformatf("The UartDataType is %s \nThe baudrate of Uart is %0d \nThe parity enable=%b",uartTxAgentConfig.uartDataType.name(),uartTxAgentConfig.uartBaudRate,uartTxAgentConfig.hasParity),UVM_LOW);
 
 					`uvm_info("[Driver PROXY]","DATA BEING SENT FROM TRANSMITTER DRIVER PROXY IS:\t",UVM_LOW);
+					$display("DATATYPE = %0d", uartTxAgentConfig.uartDataType); //// **************FOR DEBUG  *****************
   				for(int i=0;i<uartTxAgentConfig.uartDataType;i++)
    					$write("%b",req.transmissionData[i]);
    				$display(" ");
