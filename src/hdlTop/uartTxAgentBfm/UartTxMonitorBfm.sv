@@ -19,6 +19,9 @@ interface UartTxMonitorBfm (input  logic   clk,
   //baud clock for uart transmisson/reception
 	bit baudClk;
 
+	logic [DATA_WIDTH+2 : 0]concatData;
+	int numOfZeroes;
+
 	// enum variable for transfer states
 	UartTransmitterStateEnum uartTransmitterState;
 	
@@ -120,11 +123,13 @@ interface UartTxMonitorBfm (input  logic   clk,
         if(uartConfigStruct.OverSampledBaudFrequencyClk==1)begin
         	repeat(uartConfigStruct.uartOverSamplingMethod/2) @(posedge baudClk); 
 					uartTransmitterState = STARTBIT;
+					conactData={concatData,tx);
 
 					// sampling data bits 
 					for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
           	repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk); begin
 						uartTxPacketStruct.transmissionData[i] = tx;
+							conactData={concatData,tx);
 						uartTransmitterState = UartTransmitterStateEnum'(i+3);
           end
         end
@@ -133,6 +138,7 @@ interface UartTxMonitorBfm (input  logic   clk,
         if(uartConfigStruct.uartParityEnable ==1) begin
         	repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 					uartTxPacketStruct.parity = tx;
+					conactData={concatData,tx);
 					uartTransmitterState = PARITYBIT;
 					parityCheck(uartConfigStruct,uartTxPacketStruct,tx);
       	end
@@ -141,6 +147,9 @@ interface UartTxMonitorBfm (input  logic   clk,
         repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 					stopBitCheck(uartTxPacketStruct,uartConfigStruct,tx);
 					uartTransmitterState = STOPBIT;
+					conactData={concatData,tx);
+					numOfZeroes=$countones(~(concatData));
+					$display("THE NUMBER OF ZEROES IS %0d",numOfZeroes);
 					repeat(uartConfigStruct.uartOverSamplingMethod/2) @(posedge baudClk);
 					uartTransmitterState = IDLE;
         end
