@@ -82,6 +82,8 @@ endfunction : setupUartEnvConfig
   uartEnvConfig.uartTxAgentConfig.uartParityType = EVEN_PARITY;
   uartEnvConfig.uartTxAgentConfig.parityErrorInjection = 0;
   uartEnvConfig.uartTxAgentConfig.framingErrorInjection = 0;
+  uartEnvConfig.uartTxAgentConfig.patternNeeded = 0;
+  uartEnvConfig.uartTxAgentConfig.patternToTransmit=10101010;
 
   uartEnvConfig.uartTxAgentConfig.OverSampledBaudFrequencyClk =1;
   uvm_config_db #(UartTxAgentConfig) :: set(null,"*", "uartTxAgentConfig",uartEnvConfig.uartTxAgentConfig);
@@ -106,6 +108,8 @@ endfunction : setupUartTxAgentConfig
   uartEnvConfig.uartRxAgentConfig.parityErrorInjection =0;
   uartEnvConfig.uartRxAgentConfig.framingErrorInjection = 0;
   uartEnvConfig.uartRxAgentConfig.OverSampledBaudFrequencyClk =1;
+  artEnvConfig.uartRxAgentConfig.patternNeeded = 0;
+    uartEnvConfig.uartRxAgentConfig.patternToTransmit=10101010;
   uvm_config_db #(UartRxAgentConfig) :: set(null,"*", "uartRxAgentConfig",uartEnvConfig.uartRxAgentConfig);
 
 endfunction : setupUartRxAgentConfig
@@ -130,11 +134,16 @@ endfunction : end_of_elaboration_phase
 // phase - stores the current phase
 //--------------------------------------------------------------------------------------------
  task UartBaseTest :: run_phase(uvm_phase phase);
+  if( uartEnvConfig.uartTxAgentConfig.patternNeeded==0)
+    UartVirtualBaseSequence :: type_id ::set_type_override(UartVirtualTransmissionSequence::get_type());
+  else 
+   UartVirtualBaseSequence :: type_id ::set_type_override(UartVirtualTransmissionSequenceWithPattern::get_type());
   
-  uartVirtualTransmissionSequence = UartVirtualTransmissionSequence :: type_id :: create("uartVirtualTransmissionSequence");
+  uartVirtualBaseSequence = UartVirtualBaseSequence :: type_id :: create("uartVirtualBaseSequence");
+  uartVirtualBaseSequence.print();
   phase.raise_objection(this);
-   uartVirtualTransmissionSequence.start(uartEnv.uartVirtualSequencer);
-   #10000;
+   uartVirtualBaseSequence.start(uartEnv.uartVirtualSequencer);
+   #100000;
   phase.drop_objection(this);
 
 endtask : run_phase
