@@ -8,7 +8,7 @@ package UartTxSequencePkg;
   import UartTxPkg ::*;
 
   `include"UartTxBaseSequence.sv"
-  `include"UartTxBaseSequenceWithPattern"
+  `include"UartTxBaseSequenceWithPattern.sv"
  
 endpackage
 `endif
