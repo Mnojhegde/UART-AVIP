@@ -108,8 +108,8 @@ endfunction : setupUartTxAgentConfig
   uartEnvConfig.uartRxAgentConfig.parityErrorInjection =0;
   uartEnvConfig.uartRxAgentConfig.framingErrorInjection = 0;
   uartEnvConfig.uartRxAgentConfig.OverSampledBaudFrequencyClk =1;
-  artEnvConfig.uartRxAgentConfig.patternNeeded = 0;
-    uartEnvConfig.uartRxAgentConfig.patternToTransmit=10101010;
+  uartEnvConfig.uartRxAgentConfig.patternNeeded = 0;
+  uartEnvConfig.uartRxAgentConfig.patternToTransmit=10101010;
   uvm_config_db #(UartRxAgentConfig) :: set(null,"*", "uartRxAgentConfig",uartEnvConfig.uartRxAgentConfig);
 
 endfunction : setupUartRxAgentConfig
