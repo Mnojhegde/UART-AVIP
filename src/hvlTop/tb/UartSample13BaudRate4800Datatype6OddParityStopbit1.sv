@@ -1,7 +1,7 @@
 `ifndef UARTSAMPLE13BAUDRATE4800DATATYPE6ODDPARITYSTOPBIT1_INCLUDED_
 `define UARTSAMPLE13BAUDRATE4800DATATYPE6ODDPARITYSTOPBIT1_INCLUDED_
 //--------------------------------------------------------------------------------------------
-// Class:  UartSample13BaudRate4800Datatype6OddParityStopbit1
+// Class:UartSample13BaudRate4800Datatype6OddParityStopbit1
 // A test for 13 sampling condition
 //--------------------------------------------------------------------------------------------
 class UartSample13BaudRate4800Datatype6OddParityStopbit1 extends UartBaseTest;
@@ -14,7 +14,7 @@ class UartSample13BaudRate4800Datatype6OddParityStopbit1 extends UartBaseTest;
     extern virtual function void  build_phase(uvm_phase phase);
     extern virtual task run_phase(uvm_phase phase);
  
-endclass : UartSample13BaudRate4800Datatype6OddParityStopbit1
+endclass :UartSample13BaudRate4800Datatype6OddParityStopbit1
 //--------------------------------------------------------------------------------------------
 // Constructor:new
 //
@@ -40,7 +40,7 @@ function void UartSample13BaudRate4800Datatype6OddParityStopbit1 :: build_phase(
   uartEnvConfig.uartTxAgentConfig.uartStopBit = ONE_BIT;
   uartEnvConfig.uartTxAgentConfig.hasParity=1;
 
-     uartEnvConfig.uartRxAgentConfig.uartOverSamplingMethod =OVERSAMPLING_13;
+  uartEnvConfig.uartRxAgentConfig.uartOverSamplingMethod =OVERSAMPLING_13;
   uartEnvConfig.uartRxAgentConfig.uartBaudRate = BAUD_4800;
   uartEnvConfig.uartRxAgentConfig.uartDataType = SIX_BIT;
   uartEnvConfig.uartRxAgentConfig.uartParityType = ODD_PARITY;
