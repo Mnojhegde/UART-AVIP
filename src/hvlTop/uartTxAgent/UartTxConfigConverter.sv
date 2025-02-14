@@ -19,8 +19,8 @@ function void UartTxConfigConverter :: from_Class(input UartTxAgentConfig uartTx
   uartConfigStruct.uartParityType = uartTxAgentConfig.uartParityType;
   uartConfigStruct.uartParityEnable = uartTxAgentConfig.hasParity;
   uartConfigStruct.uartParityErrorInjection = uartTxAgentConfig.parityErrorInjection;
-   uartConfigStruct.uartFramingErrorInjection = uartTxAgentConfig.framingErrorInjection;
-
+  uartConfigStruct.uartFramingErrorInjection = uartTxAgentConfig.framingErrorInjection;
+  uartConfigStruct.uartBreakingErrorInjection = uartTxAgentConfig.breakingErrorInjection;
   uartConfigStruct.OverSampledBaudFrequencyClk = uartTxAgentConfig.OverSampledBaudFrequencyClk;
 endfunction : from_Class
 
