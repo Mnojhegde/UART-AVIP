@@ -18,6 +18,8 @@ class UartRxAgentConfig extends uvm_object;
   parityTypeEnum uartParityType;
   stopBitEnum  uartStopBit;
   rand int packetsNeeded;
+  bit patternNeeded;
+  logic[DATA_WIDTH-1:0]patternToTransmit;
   bit parityErrorInjection;
   bit OverSampledBaudFrequencyClk;
   bit framingErrorInjection; 
