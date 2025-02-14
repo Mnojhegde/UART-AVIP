@@ -148,8 +148,8 @@ interface UartTxMonitorBfm (input  logic   clk,
 		$display("OUTSIDE PARITY GEN IS %t",$time);
 				// sampling stop bit	
         repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
-					stopBitCheck(uartTxPacketStruct,uartConfigStruct,tx);
 					uartTransmitterState = STOPBIT;
+					stopBitCheck(uartTxPacketStruct,uartConfigStruct,tx);
 					$display("STOP BIT IS BEING ASSIGNED IN  MONITOR AT %t",$time);
 					concatData={concatData,tx};
 					$display("THE CONCATED DATA IS %b",concatData);
