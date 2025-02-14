@@ -5,16 +5,16 @@
 // A test for 13 sampling condition
 //--------------------------------------------------------------------------------------------
 class UartSample13BaudRate19200Datatype5OddParityStopbit2 extends UartBaseTest;
-   `uvm_component_utils(    UartSample13BaudRate19200Datatype5OddParityStopbit2)
+   `uvm_component_utils(UartSample13BaudRate19200Datatype5OddParityStopbit2)
     UartVirtualBaseSequence uartVirtualBaseSequence;
     //-------------------------------------------------------
     // Externally defined Tasks and Functions
     //-------------------------------------------------------
-    extern function new(string name = " UartSample13BaudRate19200Datatype5OddParityStopbit2" , uvm_component parent = null);
+    extern function new(string name = "UartSample13BaudRate19200Datatype5OddParityStopbit2" , uvm_component parent = null);
     extern virtual function void  build_phase(uvm_phase phase);
     extern virtual task run_phase(uvm_phase phase);
  
-endclass :    UartSample13BaudRate19200Datatype5OddParityStopbit2
+endclass :UartSample13BaudRate19200Datatype5OddParityStopbit2
 //--------------------------------------------------------------------------------------------
 // Constructor:new
 //
@@ -22,7 +22,7 @@ endclass :    UartSample13BaudRate19200Datatype5OddParityStopbit2
 //
 // parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
-function UartSample13BaudRate19200Datatype5OddParityStopbit2:: new(string name = " UartSample13BaudRate19200Datatype5OddParityStopbit2" , uvm_component parent = null);
+function UartSample13BaudRate19200Datatype5OddParityStopbit2:: new(string name = "UartSample13BaudRate19200Datatype5OddParityStopbit2" , uvm_component parent = null);
   super.new(name,parent);
 endfunction  : new
 //--------------------------------------------------------------------------------------------
@@ -32,7 +32,7 @@ endfunction  : new
 // Parameters:
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
-function void  UartSample13BaudRate19200Datatype5OddParityStopbit2 :: build_phase(uvm_phase phase);
+function void UartSample13BaudRate19200Datatype5OddParityStopbit2 :: build_phase(uvm_phase phase);
   super.build_phase(phase);
   uartEnvConfig.uartTxAgentConfig.uartBaudRate = BAUD_19200;
   uartEnvConfig.uartTxAgentConfig.uartDataType = FIVE_BIT;
