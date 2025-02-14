@@ -129,7 +129,7 @@ interface UartTxMonitorBfm (input  logic   clk,
 					for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
           	repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk); begin
 						uartTxPacketStruct.transmissionData[i] = tx;
-							concatData={concatData,tx);
+			      concatData={concatData,tx};
 						uartTransmitterState = UartTransmitterStateEnum'(i+3);
           end
         end
