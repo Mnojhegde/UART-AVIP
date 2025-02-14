@@ -139,6 +139,7 @@ interface UartTxMonitorBfm (input  logic   clk,
 				// sampling parity bit 
         if(uartConfigStruct.uartParityEnable ==1) begin
         	repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+					$display("PARITY IS ASSSIGNED AT %t",$time);
 					uartTxPacketStruct.parity = tx;
 					concatData={concatData,tx};
 					uartTransmitterState = PARITYBIT;
