@@ -5,12 +5,12 @@
 // A test for 13 sampling condition
 //--------------------------------------------------------------------------------------------
 class UartSample13BaudRate19200Datatype6OddParityStopbit1 extends UartBaseTest;
-   `uvm_component_utils( UartSample13BaudRate19200Datatype6OddParityStopbit1)
+   `uvm_component_utils(UartSample13BaudRate19200Datatype6OddParityStopbit1)
     UartVirtualBaseSequence uartVirtualBaseSequence;
     //-------------------------------------------------------
     // Externally defined Tasks and Functions
     //-------------------------------------------------------
-    extern function new(string name = " UartSample13BaudRate19200Datatype6OddParityStopbit1" , uvm_component parent = null);
+    extern function new(string name = "UartSample13BaudRate19200Datatype6OddParityStopbit1" , uvm_component parent = null);
     extern virtual function void  build_phase(uvm_phase phase);
     extern virtual task run_phase(uvm_phase phase);
  
