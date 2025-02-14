@@ -205,7 +205,9 @@ interface UartTxDriverBfm (input  logic   clk,
 	    end 
 	    else begin
 	    	tx='b x;
+				uartTransmitterState = STOPBIT;
 		    repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+				uartTransmitterState = IDLE;
 	    end
 	  end
 		
