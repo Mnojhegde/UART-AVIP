@@ -148,11 +148,9 @@ interface UartTxMonitorBfm (input  logic   clk,
 		$display("OUTSIDE PARITY GEN IS %t",$time);
 				// sampling stop bit	
         repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
-					uartTransmitterState = STOPBIT;
+					concatData={concatData,tx};
 					stopBitCheck(uartTxPacketStruct,uartConfigStruct,tx);
 					$display("STOP BIT IS BEING ASSIGNED IN  MONITOR AT %t",$time);
-					concatData={concatData,tx};
-					$display("THE CONCATED DATA IS %b",concatData);
 					numOfZeroes=$countones(~(concatData));
 					breakZeroCount=uartConfigStruct.uartParityEnable ? (uartConfigStruct.uartDataType)+3 :(uartConfigStruct.uartDataType)+2;
 					$display("THE NUMBER OF ZEROES IS %0d",numOfZeroes);
@@ -204,6 +202,7 @@ interface UartTxMonitorBfm (input  logic   clk,
 			end
 			else begin
 				uartTxPacketStruct.framingError = 1;
+				uartTransmitterState = INVALIDSTOPBIT;
 				repeat(uartConfigStruct.uartOverSamplingMethod)@(posedge baudClk);
 			end
   	endtask
