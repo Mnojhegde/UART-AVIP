@@ -8,7 +8,7 @@ class UartTxBaseSequenceWithPattern extends uvm_sequence#(UartTxTransaction);
   extern virtual task body();
   rand int packetsNeeded;
 rand logic[DATA_WIDTH-1:0]patternToTransmit;
-endclass : UartTxBaseSequence
+endclass : UartTxBaseSequenceWithPattern
 
 function  UartTxBaseSequenceWithPattern :: new(string name= "UartTxBaseSequenceWithPattern");
   super.new(name);
