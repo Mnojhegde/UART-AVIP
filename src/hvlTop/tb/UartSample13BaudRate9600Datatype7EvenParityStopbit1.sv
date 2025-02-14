@@ -42,7 +42,7 @@ function void UartSample13BaudRate9600Datatype7EvenParityStopbit1 :: build_phase
 
      uartEnvConfig.uartRxAgentConfig.uartOverSamplingMethod =OVERSAMPLING_13;
   uartEnvConfig.uartRxAgentConfig.uartBaudRate = BAUD_9600;
-  uartEnvConfig.uartRxAgentConfig.uartDataType = SEVENS_BIT;
+  uartEnvConfig.uartRxAgentConfig.uartDataType = SEVEN_BIT;
   uartEnvConfig.uartRxAgentConfig.uartParityType = EVEN_PARITY;
   uartEnvConfig.uartRxAgentConfig.uartStopBit = ONE_BIT;
   uartEnvConfig.uartRxAgentConfig.hasParity=1;
