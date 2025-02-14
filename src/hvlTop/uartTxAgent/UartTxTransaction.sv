@@ -19,7 +19,7 @@ class UartTxTransaction extends uvm_sequence_item;
    //-------------------------------------------------------
    // constraints for uart
    //-------------------------------------------------------
-   constraint set_transmissionData_range{ transmissionData inside{[1:$]};}
+   
 	
    //-------------------------------------------------------
    // Externally defined Tasks and Functions
