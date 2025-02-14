@@ -1,4 +1,3 @@
-
 `ifndef UARTRXTRANSACTION_INLCLUDED_ 
 `define UARTRXTRANSACTION_INCLUDED_
 
@@ -12,10 +11,10 @@ class UartRxTransaction extends uvm_sequence_item;
  
   //input signals
   logic [DATA_WIDTH-1: 0]receivingData;
-  logic [NO_OF_PACKETS-1:0] parity;
-	logic [NO_OF_PACKETS-1:0]parityError; 
-	logic[NO_OF_PACKETS-1:0]breakingError; 
-	logic [NO_OF_PACKETS-1:0]overrunError;
+  logic parity;
+	logic parityError; 
+	logic breakingError; 
+	logic overrunError;
   
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
@@ -47,6 +46,10 @@ function void UartRxTransaction :: do_copy(uvm_object rhs);
   super.copy(rhs);
   this.receivingData = rhs1.receivingData;
   this.parity = rhs1.parity;
+  this.framingError = rhs1.framingError;
+  this.parityError = rhs1.parityError;
+	this.breakingError = rhs1.breakingError;
+	this.overrunError = rhs1.overrunError;
 endfunction : do_copy
     
 //--------------------------------------------------------------------------------------------
