@@ -197,20 +197,20 @@ interface UartTxDriverBfm (input  logic   clk,
 
 			// driving stop bit
 		  repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
-	    if(uartConfigStruct.uartFramingErrorInjection == 0)begin 
+			if(uartConfigStruct.uartFramingErrorInjection == 0 && uartConfigStruct.uartBreakingErrorInjection == 0)begin 
 	    	tx = STOP_BIT;  
 	    	uartTransmitterState = STOPBIT;
 		  	repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 	   		uartTransmitterState = IDLE;
 	    end 
-	    else begin
+			else if(uartConfigStruct.uartFramingErrorInjection == 1 && uartConfigStruct.uartBreakingErrorInjection == 0) begin
 	    	tx='b x;
 				uartTransmitterState = STOPBIT;
 		    repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 				tx=1;
 				uartTransmitterState = IDLE;
 	    end
-			if(uartConfigStruct.uartBreakingErrorInjection == 1)begin 
+			else if(uartConfigStruct.uartBreakingErrorInjection == 1)begin 
 	    	tx = 'b 0;  
 	    	uartTransmitterState = STOPBIT;
 		  	repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
