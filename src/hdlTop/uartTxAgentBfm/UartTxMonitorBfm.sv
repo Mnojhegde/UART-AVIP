@@ -21,6 +21,7 @@ interface UartTxMonitorBfm (input  logic   clk,
 
 	logic [DATA_WIDTH+2 : 0]concatData;
 	int numOfZeroes;
+	int breakZeroCount;
 
 	// enum variable for transfer states
 	UartTransmitterStateEnum uartTransmitterState;
@@ -124,6 +125,7 @@ interface UartTxMonitorBfm (input  logic   clk,
         	repeat(uartConfigStruct.uartOverSamplingMethod/2) @(posedge baudClk); 
 					uartTransmitterState = STARTBIT;
 					concatData={concatData,tx};
+	
 
 					// sampling data bits 
 					for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
@@ -142,14 +144,24 @@ interface UartTxMonitorBfm (input  logic   clk,
 					uartTransmitterState = PARITYBIT;
 					parityCheck(uartConfigStruct,uartTxPacketStruct,tx);
       	end
-
 				// sampling stop bit	
         repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 					stopBitCheck(uartTxPacketStruct,uartConfigStruct,tx);
 					uartTransmitterState = STOPBIT;
 					concatData={concatData,tx};
+					
 					numOfZeroes=$countones(~(concatData));
+					breakZeroCount=uartTxAgentConfig.uartparityEnable ? (uartTxAgentConfig.uartDataType)+3 :(uartTxAgentConfig.uartDataType)+2;
 					$display("THE NUMBER OF ZEROES IS %0d",numOfZeroes);
+					if(numofZeroes == breakZeroCount)
+						uartTxPacketStruct.breakingError =1;
+				  else 
+						uartTxPacketStruct.breakingError =0;
+
+
+					$display("THE BREAKING ERROR IS %b",uartTxPacketStruct.breakingError);
+					concatData = 'b x;
+					numOfZeroes =0;
 					repeat(uartConfigStruct.uartOverSamplingMethod/2) @(posedge baudClk);
 					uartTransmitterState = IDLE;
         end
