@@ -22,6 +22,7 @@ class UartTxAgentConfig extends uvm_object;
   rand int packetsNeeded;
   bit parityErrorInjection;
   bit framingErrorInjection;
+  bit breakingErrorInjection;
   bit patternNeeded;
   logic[DATA_WIDTH-1:0]patternToTransmit;
   bit OverSampledBaudFrequencyClk;  
