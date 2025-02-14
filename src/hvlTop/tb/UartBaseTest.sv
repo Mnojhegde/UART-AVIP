@@ -10,7 +10,7 @@ class UartBaseTest extends uvm_test;
  
   `uvm_component_utils(UartBaseTest)
  
-  UartVirtualTransmissionSequence uartVirtualTransmissionSequence;
+  UartVirtualBaseSequence uartVirtualBaseSequence;
   UartEnvConfig           uartEnvConfig;
   UartEnv                 uartEnv;
   //-------------------------------------------------------
