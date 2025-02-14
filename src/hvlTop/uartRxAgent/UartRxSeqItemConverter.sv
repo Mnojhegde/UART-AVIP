@@ -47,5 +47,9 @@ function void UartRxSeqItemConverter :: toRxClass(input UartRxPacketStruct uartR
       uartRxTransaction.receivingData[i] = uartRxPacketStruct.receivingData[i];
     end
     uartRxTransaction.parity = uartRxPacketStruct.parity;
+    uartRxTransaction.framingError = uartRxPacketStruct.framingError;
+    uartRxTransaction.parityError = uartRxPacketStruct.parityError;
+    uartRxTransaction.breakingError = uartRxPacketStruct.breakingError;
+    uartRxTransaction.overrunError = uartRxPacketStruct.overrunError;
 endfunction
 `endif
