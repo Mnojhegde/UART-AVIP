@@ -145,6 +145,7 @@ interface UartTxMonitorBfm (input  logic   clk,
 					uartTransmitterState = PARITYBIT;
 					parityCheck(uartConfigStruct,uartTxPacketStruct,tx);
       	end
+		$display("OUTSIDE PARITY GEN IS %t",$time);
 				// sampling stop bit	
         repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 					stopBitCheck(uartTxPacketStruct,uartConfigStruct,tx);
