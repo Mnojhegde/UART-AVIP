@@ -8,7 +8,7 @@ class UartVirtualTransmissionSequenceWithPattern extends UartVirtualBaseSequence
   `uvm_object_utils(UartVirtualTransmissionSequenceWithPattern)
   `uvm_declare_p_sequencer(UartVirtualSequencer)
   
-  UartTxBaseSequence uartTxBaseSequence;
+  UartTxBaseSequenceWithPattern uartTxBaseSequenceWithPattern;
   UartRxBaseSequence uartRxBaseSequence;
   UartTxAgentConfig uartTxAgentConfig;
   //-------------------------------------------------------
@@ -40,13 +40,13 @@ endfunction : new
 
 task UartVirtualTransmissionSequenceWithPattern :: body();
   super.body();
-  uartTxBaseSequence = UartTxBaseSequence :: type_id :: create("uartTxBaseSequence");
+  uartTxBaseSequenceWithPattern = UartTxBaseSequenceWithPattern :: type_id :: create("uartTxBaseSequenceWithPattern");
   uartRxBaseSequence = UartRxBaseSequence :: type_id :: create("uartRxBaseSequence");
   if(!(uvm_config_db#(UartTxAgentConfig) :: get(null,"","uartTxAgentConfig",uartTxAgentConfig)))
     `uvm_fatal("[VIRTUAL SEQUENCE]",$sformatf("failed to get the config"))
   begin 
- //   uartTxBaseSequence.start(p_sequencer.uartTxSequencer);
-     `uvm_do_on_with(uartTxBaseSequenceWithPattern , p_sequencer.uartTxSequencer,{packetsNeeded ==uartTxAgentConfig.packetsNeeded;patternToTransmit==uartTxAgentConfig.patternToTransmit;})
+ //   uartTxBaseSequenceWithPattern.start(p_sequencer.uartTxSequencer);
+     `uvm_do_on_with(uartTxBaseSequenceWithPatternWithPattern , p_sequencer.uartTxSequencer,{packetsNeeded ==uartTxAgentConfig.packetsNeeded;patternToTransmit==uartTxAgentConfig.patternToTransmit;})
  //  uartRxBaseSequence.start(p_sequencer.uartRxSequencer);
   end 
 
