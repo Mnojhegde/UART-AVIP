@@ -1,11 +1,11 @@
-`ifndef  UARTSAMPLE13BAUDRATE9600DATATYPE8ODDPARITYSTOPBIT2_INCLUDED_
-`define  UARTSAMPLE13BAUDRATE9600DATATYPE8ODDPARITYSTOPBIT2_INCLUDED_   
+`ifndef UARTSAMPLE13BAUDRATE9600DATATYPE8ODDPARITYSTOPBIT2_INCLUDED_
+`define UARTSAMPLE13BAUDRATE9600DATATYPE8ODDPARITYSTOPBIT2_INCLUDED_   
 //--------------------------------------------------------------------------------------------
 // Class:UartSample13BaudRate9600Datatype8OddParityStopbit2
 // A test for 13 sampling condition
 //--------------------------------------------------------------------------------------------
 class UartSample13BaudRate9600Datatype8OddParityStopbit2 extends UartBaseTest;
-   `uvm_component_utils(    UartSample13BaudRate9600Datatype8OddParityStopbit2)
+   `uvm_component_utils(UartSample13BaudRate9600Datatype8OddParityStopbit2)
     UartVirtualBaseSequence uartVirtualBaseSequence;
     //-------------------------------------------------------
     // Externally defined Tasks and Functions
