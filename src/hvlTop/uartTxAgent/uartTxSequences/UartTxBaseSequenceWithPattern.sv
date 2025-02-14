@@ -20,7 +20,7 @@ task UartTxBaseSequenceWithPattern :: body();
   req = UartTxTransaction :: type_id :: create("req");
   repeat(packetsNeeded)begin 
   start_item(req);
-  if(!(req.randomize())with{transmissionData == patternToTransmit;})
+    if(!(req.randomize() with{transmissionData == patternToTransmit;}))
    `uvm_fatal("[tx sequence]","randomization failed")
 
   req.print();
