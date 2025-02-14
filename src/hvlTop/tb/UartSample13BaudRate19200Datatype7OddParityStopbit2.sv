@@ -57,7 +57,7 @@ endfunction  : build_phase
 // Parameters:
 // phase - stores the current phase
 //------------------------------------------------------------------------------------------
-task UartSample13BaudRate19200Datatype7OddParityStopbit1:: run_phase(uvm_phase phase);
+task UartSample13BaudRate19200Datatype7OddParityStopbit1::run_phase(uvm_phase phase);
   UartVirtualBaseSequence :: type_id ::set_type_override(UartVirtualTransmissionSequence::get_type());
   uartVirtualBaseSequence = UartVirtualBaseSequence :: type_id :: create("uartVirtualBaseSequence");
   uartVirtualBaseSequence.print();
