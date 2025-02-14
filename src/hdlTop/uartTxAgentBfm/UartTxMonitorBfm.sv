@@ -173,12 +173,13 @@ interface UartTxMonitorBfm (input  logic   clk,
       	end
     endtask
 	
-		task stopBitCheck (inout  UartTxPacketStruct uartTxPacketStruct,input bit tx);
+	task stopBitCheck (inout  UartTxPacketStruct uartTxPacketStruct,input UartConfigStruct uartConfigStruct,input bit tx);
 			if (tx == 1) begin
 				uartTxPacketStruct.framingError = 0;
 			end
 			else begin
 				uartTxPacketStruct.framingError = 1;
+				repeat(uartConfigStruct.uartOverSamplingMethod)@(posedge baudClk);
 			end
   	endtask
 		
