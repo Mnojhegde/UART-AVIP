@@ -32,7 +32,7 @@ endfunction  : new
 // Parameters:
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
-function voidUartSample13BaudRate9600Datatype5EvenParityStopbit1 :: build_phase(uvm_phase phase);
+function void UartSample13BaudRate9600Datatype5EvenParityStopbit1 :: build_phase(uvm_phase phase);
   super.build_phase(phase);
     uartEnvConfig.uartTxAgentConfig.uartOverSamplingMethod =OVERSAMPLING_13;
   uartEnvConfig.uartTxAgentConfig.uartBaudRate = BAUD_9600;
