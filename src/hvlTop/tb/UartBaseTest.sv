@@ -84,6 +84,7 @@ endfunction : setupUartEnvConfig
   uartEnvConfig.uartTxAgentConfig.framingErrorInjection = 0;
   uartEnvConfig.uartTxAgentConfig.patternNeeded = 0;
   uartEnvConfig.uartTxAgentConfig.patternToTransmit=10101010;
+  uartEnvConfig.uartTxAgentConfig.breakingErrorInjection = 0;
 
   uartEnvConfig.uartTxAgentConfig.OverSampledBaudFrequencyClk =1;
   uvm_config_db #(UartTxAgentConfig) :: set(null,"*", "uartTxAgentConfig",uartEnvConfig.uartTxAgentConfig);
