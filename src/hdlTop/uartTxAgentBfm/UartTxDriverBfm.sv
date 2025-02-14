@@ -210,6 +210,13 @@ interface UartTxDriverBfm (input  logic   clk,
 				tx=1;
 				uartTransmitterState = IDLE;
 	    end
+			if(uartConfigStruct.uartBreakingErrorInjection == 1)begin 
+	    	tx = 'b 0;  
+	    	uartTransmitterState = STOPBIT;
+		  	repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+				tx=1;
+	   		uartTransmitterState = IDLE;
+	    end 
 	  end
 		
 	  else if(uartConfigStruct.OverSampledBaudFrequencyClk ==0)begin
