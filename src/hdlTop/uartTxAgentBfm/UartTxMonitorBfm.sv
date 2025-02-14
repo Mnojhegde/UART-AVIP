@@ -203,7 +203,7 @@ interface UartTxMonitorBfm (input  logic   clk,
 			end
 			else begin
 				uartTxPacketStruct.framingError = 1;
-				repeat(uartConfigStruct.uartOverSamplingMethod)@(posedge baudClk);
+				//repeat(uartConfigStruct.uartOverSamplingMethod)@(posedge baudClk);
 			end
   	endtask
 		
