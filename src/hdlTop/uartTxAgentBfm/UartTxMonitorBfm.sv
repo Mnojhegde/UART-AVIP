@@ -169,7 +169,7 @@ interface UartTxMonitorBfm (input  logic   clk,
 					// sampling stop bit	
         	@(posedge baudClk);
 					uartTransmitterState = STOPBIT;
-					stopBitCheck(uartTxPacketStruct,tx);
+		      stopBitCheck(uartTxPacketStruct,uartConfigStruct,tx);
       	end
     endtask
 	
