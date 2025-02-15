@@ -45,6 +45,7 @@ package UartBaseTestPkg;
   `include "UartSample13BaudRate4800Datatype8EvenParityStopbit1.sv"
   `include "UartSample13BaudRate4800Datatype8EvenParityStopbit2.sv"
   `include "UartSample13BaudRate4800Datatype8OddParityStopbit1.sv"
+  `include "UartSample13BaudRate4800Datatype8OddParityStopbit2.sv"
   `include "UartSample13BaudRate4800Datatype8EvenParityStopbit2.sv"
   `include "UartSample13BaudRate9600Datatype5EvenParityStopbit1.sv"
   `include "UartSample13BaudRate9600Datatype5EvenParityStopbit2.sv"
