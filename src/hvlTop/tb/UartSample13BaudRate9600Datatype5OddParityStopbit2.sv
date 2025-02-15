@@ -36,14 +36,14 @@ function void UartSample13BaudRate9600Datatype5OddParityStopbit2 :: build_phase(
   super.build_phase(phase);
   uartEnvConfig.uartTxAgentConfig.uartBaudRate = BAUD_9600;
   uartEnvConfig.uartTxAgentConfig.uartDataType = FIVE_BIT;
-  uartEnvConfig.uartTxAgentConfig.uartParityType = EVEN_PARITY;
+  uartEnvConfig.uartTxAgentConfig.uartParityType = ODD_PARITY;
   uartEnvConfig.uartTxAgentConfig.uartStopBit = TWO_BIT;
   uartEnvConfig.uartTxAgentConfig.hasParity=1;
 
      uartEnvConfig.uartRxAgentConfig.uartOverSamplingMethod =OVERSAMPLING_13;
   uartEnvConfig.uartRxAgentConfig.uartBaudRate = BAUD_9600;
   uartEnvConfig.uartRxAgentConfig.uartDataType = FIVE_BIT;
-  uartEnvConfig.uartRxAgentConfig.uartParityType = EVEN_PARITY;
+  uartEnvConfig.uartRxAgentConfig.uartParityType = ODD_PARITY;
   uartEnvConfig.uartRxAgentConfig.uartStopBit = TWO_BIT;
   uartEnvConfig.uartRxAgentConfig.hasParity=1;
 
