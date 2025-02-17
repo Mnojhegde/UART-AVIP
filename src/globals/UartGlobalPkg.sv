@@ -15,7 +15,7 @@ package UartGlobalPkg;
   parameter STOP_BIT = 1;
 
   // can enable or disable parity
-	typedef enum bit{ PARITY_DISABLED , PARITY_ENABLED } hasParityEnum;
+	typedef enum bit{ PARITY_DISABLED = 0 , PARITY_ENABLED = 1} hasParityEnum;
 
   // even or odd parity can be set
 	typedef enum{ EVEN_PARITY , ODD_PARITY} parityTypeEnum;
