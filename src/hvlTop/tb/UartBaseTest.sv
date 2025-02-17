@@ -75,7 +75,7 @@ endfunction : setupUartEnvConfig
   uartEnvConfig.uartTxAgentConfig.packetsNeeded=NO_OF_PACKETS;
   uartEnvConfig.uartTxAgentConfig.is_active = UVM_ACTIVE;
   uartEnvConfig.uartTxAgentConfig.hasCoverage = 1;
-  uartEnvConfig.uartTxAgentConfig.hasParity = hasParityEnum.PARITY_ENABLED;
+  uartEnvConfig.uartTxAgentConfig.hasParity = PARITY_ENABLED;
   uartEnvConfig.uartTxAgentConfig.uartOverSamplingMethod = OVERSAMPLING_16;
   uartEnvConfig.uartTxAgentConfig.uartBaudRate = BAUD_9600;
   uartEnvConfig.uartTxAgentConfig.uartDataType = FIVE_BIT;
@@ -101,7 +101,7 @@ endfunction : setupUartTxAgentConfig
   uartEnvConfig.uartRxAgentConfig.packetsNeeded=NO_OF_PACKETS;
   uartEnvConfig.uartRxAgentConfig.is_active = UVM_PASSIVE;
   uartEnvConfig.uartRxAgentConfig.hasCoverage = 1;
-  uartEnvConfig.uartRxAgentConfig.hasParity = PARITY_ENABLED;
+  uartEnvConfig.uartRxAgentConfig.hasParity = hasParityEnum;
   uartEnvConfig.uartRxAgentConfig.uartOverSamplingMethod = OVERSAMPLING_16;
   uartEnvConfig.uartRxAgentConfig.uartBaudRate = BAUD_9600;
   uartEnvConfig.uartRxAgentConfig.uartDataType = FIVE_BIT;
