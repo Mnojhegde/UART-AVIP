@@ -146,7 +146,7 @@ interface UartRxMonitorBfm (input  logic   clk,
 				
         repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 				concatData={concatData,rx};
-				stopBitCheck(uartRxPacketStruct,rx);
+				stopBitCheck(uartRxPacketStruct,uartConfigStruct,rx);
 				$display("STOP BIT IS BEING ASSIGNED IN  MONITOR AT %t",$time);
 				numOfZeroes=$countones(~(concatData));
 				breakZeroCount=uartConfigStruct.uartParityEnable ? (uartConfigStruct.uartDataType)+3 :(uartConfigStruct.uartDataType)+2;
@@ -180,7 +180,7 @@ interface UartRxMonitorBfm (input  logic   clk,
         end
 				
         @(posedge baudClk);
-				stopBitCheck(uartRxPacketStruct,rx);
+				stopBitCheck(uartRxPacketStruct,uartConfigStruct,rx);
       end
   endtask
 	
