@@ -1,11 +1,37 @@
 `ifndef UARTSCOREBOARD_INCLUDED_
 `define UARTSCOREBOARD_INCLUDED_
+
+//--------------------------------------------------------------------------------------------
+// Class: UartScoreboard
+// Used to compare the data sent/received by the master with the slave's data sent/received
+//--------------------------------------------------------------------------------------------
+
+import UartGlobalPkg :: *;
+
+ typedef struct { int packetNum;
+                  bit[7:0] transmissionData;
+                  bit[7:0] receivingData;
+                  bit match;
+                  bit [7:0] errorBitNo;
+                  bit parity;
+                  bit parityError;
+                  bit breakingError;
+                  bit framingError;} UartNoOfPacketsStruct;
+
+
 class UartScoreboard extends uvm_scoreboard;
   `uvm_component_utils(UartScoreboard)
 
-   //Declaring Tx class handle and Rx class hamdle
-   UartTxTransaction uartTxTransaction;
-   UartRxTransaction uartRxTransaction;
+  //Declaring handle for struct
+  UartNoOfPacketsStruct uartNoOfPacketsStruct[$];
+  UartNoOfPacketsStruct tempStruct;
+
+  //Declaring handle to keep the count of packets
+  int packetCount = 0;
+
+  //Declaring Tx class handle and Rx class hamdle
+  UartTxTransaction uartTxTransaction;
+  UartRxTransaction uartRxTransaction;
 
   //Variable: uartScoreboardTxAnalysisExport
   //Declaring analysis export for transmitting  Tx transaction object to scoreboard
@@ -32,19 +58,6 @@ class UartScoreboard extends uvm_scoreboard;
   //Declaring handle for uart reciever agent
   UartRxAgentConfig uartRxAgentConfig;
 
-
-  //Variable TransactionCount
-  //to keep track of number of transaction
-  int transmissionReciveingSucessfulCount = 0;
-
-  //Variable bitDataCmpVerifiedTxRxCount
-  //to keep track number verified comparisions
-  int bitDataCmpVerifiedTxRxCount = 0;
-
-  //Variable bitDataCmpFailedTxRxCount
-  //to keep track number failed comparisions
-  int bitDataCmpFailedTxRxCount = 0;
-
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
@@ -53,6 +66,9 @@ class UartScoreboard extends uvm_scoreboard;
   extern virtual function void connect_phase(uvm_phase phase);
   extern virtual task run_phase(uvm_phase phase);
   extern task compareTxRx(UartTxTransaction uartTxTransaction,UartRxTransaction uartRxTransaction);
+  extern task packetSummary();
+  extern function void report_phase(uvm_phase phase);
+
  endclass : UartScoreboard
 
 //--------------------------------------------------------------------------------------------
@@ -124,22 +140,23 @@ task UartScoreboard :: run_phase(uvm_phase phase);
 endtask : run_phase
 
 
- task UartScoreboard :: compareTxRx(UartTxTransaction uartTxTransaction,UartRxTransaction uartRxTransaction);
+task UartScoreboard :: compareTxRx(UartTxTransaction uartTxTransaction,UartRxTransaction uartRxTransaction);
+    bit bitsMatch = 1;
 
-      foreach(uartTxTransaction.transmissionData[i])
+       foreach(uartTxTransaction.transmissionData[i])
           begin
-
            if(uartTxTransaction.transmissionData[i] != uartRxTransaction.receivingData[i])
              begin
-               bitDataCmpFailedTxRxCount++;
+               tempStruct.errorBitNo[i] = 1;
+               bitsMatch = 0;
               `uvm_info(get_type_name(),$sformatf("Bit mismatch = %0d",i),UVM_LOW)
               `uvm_info(get_type_name(),$sformatf("TransmissionData = %b,RecievingData = %b",uartTxTransaction.transmissionData[i],uartRxTransaction.receivingData[i]),UVM_LOW)
              end
            else
              begin
-               bitDataCmpVerifiedTxRxCount++;
-               `uvm_info(get_type_name(),$sformatf("Bit Match = %0d",i),UVM_LOW)
-               `uvm_info(get_type_name(),$sformatf("TransmissionData = %b,RecievingData = %b",uartTxTransaction.transmissionData[i],uartRxTransaction.receivingData[i]),UVM_LOW)
+                tempStruct.errorBitNo[i] = 0;
+                `uvm_info(get_type_name(),$sformatf("Bit Match = %0d",i),UVM_LOW)
+                `uvm_info(get_type_name(),$sformatf("TransmissionData = %b,RecievingData = %b",uartTxTransaction.transmissionData[i],uartRxTransaction.receivingData[i]),UVM_LOW)
              end
            end
 
@@ -155,15 +172,47 @@ endtask : run_phase
              begin
                `uvm_error(get_type_name(),$sformatf("Framing Error Occured"))
              end
-           /*
-           if(uartTxTransaction.overrunError[i] != uartRxTransaction.overrunError[i])
-             begin
-               `uvm_error(get_type_name(),$sformatf("Parity mismatch"))
-             end*/
 
-            transmissionReciveingSucessfulCount++;
-            `uvm_info(get_type_name(),$sformatf("DATA MATCH"),UVM_LOW)
-            `uvm_info(get_type_name(),$sformatf("\n transmissionData = %b\n receivingData = %b\n tx parity = %0b rx parity=%0b\n tx framing error = %0b rx framing error = %0b\n tx parity error = %0b rx parity error = %0b",uartTxTransaction.transmissionData,uartRxTransaction.receivingData,uartTxTransaction.parity,uartRxTransaction.parity,uartTxTransaction.framingError,uartRxTransaction.framingError,uartTxTransaction.parityError,uartRxTransaction.parityError),UVM_LOW)
+           if(uartTxTransaction.breakingError != uartRxTransaction.breakingError)
+             begin
+               `uvm_error(get_type_name(),$sformatf("Breaking Error Occured"))
+             end
+
+            packetCount++;
+
+            tempStruct = '{packetNum: packetCount,
+                           transmissionData: uartTxTransaction.transmissionData,
+                           receivingData: uartRxTransaction.receivingData,
+                           match: bitsMatch,
+                           parity: uartTxTransaction.parity == uartRxTransaction.parity,
+                           parityError: uartTxTransaction.parityError != uartRxTransaction.parityError,
+                           breakingError: uartTxTransaction.breakingError != uartRxTransaction.breakingError,
+                           framingError: uartTxTransaction.framingError != uartRxTransaction.framingError,
+                           errorBitNo: tempStruct.errorBitNo};
+            uartNoOfPacketsStruct.push_back(tempStruct);
+
+            `uvm_info(get_type_name(),$sformatf("SUCCESSFUL DATA MATCH"),UVM_LOW)
+            `uvm_info(get_type_name(),$sformatf("\n transmissionData:%b\n receivingData:%b\n tx parity:%0b rx parity:%0b\n tx framingError:%0b rx framingError:%0b\n tx parityError:%0b rx parityError:%0b\n tx breakingError:%0b rx breakingError:%0b",uartTxTransaction.transmissionData,uartRxTransaction.receivingData,uartTxTransaction.parity,uartRxTransaction.parity,uartTxTransaction.framingError,uartRxTransaction.framingError,uartTxTransaction.parityError,uartRxTransaction.parityError,uartTxTransaction.breakingError,uartRxTransaction.breakingError),UVM_LOW)
 
 endtask : compareTxRx
+
+task UartScoreboard::packetSummary();
+  foreach (uartNoOfPacketsStruct[i]) begin
+  $display("----------------------------------------------------------------------------------------------------------------------------------------");
+  `uvm_info(get_type_name(), $sformatf("\nPacket %0d Summary:\n TransmissionData:%b\n RecievingData:%b\n %0s\n %0s\n %0s\n %0s\n %0s\n",uartNoOfPacketsStruct[i].packetNum,uartNoOfPacketsStruct[i].transmissionData,uartNoOfPacketsStruct[i].receivingData,uartNoOfPacketsStruct[i].match?"Packet matched":"Packet mismatched", uartNoOfPacketsStruct[i].parity?"Parity match":"Parity mismatch",uartNoOfPacketsStruct[i].parityError?"Parity Error":"No Parity Error",uartNoOfPacketsStruct[i].breakingError?"Breaking Error":"No Breaking Error",uartNoOfPacketsStruct[i].framingError?"Framing Error":"No Framing Error"), UVM_LOW)
+
+  /*foreach(tempStruct.errorBitNo[i])
+   begin
+    if(tempStruct.errorBitNo != 0)
+      $display("Bit %0b :",tempStruct.errorBitNo[i]);
+   end*/
+  $display("----------------------------------------------------------------------------------------------------------------------------------------");
+  end
+endtask
+
+function void UartScoreboard:: report_phase(uvm_phase phase);
+  super.report_phase(phase);
+  packetSummary();
+endfunction
+
 `endif
