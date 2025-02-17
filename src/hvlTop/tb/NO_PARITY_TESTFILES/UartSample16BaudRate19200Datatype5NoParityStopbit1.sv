@@ -51,7 +51,7 @@ function void UartSample16BaudRate19200Datatype5NoParityStopbit1 :: build_phase(
   uartEnvConfig.uartRxAgentConfig.uartBaudRate =   BAUD_9600;
   uartEnvConfig.uartRxAgentConfig.uartDataType = FIVE_BIT;
   uartEnvConfig.uartRxAgentConfig.uartStopBit = ONE_BIT;
-  uartEnvConfig.uartRxAgentConfig.hasParity=1;
+  uartEnvConfig.uartRxAgentConfig.hasParity = PARITY_DISABLED;
 endfunction  : build_phase
    
    
