@@ -75,7 +75,7 @@ endfunction : setupUartEnvConfig
   uartEnvConfig.uartTxAgentConfig.packetsNeeded=NO_OF_PACKETS;
   uartEnvConfig.uartTxAgentConfig.is_active = UVM_ACTIVE;
   uartEnvConfig.uartTxAgentConfig.hasCoverage = 1;
-  uartEnvConfig.uartTxAgentConfig.hasParity = PARITY_ENABLED;
+  uartEnvConfig.uartTxAgentConfig.hasParity = hasParityEnum.PARITY_ENABLED;
   uartEnvConfig.uartTxAgentConfig.uartOverSamplingMethod = OVERSAMPLING_16;
   uartEnvConfig.uartTxAgentConfig.uartBaudRate = BAUD_9600;
   uartEnvConfig.uartTxAgentConfig.uartDataType = FIVE_BIT;
