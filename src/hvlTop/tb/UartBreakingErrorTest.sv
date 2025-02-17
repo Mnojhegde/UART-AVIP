@@ -46,7 +46,7 @@ function void UartBreakingErrorTest :: build_phase(uvm_phase phase);
   uartEnvConfig.uartTxAgentConfig.uartStopBit = TWO_BIT;
   uartEnvConfig.uartTxAgentConfig.hasParity=1;
   uartEnvConfig.uartTxAgentConfig.patternNeeded = 1;
-  uartEnvConfig.uartTxAgentConfig.patternToTransmit = 8'b0;
+  uartEnvConfig.uartTxAgentConfig.patternToTransmit = 7'b0;
   uartEnvConfig.uartTxAgentConfig.breakingErrorInjection = 1;
 
  // uartEnvConfig.uartRxAgentConfig.uartOverSamplingMethod = OVERSAMPLING_16;
@@ -55,6 +55,7 @@ function void UartBreakingErrorTest :: build_phase(uvm_phase phase);
   uartEnvConfig.uartRxAgentConfig.uartParityType = EVEN_PARITY;
   uartEnvConfig.uartRxAgentConfig.uartStopBit = TWO_BIT;
   uartEnvConfig.uartRxAgentConfig.hasParity=1;
+  uartEnvConfig.uartRxAgentConfig.breakingErrorInjection = 1;
 
 endfunction  : build_phase
 			         
