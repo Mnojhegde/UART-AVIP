@@ -59,5 +59,6 @@ endfunction  : build_phase
 // phase - stores the current phase
 //------------------------------------------------------------------------------------------
 task UartSample13BaudRate4800Datatype7EvenParityStopbit2:: run_phase(uvm_phase phase);
-  super.run_phase(phase);
+ super.run_phase(phase);
+endtask : run_phase
 `endif 
