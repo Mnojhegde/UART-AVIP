@@ -62,7 +62,7 @@ package UartGlobalPkg;
 												  bit uartParityEnable; 
 												  bit uartParityErrorInjection;
 												  bit uartFramingErrorInjection;
-			       									  bit uartBreakingErrorInjection;
+			       							bit uartBreakingErrorInjection;
 												  bit OverSampledBaudFrequencyClk;} UartConfigStruct;
 
 
