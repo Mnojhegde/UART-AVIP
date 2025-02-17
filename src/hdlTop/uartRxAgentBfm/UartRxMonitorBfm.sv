@@ -21,6 +21,10 @@ interface UartRxMonitorBfm (input  logic   clk,
 	bit baudClk;
   bit oversamplingClk;
 
+	logic [DATA_WIDTH+2 : 0]concatData;
+	int numOfZeroes;
+	int breakZeroCount;
+
 	// enum variable for receiver states
 	UartTransmitterStateEnum uartTransmitterState;
 
@@ -122,10 +126,12 @@ interface UartRxMonitorBfm (input  logic   clk,
     	if(uartConfigStruct.OverSampledBaudFrequencyClk==1)begin
       	repeat(uartConfigStruct.uartOverSamplingMethod/2) @(posedge baudClk);//needs this posedge or 1 cycle delay to avoid race around or delay in output
         uartTransmitterState = STARTBIT;
+				concatData={concatData,rx};
 		
 				for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
         	repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk); begin
 						uartRxPacketStruct.receivingData[i] = rx;
+						concatData={concatData,rx};
 						uartTransmitterState = UartTransmitterStateEnum'(i+3);
         	end
         end
@@ -133,16 +139,31 @@ interface UartRxMonitorBfm (input  logic   clk,
         if(uartConfigStruct.uartParityEnable ==1) begin
 					repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 					uartRxPacketStruct.parity = rx;
+					concatData={concatData,rx};
 					uartTransmitterState = PARITYBIT;
 					parityCheck(uartConfigStruct,uartRxPacketStruct,rx);
         end
 				
         repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+				concatData={concatData,rx};
 				stopBitCheck(uartRxPacketStruct,rx);
-				uartTransmitterState = STOPBIT;
-				repeat(uartConfigStruct.uartOverSamplingMethod/2) @(posedge baudClk);
-				uartTransmitterState = IDLE;
-      end
+				$display("STOP BIT IS BEING ASSIGNED IN  MONITOR AT %t",$time);
+				numOfZeroes=$countones(~(concatData));
+				breakZeroCount=uartConfigStruct.uartParityEnable ? (uartConfigStruct.uartDataType)+3 :(uartConfigStruct.uartDataType)+2;
+				$display("THE NUMBER OF ZEROES IS %0d",numOfZeroes);
+				if(numOfZeroes == breakZeroCount)
+					uartRxPacketStruct.breakingError =1;
+				else 
+					uartRxPacketStruct.breakingError =0;
+
+
+					$display("THE BREAKING ERROR IS %b",uartRxPacketStruct.breakingError);
+					repeat(uartConfigStruct.uartOverSamplingMethod/2) @(posedge baudClk);
+					concatData = 'b x;
+					numOfZeroes =0;
+					uartTransmitterState = IDLE;
+					
+        end
 		
       else if(uartConfigStruct.OverSampledBaudFrequencyClk==0)begin
         repeat(1)@(posedge baudClk);
@@ -163,27 +184,31 @@ interface UartRxMonitorBfm (input  logic   clk,
       end
   endtask
 	
-	task stopBitCheck (inout  UartRxPacketStruct uartRxPacketStruct,input bit rx);
-		if (rx == 1) begin
-			uartRxPacketStruct.framingError = 0;
-		end
-		else begin
-			uartRxPacketStruct.framingError = 1;
-		end
-	endtask
-	task parityCheck(inout UartConfigStruct uartConfigStruct,inout UartRxPacketStruct uartRxPacketStruct,input bit rx);
-		int cal_parity;
-		if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
-			cal_parity = evenParityCompute(uartConfigStruct,uartRxPacketStruct);
-		end
-		else begin
-			cal_parity = oddParityCompute(uartConfigStruct,uartRxPacketStruct);
-		end
-		if(rx==cal_parity)begin
-			uartRxPacketStruct.parityError=0;
-		end
-		else begin
-			uartRxPacketStruct.parityError=1;
-		end
-	endtask:parityCheck
+	task stopBitCheck (inout  UartRxPacketStruct uartRxPacketStruct,input UartConfigStruct uartConfigStruct,input bit rx);
+			if (rx == 1) begin
+				uartRxPacketStruct.framingError = 0;
+				uartTransmitterState = STOPBIT;
+			end
+			else begin
+				uartRxPacketStruct.framingError = 1;
+				uartTransmitterState = INVALIDSTOPBIT;
+				repeat(uartConfigStruct.uartOverSamplingMethod)@(posedge baudClk);
+			end
+  	endtask
+		
+		task parityCheck(inout UartConfigStruct uartConfigStruct,inout UartRxPacketStruct uartRxPacketStruct,input bit rx);
+   		int cal_parity;
+   		if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
+      	cal_parity = evenParityCompute(uartConfigStruct,uartRxPacketStruct);
+     	end
+      else begin
+      	cal_parity = oddParityCompute(uartConfigStruct,uartRxPacketStruct);
+      end
+			if(rx==cal_parity)begin
+      	uartRxPacketStruct.parityError=0;
+     	end
+     	else begin
+     		uartRxPacketStruct.parityError=1;
+     	end
+  	endtask:parityCheck
 endinterface : UartRxMonitorBfm
