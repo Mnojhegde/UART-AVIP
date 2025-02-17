@@ -22,7 +22,7 @@ endclass :UartSample13BaudRate4800Datatype8NoParityStopbit1
 //
 // parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
-     function UartSample13BaudRate4800Datatype8NoParityStopbit1:: new(string name ="UartSample13BaudRate4800Datatype8NoParityStopbit1" , uvm_component parent = null);
+ function UartSample13BaudRate4800Datatype8NoParityStopbit1:: new(string name ="UartSample13BaudRate4800Datatype8NoParityStopbit1" , uvm_component parent = null);
   super.new(name,parent);
 endfunction  : new
 //--------------------------------------------------------------------------------------------
@@ -55,7 +55,7 @@ endfunction  : build_phase
 // Parameters:
 // phase - stores the current phase
 //------------------------------------------------------------------------------------------
-task  UartSample13BaudRate4800Datatype8NoParityStopbit1:: run_phase(uvm_phase phase);
+task UartSample13BaudRate4800Datatype8NoParityStopbit1:: run_phase(uvm_phase phase);
   super.run_phase(phase);
   endtask : run_phase
 `endif
