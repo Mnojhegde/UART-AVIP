@@ -107,6 +107,6 @@ package UartBaseTestPkg;
   `include "UartSample16BaudRate19200Datatype8EvenParityStopbit2.sv"
   `include "UartSample16BaudRate19200Datatype8OddParityStopbit1.sv"
   `include "UartSample16BaudRate19200Datatype8OddParityStopbit2.sv"
-
+  `include "UartBreakingErrorTest.sv"
 endpackage : UartBaseTestPkg
 `endif
