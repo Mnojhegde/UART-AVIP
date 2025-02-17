@@ -14,7 +14,7 @@ class UartSample13BaudRate4800Datatype6NoParityStopbit1 extends UartBaseTest;
     extern virtual function void  build_phase(uvm_phase phase);
     extern virtual task run_phase(uvm_phase phase);
 
-endclass :UartSample13BaudRate4800Datatype5EvenParityStopbit1
+endclass :UartSample13BaudRate4800Datatype6EvenParityStopbit1
 //--------------------------------------------------------------------------------------------
 // Constructor:new
 //
@@ -37,12 +37,12 @@ function void UartSample13BaudRate4800Datatype6NoParityStopbit1 :: build_phase(u
   uartEnvConfig.uartTxAgentConfig.uartOverSamplingMethod =OVERSAMPLING_13;
   uartEnvConfig.uartTxAgentConfig.uartBaudRate = BAUD_4800;
   uartEnvConfig.uartTxAgentConfig.uartDataType = FIVE_BIT;
-  uartEnvConfig.uartTxAgentConfig.uartStopBit = ONE_BIT;
+  uartEnvConfig.uartTxAgentConfig.uartStopBit = SIX_BIT;
   uartEnvConfig.uartTxAgentConfig.hasParity=PARITY_DISABLED;
 
   uartEnvConfig.uartRxAgentConfig.uartOverSamplingMethod =OVERSAMPLING_13;
   uartEnvConfig.uartRxAgentConfig.uartBaudRate = BAUD_4800;
-  uartEnvConfig.uartRxAgentConfig.uartDataType = FIVE_BIT;
+  uartEnvConfig.uartRxAgentConfig.uartDataType = SIX_BIT;
   uartEnvConfig.uartRxAgentConfig.uartStopBit = ONE_BIT;
   uartEnvConfig.uartRxAgentConfig.hasParity=PARITY_DISABLED;
 
