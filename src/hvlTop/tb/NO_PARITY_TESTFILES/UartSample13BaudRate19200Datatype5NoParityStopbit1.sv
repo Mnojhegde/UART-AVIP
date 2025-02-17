@@ -1,4 +1,4 @@
-`ifndef UARTSAMPLE13BAUDRATE1920DATATYPE5NOPARITYSTOPBIT1_INCLUDED_
+`ifndef UARTSAMPLE13BAUDRATE19200DATATYPE5NOPARITYSTOPBIT1_INCLUDED_
 `define UartSample13BaudRate19200Datatype5NoParityStopbit1_INCLUDED_
 //--------------------------------------------------------------------------------------------
 // Class:UartSample13BaudRate19200Datatype5NoParityStopbit1
