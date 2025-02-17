@@ -45,8 +45,9 @@ function void UartBreakingErrorTest :: build_phase(uvm_phase phase);
   uartEnvConfig.uartTxAgentConfig.uartParityType = EVEN_PARITY;
   uartEnvConfig.uartTxAgentConfig.uartStopBit = TWO_BIT;
   uartEnvConfig.uartTxAgentConfig.hasParity=1;
-  uartEnvConfig.uartTxAgentConfig.patternNeeded = 'b0; 
-
+  uartEnvConfig.uartTxAgentConfig.patternNeeded = 1;
+  uartEnvConfig.uartTxAgentConfig.patternToTransmit = 8'b0;
+  uartEnvConfig.uartTxAgentConfig.breakingErrorInjection = 1;
 
  // uartEnvConfig.uartRxAgentConfig.uartOverSamplingMethod = OVERSAMPLING_16;
   //uartEnvConfig.uartRxAgentConfig.uartBaudRate =   BAUD_9600;
