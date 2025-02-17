@@ -4,7 +4,7 @@
 // Class:UartSample13BaudRate9600Datatype6NoParityStopbit2
 // A test for 13 sampling condition
 //--------------------------------------------------------------------------------------------
-class  UartSample13BaudRate9600Datatype6NoParityStopbit2 extends UartBaseTest;
+class UartSample13BaudRate9600Datatype6NoParityStopbit2 extends UartBaseTest;
   `uvm_component_utils(UartSample13BaudRate9600Datatype6NoParityStopbit2)
     UartVirtualBaseSequence uartVirtualBaseSequence;
     //-------------------------------------------------------
@@ -32,7 +32,7 @@ endfunction  : new
 // Parameters:
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
-function void  UartSample13BaudRate9600Datatype6NoParityStopbit2:: build_phase(uvm_phase phase);
+function void UartSample13BaudRate9600Datatype6NoParityStopbit2:: build_phase(uvm_phase phase);
   super.build_phase(phase);
   uartEnvConfig.uartTxAgentConfig.uartOverSamplingMethod =OVERSAMPLING_13;
   uartEnvConfig.uartTxAgentConfig.uartBaudRate = BAUD_9600;
