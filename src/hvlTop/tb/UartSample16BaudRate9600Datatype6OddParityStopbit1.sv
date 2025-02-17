@@ -64,14 +64,7 @@ endfunction  : build_phase
 // phase - stores the current phase
 //--------------------------------------------------------------------------------------------
  task UartSample16BaudRate9600Datatype6OddParityStopbit1 :: run_phase(uvm_phase phase);
-  UartVirtualBaseSequence :: type_id ::set_type_override(UartVirtualTransmissionSequence::get_type());
-  uartVirtualBaseSequence = UartVirtualBaseSequence :: type_id :: create("uartVirtualBaseSequence");
-  uartVirtualBaseSequence.print();
-  phase.raise_objection(this);
-   uartVirtualBaseSequence.start(uartEnv.uartVirtualSequencer);
-   #100000;
-  phase.drop_objection(this);
-
+    super.run_phase(phase);
 endtask : run_phase
 
 `endif  
