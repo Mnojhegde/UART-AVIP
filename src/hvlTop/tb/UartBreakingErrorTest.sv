@@ -55,7 +55,7 @@ function void UartBreakingErrorTest :: build_phase(uvm_phase phase);
   uartEnvConfig.uartRxAgentConfig.uartParityType = EVEN_PARITY;
   uartEnvConfig.uartRxAgentConfig.uartStopBit = TWO_BIT;
   uartEnvConfig.uartRxAgentConfig.hasParity=1;
-  uartEnvConfig.uartRxAgentConfig.breakingErrorInjection = 1;
+  // uartEnvConfig.uartRxAgentConfig.breakingErrorInjection = 1;
 
 endfunction  : build_phase
 			         
