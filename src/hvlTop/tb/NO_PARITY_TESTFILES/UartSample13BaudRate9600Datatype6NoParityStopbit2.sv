@@ -10,7 +10,7 @@ class  UartSample13BaudRate9600Datatype6NoParityStopbit2 extends UartBaseTest;
     //-------------------------------------------------------
     // Externally defined Tasks and Functions
     //-------------------------------------------------------
-  extern function new(string name = "UartSample13BaudRate9600Datatype56NoParityStopbit2" , uvm_component parent = null);
+  extern function new(string name = "UartSample13BaudRate9600Datatype6NoParityStopbit2" , uvm_component parent = null);
     extern virtual function void  build_phase(uvm_phase phase);
     extern virtual task run_phase(uvm_phase phase);
 
