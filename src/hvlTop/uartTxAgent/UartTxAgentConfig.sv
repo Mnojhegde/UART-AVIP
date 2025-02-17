@@ -13,7 +13,7 @@ class UartTxAgentConfig extends uvm_object;
 
   // config variables required for transmitting data
   bit hasCoverage;
-  bit hasParity;
+  hasParityEnum hasParity;
   overSamplingEnum uartOverSamplingMethod;
   baudRateEnum uartBaudRate;
   dataTypeEnum uartDataType;
