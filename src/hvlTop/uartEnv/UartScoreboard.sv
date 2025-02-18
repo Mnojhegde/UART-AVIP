@@ -184,9 +184,9 @@ task UartScoreboard :: compareTxRx(UartTxTransaction uartTxTransaction,UartRxTra
                            receivingData: uartRxTransaction.receivingData,
                            match: bitsMatch,
                            parity: uartTxTransaction.parity == uartRxTransaction.parity,
-                           parityError: uartTxTransaction.parityError and uartRxTransaction.parityError,
-                           breakingError: uartTxTransaction.breakingError and uartRxTransaction.breakingError,
-                           framingError: uartTxTransaction.framingError and uartRxTransaction.framingError,
+                           parityError: uartTxTransaction.parityError && uartRxTransaction.parityError,
+                           breakingError: uartTxTransaction.breakingError && uartRxTransaction.breakingError,
+                           framingError: uartTxTransaction.framingError && uartRxTransaction.framingError,
                            errorBitNo: tempStruct.errorBitNo};
             uartNoOfPacketsStruct.push_back(tempStruct);
 
