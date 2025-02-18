@@ -4,7 +4,7 @@
 // Package:UartBaseTestPkg
 //--------------------------------------------------------------------------------------------
 package UartBaseTestPkg;
-  `include "uvm_macros.sv"h"
+  `include "uvm_macros.svh"
   
   //-------------------------------------------------------
   // Import uvm package
