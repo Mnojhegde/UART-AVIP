@@ -37,7 +37,7 @@ function void UartSample13BaudRate9600Datatype5NoParityStopbit2:: build_phase(uv
   uartEnvConfig.uartTxAgentConfig.uartOverSamplingMethod =OVERSAMPLING_13;
   uartEnvConfig.uartTxAgentConfig.uartBaudRate = BAUD_9600;
   uartEnvConfig.uartTxAgentConfig.uartDataType = FIVE_BIT;
-  uartEnvConfig.uartTxAgentConfig.uartStopBit = Two_BIT;
+  uartEnvConfig.uartTxAgentConfig.uartStopBit = TWO_BIT;
   uartEnvConfig.uartTxAgentConfig.hasParity=PARITY_DISABLED;
 
      uartEnvConfig.uartRxAgentConfig.uartOverSamplingMethod =OVERSAMPLING_13;
