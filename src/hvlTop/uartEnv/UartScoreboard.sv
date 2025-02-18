@@ -167,12 +167,17 @@ task UartScoreboard :: compareTxRx(UartTxTransaction uartTxTransaction,UartRxTra
                  end
              end
 
-           if(uartTxTransaction.framingError != uartRxTransaction.framingError)
+          if(~(uartTxTransaction.parityError || uartRxTransaction.parityError))
+             begin
+               `uvm_error(get_type_name(),$sformatf("Breaking Error Occured"))
+             end
+
+          if(~(uartTxTransaction.framingError || uartRxTransaction.framingError))
              begin
                `uvm_error(get_type_name(),$sformatf("Framing Error Occured"))
              end
 
-           if(uartTxTransaction.breakingError != uartRxTransaction.breakingError)
+          if(~(uartTxTransaction.breakingError || uartRxTransaction.breakingError))
              begin
                `uvm_error(get_type_name(),$sformatf("Breaking Error Occured"))
              end
