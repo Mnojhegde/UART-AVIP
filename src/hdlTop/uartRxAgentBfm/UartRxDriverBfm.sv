@@ -102,7 +102,7 @@ interface UartRxDriverBfm (input  bit clk,
   // this task will generate baud clk based on baud divider
   //-------------------------------------------------------------------
 
-  task BaudclkGenerator(input int baudDivisor);
+  task BaudClkGenerator(input int baudDivisor);
        static int count=0;
        forever begin 
         @(posedge clk or negedge clk)
