@@ -160,5 +160,8 @@ package UartBaseTestPkg;
   `include "UartEvenParityWithErrorTest.sv"
   `include "UartOddParityWithErrorTest.sv"
   `include "UartFramingErrorEvenParityTest.sv"
+  `include "UartFramingErrorOddParityTest.sv"
+  `include "UartFramingErrorNoParityTest.sv"
+
 endpackage : UartBaseTestPkg
 `endif
