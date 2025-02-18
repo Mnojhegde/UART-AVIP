@@ -40,7 +40,7 @@ endfunction  : new
 //--------------------------------------------------------------------------------------------
 function void UartOddParityTest :: build_phase(uvm_phase phase);
   super.build_phase(phase);
-  uartEnvConfig.uartTxAgentConfig.hasParity=1;
+  uartEnvConfig.uartTxAgentConfig.hasParity = PARITY_ENABLED;
   uartEnvConfig.uartTxAgentConfig.uartParityType = ODD_PARITY;
 endfunction  : build_phase
 			         
