@@ -9,7 +9,7 @@ class UartBreakingErrorTest extends UartBaseTest;
  
    `uvm_component_utils(UartBreakingErrorTest)
     
-   UartVirtualBaseSequence uartVirtualBaseSequence;
+   UartVirtualTransmissionSequenceWithPattern uartVirtualTransmissionSequenceWithPattern;
     //-------------------------------------------------------
     // Externally defined Tasks and Functions
     //-------------------------------------------------------
@@ -68,6 +68,9 @@ endfunction  : build_phase
 // phase - stores the current phase
 //------------------------------------------------------------------------------------------
 task UartBreakingErrorTest:: run_phase(uvm_phase phase);
-    super.run_phase(phase);
-  endtask : run_phase
+  phase.raise_objection(this);
+   uartVirtualTransmissionSequenceWithPattern.start(uartEnv.uartVirtualSequencer);
+   #100000;
+  phase.drop_objection(this);  
+endtask : run_phase
 `endif  
