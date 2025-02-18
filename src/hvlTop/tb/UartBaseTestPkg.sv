@@ -132,7 +132,7 @@ package UartBaseTestPkg;
   `include UartSample13BaudRate9600Datatype8NoParityStopbit2.sv
   `include UartSample16BaudRate19200Datatype5NoParityStopbit1.sv
   `include UartSample16BaudRate19200Datatype5NoParityStopbit2.sv
-  `include UartSample16BaudRate19200Datatype6NoParityStopbit1.SV
+  `include UartSample16BaudRate19200Datatype6NoParityStopbit1.sv
   `include UartSample16BaudRate19200Datatype6NoParityStopbit2.sv
   `include UartSample16BaudRate19200Datatype7NoParityStopbit1.sv
   `include UartSample16BaudRate19200Datatype7NoParityStopbit2.sv
