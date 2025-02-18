@@ -27,8 +27,7 @@ package UartBaseTestPkg;
   `include "UartBaseTest.sv"
   `include "UartEvenParityTest.sv"
   `include "UartOddParityTest.sv"
-  `include "UartEvenParityWithErrorTest.sv"
-  `include "UartOddParityWithErrorTest.sv"
+
 
   `include "UartSample13BaudRate4800Datatype5EvenParityStopbit1.sv"
   `include "UartSample13BaudRate4800Datatype5EvenParityStopbit2.sv"
@@ -79,10 +78,7 @@ package UartBaseTestPkg;
   `include "UartSample13BaudRate19200Datatype8EvenParityStopbit2.sv"
   `include "UartSample13BaudRate19200Datatype8OddParityStopbit1.sv"
   `include "UartSample13BaudRate19200Datatype8OddParityStopbit2.sv"
-
-  
   `include "UartSample16BaudRate4800Datatype5EvenParityStopbit1.sv"
-  
   `include "UartSample16BaudRate9600Datatype7EvenParityStopbit1.sv"
   `include "UartSample16BaudRate9600Datatype7EvenParityStopbit2.sv"
   `include "UartSample16BaudRate9600Datatype7OddParityStopbit1.sv"
@@ -107,6 +103,61 @@ package UartBaseTestPkg;
   `include "UartSample16BaudRate19200Datatype8EvenParityStopbit2.sv"
   `include "UartSample16BaudRate19200Datatype8OddParityStopbit1.sv"
   `include "UartSample16BaudRate19200Datatype8OddParityStopbit2.sv"
+
+  //  No Parity Test cases
+
+  `include UartSample13BaudRate19200Datatype5NoParityStopbit1.sv
+  `include UartSample13BaudRate19200Datatype5NoParityStopbit2.sv
+  `include UartSample13BaudRate19200Datatype6NoParityStopbit1.sv
+  `include UartSample13BaudRate19200Datatype6NoParityStopbit2.sv
+  `include UartSample13BaudRate19200Datatype7NoParityStopbit1.sv
+  `include UartSample13BaudRate19200Datatype7NoParityStopbit2.sv
+  `include UartSample13BaudRate19200Datatype8NoParityStopbit1.sv
+  `include UartSample13BaudRate19200Datatype8NoParityStopbit2.sv
+  `include UartSample13BaudRate4800Datatype5NoParityStopbit1.sv
+  `include UartSample13BaudRate4800Datatype5NoParityStopbit2.sv
+  `include UartSample13BaudRate4800Datatype6NoParityStopbit1.sv
+  `include UartSample13BaudRate4800Datatype6NoParityStopbit2.sv
+  `include UartSample13BaudRate4800Datatype7NoParityStopbit1.sv
+  `include UartSample13BaudRate4800Datatype7NoParityStopbit2.sv
+  `include UartSample13BaudRate4800Datatype8NoParityStopbit1.sv
+  `include UartSample13BaudRate4800Datatype8NoParityStopbit2.sv
+  `include UartSample13BaudRate9600Datatype5NoParityStopbit1.sv
+  `include UartSample13BaudRate9600Datatype5NoParityStopbit2.sv
+  `include UartSample13BaudRate9600Datatype6NoParityStopbit1.sv
+  `include UartSample13BaudRate9600Datatype6NoParityStopbit2.sv
+  `include UartSample13BaudRate9600Datatype7NoParityStopbit1.sv
+  `include UartSample13BaudRate9600Datatype7NoParityStopbit2.sv
+  `include UartSample13BaudRate9600Datatype8NoParityStopbit1.sv
+  `include UartSample13BaudRate9600Datatype8NoParityStopbit2.sv
+  `include UartSample16BaudRate19200Datatype5NoParityStopbit1.sv
+  `include UartSample16BaudRate19200Datatype5NoParityStopbit2.sv
+  `include UartSample16BaudRate19200Datatype6NoParityStopbit1.SV
+  `include UartSample16BaudRate19200Datatype6NoParityStopbit2.sv
+  `include UartSample16BaudRate19200Datatype7NoParityStopbit1.sv
+  `include UartSample16BaudRate19200Datatype7NoParityStopbit2.sv
+  `include UartSample16BaudRate19200Datatype8NoParityStopbit1.sv
+  `include UartSample16BaudRate19200Datatype8NoParityStopbit2.sv
+  `include UartSample16BaudRate4800Datatype5NoParityStopbit1.sv
+  `include UartSample16BaudRate4800Datatype5NoParityStopbit2.sv
+  `include UartSample16BaudRate4800Datatype6NoParityStopbit1.sv
+  `include UartSample16BaudRate4800Datatype6NoParityStopbit2.sv
+  `include UartSample16BaudRate4800Datatype7NoParityStopbit1.sv
+  `include UartSample16BaudRate4800Datatype7NoParityStopbit2.sv
+  `include UartSample16BaudRate4800Datatype8NoParityStopbit1.sv
+  `include UartSample16BaudRate4800Datatype8NoParityStopbit2.sv
+  `include UartSample16BaudRate9600Datatype5NoParityStopbit1.sv
+  `include UartSample16BaudRate9600Datatype5NoParityStopbit2.sv
+  `include UartSample16BaudRate9600Datatype6NoParityStopbit1.sv
+  `include UartSample16BaudRate9600Datatype6NoParityStopbit2.sv
+  `include UartSample16BaudRate9600Datatype7NoParityStopbit1.sv
+  `include UartSample16BaudRate9600Datatype7NoParityStopbit2.sv
+  `include UartSample16BaudRate9600Datatype8NoParityStopbit1.sv
+  `include UartSample16BaudRate9600Datatype8NoParityStopbit2.sv
+  
+  //   Error Test cases  
   `include "UartBreakingErrorTest.sv"
+  `include "UartEvenParityWithErrorTest.sv"
+  `include "UartOddParityWithErrorTest.sv"
 endpackage : UartBaseTestPkg
 `endif
