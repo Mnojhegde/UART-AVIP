@@ -138,7 +138,7 @@ interface UartRxDriverBfm (input  bit clk,
   //  This task will drive the data from bfm to proxy using converters
   //--------------------------------------------------------------------------------------------
 
-  task DriveToBfm(inout uartRxPacketStruct uartRxPacketStruct , inout UartConfigStruct uartConfigStruct);  
+	task DriveToBfm(inout UartRxPacketStruct uartRxPacketStruct , inout UartConfigStruct uartConfigStruct);  
      SampleData(uartRxPacketStruct , uartConfigStruct);
   endtask: DriveToBfm
 
