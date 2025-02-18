@@ -46,14 +46,14 @@ function void UartFramingErrorNoParityTest :: build_phase(uvm_phase phase);
 // uartEnvConfig.uartTxAgentConfig.uartDataType = SEVEN_BIT;
 // uartEnvConfig.uartTxAgentConfig.uartStopBit = ONE_BIT;
   uartEnvConfig.uartTxAgentConfig.hasParity = PARITY_DISABLED;
-  uartEnvConfig.uartTxAgentCpnfig.framingErrorInjection = 1;
+  uartEnvConfig.uartTxAgentConfig.framingErrorInjection = 1;
 
 //  uartEnvConfig.uartRxAgentConfig.uartOverSamplingMethod = OVERSAMPLING_16;
 //  uartEnvConfig.uartRxAgentConfig.uartBaudRate =   BAUD_19200;
 //  uartEnvConfig.uartRxAgentConfig.uartDataType = SEVEN_BIT;
 //  uartEnvConfig.uartRxAgentConfig.uartStopBit = ONE_BIT;
   uartEnvConfig.uartRxAgentConfig.hasParity = PARITY_DISABLED;
-  uartEnvConfig.uartRxAgentCpnfig.framingErrorInjection = 1;
+  uartEnvConfig.uartRxAgentConfig.framingErrorInjection = 1;
 
 endfunction  : build_phase
    
