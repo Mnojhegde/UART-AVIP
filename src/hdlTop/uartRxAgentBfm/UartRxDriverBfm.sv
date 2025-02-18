@@ -143,7 +143,7 @@ interface UartRxDriverBfm (input  bit clk,
   endtask: DriveToBfm
 
 
-  task evenParityCompute(input UartConfigStruct uartConfigStruct,input uartRxPacketStruct uartRxPacketStruct,output rx);
+  task evenParityCompute(input UartConfigStruct uartConfigStruct,input UartRxPacketStruct uartRxPacketStruct,output rx);
      case(uartConfigStruct.uartDataType)
 	FIVE_BIT: rx = ^(uartRxPacketStruct.receivingData[4:0]);
 	SIX_BIT :rx = ^(uartRxPacketStruct.receivingData[5:0]);
@@ -152,7 +152,7 @@ interface UartRxDriverBfm (input  bit clk,
      endcase
   endtask 
 
- task oddParityCompute(input UartConfigStruct uartConfigStruct,input uartRxPacketStruct uartRxPacketStruct,output rx);
+  task oddParityCompute(input UartConfigStruct uartConfigStruct,input UartRxPacketStruct uartRxPacketStruct,output rx);
      case(uartConfigStruct.uartDataType)
 	FIVE_BIT: rx = ~^(uartRxPacketStruct.receivingData[4:0]);
 	SIX_BIT :rx = ~^(uartRxPacketStruct.receivingData[5:0]);
@@ -167,7 +167,7 @@ interface UartRxDriverBfm (input  bit clk,
   //  This task will send the data to the uart interface based on oversampling_clk
   //--------------------------------------------------------------------------------------------
   
- task SampleData(inout uartRxPacketStruct uartRxPacketStruct , inout UartConfigStruct uartConfigStruct);
+  task SampleData(inout UartRxPacketStruct uartRxPacketStruct , inout UartConfigStruct uartConfigStruct);
     repeat(1) @(posedge baudClk);
         // driving start bit 
 	if(uartConfigStruct.OverSampledBaudFrequencyClk ==1)begin 
