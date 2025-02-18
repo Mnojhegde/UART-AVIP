@@ -201,11 +201,11 @@ endtask : compareTxRx
   $display("----------------------------------------------------------------------------------------------------------------------------------------");
   `uvm_info(get_type_name(), $sformatf("\nPacket %0d Summary:\n TransmissionData:%b\n RecievingData:%b\n %0s\n %0s\n %0s\n %0s\n %0s\n",uartNoOfPacketsStruct[i].packetNum,uartNoOfPacketsStruct[i].transmissionData,uartNoOfPacketsStruct[i].receivingData,uartNoOfPacketsStruct[i].match?"Packet matched":"Packet mismatched", uartNoOfPacketsStruct[i].parity?"Parity match":"Parity mismatch",uartNoOfPacketsStruct[i].parityError?"Parity Error":"No Parity Error",uartNoOfPacketsStruct[i].breakingError?"Breaking Error":"No Breaking Error",uartNoOfPacketsStruct[i].framingError?"Framing Error":"No Framing Error"), UVM_LOW)
 
-  /*foreach(tempStruct.errorBitNo[i])
+  foreach(tempStruct.errorBitNo[i])
    begin
     if(tempStruct.errorBitNo != 0)
       $display("Bit %0b :",tempStruct.errorBitNo[i]);
-   end*/
+   end
   $display("----------------------------------------------------------------------------------------------------------------------------------------");
   end
 endtask */
