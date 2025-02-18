@@ -1,7 +1,7 @@
 `ifndef UARTSAMPLE13BAUDRATE4800DATATYPE7NOPARITYSTOPBIT1_INCLUDED_
 `define UARTSAMPLE13BAUDRATE4800DATATYPE7NOPARITYSTOPBIT1_INCLUDED_
 //--------------------------------------------------------------------------------------------
-// Class:UartSample13BaudRate4800Datatype7NoParityStopbit1.
+// Class:UartSample13BaudRate4800Datatype7NoParityStopbit1
 // A test for 13 sampling condition
 //--------------------------------------------------------------------------------------------
 class UartSample13BaudRate4800Datatype7NoParityStopbit1 extends UartBaseTest;
@@ -22,7 +22,7 @@ endclass :UartSample13BaudRate4800Datatype7NoParityStopbit1
 //
 // parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
-     function UartSample13BaudRate4800Datatype7NoParityStopbit1.:: new(string name ="UartSample13BaudRate4800Datatype7NoParityStopbit1." , uvm_component parent = null);
+     function UartSample13BaudRate4800Datatype7NoParityStopbit1:: new(string name ="UartSample13BaudRate4800Datatype7NoParityStopbit1" , uvm_component parent = null);
   super.new(name,parent);
 endfunction  : new
 //--------------------------------------------------------------------------------------------
@@ -32,7 +32,7 @@ endfunction  : new
 // Parameters:
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
-function void UartSample13BaudRate4800Datatype7NoParityStopbit1. :: build_phase(uvm_phase phase);
+function void UartSample13BaudRate4800Datatype7NoParityStopbit1 :: build_phase(uvm_phase phase);
   super.build_phase(phase);
   uartEnvConfig.uartTxAgentConfig.uartOverSamplingMethod =OVERSAMPLING_13;
   uartEnvConfig.uartTxAgentConfig.uartBaudRate = BAUD_4800;
@@ -55,7 +55,7 @@ endfunction  : build_phase
 // Parameters:
 // phase - stores the current phase
 //------------------------------------------------------------------------------------------
-task UartSample13BaudRate4800Datatype7NoParityStopbit1.:: run_phase(uvm_phase phase);
+task UartSample13BaudRate4800Datatype7NoParityStopbit1:: run_phase(uvm_phase phase);
   super.run_phase(phase);
   endtask : run_phase
 `endif
