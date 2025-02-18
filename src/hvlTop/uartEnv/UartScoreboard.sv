@@ -66,7 +66,6 @@ class UartScoreboard extends uvm_scoreboard;
   extern virtual function void connect_phase(uvm_phase phase);
   extern virtual task run_phase(uvm_phase phase);
   extern task compareTxRx(UartTxTransaction uartTxTransaction,UartRxTransaction uartRxTransaction);
-  //extern task packetSummary();
   extern function void report_phase(uvm_phase phase);
 
  endclass : UartScoreboard
@@ -195,20 +194,6 @@ task UartScoreboard :: compareTxRx(UartTxTransaction uartTxTransaction,UartRxTra
             `uvm_info(get_type_name(),$sformatf("\n transmissionData:%b\n receivingData:%b\n tx parity:%0b rx parity:%0b\n tx framingError:%0b rx framingError:%0b\n tx parityError:%0b rx parityError:%0b\n tx breakingError:%0b rx breakingError:%0b",uartTxTransaction.transmissionData,uartRxTransaction.receivingData,uartTxTransaction.parity,uartRxTransaction.parity,uartTxTransaction.framingError,uartRxTransaction.framingError,uartTxTransaction.parityError,uartRxTransaction.parityError,uartTxTransaction.breakingError,uartRxTransaction.breakingError),UVM_LOW)
 
 endtask : compareTxRx
-
-/*task UartScoreboard::packetSummary();
-  foreach (uartNoOfPacketsStruct[i]) begin
-  $display("----------------------------------------------------------------------------------------------------------------------------------------");
-  `uvm_info(get_type_name(), $sformatf("\nPacket %0d Summary:\n TransmissionData:%b\n RecievingData:%b\n %0s\n %0s\n %0s\n %0s\n %0s\n",uartNoOfPacketsStruct[i].packetNum,uartNoOfPacketsStruct[i].transmissionData,uartNoOfPacketsStruct[i].receivingData,uartNoOfPacketsStruct[i].match?"Packet matched":"Packet mismatched", uartNoOfPacketsStruct[i].parity?"Parity match":"Parity mismatch",uartNoOfPacketsStruct[i].parityError?"Parity Error":"No Parity Error",uartNoOfPacketsStruct[i].breakingError?"Breaking Error":"No Breaking Error",uartNoOfPacketsStruct[i].framingError?"Framing Error":"No Framing Error"), UVM_LOW)
-
-  foreach(tempStruct.errorBitNo[i])
-   begin
-    if(tempStruct.errorBitNo != 0)
-      $display("Bit %0b :",tempStruct.errorBitNo[i]);
-   end
-  $display("----------------------------------------------------------------------------------------------------------------------------------------");
-  end
-endtask */
 
 function void UartScoreboard:: report_phase(uvm_phase phase);
   super.report_phase(phase);
