@@ -68,7 +68,7 @@ endfunction  : build_phase
 // phase - stores the current phase
 //------------------------------------------------------------------------------------------
 task UartBreakingErrorTest:: run_phase(uvm_phase phase);
-  uartVirtualTransmissionSequenceWithPattern = UartVirtualBaseSequence :: type_id :: create("uartVirtualTransmissionSequenceWithPattern");
+  uartVirtualTransmissionSequenceWithPattern = UartVirtualTransmissionSequenceWithPattern :: type_id :: create("uartVirtualTransmissionSequenceWithPattern");
   phase.raise_objection(this);
    uartVirtualTransmissionSequenceWithPattern.start(uartEnv.uartVirtualSequencer);
    #100000;
