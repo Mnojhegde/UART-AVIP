@@ -55,7 +55,7 @@ interface UartRxDriverBfm (input  bit clk,
   UartRxDriverProxy uartRxDriverProxy;
 
  // variable for data transfer state
-  UartReceiverStateEnum uartReceiverState;
+  UartTransmitterStateEnum uartTransmitterState;
    
   //-------------------------------------------------------
   // Used to display the name of the interface
@@ -126,10 +126,10 @@ interface UartRxDriverBfm (input  bit clk,
    task WaitForReset();
       @(negedge reset);
 	  `uvm_info(name,$sformatf("RESET DETECTED"),UVM_LOW);
-	   uartReceiverState = RESET;
+	   uartTransmitterState = RESET;
 	   rx = 1; //DRIVE THE UART TO IDEAL STATE
 	   @(posedge reset);
-	   uartReceiverState = IDLE;
+	   uartTransmitterState = IDLE;
 	  `uvm_info(name,$sformatf("RESET DEASSERTED"),UVM_LOW);
    endtask: WaitForReset
   
@@ -172,13 +172,13 @@ interface UartRxDriverBfm (input  bit clk,
         // driving start bit 
 	if(uartConfigStruct.OverSampledBaudFrequencyClk ==1)begin 
 	    rx = START_BIT;
-	    uartReceiverState = STARTBIT;
+	    uartTransmitterState = STARTBIT;
 
             // driving data bits 
 	    for( int i=0 ; i< uartConfigStruct.uartDataType ; i++) begin
 		repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 	        rx = uartRxPacketStruct.receivingData[i];
-	        uartReceiverState = uartReceiverStateEnum'(i + 3);
+	        uartTransmitterState = UartTransmitterStateEnum'(i + 3);
 	    end
 
             // driving parity bit
@@ -187,24 +187,24 @@ interface UartRxDriverBfm (input  bit clk,
 	        if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
 			repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 		  	    evenParityCompute(uartConfigStruct,uartRxPacketStruct,rx);
-			    uartReceiverState = PARITYBIT;
+			    uartTransmitterState = PARITYBIT;
 	        end
 	        else if (uartConfigStruct.uartParityType == ODD_PARITY) begin 
 		   repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 		     oddParityCompute(uartConfigStruct,uartRxPacketStruct,rx);
-		     uartReceiverState = PARITYBIT;
+		     uartTransmitterState = PARITYBIT;
 	        end 
 	      end
 	      else begin 
 	        if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
 		   repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 	             oddParityCompute(uartConfigStruct,uartRxPacketStruct,rx);
-		     uartReceiverState = PARITYBIT;
+		     uartTransmitterState = PARITYBIT;
 	        end 
 	        else if(uartConfigStruct.uartParityType == ODD_PARITY) begin
 		   repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 		      evenParityCompute(uartConfigStruct,uartRxPacketStruct,rx);
-		      uartReceiverState = PARITYBIT;
+		      uartTransmitterState = PARITYBIT;
 	      	end 
 	      end 
 	    end
@@ -213,23 +213,23 @@ interface UartRxDriverBfm (input  bit clk,
 		repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 		  if(uartConfigStruct.uartFramingErrorInjection == 0 && uartConfigStruct.uartBreakingErrorInjection == 0)begin 
 	    	      rx = STOP_BIT;  
-	    	      uartReceiverState = STOPBIT;
+	    	      uartTransmitterState = STOPBIT;
 		      repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
-	   		uartReceiverState = IDLE;
+	   		uartTransmitterState = IDLE;
 	          end 
 		  else if(uartConfigStruct.uartFramingErrorInjection == 1 && uartConfigStruct.uartBreakingErrorInjection == 0) begin
 	    	      rx='b x;
-		      uartReceiverState = STOPBIT;
+		      uartTransmitterState = STOPBIT;
 		      repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 			 rx=1;
-			 uartReceiverState = IDLE;
+			 uartTransmitterState = IDLE;
 	          end
 		  else if(uartConfigStruct.uartBreakingErrorInjection == 1)begin 
 	    	      rx = 'b 0;  
-	    	      uartReceiverState = STOPBIT;
+	    	      uartTransmitterState = STOPBIT;
 		      repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 		        rx=1;
-	   		uartReceiverState = IDLE;
+	   		uartTransmitterState = IDLE;
 	            end 
 	        end
 		
@@ -237,13 +237,13 @@ interface UartRxDriverBfm (input  bit clk,
 		 // driving start bit
 	           @(posedge baudClk);
 	             rx =START_BIT;
-	             uartReceiverState = STARTBIT;
+	             uartTransmitterState = STARTBIT;
 
 		 // driving data bits
 	            for( int i=0 ; i< uartConfigStruct.uartDataType ; i++) begin
 	               @(posedge baudClk)
 	                  rx = uartRxPacketStruct.receivingData[i];
-			  uartReceiverState = uartReceiverStateEnum'(i+3);
+			  uartTransmitterState = UartTransmitterStateEnum'(i+3);
 	             end 
 
 		 // driving parity bit
@@ -273,7 +273,7 @@ interface UartRxDriverBfm (input  bit clk,
 	   // driving stop bit
 	    @(posedge baudClk)
 	      rx =STOP_BIT;
-	      uartReceiverState = STOPBIT;
+	      uartTransmitterState = STOPBIT;
 	  end 
 	endtask
 
