@@ -1,5 +1,5 @@
 QuestaSim vlog 10.6c Compiler 2017.07 Jul 25 2017
-Start time: 11:56:43 on Feb 12,2025
+Start time: 09:10:47 on Feb 18,2025
 vlog -sv "+acc" "+cover" "+fcover" -l UartCompile.log -f ../UartCompile.f 
 -- Compiling package UartGlobalPkg
 -- Compiling package UartTxPkg
@@ -12,6 +12,7 @@ vlog -sv "+acc" "+cover" "+fcover" -l UartCompile.log -f ../UartCompile.f
 -- Compiling package UartRxSequencePkg
 -- Importing package UartRxPkg
 -- Compiling package UartEnvPkg
+** Warning: ../../src/hvlTop/uartEnv/UartScoreboard.sv(215): (vlog-2875) Task "packetSummary" is being called in function "report_phase".
 -- Compiling package UartVirtualSequencePkg
 -- Importing package UartEnvPkg
 -- Importing package UartTxSequencePkg
@@ -64,5 +65,5 @@ vlog -sv "+acc" "+cover" "+fcover" -l UartCompile.log -f ../UartCompile.f
 Top level modules:
 	HdlTop
 	HvlTop
-End time: 11:56:46 on Feb 12,2025, Elapsed time: 0:00:03
-Errors: 0, Warnings: 0
+End time: 09:10:50 on Feb 18,2025, Elapsed time: 0:00:03
+Errors: 0, Warnings: 1

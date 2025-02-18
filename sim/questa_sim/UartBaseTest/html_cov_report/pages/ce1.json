@@ -1,0 +1,48 @@
+var g_data = {
+c92:[{dummy:0}
+,{anchor:'cvg104',cr:'m',items:[{s:'3',x:'FC',z:'((uartConfigStruct.uartFramingErrorInjection == 0) && (uartConfigStruct.uartBreakingErrorInjection == 0))',c:'R',p:'0.00',d:'0',F:'1'}
+,{}
+,{z:'(uartConfigStruct.uartFramingErrorInjection == 0)',c:'r',r:'\'_0\' not hit',i:'Hit \'_0\''}
+,{z:'(uartConfigStruct.uartBreakingErrorInjection == 0)',c:'r',r:'\'_0\' not hit',i:'Hit \'_0\''}
+,{}
+,{n:'1',z:'(uartConfigStruct.uartFramingErrorInjection == 0)_0',h1:'0',t:'c',c1:'-'}
+,{n:'2',z:'(uartConfigStruct.uartFramingErrorInjection == 0)_1',h1:'1',t:'c',c1:'(uartConfigStruct.uartBreakingErrorInjection == 0)'}
+,{n:'3',z:'(uartConfigStruct.uartBreakingErrorInjection == 0)_0',h1:'0',t:'c',c1:'(uartConfigStruct.uartFramingErrorInjection == 0)'}
+,{n:'4',z:'(uartConfigStruct.uartBreakingErrorInjection == 0)_1',h1:'1',t:'c',c1:'(uartConfigStruct.uartFramingErrorInjection == 0)'}
+]}
+,{anchor:'cvg106',cr:'m',items:[{s:'3',x:'FC',z:'((uartConfigStruct.uartFramingErrorInjection == 1) && (uartConfigStruct.uartBreakingErrorInjection == 0))',c:'R',p:'0.00',d:'0',F:'1'}
+,{}
+,{z:'(uartConfigStruct.uartFramingErrorInjection == 1)',c:'r',r:'No hits',i:'Hit \'_0\' and \'_1\''}
+,{z:'(uartConfigStruct.uartBreakingErrorInjection == 0)',c:'r',r:'No hits',i:'Hit \'_0\' and \'_1\''}
+,{}
+,{n:'1',z:'(uartConfigStruct.uartFramingErrorInjection == 1)_0',h1:'0',t:'c',c1:'-'}
+,{n:'2',z:'(uartConfigStruct.uartFramingErrorInjection == 1)_1',h1:'0',t:'c',c1:'(uartConfigStruct.uartBreakingErrorInjection == 0)'}
+,{n:'3',z:'(uartConfigStruct.uartBreakingErrorInjection == 0)_0',h1:'0',t:'c',c1:'(uartConfigStruct.uartFramingErrorInjection == 1)'}
+,{n:'4',z:'(uartConfigStruct.uartBreakingErrorInjection == 0)_1',h1:'0',t:'c',c1:'(uartConfigStruct.uartFramingErrorInjection == 1)'}
+]}
+],
+c2660:[{dummy:0}
+,{anchor:'cvg2672',cr:'m',items:[{s:'3',x:'FC',z:'((uartConfigStruct.uartFramingErrorInjection == 0) && (uartConfigStruct.uartBreakingErrorInjection == 0))',c:'R',p:'0.00',d:'0',F:'1'}
+,{}
+,{z:'(uartConfigStruct.uartFramingErrorInjection == 0)',c:'r',r:'\'_0\' not hit',i:'Hit \'_0\''}
+,{z:'(uartConfigStruct.uartBreakingErrorInjection == 0)',c:'r',r:'\'_0\' not hit',i:'Hit \'_0\''}
+,{}
+,{n:'1',z:'(uartConfigStruct.uartFramingErrorInjection == 0)_0',h1:'0',t:'c',c1:'-'}
+,{n:'2',z:'(uartConfigStruct.uartFramingErrorInjection == 0)_1',h1:'1',t:'c',c1:'(uartConfigStruct.uartBreakingErrorInjection == 0)'}
+,{n:'3',z:'(uartConfigStruct.uartBreakingErrorInjection == 0)_0',h1:'0',t:'c',c1:'(uartConfigStruct.uartFramingErrorInjection == 0)'}
+,{n:'4',z:'(uartConfigStruct.uartBreakingErrorInjection == 0)_1',h1:'1',t:'c',c1:'(uartConfigStruct.uartFramingErrorInjection == 0)'}
+]}
+,{anchor:'cvg2674',cr:'m',items:[{s:'3',x:'FC',z:'((uartConfigStruct.uartFramingErrorInjection == 1) && (uartConfigStruct.uartBreakingErrorInjection == 0))',c:'R',p:'0.00',d:'0',F:'1'}
+,{}
+,{z:'(uartConfigStruct.uartFramingErrorInjection == 1)',c:'r',r:'No hits',i:'Hit \'_0\' and \'_1\''}
+,{z:'(uartConfigStruct.uartBreakingErrorInjection == 0)',c:'r',r:'No hits',i:'Hit \'_0\' and \'_1\''}
+,{}
+,{n:'1',z:'(uartConfigStruct.uartFramingErrorInjection == 1)_0',h1:'0',t:'c',c1:'-'}
+,{n:'2',z:'(uartConfigStruct.uartFramingErrorInjection == 1)_1',h1:'0',t:'c',c1:'(uartConfigStruct.uartBreakingErrorInjection == 0)'}
+,{n:'3',z:'(uartConfigStruct.uartBreakingErrorInjection == 0)_0',h1:'0',t:'c',c1:'(uartConfigStruct.uartFramingErrorInjection == 1)'}
+,{n:'4',z:'(uartConfigStruct.uartBreakingErrorInjection == 0)_1',h1:'0',t:'c',c1:'(uartConfigStruct.uartFramingErrorInjection == 1)'}
+]}
+],
+dummyEnd:0
+};
+processCondExprData(g_data);
