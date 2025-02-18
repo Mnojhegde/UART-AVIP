@@ -9,9 +9,9 @@ import UartGlobalPkg::*;
 //  Used as the HDL driver for Uart
 //  It connects with the HVL driver_proxy for driving the stimulus
 //--------------------------------------------------------------------------------------------
-interface UartRxDriverBfm (input  bit   clk,
+interface UartRxDriverBfm (input  bit clk,
                            input  bit   reset,
-                           output  bit  rx
+                           output bit  rx
                            );
 
   //-------------------------------------------------------
@@ -39,19 +39,24 @@ interface UartRxDriverBfm (input  bit   clk,
   // clk used to sample the data
   bit oversamplingClk;
   
-  //Variable: baudRate
+  //Variable: count
   // Counter to keep track of clock cycles
-  reg [15:0] counter;  
+  int count = 0;  
   
-  //Variable: baudDivider
+  //Variable: baudDivisor
   //to Calculate baud rate divider
-  reg [15:0] baudDivider;
-  
+  int baudDivisor;
+
+  //Variable: counTbclk
+  //to count the no of baud clock cycles
+  int countbClk = 0;	
   
   //Creating the handle for the proxy_driver
   UartRxDriverProxy uartRxDriverProxy;
-   
 
+ // variable for data transfer state
+  UartReceiverStateEnum uartReceiverState;
+   
   //-------------------------------------------------------
   // Used to display the name of the interface
   //-------------------------------------------------------
@@ -65,139 +70,211 @@ interface UartRxDriverBfm (input  bit   clk,
   // this task will calculate the baud divider based on sys clk frequency
   //-------------------------------------------------------------------
 	
-    // task bauddivcalculation(input oversamplingmethod,input baudrate);
-    //   real clkPeriodStartTime; 
-    //   real clkPeriodStopTime;
-    //   real clkPeriod;
-    //   real clkFrequency;
-    //   int baudDivisor;
-    //   @(posedge clk);
-    //   clkPeriodStartTime = $realtime;
-    //   @(posedge clk);
-    //   clkPeriodStopTime = $realtime; 
-    //   clkPeriod = clkPeriodStopTime - clkPeriodStartTime;
-    //   clkFrequency = ( 10 **9 )/ clkPeriod;
+     task GenerateBaudClk(inout UartConfigStruct uartConfigStruct);
+       real clkPeriodStartTime; 
+       real clkPeriodStopTime;
+       real clkPeriod;
+       real clkFrequency;
+       int baudDivisor;
+       int count;
+       @(posedge clk);
+       clkPeriodStartTime = $realtime;
+       @(posedge clk);
+       clkPeriodStopTime = $realtime; 
+       clkPeriod = clkPeriodStopTime - clkPeriodStartTime;
+       clkFrequency = ( 10 **9 )/ clkPeriod;
 
-    //   baudDivisor = (clkFrequency)/(oversamplingmethod * baudrate); 
 
-    //   baudclkgenerator(baudDivisor);
-    // endtask
+       if(uartConfigStruct.OverSampledBaudFrequencyClk ==1)begin
+       baudDivisor = (clkFrequency)/(uartConfigStruct.uartOverSamplingMethod * uartConfigStruct.uartBaudRate); 
+      end 
+      else begin 
+        baudDivisor = (clkFrequency)/(uartConfigStruct.uartBaudRate);
+      end 
+        
+     BaudClkGenerator(baudDivisor);
 
+    endtask
+
+   
   //------------------------------------------------------------------
   // Task: baudclkgenerator
   // this task will generate baud clk based on baud divider
   //-------------------------------------------------------------------
 
-    // task baudclkgenerator(input int baudDivisor);
-    //   static int count=0;
-    //   forever begin 
-    //     @(posedge clk or negedge clk)
+  task Baudclkgenerator(input int baudDivisor);
+       static int count=0;
+       forever begin 
+        @(posedge clk or negedge clk)
     
-    //     if(count == (baudDivisor-1))begin 
-    //       count <= 0;
-    //       baudClk <= ~baudClk;
-    //     end 
-    //     else begin 
-    //       count <= count +1;
-    //     end   
-    //   end
-    // endtask
+         if(count == (baudDivisor-1))begin 
+           count <= 0;
+           baudClk <= ~baudClk;
+         end 
+         else begin 
+           count <= count +1;
+         end   
+    end
+ endtask
 
   
- //  //-------------------------------------------------------
+   //-------------------------------------------------------
   // Task: WaitForReset
   //  Waiting for the system reset
   //-------------------------------------------------------
 
-  // task WaitForReset();
-  // 	  @(negedge reset);
-	 //  `uvm_info(name,$sformatf("RESET DETECTED"),UVM_LOW);
-	 //   rx = 1; //DRIVE THE UART TO IDEAL STATE
-	 //  @(posedge reset);
-	 //  `uvm_info(name,$sformatf("RESET DEASSERTED"),UVM_LOW);
-  // endtask: WaitForReset
+   task WaitForReset();
+      @(negedge reset);
+	  `uvm_info(name,$sformatf("RESET DETECTED"),UVM_LOW);
+	   uartReceiverState = RESET;
+	   rx = 1; //DRIVE THE UART TO IDEAL STATE
+	   @(posedge reset);
+	   uartReceiverState = IDLE;
+	  `uvm_info(name,$sformatf("RESET DEASSERTED"),UVM_LOW);
+   endtask: WaitForReset
   
   //--------------------------------------------------------------------------------------------
   // Task: DriveToBfm
   //  This task will drive the data from bfm to proxy using converters
   //--------------------------------------------------------------------------------------------
 
- //  task DriveToBfm(inout UartRxPacketStruct uartRxPacketStruct);  
-	// `uvm_info(name,$sformatf("data_packet=\n%p",uartRxPacketStruct),UVM_HIGH);
- //    	`uvm_info(name,$sformatf("DRIVE TO BFM TASK"),UVM_HIGH);
-	//  fork
- //         BclkCounter(uartConfigStruct.uartOverSamplingMethod);   /* NEED TO UPDATE CONFIG CONVERTER IN DRIVER PROXY SIDE */
- //         SampleData(uartRxPacketStruct);
-	//  join
- //  endtask: DriveToBfm
+  task DriveToBfm(inout uartRxPacketStruct uartRxPacketStruct , inout UartConfigStruct uartConfigStruct);  
+     SampleData(uartRxPacketStruct , uartConfigStruct);
+  endtask: DriveToBfm
 
 
-   //--------------------------------------------------------------------------------------------
-  // Task: bclk_counter
-  //  This task will count the number of cycles of bclk and generate oversampling_clk to sample data
-  //--------------------------------------------------------------------------------------------
+  task evenParityCompute(input UartConfigStruct uartConfigStruct,input uartRxPacketStruct uartRxPacketStruct,output rx);
+     case(uartConfigStruct.uartDataType)
+	FIVE_BIT: rx = ^(uartRxPacketStruct.receivingData[4:0]);
+	SIX_BIT :rx = ^(uartRxPacketStruct.receivingData[5:0]);
+	SEVEN_BIT: rx = ^(uartRxPacketStruct.receivingData[6:0]);
+	EIGHT_BIT : rx = ^(uartRxPacketStruct.receivingData[7:0]);
+     endcase
+  endtask 
 
- //  task BclkCounter(input oversamplingmethod);
- //    static int countbClk = 0;
- //    forever begin
-	// @(posedge baudClk)
-	//     if(countbClk == (oversamplingmethod/2)-1) begin
- //      		oversamplingClk = ~oversamplingClk;
- //      		countbClk=0;
- //      	end
- //      	else begin
- //      	countbClk = countbClk+1;
- //      end
-    
- //    end
- //  endtask
+ task oddParityCompute(input UartConfigStruct uartConfigStruct,input uartRxPacketStruct uartRxPacketStruct,output rx);
+     case(uartConfigStruct.uartDataType)
+	FIVE_BIT: rx = ~^(uartRxPacketStruct.receivingData[4:0]);
+	SIX_BIT :rx = ~^(uartRxPacketStruct.receivingData[5:0]);
+	SEVEN_BIT: rx = ~^(uartRxPacketStruct.receivingData[6:0]);
+	EIGHT_BIT : rx = ~^(uartRxPacketStruct.receivingData[7:0]);
+     endcase
+ endtask
+  
   
   //--------------------------------------------------------------------------------------------
   // Task: sample_data
   //  This task will send the data to the uart interface based on oversampling_clk
   //--------------------------------------------------------------------------------------------
   
- //  task SampleData(inout UartRxPacketStruct uartRxPacketStruct);
- //     static int total_receiving = $size(uartRxPacketStruct.receivingData);
- //     for(int receiving_number=0 ; receiving_number < total_receiving; receiving_number++) begin 
- //        @(posedge oversamplingClk) 
- //        rx = START_BIT; 
-	// for( int i=0 ; i< uartConfigStruct.uartDataType ; i++) begin
-	//    @(posedge oversamplingClk)
-	//    rx = uartRxPacketStruct.receivingData[receiving_number][i];
-	// end
- //      	if(uartConfigStruct.uartParityEnable ==1) begin 
-	//    if(uartConfigStruct.uartParityType == EVEN_PARITY) begin
-	//       @(posedge oversamplingClk)
-	//          rx = ^(uartRxPacketStruct.receivingData[receiving_number]);
- //           end
-	// else if (uartConfigStruct.uartParityType == ODD_PARITY) begin 
-	//    @(posedge oversamplingClk)
-	//       rx =~^(uartRxPacketStruct.receivingData[receiving_number]);
- //        end 
- //      end 		 
- //      @(posedge oversamplingClk)
- //      rx = STOP_BIT;  
-	
- //    end 
- //  endtask
+ task SampleData(inout uartRxPacketStruct uartRxPacketStruct , inout UartConfigStruct uartConfigStruct);
+    repeat(1) @(posedge baudClk);
+        // driving start bit 
+	if(uartConfigStruct.OverSampledBaudFrequencyClk ==1)begin 
+	    rx = START_BIT;
+	    uartReceiverState = STARTBIT;
 
- //  //--------------------------------------------------------------------------------------------
- //  // Task: DeSerialization
- //  //  This task will convert the serial data obtained to parallel formate
- //  //--------------------------------------------------------------------------------------------
+            // driving data bits 
+	    for( int i=0 ; i< uartConfigStruct.uartDataType ; i++) begin
+		repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+	        rx = uartRxPacketStruct.receivingData[i];
+	        uartReceiverState = uartReceiverStateEnum'(i + 3);
+	    end
 
- //  task DeSerialization();
+            // driving parity bit
+	    if(uartConfigStruct.uartParityEnable ==1) begin 
+	      if(uartConfigStruct.uartParityErrorInjection==0) begin 
+	        if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
+			repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+		  	    evenParityCompute(uartConfigStruct,uartRxPacketStruct,rx);
+			    uartReceiverState = PARITYBIT;
+	        end
+	        else if (uartConfigStruct.uartParityType == ODD_PARITY) begin 
+		   repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+		     oddParityCompute(uartConfigStruct,uartRxPacketStruct,rx);
+		     uartReceiverState = PARITYBIT;
+	        end 
+	      end
+	      else begin 
+	        if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
+		   repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+	             oddParityCompute(uartConfigStruct,uartRxPacketStruct,rx);
+		     uartReceiverState = PARITYBIT;
+	        end 
+	        else if(uartConfigStruct.uartParityType == ODD_PARITY) begin
+		   repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+		      evenParityCompute(uartConfigStruct,uartRxPacketStruct,rx);
+		      uartReceiverState = PARITYBIT;
+	      	end 
+	      end 
+	    end
 
- //  endtask
+	    // driving stop bit
+		repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+		  if(uartConfigStruct.uartFramingErrorInjection == 0 && uartConfigStruct.uartBreakingErrorInjection == 0)begin 
+	    	      rx = STOP_BIT;  
+	    	      uartReceiverState = STOPBIT;
+		      repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+	   		uartReceiverState = IDLE;
+	          end 
+		  else if(uartConfigStruct.uartFramingErrorInjection == 1 && uartConfigStruct.uartBreakingErrorInjection == 0) begin
+	    	      rx='b x;
+		      uartReceiverState = STOPBIT;
+		      repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+			 rx=1;
+			 uartReceiverState = IDLE;
+	          end
+		  else if(uartConfigStruct.uartBreakingErrorInjection == 1)begin 
+	    	      rx = 'b 0;  
+	    	      uartReceiverState = STOPBIT;
+		      repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+		        rx=1;
+	   		uartReceiverState = IDLE;
+	            end 
+	        end
+		
+	         else if(uartConfigStruct.OverSampledBaudFrequencyClk ==0)begin
+		 // driving start bit
+	           @(posedge baudClk);
+	             rx =START_BIT;
+	             uartReceiverState = STARTBIT;
 
- //  //--------------------------------------------------------------------------------------------
- //  // Task: ExtractDataFrame
- //  //  This task will discards the start bit, parity bit, and stop bit from the packet to extract the data frame
- //  //--------------------------------------------------------------------------------------------
+		 // driving data bits
+	            for( int i=0 ; i< uartConfigStruct.uartDataType ; i++) begin
+	               @(posedge baudClk)
+	                  rx = uartRxPacketStruct.receivingData[i];
+			  uartReceiverState = uartReceiverStateEnum'(i+3);
+	             end 
 
- //  task ExtractDataFrame();
+		 // driving parity bit
+	            if(uartConfigStruct.uartParityEnable ==1) begin
+	               if(uartConfigStruct.uartParityErrorInjection==0) begin
+	                  if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
+		  	      @(posedge baudClk)
+		  		evenParityCompute(uartConfigStruct,uartRxPacketStruct,rx);
+			      end 
+			   else if(uartConfigStruct.uartParityType == ODD_PARITY) begin
+		  	      @(posedge baudClk)
+		  		oddParityCompute(uartConfigStruct,uartRxPacketStruct,rx);
+			   end 
+	  		end 
+	        else begin 
+	          if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
+		  	@(posedge baudClk)
+		  	   oddParityCompute(uartConfigStruct,uartRxPacketStruct,rx);
+	                end 
+		   else if(uartConfigStruct.uartParityType == ODD_PARITY) begin
+		  	@(posedge baudClk)
+		  	   evenParityCompute(uartConfigStruct,uartRxPacketStruct,rx);
+			end 
+	  	    end 
+	        end 
 
- //  endtask
+	   // driving stop bit
+	    @(posedge baudClk)
+	      rx =STOP_BIT;
+	      uartReceiverState = STOPBIT;
+	  end 
+	endtask
 
 endinterface : UartRxDriverBfm
