@@ -26,7 +26,6 @@ class UartTxAgentConfig extends uvm_object;
   bit patternNeeded;
   logic[DATA_WIDTH-1:0]patternToTransmit;
   bit OverSampledBaudFrequencyClk;  
-  bit uartStartBitDetectionStart=1;
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
