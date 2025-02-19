@@ -22,6 +22,7 @@ function void UartTxConfigConverter :: from_Class(input UartTxAgentConfig uartTx
   uartConfigStruct.uartFramingErrorInjection = uartTxAgentConfig.framingErrorInjection;
   uartConfigStruct.uartBreakingErrorInjection = uartTxAgentConfig.breakingErrorInjection;
   uartConfigStruct.OverSampledBaudFrequencyClk = uartTxAgentConfig.OverSampledBaudFrequencyClk;
+  uartConfigStruct.uartStopBit = uartTxAgentConfig.uartStopBit;
 endfunction : from_Class
 
 
