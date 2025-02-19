@@ -19,7 +19,7 @@ interface UartTxMonitorBfm (input  logic   clk,
   //baud clock for uart transmisson/reception
 	bit baudClk;
 
-	logic [DATA_WIDTH+2 : 0]concatData;
+	logic [DATA_WIDTH+3 : 0]concatData;
 	int numOfZeroes;
 	int breakZeroCount;
 
@@ -130,42 +130,48 @@ interface UartTxMonitorBfm (input  logic   clk,
 					// sampling data bits 
 					for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
           	repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk); begin
-						uartTxPacketStruct.transmissionData[i] = tx;
-			      concatData={concatData,tx};
-						uartTransmitterState = UartTransmitterStateEnum'(i+3);
-          end
-        end
+							uartTxPacketStruct.transmissionData[i] = tx;
+							concatData={concatData,tx};
+							uartTransmitterState = UartTransmitterStateEnum'(i+3);
+          	end
+        	end
 
-				// sampling parity bit 
-        if(uartConfigStruct.uartParityEnable ==1) begin
-        	repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
-					$display("PARITY IS ASSSIGNED AT %t",$time);
-					uartTxPacketStruct.parity = tx;
-					concatData={concatData,tx};
-					uartTransmitterState = PARITYBIT;
-					parityCheck(uartConfigStruct,uartTxPacketStruct,tx);
-      	end
-		$display("OUTSIDE PARITY GEN IS %t",$time);
-				// sampling stop bit	
-        repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
-					concatData={concatData,tx};
-					stopBitCheck(uartTxPacketStruct,uartConfigStruct,tx);
-					$display("STOP BIT IS BEING ASSIGNED IN  MONITOR AT %t",$time);
+					// sampling parity bit 
+        	if(uartConfigStruct.uartParityEnable ==1) begin
+        		repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+						uartTxPacketStruct.parity = tx;
+						concatData={concatData,tx};
+						uartTransmitterState = PARITYBIT;
+						parityCheck(uartConfigStruct,uartTxPacketStruct,tx);
+	      	end
+					
+					// sampling stop bit	
+	        repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+						concatData={concatData,tx};
+						stopBitCheck(uartTxPacketStruct,uartConfigStruct,tx);
+						
+						if(uartConfigStruct.uartStopBit == 2) begin
+							repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+							if(tx==1) begin
+								concatData={concatData,tx};
+								stopBitCheck(uartTxPacketStruct,uartConfigStruct,tx);
+							end
+						end
+	
 					numOfZeroes=$countones(~(concatData));
-					breakZeroCount=uartConfigStruct.uartParityEnable ? (uartConfigStruct.uartDataType)+3 :(uartConfigStruct.uartDataType)+2;
-					$display("THE NUMBER OF ZEROES IS %0d",numOfZeroes);
+					if(uartConfigStruct.uartStopBit == 2)
+						breakZeroCount=uartConfigStruct.uartParityEnable ? (uartConfigStruct.uartDataType)+4 :(uartConfigStruct.uartDataType)+3;
+					else
+						breakZeroCount=uartConfigStruct.uartParityEnable ? (uartConfigStruct.uartDataType)+3 :(uartConfigStruct.uartDataType)+2;
 					if(numOfZeroes == breakZeroCount)
 						uartTxPacketStruct.breakingError =1;
 				  else 
 						uartTxPacketStruct.breakingError =0;
 
-
-					$display("THE BREAKING ERROR IS %b",uartTxPacketStruct.breakingError);
 					repeat(uartConfigStruct.uartOverSamplingMethod/2) @(posedge baudClk);
 					concatData = 'b x;
 					numOfZeroes =0;
 					uartTransmitterState = IDLE;
-					
         end
 		
         else if(uartConfigStruct.OverSampledBaudFrequencyClk==0)begin
