@@ -152,7 +152,7 @@ interface UartRxMonitorBfm (input  logic   clk,
 					repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 					if(rx==1) begin
 						concatData={concatData,rx};
-						stopBitCheck(uartTxPacketStruct,uartConfigStruct,rx);
+						stopBitCheck(uartRxPacketStruct,uartConfigStruct,rx);
 					end
 				end
 				
