@@ -95,8 +95,10 @@ function void UartScoreboard :: build_phase(uvm_phase phase);
   uartScoreboardTxAnalysisFifo = new("uartScoreboardTxAnalysisFifo",this);
   uartScoreboardRxAnalysisFifo = new("uartScoreboardRxAnalysisFifo",this);
 
-  uvm_config_db #(UartTxAgentConfig) :: get(this,"","uartTxAgentConfig",uartTxAgentConfig);
-  uvm_config_db #(UartRxAgentConfig) :: get(this,"","uartRxAgentConfig",uartRxAgentConfig);
+ if(!uvm_config_db #(UartTxAgentConfig) :: get(this,"","uartTxAgentConfig",uartTxAgentConfig))
+   `uvm_fatal ("No vif", {"Config_db Error:", get_full_name (), ".vif"});
+ if(!uvm_config_db #(UartRxAgentConfig) :: get(this,"","uartRxAgentConfig",uartRxAgentConfig))
+   `uvm_fatal ("No vif", {"Config_db Error:", get_full_name (), ".vif"});
 
 endfunction : build_phase
 
@@ -167,22 +169,35 @@ task UartScoreboard :: compareTxRx(UartTxTransaction uartTxTransaction,UartRxTra
                  end
              end
 
-          if(~(uartTxTransaction.parityError || uartRxTransaction.parityError))
+           else
+            begin
+              `uvm_info(get_type_name(),$sformatf("No parity"),UVM_LOW)
+            end
+
+          if(uartTxTransaction.parityError || uartRxTransaction.parityError)
              begin
                `uvm_error(get_type_name(),$sformatf("Breaking Error Occured"))
              end
 
-          if(~(uartTxTransaction.framingError || uartRxTransaction.framingError))
+          if(uartTxTransaction.framingError || uartRxTransaction.framingError)
              begin
                `uvm_error(get_type_name(),$sformatf("Framing Error Occured"))
              end
 
-          if(~(uartTxTransaction.breakingError || uartRxTransaction.breakingError))
+          if(uartTxTransaction.breakingError || uartRxTransaction.breakingError)
              begin
                `uvm_error(get_type_name(),$sformatf("Breaking Error Occured"))
              end
 
+          else
+            begin
+              `uvm_info(get_type_name(),$sformatf("PACKET MATCH SUCCESSFUL"),UVM_LOW)
+            end
+
             packetCount++;
+            `uvm_info(get_type_name(),$sformatf("\n transmissionData:%b\n receivingData:%b\n tx parity:%0b rx parity:%0b\n tx framingError:%0b rx framingError:%0b\n tx parityError:%0b rx parityError:%0b\n tx breakingError:%0b rx breakingError:%0b",uartTxTransaction.transmissionData,uartRxTransaction.receivingData,uartTxTransaction.parity,uartRxTransaction.parity,uartTxTransaction.framingError,uartRxTransaction.framingError,uartTxTransaction.parityError,uartRxTransaction.parityError,uartTxTransaction.breakingError,uartRxTransaction.breakingError),UVM_LOW)
+
+
 
             tempStruct = '{packetNum: packetCount,
                            transmissionData: uartTxTransaction.transmissionData,
@@ -194,9 +209,6 @@ task UartScoreboard :: compareTxRx(UartTxTransaction uartTxTransaction,UartRxTra
                            framingError: uartTxTransaction.framingError || uartRxTransaction.framingError,
                            errorBitNo: tempStruct.errorBitNo};
             uartNoOfPacketsStruct.push_back(tempStruct);
-
-            `uvm_info(get_type_name(),$sformatf("SUCCESSFUL DATA MATCH"),UVM_LOW)
-            `uvm_info(get_type_name(),$sformatf("\n transmissionData:%b\n receivingData:%b\n tx parity:%0b rx parity:%0b\n tx framingError:%0b rx framingError:%0b\n tx parityError:%0b rx parityError:%0b\n tx breakingError:%0b rx breakingError:%0b",uartTxTransaction.transmissionData,uartRxTransaction.receivingData,uartTxTransaction.parity,uartRxTransaction.parity,uartTxTransaction.framingError,uartRxTransaction.framingError,uartTxTransaction.parityError,uartRxTransaction.parityError,uartTxTransaction.breakingError,uartRxTransaction.breakingError),UVM_LOW)
 
 endtask : compareTxRx
 
