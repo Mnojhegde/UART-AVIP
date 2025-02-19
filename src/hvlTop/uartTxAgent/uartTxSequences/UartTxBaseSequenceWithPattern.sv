@@ -7,7 +7,7 @@ class UartTxBaseSequenceWithPattern extends uvm_sequence#(UartTxTransaction);
   extern function new(string name = "UartTxBaseSequenceWithPattern");
   extern virtual task body();
   rand int packetsNeeded;
-rand logic[DATA_WIDTH-1:0]patternToTransmit;
+  rand logic[DATA_WIDTH-1:0]patternToTransmit;
 endclass : UartTxBaseSequenceWithPattern
 
 function  UartTxBaseSequenceWithPattern :: new(string name= "UartTxBaseSequenceWithPattern");
@@ -16,15 +16,13 @@ endfunction : new
 
 task UartTxBaseSequenceWithPattern :: body();
   super.body();
- 
   req = UartTxTransaction :: type_id :: create("req");
   repeat(packetsNeeded)begin 
-  start_item(req);
+    start_item(req);
     if(!(req.randomize() with{transmissionData == patternToTransmit;}))
-   `uvm_fatal("[tx sequence]","randomization failed")
-
-  req.print();
-  finish_item(req);
+      `uvm_fatal("[tx sequence]","randomization failed")
+    req.print();
+    finish_item(req);
   end 
 endtask : body
  
