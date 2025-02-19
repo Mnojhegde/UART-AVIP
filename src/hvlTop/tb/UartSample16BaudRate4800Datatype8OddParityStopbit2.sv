@@ -63,7 +63,7 @@ endfunction  : build_phase
 // Parameters:
 // phase - stores the current phase
 //--------------------------------------------------------------------------------------------
- task UartSample16BaudRate4800Datatype8OddParityStopbit1 :: run_phase(uvm_phase phase);
+ task UartSample16BaudRate4800Datatype8OddParityStopbit2 :: run_phase(uvm_phase phase);
     super.run_phase(phase);
 endtask : run_phase
 
