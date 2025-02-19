@@ -152,8 +152,8 @@ interface UartTxMonitorBfm (input  logic   clk,
 						
 						if(uartConfigStruct.uartStopBit == 2) begin
 							repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
-							if(tx==1) begin
-								concatData={concatData,tx};
+							concatData={concatData,tx};
+							if(uartTxPacketStruct.framingError == 0) begin
 								stopBitCheck(uartTxPacketStruct,uartConfigStruct,tx);
 							end
 						end
