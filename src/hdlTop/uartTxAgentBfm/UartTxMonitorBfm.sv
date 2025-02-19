@@ -163,7 +163,6 @@ interface UartTxMonitorBfm (input  logic   clk,
 						breakZeroCount=uartConfigStruct.uartParityEnable ? (uartConfigStruct.uartDataType)+4 :(uartConfigStruct.uartDataType)+3;
 					else
 						breakZeroCount=uartConfigStruct.uartParityEnable ? (uartConfigStruct.uartDataType)+3 :(uartConfigStruct.uartDataType)+2;
-					$display("******* N.O.Z=%0d ******** B.Z.C.=%0d **************",numOfZeroes,breakZeroCount);
 					if(numOfZeroes == breakZeroCount)
 						uartTxPacketStruct.breakingError =1;
 				  else 
