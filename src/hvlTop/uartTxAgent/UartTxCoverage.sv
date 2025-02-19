@@ -39,11 +39,11 @@ class UartTxCoverage extends uvm_subscriber #(UartTxTransaction);
        bins PARITY_oDD = {ODD_PARITY};
     }
 
-    // STOP_BIT_CP : coverpoint uartTxAgentConfig.uartStopBit{
-    //    option.comment = "stop bit width";
-    //    bins STOP_BIT_1 = {ONE_BIT};
-    //    bins STOP_BIT_2 = {TWO_BIT};
-    // }
+    STOP_BIT_CP : coverpoint uartTxAgentConfig.uartStopBit{
+       option.comment = "stop bit width";
+       bins STOP_BIT_1 = {ONE_BIT};
+       bins STOP_BIT_2 = {TWO_BIT};
+    }
 
     OVERSAMPLING_CP : coverpoint uartTxAgentConfig.uartOverSamplingMethod {
        option.comment = "oversampling_rate";
@@ -72,7 +72,7 @@ class UartTxCoverage extends uvm_subscriber #(UartTxTransaction);
 
 
     DATA_WIDTH_CP_PARITY_CP : cross DATA_WIDTH_CP,PARITY_CP;
-    // DATA_WIDTH_CP_STOP_BIT_CP :cross DATA_WIDTH_CP,STOP_BIT_CP;
+    DATA_WIDTH_CP_STOP_BIT_CP :cross DATA_WIDTH_CP,STOP_BIT_CP;
     OVERSAMPLING_CP_BAUD_RATE_CP : cross OVERSAMPLING_CP, BAUD_RATE_CP;
     HAS_PARITY_CP_PARITY_ERROR_INJECTION_CP : cross HAS_PARITY_CP, PARITY_ERROR_INJECTION_CP;
     DATA_WIDTH_CP_BAUD_RATE_CP : cross DATA_WIDTH_CP, BAUD_RATE_CP;
