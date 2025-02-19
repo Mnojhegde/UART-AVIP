@@ -127,13 +127,13 @@ interface UartRxMonitorBfm (input  logic   clk,
       	repeat(uartConfigStruct.uartOverSamplingMethod/2) @(posedge baudClk);//needs this posedge or 1 cycle delay to avoid race around or delay in output
         uartTransmitterState = STARTBIT;
 				concatData={concatData,rx};
-				$display("%b",concatData);
+				$display($time,"%b  rx=%b",concatData,rx);
 		
 				for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
         	repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk); begin
 						uartRxPacketStruct.receivingData[i] = rx;
 						concatData={concatData,rx};
-						$display("%b",concatData);
+						$display($time,"%b  rx=%b",concatData,rx);
 						uartTransmitterState = UartTransmitterStateEnum'(i+3);
         	end
         end
@@ -142,20 +142,20 @@ interface UartRxMonitorBfm (input  logic   clk,
 					repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 					uartRxPacketStruct.parity = rx;
 					concatData={concatData,rx};
-					$display("%b",concatData);
+					$display($time,"%b  rx=%b",concatData,rx);
 					uartTransmitterState = PARITYBIT;
 					parityCheck(uartConfigStruct,uartRxPacketStruct,rx);
         end
 				
         repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 				concatData={concatData,rx};
-				$display("%b",concatData);
+				$display($time,"%b  rx=%b",concatData,rx);
 				stopBitCheck(uartRxPacketStruct,uartConfigStruct,rx);
 				
 				if(uartConfigStruct.uartStopBit == 2) begin
 					repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 					concatData={concatData,rx};
-					$display("%b",concatData);
+					$display($time,"%b  rx=%b",concatData,rx);
 					if(uartRxPacketStruct.framingError == 0) begin
 						stopBitCheck(uartRxPacketStruct,uartConfigStruct,rx);
 					end
