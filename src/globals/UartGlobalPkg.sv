@@ -60,7 +60,7 @@ package UartGlobalPkg;
 												  dataTypeEnum uartDataType;
 												  parityTypeEnum uartParityType;
 												 	stopBitEnum uartStopBit;
-												  bit uartParityEnable; 
+												  hasParityEnum uartParityEnable; 
 												  bit uartParityErrorInjection;
 												  bit uartFramingErrorInjection;
 			       							bit uartBreakingErrorInjection;
