@@ -142,7 +142,9 @@ endtask : run_phase
 
 
 task UartScoreboard :: compareTxRx(UartTxTransaction uartTxTransaction,UartRxTransaction uartRxTransaction);
+
     bit bitsMatch = 1;
+    bit packetMatch = 1;
 
        foreach(uartTxTransaction.transmissionData[i])
           begin
@@ -150,6 +152,8 @@ task UartScoreboard :: compareTxRx(UartTxTransaction uartTxTransaction,UartRxTra
              begin
                tempStruct.errorBitNo[i] = 1;
                bitsMatch = 0;
+               packetMatch = 0;
+
               `uvm_info(get_type_name(),$sformatf("Bit mismatch = %0d",i),UVM_LOW)
               `uvm_info(get_type_name(),$sformatf("TransmissionData = %b,RecievingData = %b",uartTxTransaction.transmissionData[i],uartRxTransaction.receivingData[i]),UVM_LOW)
              end
@@ -165,6 +169,7 @@ task UartScoreboard :: compareTxRx(UartTxTransaction uartTxTransaction,UartRxTra
              begin
                if(uartTxTransaction.parity != uartRxTransaction.parity)
                  begin
+                   packetMatch = 0;
                    `uvm_error(get_type_name(),$sformatf("Parity mismatch"))
                  end
              end
@@ -174,27 +179,34 @@ task UartScoreboard :: compareTxRx(UartTxTransaction uartTxTransaction,UartRxTra
               `uvm_info(get_type_name(),$sformatf("No parity"),UVM_LOW)
             end
 
-          if(uartTxTransaction.parityError || uartRxTransaction.parityError)
+           if(uartTxTransaction.parityError || uartRxTransaction.parityError)
              begin
-               `uvm_error(get_type_name(),$sformatf("Breaking Error Occured"))
+               packetMatch = 0;
+               `uvm_error(get_type_name(),$sformatf("Parity Error Occured"))
              end
 
-          if(uartTxTransaction.framingError || uartRxTransaction.framingError)
+           if(uartTxTransaction.framingError || uartRxTransaction.framingError)
              begin
+               packetMatch = 0;
                `uvm_error(get_type_name(),$sformatf("Framing Error Occured"))
              end
 
-          if(uartTxTransaction.breakingError || uartRxTransaction.breakingError)
+           if(uartTxTransaction.breakingError || uartRxTransaction.breakingError)
              begin
+               packetMatch = 0;
                `uvm_error(get_type_name(),$sformatf("Breaking Error Occured"))
              end
+          packetCount++;
 
+          if(packetMatch)
+            begin
+              `uvm_info(get_type_name(), "PACKET MATCH SUCCESSFUL", UVM_LOW)
+            end
           else
             begin
-              `uvm_info(get_type_name(),$sformatf("PACKET MATCH SUCCESSFUL"),UVM_LOW)
+             `uvm_error(get_type_name(), "PACKET MISMATCH")
             end
 
-            packetCount++;
             `uvm_info(get_type_name(),$sformatf("\n transmissionData:%b\n receivingData:%b\n tx parity:%0b rx parity:%0b\n tx framingError:%0b rx framingError:%0b\n tx parityError:%0b rx parityError:%0b\n tx breakingError:%0b rx breakingError:%0b",uartTxTransaction.transmissionData,uartRxTransaction.receivingData,uartTxTransaction.parity,uartRxTransaction.parity,uartTxTransaction.framingError,uartRxTransaction.framingError,uartTxTransaction.parityError,uartRxTransaction.parityError,uartTxTransaction.breakingError,uartRxTransaction.breakingError),UVM_LOW)
 
 
