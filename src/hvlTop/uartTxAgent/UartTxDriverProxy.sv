@@ -74,10 +74,9 @@ task UartTxDriverProxy :: run_phase(uvm_phase phase);
 				forever begin
 					seq_item_port.get_next_item(req);
 					UartTxConfigConverter::from_Class(uartTxAgentConfig , uartConfigStruct);
-					`uvm_info("[DRIVER PROXY]",$sformatf("The UartDataType is %s \nThe baudrate of Uart is %0d \nThe parity enable=%b",uartTxAgentConfig.uartDataType.name(),uartTxAgentConfig.uartBaudRate,uartTxAgentConfig.hasParity),UVM_LOW);
-
-					`uvm_info("[Driver PROXY]","DATA BEING SENT FROM TRANSMITTER DRIVER PROXY IS:\t",UVM_LOW);
-					$display("DATATYPE = %0d", uartTxAgentConfig.uartDataType); //// **************FOR DEBUG  *****************
+					`uvm_info("[DRIVER PROXY]",$sformatf("UartDataType = %s \nThe baudrate of Uart = %s \nThe parity enable = %s \n No. of stop bits = %s\n oversampling method = %s",
+					uartTxAgentConfig.uartDataType, uartTxAgentConfig.uartBaudRate, uartTxAgentConfig.hasParity, uartTxAgentConfig.uartStopBit, uartTxAgentConfig.uartOverSamplingMethod),UVM_LOW);
+					$write("Data to be sent : ");
   				for(int i=0;i<uartTxAgentConfig.uartDataType;i++)
    					$write("%b",req.transmissionData[i]);
    				$display(" ");
