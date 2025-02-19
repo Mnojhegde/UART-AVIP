@@ -11,7 +11,7 @@ class UartRxAgentConfig extends uvm_object;
 
   // config variables for rx agent
   bit hasCoverage;
-  bit hasParity;
+  hasParityEnum hasParity;
   overSamplingEnum uartOverSamplingMethod;
   baudRateEnum uartBaudRate;
   dataTypeEnum uartDataType;
