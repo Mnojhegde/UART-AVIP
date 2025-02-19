@@ -21,7 +21,7 @@ interface UartRxMonitorBfm (input  logic   clk,
 	bit baudClk;
   bit oversamplingClk;
 
-	logic [DATA_WIDTH+2 : 0]concatData;
+	logic [DATA_WIDTH+3 : 0]concatData;
 	int numOfZeroes;
 	int breakZeroCount;
 
@@ -147,23 +147,30 @@ interface UartRxMonitorBfm (input  logic   clk,
         repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 				concatData={concatData,rx};
 				stopBitCheck(uartRxPacketStruct,uartConfigStruct,rx);
-				$display("STOP BIT IS BEING ASSIGNED IN  MONITOR AT %t",$time);
+				
+				if(uartConfigStruct.uartStopBit == 2) begin
+					repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+					if(rx==1) begin
+						concatData={concatData,rx};
+						stopBitCheck(uartTxPacketStruct,uartConfigStruct,rx);
+					end
+				end
+				
 				numOfZeroes=$countones(~(concatData));
-				breakZeroCount=uartConfigStruct.uartParityEnable ? (uartConfigStruct.uartDataType)+3 :(uartConfigStruct.uartDataType)+2;
-				$display("THE NUMBER OF ZEROES IS %0d",numOfZeroes);
+				if(uartConfigStruct.uartStopBit == 2)
+					breakZeroCount=uartConfigStruct.uartParityEnable ? (uartConfigStruct.uartDataType)+4 :(uartConfigStruct.uartDataType)+3;
+				else
+					breakZeroCount=uartConfigStruct.uartParityEnable ? (uartConfigStruct.uartDataType)+3 :(uartConfigStruct.uartDataType)+2;
 				if(numOfZeroes == breakZeroCount)
 					uartRxPacketStruct.breakingError =1;
 				else 
 					uartRxPacketStruct.breakingError =0;
 
-
-					$display("THE BREAKING ERROR IS %b",uartRxPacketStruct.breakingError);
-					repeat(uartConfigStruct.uartOverSamplingMethod/2) @(posedge baudClk);
-					concatData = 'b x;
-					numOfZeroes =0;
-					uartTransmitterState = IDLE;
-					
-        end
+				repeat(uartConfigStruct.uartOverSamplingMethod/2) @(posedge baudClk);
+				concatData = 'b x;
+				numOfZeroes =0;
+				uartTransmitterState = IDLE;		
+			end
 		
       else if(uartConfigStruct.OverSampledBaudFrequencyClk==0)begin
         repeat(1)@(posedge baudClk);
