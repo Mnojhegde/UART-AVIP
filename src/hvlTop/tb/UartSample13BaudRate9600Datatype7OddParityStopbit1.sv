@@ -33,7 +33,9 @@ endfunction  : new
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
 function void UartSample13BaudRate9600Datatype7OddParityStopbit1 :: build_phase(uvm_phase phase);
-  super.build_phase(phase);uartEnvConfig.uartTxAgentConfig.uartBaudRate = BAUD_9600;
+  super.build_phase(phase);
+   uartEnvConfig.uartTxAgentConfig.uartOverSamplingMethod =OVERSAMPLING_13;
+   uartEnvConfig.uartTxAgentConfig.uartBaudRate = BAUD_9600;
   uartEnvConfig.uartTxAgentConfig.uartDataType = SEVEN_BIT;
   uartEnvConfig.uartTxAgentConfig.uartParityType = ODD_PARITY;
   uartEnvConfig.uartTxAgentConfig.uartStopBit = ONE_BIT;
