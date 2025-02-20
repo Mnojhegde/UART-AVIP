@@ -201,6 +201,7 @@ interface UartTxDriverBfm (input  logic   clk,
 	    	tx = STOP_BIT;  
 	    	uartTransmitterState = STOPBIT;
 				repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+				$display($time,"****************no of stop bit=%0d********************",uartConfigStruct.uartStopBit);
 				if(uartConfigStruct.uartStopBit == TWO_BIT) begin
 					uartTransmitterState = STOPBIT;
 					repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
