@@ -163,7 +163,6 @@ interface UartTxMonitorBfm (input  logic   clk,
 						breakZeroCount=uartConfigStruct.uartParityEnable ? (uartConfigStruct.uartDataType)+4 :(uartConfigStruct.uartDataType)+3;
 					else
 						breakZeroCount=uartConfigStruct.uartParityEnable ? (uartConfigStruct.uartDataType)+3 :(uartConfigStruct.uartDataType)+2;
-					$display("******* N.O.Z=%0d ******** B.Z.C.=%0d ************** S.B.=%0d *********** concat = %b",numOfZeroes,breakZeroCount,uartConfigStruct.uartStopBit,concatData);
 					if(numOfZeroes == breakZeroCount)
 						uartTxPacketStruct.breakingError =1;
 				  else 
@@ -203,7 +202,7 @@ interface UartTxMonitorBfm (input  logic   clk,
       	end
     endtask
 	
-	task stopBitCheck (inout  UartTxPacketStruct uartTxPacketStruct,input UartConfigStruct uartConfigStruct,input bit tx);
+		task stopBitCheck (inout  UartTxPacketStruct uartTxPacketStruct,input UartConfigStruct uartConfigStruct,input bit tx);
 			if (tx == 1) begin
 				uartTxPacketStruct.framingError = 0;
 				uartTransmitterState = STOPBIT;
@@ -211,7 +210,6 @@ interface UartTxMonitorBfm (input  logic   clk,
 			else begin
 				uartTxPacketStruct.framingError = 1;
 				uartTransmitterState = INVALIDSTOPBIT;
-				// repeat(uartConfigStruct.uartOverSamplingMethod/2)@(posedge baudClk);
 			end
   	endtask
 		
