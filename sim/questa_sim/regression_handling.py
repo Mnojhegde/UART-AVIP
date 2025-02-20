@@ -18,7 +18,7 @@ if debug:
     print(regression_list)
 
 # Reading the file
-path = "../../src/hvl_top/tb/" + regression_list
+path = "../../src/hvl_top/tb/regressionTest" + regression_list
 if debug:
     print(path)
 
