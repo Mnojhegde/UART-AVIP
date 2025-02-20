@@ -61,15 +61,15 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
       repeat((uartTxAgentConfig.uartOverSamplingMethod)-1)
        @(posedge uartClk);
 
-      $display("local width near if %0d @%t",localWidth,$time);
+      //$display("local width near if %0d @%t",localWidth,$time);
       if(uartTxAgentConfig.uartDataType !=localWidth)begin 
       uartLocalData = {uartLocalData,uartTx};
-      $display("%b",uartLocalData);
+      //$display("%b",uartLocalData);
       localWidth++;
       end
 
       if(localWidth == (uartTxAgentConfig.uartDataType))begin
-       $display("entered inside if check");
+       //$display("entered inside if check");
         if(uartParityEnabled == 1)begin 
           if(uartEvenOddParity == EVEN_PARITY)begin
             uartEvenParityDetectionInitiation = 1;
