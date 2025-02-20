@@ -12,6 +12,7 @@ import UartGlobalPkg :: *;
                   bit[7:0] transmissionData;
                   bit[7:0] receivingData;
                   bit [7:0] errorBitNo;
+                  bit match;
                   bit parity;
                   bit parityError;
                   bit breakingError;
