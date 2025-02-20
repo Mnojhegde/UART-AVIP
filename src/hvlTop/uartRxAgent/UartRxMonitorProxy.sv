@@ -67,26 +67,25 @@ task UartRxMonitorProxy :: run_phase(uvm_phase phase);
   
   fork 
     begin 
-    // generating baud clck
-    uartRxMonitorBfm.GenerateBaudClk(uartConfigStruct);
+    	// generating baud clck
+    	uartRxMonitorBfm.GenerateBaudClk(uartConfigStruct);
     end 
+		
     begin 
-  uartRxMonitorBfm.WaitForReset();
-  forever begin
-    UartRxTransaction uartRxTransaction_clone;
-    UartRxSeqItemConverter :: fromRxClass(uartRxTransaction,uartRxAgentConfig,uartRxPacketStruct);
-    UartRxConfigConverter::from_Class(uartRxAgentConfig , uartConfigStruct);
-    uartRxMonitorBfm.StartMonitoring(uartRxPacketStruct, uartConfigStruct);
-    UartRxSeqItemConverter::toRxClass(uartRxPacketStruct,uartRxAgentConfig,uartRxTransaction);
-	  `uvm_info("[receciever monitor PROXY]","DATA BEING Sreceived FROM TRANSMITTER DRIVER PROXY IS:\t",UVM_LOW);
-	  for(int i=0;i<uartRxAgentConfig.uartDataType;i++)
-		  $write("%b",uartRxTransaction.receivingData[i]);
-                 $display(" ");
-		$display("parity is %b",uartRxTransaction.parity);
-
-    $cast(uartRxTransaction_clone, uartRxTransaction.clone());  
-    uartRxMonitorAnalysisPort.write(uartRxTransaction_clone);
-  
+  	uartRxMonitorBfm.WaitForReset();
+  	forever begin
+	    UartRxTransaction uartRxTransaction_clone;
+	    UartRxSeqItemConverter :: fromRxClass(uartRxTransaction,uartRxAgentConfig,uartRxPacketStruct);
+	    UartRxConfigConverter::from_Class(uartRxAgentConfig , uartConfigStruct);
+	    uartRxMonitorBfm.StartMonitoring(uartRxPacketStruct, uartConfigStruct);
+	    UartRxSeqItemConverter::toRxClass(uartRxPacketStruct,uartRxAgentConfig,uartRxTransaction);
+	
+			$write("Data received : ");
+			for(int i=0;i<uartRxAgentConfig.uartDataType;i++)
+   			$write("%b",req.transmissionData[i]);
+   		$display(" ");
+	    $cast(uartRxTransaction_clone, uartRxTransaction.clone());  
+	    uartRxMonitorAnalysisPort.write(uartRxTransaction_clone);
   end
  end 
 join_any
