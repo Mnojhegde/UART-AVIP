@@ -16,7 +16,7 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
   bit uartOddParityDetectionInitiation;
   logic [ DATA_WIDTH-1:0]uartLocalData;
   bit uartParityEnabled;
-  bit uartStartDetectInitiation = 1;
+  bit uartStartDetectInitiation;
   bit parity;
   int uartLegalDataWidth;
   parityTypeEnum uartEvenOddParity;
@@ -27,7 +27,7 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
     if(!(uvm_config_db#(UartTxAgentConfig) :: get(null,"","uartTxAgentConfig",uartTxAgentConfig)))
       `uvm_fatal("[TX ASSERTION]","FAILED TO GET CONFIG OBJECT")
      uartParityEnabled = uartTxAgentConfig.hasParity;
-     uartStartDetectInitiation = uartTxAgentConfig.uartStartBitDetectionStart;
+     uartStartDetectInitiation = 1;
      uartEvenOddParity = uartTxAgentConfig.uartParityType;
      uartLegalDataWidth = uartTxAgentConfig.uartDataType;
      overSamplingMethod = uartTxAgentConfig.uartOverSamplingMethod;
