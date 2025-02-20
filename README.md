@@ -1,6 +1,6 @@
 # UART-AVIP
 ## UART AVIP ARCHITECTURE
-![image](https://github.com/user-attachments/assets/8f4cfc32-3557-4c3f-9f17-f7a44fa8cad6)
+![image](https://github.com/user-attachments/assets/7a37a021-88ac-4cbf-a1aa-09490f3d0837)
 ## DATA FORMAT
 ### Relationships Between Data Bit, BCLK, and UART Input Clock
 ![image](https://github.com/user-attachments/assets/990c8768-5e1e-45a2-ad59-1b2fac04e0c7)
