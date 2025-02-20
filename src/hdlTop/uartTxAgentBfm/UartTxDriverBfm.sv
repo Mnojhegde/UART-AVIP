@@ -220,7 +220,6 @@ interface UartTxDriverBfm (input  logic   clk,
 			else if(uartConfigStruct.uartBreakingErrorInjection == 1)begin 
 	    	tx = 'b 0;  
 	    	uartTransmitterState = STOPBIT;
-		  	repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 				if(uartConfigStruct.uartStopBit == TWO_BIT) begin
 					uartTransmitterState = STOPBIT;
 					repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
