@@ -16,7 +16,7 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
   bit uartOddParityDetectionInitiation;
   logic [ DATA_WIDTH-1:0]uartLocalData;
   bit uartParityEnabled;
-  bit uartStartDetectInitiation;
+  bit uartStartDetectInitiation = 1;
   bit parity;
   int uartLegalDataWidth;
   parityTypeEnum uartEvenOddParity;
