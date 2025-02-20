@@ -11,7 +11,7 @@ interface UartRxAssertions ( input bit uartClk , input logic uartRx);
   int localWidth = 0;
   bit uartParityEnabled = uartRxAgentConfig.hasParity;
   bit uartStopDetectInitiation;
-  bit uartStartDetectInitiation = uartRxAgentConfig.uartStartBitDetectionStart;
+  bit uartStartDetectInitiation = 1;
   bit uartDataWidthDetectInitiation;
   bit uartEvenParityDetectionInitiation;
   bit uartOddParityDetectionInitiation;
