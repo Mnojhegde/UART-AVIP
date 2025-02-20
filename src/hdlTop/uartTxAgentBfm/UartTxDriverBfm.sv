@@ -199,25 +199,31 @@ interface UartTxDriverBfm (input  logic   clk,
 		  repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 			if(uartConfigStruct.uartFramingErrorInjection == 0 && uartConfigStruct.uartBreakingErrorInjection == 0)begin 
 	    	tx = STOP_BIT;  
-	    	uartTransmitterState = STOPBIT;
+	    	uartTransmitterState = STOPBIT1;
 		  	repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
-				if(uartConfigStruct.uartStopBit == TWO_BIT)
-					repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+				if(uartConfigStruct.uartStopBit == TWO_BIT) begin
+					uartTransmitterState = STOPBIT2;
+				end
+				repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 	   		uartTransmitterState = IDLE;
 	    end 
+						
 			else if(uartConfigStruct.uartFramingErrorInjection == 1 && uartConfigStruct.uartBreakingErrorInjection == 0) begin
 	    	tx='b x;
-				uartTransmitterState = STOPBIT;
+				uartTransmitterState = STOPBIT1;
 		    repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 				tx=1;
 				uartTransmitterState = IDLE;
 	    end
+						
 			else if(uartConfigStruct.uartBreakingErrorInjection == 1)begin 
 	    	tx = 'b 0;  
-	    	uartTransmitterState = STOPBIT;
+	    	uartTransmitterState = STOPBIT1;
 		  	repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
-				if(uartConfigStruct.uartStopBit == TWO_BIT)
+				if(uartConfigStruct.uartStopBit == TWO_BIT) begin
+					uartTransmitterState = STOPBIT2;
 					repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+				end
 				tx=1;
 	   		uartTransmitterState = IDLE;
 	    end 
