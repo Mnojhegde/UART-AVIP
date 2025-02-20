@@ -127,13 +127,11 @@ interface UartRxMonitorBfm (input  logic   clk,
       	repeat(uartConfigStruct.uartOverSamplingMethod/2) @(posedge baudClk);//needs this posedge or 1 cycle delay to avoid race around or delay in output
         uartTransmitterState = STARTBIT;
 				concatData={concatData,rx};
-				$display($time,"%b  rx=%b",concatData,rx);
 		
 				for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
         	repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk); begin
 						uartRxPacketStruct.receivingData[i] = rx;
 						concatData={concatData,rx};
-						$display($time,"%b  rx=%b",concatData,rx);
 						uartTransmitterState = UartTransmitterStateEnum'(i+3);
         	end
         end
@@ -142,20 +140,17 @@ interface UartRxMonitorBfm (input  logic   clk,
 					repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 					uartRxPacketStruct.parity = rx;
 					concatData={concatData,rx};
-					$display($time,"%b  rx=%b",concatData,rx);
 					uartTransmitterState = PARITYBIT;
 					parityCheck(uartConfigStruct,uartRxPacketStruct,rx);
         end
 				
         repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 				concatData={concatData,rx};
-				$display($time,"%b  rx=%b",concatData,rx);
 				stopBitCheck(uartRxPacketStruct,uartConfigStruct,rx);
 				
 				if(uartConfigStruct.uartStopBit == 2) begin
 					repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 					concatData={concatData,rx};
-					$display($time,"%b  rx=%b",concatData,rx);
 					if(uartRxPacketStruct.framingError == 0) begin
 						stopBitCheck(uartRxPacketStruct,uartConfigStruct,rx);
 					end
@@ -166,7 +161,6 @@ interface UartRxMonitorBfm (input  logic   clk,
 					breakZeroCount=uartConfigStruct.uartParityEnable ? (uartConfigStruct.uartDataType)+4 :(uartConfigStruct.uartDataType)+3;
 				else
 					breakZeroCount=uartConfigStruct.uartParityEnable ? (uartConfigStruct.uartDataType)+3 :(uartConfigStruct.uartDataType)+2;
-				$display("******* N.O.Z=%0d ******** B.Z.C.=%0d ************** S.B.=%0d *********** concat = %b",numOfZeroes,breakZeroCount,uartConfigStruct.uartStopBit,concatData);
 				if(numOfZeroes == breakZeroCount)
 					uartRxPacketStruct.breakingError =1;
 				else 
@@ -198,30 +192,29 @@ interface UartRxMonitorBfm (input  logic   clk,
   endtask
 	
 	task stopBitCheck (inout  UartRxPacketStruct uartRxPacketStruct,input UartConfigStruct uartConfigStruct,input bit rx);
-			if (rx == 1) begin
-				uartRxPacketStruct.framingError = 0;
-				uartTransmitterState = STOPBIT;
-			end
-			else begin
-				uartRxPacketStruct.framingError = 1;
-				uartTransmitterState = INVALIDSTOPBIT;
-				// repeat(uartConfigStruct.uartOverSamplingMethod)@(posedge baudClk);
-			end
-  	endtask
+		if (rx == 1) begin
+			uartRxPacketStruct.framingError = 0;
+			uartTransmitterState = STOPBIT;
+		end
+		else begin
+			uartRxPacketStruct.framingError = 1;
+			uartTransmitterState = INVALIDSTOPBIT;
+		end
+  endtask
 		
-		task parityCheck(inout UartConfigStruct uartConfigStruct,inout UartRxPacketStruct uartRxPacketStruct,input bit rx);
-   		int cal_parity;
-   		if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
-      	cal_parity = evenParityCompute(uartConfigStruct,uartRxPacketStruct);
-     	end
-      else begin
-      	cal_parity = oddParityCompute(uartConfigStruct,uartRxPacketStruct);
-      end
-			if(rx==cal_parity)begin
-      	uartRxPacketStruct.parityError=0;
-     	end
-     	else begin
-     		uartRxPacketStruct.parityError=1;
-     	end
-  	endtask:parityCheck
+	task parityCheck(inout UartConfigStruct uartConfigStruct,inout UartRxPacketStruct uartRxPacketStruct,input bit rx);
+		int cal_parity;
+		if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
+			cal_parity = evenParityCompute(uartConfigStruct,uartRxPacketStruct);
+		end
+		else begin
+			cal_parity = oddParityCompute(uartConfigStruct,uartRxPacketStruct);
+		end
+		if(rx==cal_parity)begin
+			uartRxPacketStruct.parityError=0;
+		end
+		else begin
+			uartRxPacketStruct.parityError=1;
+		end
+	endtask:parityCheck
 endinterface : UartRxMonitorBfm
