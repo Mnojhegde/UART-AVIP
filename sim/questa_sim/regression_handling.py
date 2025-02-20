@@ -28,7 +28,7 @@ with open(path, 'r') as f:
         if match:
             continue
 
-        match = re.search('(r'\bUart\w*', line)', line)
+        match = re.search('(r'\bUart\w*)', line)
         if match:
             reg_list_array.append(match.group(0))
             if debug:
