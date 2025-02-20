@@ -82,7 +82,7 @@ task UartRxMonitorProxy :: run_phase(uvm_phase phase);
 	
 			$write("Data received : ");
 			for(int i=0;i<uartRxAgentConfig.uartDataType;i++)
-   			$write("%b",req.transmissionData[i]);
+				$write("%b",uartRxTransaction.receivingData[i]);
    		$display(" ");
 	    $cast(uartRxTransaction_clone, uartRxTransaction.clone());  
 	    uartRxMonitorAnalysisPort.write(uartRxTransaction_clone);
