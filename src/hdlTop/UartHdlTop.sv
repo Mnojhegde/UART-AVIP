@@ -19,10 +19,6 @@ module HdlTop;
   //Declaration of system clock
 
   bit clk;
-  
-  //Variables : on,off
-  //used for generating clock of required frequency
-  real on,off;
 
   //Variable : reset
   //Declaration of system reset
