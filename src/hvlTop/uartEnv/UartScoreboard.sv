@@ -77,6 +77,37 @@ class UartScoreboard extends uvm_scoreboard;
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
 
+/--------------------------------------------------------------------------------------------
+// Construct: new
+// Initialization of new memory
+//  name - UartScoreboard
+//  parent - parent under which this component is created
+//--------------------------------------------------------------------------------------------
+ 
+function UartScoreboard :: new(string name = "UartScoreboard" , uvm_component parent = null);
+  super.new(name, parent);
+endfunction : new
+ 
+//--------------------------------------------------------------------------------------------
+// Function: build_phase
+//
+// Parameters:
+//  phase - uvm phase
+//--------------------------------------------------------------------------------------------
+function void UartScoreboard :: build_phase(uvm_phase phase);
+  super.build_phase(phase);
+  uartScoreboardTxAnalysisExport = new("uartScoreboardTxAnalysisExport",this);
+  uartScoreboardRxAnalysisExport = new("uartScoreboardRxAnalysisExport",this);
+  uartScoreboardTxAnalysisFifo = new("uartScoreboardTxAnalysisFifo",this);
+  uartScoreboardRxAnalysisFifo = new("uartScoreboardRxAnalysisFifo",this);
+ 
+if(!uvm_config_db #(UartTxAgentConfig) :: get(this,"","uartTxAgentConfig",uartTxAgentConfig))
+   `uvm_fatal ("No vif", {"Config_db Error:", get_full_name (), ".vif"});
+if(!uvm_config_db #(UartRxAgentConfig) :: get(this,"","uartRxAgentConfig",uartRxAgentConfig))
+   `uvm_fatal ("No vif", {"Config_db Error:", get_full_name (), ".vif"});
+ 
+endfunction : build_phase
+
 function void UartScoreboard :: connect_phase(uvm_phase phase);
   super.connect_phase(phase);
   uartScoreboardTxAnalysisExport.connect(uartScoreboardTxAnalysisFifo.analysis_export);
