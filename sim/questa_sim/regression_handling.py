@@ -53,4 +53,4 @@ with open(trace_file_path, 'a') as trace_file:
 
         os.system(line)
 
-print(f"Test names have been traced in {trace_file_path}")
+# print(f"Test names have been traced in {trace_file_path}")
