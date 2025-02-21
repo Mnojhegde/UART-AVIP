@@ -80,7 +80,7 @@ task UartTxMonitorProxy :: run_phase(uvm_phase phase);
 
 				$cast(uartTxTransaction_clone, uartTxTransaction.clone());  
     		uartTxMonitorAnalysisPort.write(uartTxTransaction_clone);
-				->monitorSynchronizer;
+				//->monitorSynchronizer;
        end 
 		end 
 	join_any
