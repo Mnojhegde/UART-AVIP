@@ -82,7 +82,7 @@ task UartTxDriverProxy :: run_phase(uvm_phase phase);
    				$display(" ");
 					UartTxSeqItemConverter :: fromTxClass(req,uartTxAgentConfig,uartTxPacketStruct);
 					uartTxDriverBfm.DriveToBfm(uartTxPacketStruct , uartConfigStruct);
-				 	wait(driverSynchronizer.triggered);
+				 	//wait(driverSynchronizer.triggered);
 					seq_item_port.item_done();
 				end
 			end 
