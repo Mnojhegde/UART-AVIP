@@ -168,19 +168,7 @@ clean_compile:
 ##
 ## For Regression and coverage merge
 ##
-"""
-regression:
-	# Run compilation
-	#make compile
-	make clean_simulate
-	# Run simualtion - regression 
-	python regression_handling.py $(testlist_name)
-	#	# Get the tests from regression list
-	#	grep "_test" ../../src/hvl_top/testlists/apb_simple_fd_regression.list | grep -v "\#" > reg_list
-	#	make simulate test=value #Get the name from regression list
-	#	Merge coverage
-	make merge_cov_report
-"""
+
 
 regression:
 	rm -f regression_summary.log  # Remove old regression log before starting
@@ -221,36 +209,7 @@ compile_war_err:
 	echo "-----------------------------------------------------------------";
 	echo "";
 
-"""
-simulate_war_err:
-	echo "";
-	echo "-----------------------------------------------------------------";
-	echo "-------------------- Simulation Report --------------------------";
-	echo "";
-	echo "Simulator Errors";
-	grep "Error" $(test_folder)/$(test).log;
-	echo "";
-	echo "UVM Fatal";
-	grep "UVM_FATAL" $(test_folder)/$(test).log;
-	echo "";
-	echo "UVM Errors";
-	grep "UVM_ERROR" $(test_folder)/$(test).log;
-	echo "";
-	echo "UVM Warnings";
-	grep "UVM_WARNING" $(test_folder)/$(test).log;
-	echo "";
-	echo "Testname: $(test)"
-	echo "";
-	echo "Log file path: $(test_folder)/$(test).log"
-	echo "";
-	echo "Waveform: vsim -view $(test_folder)/waveform.wlf &"
-	echo "";
-	echo "Coverage report: firefox $(test_folder)/html_cov_report/index.html &"
-	echo "";
-	echo "-----------------------------------------------------------------";
-	echo "-----------------------------------------------------------------";
-	echo "";
-"""
+
 
 simulate_war_err:
 	echo "" >> regression_summary.log
