@@ -168,7 +168,7 @@ interface UartTxMonitorBfm (input  logic   clk,
 				  else 
 						uartTxPacketStruct.breakingError =0;
 
-					repeat(uartConfigStruct.uartOverSamplingMethod/2) @(posedge baudClk);
+					repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 					concatData = 'b x;
 					numOfZeroes =0;
 					uartTransmitterState = IDLE;
@@ -206,7 +206,6 @@ interface UartTxMonitorBfm (input  logic   clk,
 			if (tx == 1) begin
 				uartTxPacketStruct.framingError = 0;
 				uartTransmitterState = STOPBIT;
-				repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
 			end
 			else begin
 				uartTxPacketStruct.framingError = 1;
