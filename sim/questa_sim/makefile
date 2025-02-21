@@ -131,6 +131,7 @@ simulate:
 	-c -do "log -r /*; add wave -r /*; coverage save -onexit -assert -directive -cvg -codeAll $(test_folder)/$(test)_coverage.ucdb; run -all; exit" \
 	-wlf $(test_folder)/waveform.wlf
 
+	cat $(test_folder)/$(test).log >> regression_summary.log
 
 	# For checking and reporting simulation errors
 	make simulate_war_err
@@ -167,6 +168,7 @@ clean_compile:
 ##
 ## For Regression and coverage merge
 ##
+"""
 regression:
 	# Run compilation
 	#make compile
@@ -178,6 +180,16 @@ regression:
 	#	make simulate test=value #Get the name from regression list
 	#	Merge coverage
 	make merge_cov_report
+"""
+
+regression:
+	rm -f regression_summary.log  # Remove old regression log before starting
+	make clean_simulate
+	python regression_handling.py $(testlist_name)
+	make merge_cov_report
+
+
+
 		
 # For merge to happen, the coverage names for each test must be different
 #
@@ -209,6 +221,7 @@ compile_war_err:
 	echo "-----------------------------------------------------------------";
 	echo "";
 
+"""
 simulate_war_err:
 	echo "";
 	echo "-----------------------------------------------------------------";
@@ -237,3 +250,33 @@ simulate_war_err:
 	echo "-----------------------------------------------------------------";
 	echo "-----------------------------------------------------------------";
 	echo "";
+"""
+
+simulate_war_err:
+	echo "" >> regression_summary.log
+	echo "-----------------------------------------------------------------" >> regression_summary.log
+	echo "-------------------- Simulation Report --------------------------" >> regression_summary.log
+	echo "" >> regression_summary.log
+	echo "Simulator Errors" >> regression_summary.log
+	grep "Error" $(test_folder)/$(test).log >> regression_summary.log
+	echo "" >> regression_summary.log
+	echo "UVM Fatal" >> regression_summary.log
+	grep "UVM_FATAL" $(test_folder)/$(test).log >> regression_summary.log
+	echo "" >> regression_summary.log
+	echo "UVM Errors" >> regression_summary.log
+	grep "UVM_ERROR" $(test_folder)/$(test).log >> regression_summary.log
+	echo "" >> regression_summary.log
+	echo "UVM Warnings" >> regression_summary.log
+	grep "UVM_WARNING" $(test_folder)/$(test).log >> regression_summary.log
+	echo "" >> regression_summary.log
+	echo "Testname: $(test)" >> regression_summary.log
+	echo "" >> regression_summary.log
+	echo "Log file path: $(test_folder)/$(test).log" >> regression_summary.log
+	echo "" >> regression_summary.log
+	echo "Waveform: vsim -view $(test_folder)/waveform.wlf &" >> regression_summary.log
+	echo "" >> regression_summary.log
+	echo "Coverage report: firefox $(test_folder)/html_cov_report/index.html &" >> regression_summary.log
+	echo "" >> regression_summary.log
+	echo "-----------------------------------------------------------------" >> regression_summary.log
+	echo "-----------------------------------------------------------------" >> regression_summary.log
+	echo ""
