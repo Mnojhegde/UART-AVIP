@@ -153,3 +153,8 @@ UartSample16BaudRate9600Datatype8NoParityStopbit2
 
 ##Error test
 UartBreakingErrorTest
+UartEvenParityWithErrorTest
+UartFramingErrorEvenParityTest
+UartFramingErrorNoParityTest
+UartFramingErrorOddParityTest
+UartOddParityWithErrorTest
