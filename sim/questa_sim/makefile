@@ -61,7 +61,7 @@ usage:
 	echo "make regression testlist_name=<regression_testlist_name.list>";
 	echo "";
 	echo "Example:":
-	echo "make regression testlist_name=apb_regression.list";
+	echo "make regression testlist_name=regression_testlist_name.list";
 	echo "";
 	echo "-----------------------------------------------------------------";
 	echo "-----------------------------------------------------------------";
