@@ -177,7 +177,6 @@ package UartBaseTestPkg;
   `include "UartSample16BaudRate9600Datatype7NoParityStopbit2.sv"
   `include "UartSample16BaudRate9600Datatype8NoParityStopbit1.sv"
   `include "UartSample16BaudRate9600Datatype8NoParityStopbit2.sv"
-  `include "UartSample16BaudRate9600Datatype6EvenParityStopbit1.sv"
   
   //   Error Test cases  
   `include "UartBreakingErrorTest.sv"
