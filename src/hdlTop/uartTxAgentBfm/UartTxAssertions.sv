@@ -91,7 +91,7 @@ UartTxAgentConfig uartTxAgentConfig;
 	//Assertion to detect start bit
   property start_bit_detection_property;
     @(posedge  uartClk) disable iff(!(uartStartDetectInitiation))
-    (!($isunknown(uartTx)) && uartTx) |-> first_match( (##[0:$] $fell(uartTx)));
+		(!($isunknown(uartTx)) && uartTx) |-> first_match( (##[0:500] $fell(uartTx)));
 	endproperty
 	
   IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS: assert property (start_bit_detection_property)begin 
