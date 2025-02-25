@@ -43,11 +43,11 @@ class UartRxCoverage extends uvm_subscriber #(UartRxTransaction);
       bins BAUD_19200_3 = {BAUD_19200};
     }
 
-    // OVER_SAMPLING_CP: coverpoint uartRXAgentConfig.uartOverSamplingMethod{
-    //   option.comment="over_sampling";
-    //   bins OVERSAMPLING_16_1_1 = {OVERSAMPLING_16};
-    //   bins OVERSAMPLING_13_2_2 = {OVERSAMPLING_13};
-    // }
+    OVER_SAMPLING_CP: coverpoint uartRXAgentConfig.uartOverSamplingMethod{
+      option.comment="over_sampling";
+      bins OVERSAMPLING_16_1_1 = {OVERSAMPLING_16};
+      bins OVERSAMPLING_13_2_2 = {OVERSAMPLING_13};
+    }
     
     PARITY_CP : coverpoint uartRxAgentConfig.uartParityType{
       option.comment = "parity_type";
@@ -74,11 +74,10 @@ class UartRxCoverage extends uvm_subscriber #(UartRxTransaction);
     }
     
     DATA_WIDTH_CP_PARITY_CP : cross DATA_WIDTH_CP,PARITY_CP;
-    // DATA_WIDTH_CP_STOP_BIT_CP :cross DATA_WIDTH_CP,STOP_BIT_CP;
-    // OVER_SAMPLINGxBAUD_RATE:cross BAUD_RATE_CP,  OVER_SAMPLING_CP;
-    // OVER_SAMPLINGxDATA_TYPE:cross  DATA_WIDTH_CP,OVER_SAMPLING_CP;
+    DATA_WIDTH_CP_STOP_BIT_CP :cross DATA_WIDTH_CP,STOP_BIT_CP;
+    OVER_SAMPLINGxBAUD_RATE:cross BAUD_RATE_CP,  OVER_SAMPLING_CP;
+    OVER_SAMPLINGxDATA_TYPE:cross  DATA_WIDTH_CP,OVER_SAMPLING_CP;
     DATA_WIDTHxBAUD_RATE: cross  DATA_WIDTH_CP ,BAUD_RATE_CP;
-           
     
 endgroup: UartRxCovergroup
   
@@ -91,44 +90,44 @@ endgroup: UartRxCovergroup
   extern virtual function void build_phase(uvm_phase phase);
 endclass : UartRxCoverage
 
-//--------------------------------------------------------------------------------------------
-// Construct: new
-//  name -  UartRxCoverage
-//  parent - parent under which this component is created
-//--------------------------------------------------------------------------------------------
-function  UartRxCoverage::new(string name = "UartRxCoverage", uvm_component parent = null);
-  super.new(name, parent);
-  UartRxCovergroup = new();
-endfunction : new
+  //--------------------------------------------------------------------------------------------
+  // Construct: new
+  //  name -  UartRxCoverage
+  //  parent - parent under which this component is created
+  //--------------------------------------------------------------------------------------------
+  function  UartRxCoverage::new(string name = "UartRxCoverage", uvm_component parent = null);
+    super.new(name, parent);
+    UartRxCovergroup = new();
+  endfunction : new
 
-//---------------------------------------------------------------------------------------------------------
-// Build Phase
-//-------------------------------------------------------------------------------------------------------------
-function void UartRxCoverage :: build_phase(uvm_phase phase);
-  super.build_phase(phase);
-  if(!(uvm_config_db #(UartRxAgentConfig) :: get(this,"","uartRxAgentConfig",uartRxAgentConfig)))
-  `uvm_fatal("FATAL Rx AGENT CONFIG", $sformatf("Failed to get Rx agent config in coverage"))
-endfunction : build_phase
+  //---------------------------------------------------------------------------------------------------------
+  // Build Phase
+  //-------------------------------------------------------------------------------------------------------------
+  function void UartRxCoverage :: build_phase(uvm_phase phase);
+    super.build_phase(phase);
+    if(!(uvm_config_db #(UartRxAgentConfig) :: get(this,"","uartRxAgentConfig",uartRxAgentConfig)))
+    `uvm_fatal("FATAL Rx AGENT CONFIG", $sformatf("Failed to get Rx agent config in coverage"))
+  endfunction : build_phase
 
     
-//-------------------------------------------------------
-// Function: write
-//  Creates the write method
-//  t - UartRxTransaction handle
-//-------------------------------------------------------
-function void UartRxCoverage::write(UartRxTransaction t);
-  foreach(t.receivingData[i]) begin
-    data =  t.receivingData[i];
-    UartRxCovergroup.sample(uartRxAgentConfig,data);
-  end
-endfunction : write
+  //-------------------------------------------------------
+  // Function: write
+  //  Creates the write method
+  //  t - UartRxTransaction handle
+  //-------------------------------------------------------
+  function void UartRxCoverage::write(UartRxTransaction t);
+    foreach(t.receivingData[i]) begin
+      data =  t.receivingData[i];
+      UartRxCovergroup.sample(uartRxAgentConfig,data);
+    end
+  endfunction : write
 
-//--------------------------------------------------------------------------------------------
-// Function: report_phase
-//  Used for reporting the coverage instance percentage values
-//--------------------------------------------------------------------------------------------
-function void  UartRxCoverage::report_phase(uvm_phase phase);
-  `uvm_info(get_type_name(), $sformatf("******************** UART RX Agent Coverage = %0.2f %% *********************",  UartRxCovergroup.get_coverage()), UVM_NONE);
-endfunction: report_phase
+  //--------------------------------------------------------------------------------------------
+  // Function: report_phase
+  //  Used for reporting the coverage instance percentage values
+  //--------------------------------------------------------------------------------------------
+  function void  UartRxCoverage::report_phase(uvm_phase phase);
+    `uvm_info(get_type_name(), $sformatf("******************** UART RX Agent Coverage = %0.2f %% *********************",  UartRxCovergroup.get_coverage()), UVM_NONE);
+  endfunction: report_phase
 
 `endif
