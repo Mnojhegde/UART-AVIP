@@ -5,14 +5,14 @@
 // A test for 13 sampling condition
 //--------------------------------------------------------------------------------------------
 class UartSample13BaudRate19200Datatype5EvenParityStopbit1 extends UartBaseTest;
-   `uvm_component_utils(UartSample13BaudRate19200Datatype5EvenParityStopbit1)
-    UartVirtualBaseSequence uartVirtualBaseSequence;
-    //-------------------------------------------------------
-    // Externally defined Tasks and Functions
-    //-------------------------------------------------------
-    extern function new(string name = "UartSample13BaudRate19200Datatype5EvenParityStopbit1" , uvm_component parent = null);
-    extern virtual function void  build_phase(uvm_phase phase);
-    extern virtual task run_phase(uvm_phase phase);
+	`uvm_component_utils(UartSample13BaudRate19200Datatype5EvenParityStopbit1)
+	UartVirtualBaseSequence uartVirtualBaseSequence;
+//-------------------------------------------------------
+// Externally defined Tasks and Functions
+//-------------------------------------------------------
+	extern function new(string name = "UartSample13BaudRate19200Datatype5EvenParityStopbit1" , uvm_component parent = null);
+	extern virtual function void  build_phase(uvm_phase phase);
+	extern virtual task run_phase(uvm_phase phase);
  
 endclass :UartSample13BaudRate19200Datatype5EvenParityStopbit1
 //--------------------------------------------------------------------------------------------
@@ -33,8 +33,8 @@ endfunction  : new
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
 function void UartSample13BaudRate19200Datatype5EvenParityStopbit1 :: build_phase(uvm_phase phase);
-  super.build_phase(phase);
-   uartEnvConfig.uartTxAgentConfig.uartOverSamplingMethod =OVERSAMPLING_13;
+	super.build_phase(phase);
+	uartEnvConfig.uartTxAgentConfig.uartOverSamplingMethod =OVERSAMPLING_13;
   uartEnvConfig.uartTxAgentConfig.uartBaudRate = BAUD_19200;
   uartEnvConfig.uartTxAgentConfig.uartDataType = FIVE_BIT;
   uartEnvConfig.uartTxAgentConfig.uartParityType = EVEN_PARITY;
@@ -48,7 +48,6 @@ function void UartSample13BaudRate19200Datatype5EvenParityStopbit1 :: build_phas
   uartEnvConfig.uartRxAgentConfig.uartStopBit = ONE_BIT;
   uartEnvConfig.uartRxAgentConfig.hasParity = PARITY_ENABLED;
 
- 
 endfunction  : build_phase
 
 //--------------------------------------------------------------------------------------------
@@ -59,6 +58,7 @@ endfunction  : build_phase
 // phase - stores the current phase
 //------------------------------------------------------------------------------------------
 task UartSample13BaudRate19200Datatype5EvenParityStopbit1:: run_phase(uvm_phase phase);
-   super.run_phase(phase);
-  endtask : run_phase
+	super.run_phase(phase);
+endtask : run_phase
+
 `endif 
