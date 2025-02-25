@@ -21,8 +21,8 @@ module UartRxAgentBfm(UartIf uartIf);
   //-------------------------------------------------------
   
   UartRxDriverBfm uartRxDriverBfm (.clk(uartIf.clk),
-                                     .reset(uartIf.reset),
-                                     .rx(uartIf.rx)
+                                   .reset(uartIf.reset),
+                                   .rx(uartIf.rx)
   );
 
   //-------------------------------------------------------
@@ -30,8 +30,8 @@ module UartRxAgentBfm(UartIf uartIf);
   //-------------------------------------------------------
   
  UartRxMonitorBfm uartRxMonitorBfm (.clk(uartIf.clk),
-                                     .reset(uartIf.reset),
-                                     .rx(uartIf.rx)
+                                    .reset(uartIf.reset),
+                                    .rx(uartIf.tx)
   );
 
 
