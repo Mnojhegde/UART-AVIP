@@ -128,85 +128,56 @@ interface UartTxMonitorBfm (input  logic   clk,
   task Deserializer(inout UartTxPacketStruct uartTxPacketStruct, inout UartConfigStruct uartConfigStruct);
 		// sampling start bit 
 	  @(negedge tx);
-        if(uartConfigStruct.OverSampledBaudFrequencyClk==1)begin
-        	repeat(uartConfigStruct.uartOverSamplingMethod/2) @(posedge baudClk); 
-					uartTransmitterState = STARTBIT;
+			repeat(uartConfigStruct.uartOverSamplingMethod/2) @(posedge baudClk); 
+			uartTransmitterState = STARTBIT;
+			concatData={concatData,tx};
+	
+	
+			// sampling data bits 
+			for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
+				repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk); begin
+					uartTxPacketStruct.transmissionData[i] = tx;
 					concatData={concatData,tx};
+					uartTransmitterState = UartTransmitterStateEnum'(i+3);
+				end
+			end
 	
-
-					// sampling data bits 
-					for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
-          	repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk); begin
-							uartTxPacketStruct.transmissionData[i] = tx;
-							concatData={concatData,tx};
-							uartTransmitterState = UartTransmitterStateEnum'(i+3);
-          	end
-        	end
-
-					// sampling parity bit 
-        	if(uartConfigStruct.uartParityEnable ==1) begin
-        		repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
-						uartTxPacketStruct.parity = tx;
-						concatData={concatData,tx};
-						uartTransmitterState = PARITYBIT;
-						parityCheck(uartConfigStruct,uartTxPacketStruct,tx);
-	      	end
-					
-					// sampling stop bit	
-	        repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
-						concatData={concatData,tx};
+			// sampling parity bit 
+			if(uartConfigStruct.uartParityEnable ==1) begin
+				repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+				uartTxPacketStruct.parity = tx;
+				concatData={concatData,tx};
+				uartTransmitterState = PARITYBIT;
+				parityCheck(uartConfigStruct,uartTxPacketStruct,tx);
+			end
+			
+			// sampling stop bit	
+			repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+				concatData={concatData,tx};
+				stopBitCheck(uartTxPacketStruct,uartConfigStruct,tx);
+				
+				if(uartConfigStruct.uartStopBit == 2) begin
+					repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+					concatData={concatData,tx};
+					if(uartTxPacketStruct.framingError == 0) begin
 						stopBitCheck(uartTxPacketStruct,uartConfigStruct,tx);
-						
-						if(uartConfigStruct.uartStopBit == 2) begin
-							repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
-							concatData={concatData,tx};
-							if(uartTxPacketStruct.framingError == 0) begin
-								stopBitCheck(uartTxPacketStruct,uartConfigStruct,tx);
-							end
-						end
+					end
+				end
 	
-					numOfZeroes=$countones(~(concatData));
-					if(uartConfigStruct.uartStopBit == 2)
-						breakZeroCount=uartConfigStruct.uartParityEnable ? (uartConfigStruct.uartDataType)+4 :(uartConfigStruct.uartDataType)+3;
-					else
-						breakZeroCount=uartConfigStruct.uartParityEnable ? (uartConfigStruct.uartDataType)+3 :(uartConfigStruct.uartDataType)+2;
-					if(numOfZeroes == breakZeroCount)
-						uartTxPacketStruct.breakingError =1;
-				  else 
-						uartTxPacketStruct.breakingError =0;
-
-					repeat(uartConfigStruct.uartOverSamplingMethod/2) @(posedge baudClk);
-					concatData = 'b x;
-					numOfZeroes =0;
-					uartTransmitterState = IDLE;
-        end
-		
-        else if(uartConfigStruct.OverSampledBaudFrequencyClk==0)begin
-					// sampling start bit 
-					repeat(1)@(posedge baudClk);
-					uartTransmitterState = STARTBIT;
-					
-					// sampling data bits 
-					for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
-          	@(posedge baudClk)begin
-		  				uartTxPacketStruct.transmissionData[i] = tx;
-							uartTransmitterState = UartTransmitterStateEnum'(i+3);
-        		end
-        	end
-
-					// sampling parity bit 
-					if(uartConfigStruct.uartParityEnable ==1) begin
-        		@(posedge baudClk)
-         		uartTxPacketStruct.parity = tx;
-						uartTransmitterState = PARITYBIT;
-		 				parityCheck(uartConfigStruct,uartTxPacketStruct,tx);
-        	end
-
-					// sampling stop bit	
-        	@(posedge baudClk);
-					uartTransmitterState = STOPBIT;
-		      stopBitCheck(uartTxPacketStruct,uartConfigStruct,tx);
-      	end
+			numOfZeroes=$countones(~(concatData));
+			if(uartConfigStruct.uartStopBit == 2)
+				breakZeroCount=uartConfigStruct.uartParityEnable ? (uartConfigStruct.uartDataType)+4 :(uartConfigStruct.uartDataType)+3;
+			else
+				breakZeroCount=uartConfigStruct.uartParityEnable ? (uartConfigStruct.uartDataType)+3 :(uartConfigStruct.uartDataType)+2;
+			if(numOfZeroes == breakZeroCount)
+				uartTxPacketStruct.breakingError =1;
+			else 
+				uartTxPacketStruct.breakingError =0;
+	
+			repeat(uartConfigStruct.uartOverSamplingMethod/2) @(posedge baudClk);
+			concatData = 'b x;
+			numOfZeroes =0;
+			uartTransmitterState = IDLE; 
     endtask
 	
 		task stopBitCheck (inout  UartTxPacketStruct uartTxPacketStruct,input UartConfigStruct uartConfigStruct,input bit tx);
