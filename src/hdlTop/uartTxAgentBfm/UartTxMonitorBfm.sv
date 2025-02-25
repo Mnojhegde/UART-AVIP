@@ -62,19 +62,19 @@ interface UartTxMonitorBfm (input  logic   clk,
   // Task: BaudClkGenerator
   // this task will generate baud clk based on baud divider
   //-------------------------------------------------------------------
-    task BaudClkGenerator(input int baudDiv);
-      static int count=0;
-      forever begin
-        @(posedge clk or negedge clk)
-        if(count == (baudDiv-1))begin
-          count <= 0;
-          baudClk <= ~baudClk;
-        end
-        else begin
-          count <= count +1;
-        end
-      end
-    endtask
+	task BaudClkGenerator(input int baudDiv);
+		static int count=0;
+		forever begin
+			@(posedge clk or negedge clk)
+			if(count == (baudDiv-1))begin
+				count <= 0;
+				baudClk <= ~baudClk;
+			end
+			else begin
+				count <= count +1;
+			end
+		end
+	endtask
 	
   //-------------------------------------------------------
   // Task: WaitForReset
@@ -111,14 +111,14 @@ interface UartTxMonitorBfm (input  logic   clk,
 	// Task: To compute Odd Parity
 	//-------------------------------------------------------
 	function oddParityCompute(input UartConfigStruct uartConfigStruct,input UartTxPacketStruct uartTxPacketStruct);
-	  bit parity;
-	  case(uartConfigStruct.uartDataType)
-	      FIVE_BIT: parity = ~^(uartTxPacketStruct.transmissionData[4:0]);
-	      SIX_BIT :parity = ~^(uartTxPacketStruct.transmissionData[5:0]);
-	      SEVEN_BIT: parity = ~^(uartTxPacketStruct.transmissionData[6:0]);
-	      EIGHT_BIT : parity = ~^(uartTxPacketStruct.transmissionData[7:0]);
-	  endcase
-	return parity;
+		bit parity;
+		case(uartConfigStruct.uartDataType)
+			FIVE_BIT: parity = ~^(uartTxPacketStruct.transmissionData[4:0]);
+			SIX_BIT :parity = ~^(uartTxPacketStruct.transmissionData[5:0]);
+			SEVEN_BIT: parity = ~^(uartTxPacketStruct.transmissionData[6:0]);
+			EIGHT_BIT : parity = ~^(uartTxPacketStruct.transmissionData[7:0]);
+		endcase
+		return parity;
 	endfunction
 	
   //-------------------------------------------------------
