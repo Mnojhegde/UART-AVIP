@@ -51,7 +51,7 @@ function void UartTxDriverProxy :: build_phase( uvm_phase phase);
     begin 
       `uvm_fatal(get_type_name(),$sformatf("FAILED TO GET AGENT CONFIG"))
     end 
-    uartTxTransaction = UartTxTransaction :: type_id :: create("uartTxTransaction");
+  uartTxTransaction = UartTxTransaction :: type_id :: create("uartTxTransaction");
 endfunction : build_phase
 		
 //--------------------------------------------------------------------------------------------
@@ -66,7 +66,7 @@ task UartTxDriverProxy :: run_phase(uvm_phase phase);
 	
 		fork 
 			begin 
-				// baud clck generation
+				// baud clock generation
 				uartTxDriverBfm.GenerateBaudClk(uartConfigStruct);
 			end
 			begin 
