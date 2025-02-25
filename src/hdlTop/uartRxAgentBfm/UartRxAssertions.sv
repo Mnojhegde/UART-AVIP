@@ -89,7 +89,7 @@ interface UartRxAssertions ( input bit uartClk , input logic uartRx);
 
   property start_bit_detection_property;
     @(posedge  uartClk) disable iff(!(uartStartDetectInitiation))
-    (!($isunknown(uartRx)) && uartRx) |-> first_match( (##[0:$] $fell(uartRx)));
+    (!($isunknown(uartRx)) && uartRx) |-> first_match( (##[0:500] $fell(uartRx)));
 
   endproperty
 
@@ -156,8 +156,8 @@ interface UartRxAssertions ( input bit uartClk , input logic uartRx);
     end 
   property stop_bit_detection_property;
     @(posedge uartClk) disable iff (!(uartStopDetectInitiation))
-    if(overSamplingMethod==OVERSAMPLING_16) ##16 ($rose(uartRx) || $stable(uartRx))
-    else if(overSamplingMethod==OVERSAMPLING_13) ##13 ($rose(uartRx) || $stable(uartRx));
+    if(overSamplingMethod==OVERSAMPLING_16) ##16 uartRx
+    else if(overSamplingMethod==OVERSAMPLING_13) ##13 uartRx;
   endproperty
 
   CHECK_FOR_STOP_BIT : assert property(stop_bit_detection_property)begin 
