@@ -1,13 +1,13 @@
-import UartGlobalPkg::*;
-//--------------------------------------------------------------------------------------------
-// Interface : UartRxMonitorBfm
-//  Connects the master monitor bfm with the master monitor prox
-//--------------------------------------------------------------------------------------------
-interface UartRxMonitorBfm (input  logic   clk,
-                            input  logic reset,
-                            input  logic   rx
-                           );
-	
+	import UartGlobalPkg::*;
+	//--------------------------------------------------------------------------------------------
+	// Interface : UartRxMonitorBfm
+	//  Connects the master monitor bfm with the master monitor prox
+	//--------------------------------------------------------------------------------------------
+	interface UartRxMonitorBfm (input  logic   clk,
+	                            input  logic reset,
+	                            input  logic   rx
+	                           );
+		
   //-------------------------------------------------------
   // Importing uvm package file
   //-------------------------------------------------------
@@ -35,7 +35,7 @@ interface UartRxMonitorBfm (input  logic   clk,
   end
 
   //------------------------------------------------------------------
-  // Task: Baud_div
+  // Task: GenerateBaudClk
   // this task will calculate the baud divider based on sys clk frequency
   //-------------------------------------------------------------------
   task GenerateBaudClk(inout UartConfigStruct uartConfigStruct);
@@ -51,10 +51,10 @@ interface UartRxMonitorBfm (input  logic   clk,
 		clkPeriod = clkPeriodStopTime - clkPeriodStartTime;
 		clkFrequency = ( 10 **9 )/ clkPeriod;
 		if(uartConfigStruct.OverSampledBaudFrequencyClk==1)begin
-		baudDivisor = (clkFrequency)/(uartConfigStruct.uartOverSamplingMethod * uartConfigStruct.uartBaudRate);
+			baudDivisor = (clkFrequency)/(uartConfigStruct.uartOverSamplingMethod * uartConfigStruct.uartBaudRate);
 		end
 		else begin
-		baudDivisor = (clkFrequency)/(uartConfigStruct.uartBaudRate);
+			baudDivisor = (clkFrequency)/(uartConfigStruct.uartBaudRate);
 		end
 		BaudClkGenerator(baudDivisor);
   endtask
@@ -94,6 +94,9 @@ interface UartRxMonitorBfm (input  logic   clk,
 		Deserializer(uartRxPacketStruct,uartConfigStruct);
 	endtask
 
+	//--------------------------------------------------------------------------------------------
+	// Function to compute Even Parity
+	//--------------------------------------------------------------------------------------------
 	function evenParityCompute(input UartConfigStruct uartConfigStruct,input UartRxPacketStruct uartRxPacketStruct);
 	  bit parity;
 	  case(uartConfigStruct.uartDataType)
@@ -102,9 +105,12 @@ interface UartRxMonitorBfm (input  logic   clk,
 	    SEVEN_BIT: parity = ^(uartRxPacketStruct.receivingData[6:0]);
 	    EIGHT_BIT : parity = ^(uartRxPacketStruct.receivingData[7:0]);
 	  endcase
-	return parity;
+		return parity;
 	endfunction
-	
+
+	//--------------------------------------------------------------------------------------------
+	// Function to compute Even Parity
+	//--------------------------------------------------------------------------------------------
 	function oddParityCompute(input UartConfigStruct uartConfigStruct,input UartRxPacketStruct uartRxPacketStruct);
 	  bit parity;
 	  case(uartConfigStruct.uartDataType)
@@ -113,7 +119,7 @@ interface UartRxMonitorBfm (input  logic   clk,
 	      SEVEN_BIT: parity = ~^(uartRxPacketStruct.receivingData[6:0]);
 	      EIGHT_BIT : parity = ~^(uartRxPacketStruct.receivingData[7:0]);
 	  endcase
-	return parity;
+		return parity;
 	endfunction
 	
   //-------------------------------------------------------
@@ -169,7 +175,10 @@ interface UartRxMonitorBfm (input  logic   clk,
 			numOfZeroes =0;
 			uartTransmitterState = IDLE;		
   endtask
-	
+
+	//--------------------------------------------------------------------------------------------
+	// Task to check stop bit
+	//--------------------------------------------------------------------------------------------
 	task stopBitCheck (inout  UartRxPacketStruct uartRxPacketStruct,input UartConfigStruct uartConfigStruct,input bit rx);
 		if (rx == 1) begin
 			uartRxPacketStruct.framingError = 0;
@@ -180,7 +189,10 @@ interface UartRxMonitorBfm (input  logic   clk,
 			uartTransmitterState = INVALIDSTOPBIT;
 		end
   endtask
-		
+
+	//--------------------------------------------------------------------------------------------
+	// Task to check parity
+	//--------------------------------------------------------------------------------------------
 	task parityCheck(inout UartConfigStruct uartConfigStruct,inout UartRxPacketStruct uartRxPacketStruct,input bit rx);
 		int cal_parity;
 		if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
@@ -196,4 +208,5 @@ interface UartRxMonitorBfm (input  logic   clk,
 			uartRxPacketStruct.parityError=1;
 		end
 	endtask:parityCheck
-endinterface : UartRxMonitorBfm
+	
+ endinterface : UartRxMonitorBfm
