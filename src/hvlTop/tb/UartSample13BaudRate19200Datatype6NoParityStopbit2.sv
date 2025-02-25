@@ -7,10 +7,10 @@
 class UartSample13BaudRate19200Datatype6NoParityStopbit2 extends UartBaseTest;
   `uvm_component_utils(UartSample13BaudRate19200Datatype6NoParityStopbit2)
     UartVirtualBaseSequence uartVirtualBaseSequence;
-    //-------------------------------------------------------
-    // Externally defined Tasks and Functions
-    //-------------------------------------------------------
-  extern function new(string name = "UartSample13BaudRate19200Datatype6NoParityStopbit2" , uvm_component parent = null);
+//-------------------------------------------------------
+// Externally defined Tasks and Functions
+//-------------------------------------------------------
+    extern function new(string name = "UartSample13BaudRate19200Datatype6NoParityStopbit2" , uvm_component parent = null);
     extern virtual function void  build_phase(uvm_phase phase);
     extern virtual task run_phase(uvm_phase phase);
 
@@ -22,7 +22,7 @@ endclass :UartSample13BaudRate19200Datatype6NoParityStopbit2
 //
 // parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
-  function UartSample13BaudRate19200Datatype6NoParityStopbit2:: new(string name = "UartSample13BaudRate19200Datatype6NoParityStopbit2" , uvm_component parent = null);
+function UartSample13BaudRate19200Datatype6NoParityStopbit2:: new(string name = "UartSample13BaudRate19200Datatype6NoParityStopbit2" , uvm_component parent = null);
   super.new(name,parent);
 endfunction  : new
 //--------------------------------------------------------------------------------------------
@@ -40,7 +40,7 @@ function void UartSample13BaudRate19200Datatype6NoParityStopbit2:: build_phase(u
   uartEnvConfig.uartTxAgentConfig.uartStopBit = TWO_BIT;
   uartEnvConfig.uartTxAgentConfig.hasParity=PARITY_DISABLED;
 
-     uartEnvConfig.uartRxAgentConfig.uartOverSamplingMethod =OVERSAMPLING_13;
+  uartEnvConfig.uartRxAgentConfig.uartOverSamplingMethod =OVERSAMPLING_13;
   uartEnvConfig.uartRxAgentConfig.uartBaudRate = BAUD_19200;
   uartEnvConfig.uartRxAgentConfig.uartDataType = SIX_BIT;
   uartEnvConfig.uartRxAgentConfig.uartStopBit = TWO_BIT;
@@ -57,5 +57,5 @@ endfunction  : build_phase
 //------------------------------------------------------------------------------------------
 task UartSample13BaudRate19200Datatype6NoParityStopbit2:: run_phase(uvm_phase phase);
   super.run_phase(phase);
-  endtask : run_phase
+endtask : run_phase
 `endif
