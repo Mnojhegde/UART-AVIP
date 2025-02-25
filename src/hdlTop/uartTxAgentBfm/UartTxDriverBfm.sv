@@ -12,7 +12,6 @@ interface UartTxDriverBfm (input  logic   clk,
                            input  logic   reset,
                            output logic   tx
                           );
-
 	//-------------------------------------------------------
   // Importing uvm package file
   //-------------------------------------------------------
@@ -59,7 +58,7 @@ interface UartTxDriverBfm (input  logic   clk,
   end
 
   //------------------------------------------------------------------
-  // Task: bauddivCalculation
+  // Task: GenerateBaudClk
   // this task will calculate the baud divider based on sys clk frequency
   //-------------------------------------------------------------------
    task GenerateBaudClk(inout UartConfigStruct uartConfigStruct);
@@ -129,10 +128,7 @@ interface UartTxDriverBfm (input  logic   clk,
 		SampleData(uartTxPacketStruct , uartConfigStruct);
   endtask: DriveToBfm
   
-  //--------------------------------------------------------------------------------------------
-  // Task: sample_data
-  //  This task will send the data to the uart interface based on oversamplingClk
-  //--------------------------------------------------------------------------------------------
+  // Task: To compute Even Parity
 	task evenParityCompute(input UartConfigStruct uartConfigStruct,input UartTxPacketStruct uartTxPacketStruct,output tx);
 	  case(uartConfigStruct.uartDataType)
 	    FIVE_BIT: tx = ^(uartTxPacketStruct.transmissionData[4:0]);
@@ -141,7 +137,8 @@ interface UartTxDriverBfm (input  logic   clk,
 	    EIGHT_BIT : tx = ^(uartTxPacketStruct.transmissionData[7:0]);
 	  endcase
 	endtask 
-
+	
+  // Task: To compute Odd Parity
 	task oddParityCompute(input UartConfigStruct uartConfigStruct,input UartTxPacketStruct uartTxPacketStruct,output tx);
 	  case(uartConfigStruct.uartDataType)
 	      FIVE_BIT: tx = ~^(uartTxPacketStruct.transmissionData[4:0]);
@@ -151,7 +148,10 @@ interface UartTxDriverBfm (input  logic   clk,
 	  endcase
 	endtask
 
-
+  //--------------------------------------------------------------------------------------------
+  // Task: sample_data
+  //  This task will send the data to the uart interface based on oversamplingClk
+  //--------------------------------------------------------------------------------------------
 
 	task SampleData(inout UartTxPacketStruct uartTxPacketStruct , inout UartConfigStruct uartConfigStruct);
 		repeat(1) @(posedge baudClk);
