@@ -41,8 +41,7 @@ class UartTxAgent extends uvm_component;
 endclass : UartTxAgent
 
 //--------------------------------------------------------------------------------------------
-// Construct: new
-//
+// Constructor: new
 // Parameters: 
 // name - instance name of the UartTxAgent
 // parent - parent under which this component is created
@@ -73,8 +72,7 @@ function void UartTxAgent :: build_phase( uvm_phase phase);
   
   if(uartTxAgentConfig.hasCoverage == 1)
     uartTxCoverage = UartTxCoverage :: type_id :: create("uartTxCoverage",this);
-  
-  uartTxAgentAnalysisPort = new("uartTxAgentAnalysisPort",this);
+  	uartTxAgentAnalysisPort = new("uartTxAgentAnalysisPort",this);
 endfunction : build_phase
 
 //--------------------------------------------------------------------------------------------
@@ -96,4 +94,3 @@ function void UartTxAgent :: connect_phase( uvm_phase phase);
 endfunction : connect_phase
 
 `endif
-
