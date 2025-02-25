@@ -7,9 +7,9 @@
 class UartSample13BaudRate9600Datatype6EvenParityStopbit2 extends UartBaseTest;
    `uvm_component_utils(UartSample13BaudRate9600Datatype6EvenParityStopbit2)
     UartVirtualBaseSequence uartVirtualBaseSequence;
-    //-------------------------------------------------------
-    // Externally defined Tasks and Functions
-    //-------------------------------------------------------
+//-------------------------------------------------------
+// Externally defined Tasks and Functions
+//-------------------------------------------------------
     extern function new(string name = "UartSample13BaudRate9600Datatype6EvenParityStopbit2" , uvm_component parent = null);
     extern virtual function void  build_phase(uvm_phase phase);
     extern virtual task run_phase(uvm_phase phase);
@@ -34,14 +34,14 @@ endfunction  : new
 //--------------------------------------------------------------------------------------------
 function void UartSample13BaudRate9600Datatype6EvenParityStopbit2 :: build_phase(uvm_phase phase);
   super.build_phase(phase);
-   uartEnvConfig.uartTxAgentConfig.uartOverSamplingMethod =OVERSAMPLING_13;
+  uartEnvConfig.uartTxAgentConfig.uartOverSamplingMethod =OVERSAMPLING_13;
   uartEnvConfig.uartTxAgentConfig.uartBaudRate = BAUD_9600;
   uartEnvConfig.uartTxAgentConfig.uartDataType = SIX_BIT;
   uartEnvConfig.uartTxAgentConfig.uartParityType = EVEN_PARITY;
   uartEnvConfig.uartTxAgentConfig.uartStopBit = TWO_BIT;
   uartEnvConfig.uartTxAgentConfig.hasParity = PARITY_ENABLED;
 
-     uartEnvConfig.uartRxAgentConfig.uartOverSamplingMethod =OVERSAMPLING_13;
+  uartEnvConfig.uartRxAgentConfig.uartOverSamplingMethod =OVERSAMPLING_13;
   uartEnvConfig.uartRxAgentConfig.uartBaudRate = BAUD_9600;
   uartEnvConfig.uartRxAgentConfig.uartDataType = SIX_BIT;
   uartEnvConfig.uartRxAgentConfig.uartParityType = EVEN_PARITY;
