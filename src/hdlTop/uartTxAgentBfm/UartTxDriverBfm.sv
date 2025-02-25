@@ -32,12 +32,8 @@ interface UartTxDriverBfm (input  logic   clk,
   //baud clock for uart transmisson/reception	
   bit baudClk;
   
-  //Variable: count
-  //to count the no of clock cycles
-  int count=0;
-
   //Variable: baudDivisor
-  //used to generate the baud clock
+	//used to generate the baud clock
   int baudDivisor;
 
   //Variable: baudDivider
@@ -67,7 +63,6 @@ interface UartTxDriverBfm (input  logic   clk,
       real clkPeriod;
       real clkFrequency;
       int baudDivisor;
-      int count;
 
       @(posedge clk);
       clkPeriodStartTime = $realtime;
@@ -156,125 +151,80 @@ interface UartTxDriverBfm (input  logic   clk,
 	task SampleData(inout UartTxPacketStruct uartTxPacketStruct , inout UartConfigStruct uartConfigStruct);
 		repeat(1) @(posedge baudClk);
 		// driving start bit 
-	  if(uartConfigStruct.OverSampledBaudFrequencyClk ==1)begin 
-	    tx = START_BIT;
-	    uartTransmitterState = STARTBIT;
+		tx = START_BIT;
+		uartTransmitterState = STARTBIT;
 
-			// driving data bits 
-	    for( int i=0 ; i< uartConfigStruct.uartDataType ; i++) begin
-				repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
-	      tx = uartTxPacketStruct.transmissionData[i];
-	      uartTransmitterState = UartTransmitterStateEnum'(i + 3);
-	    end
+		// driving data bits 
+		for( int i=0 ; i< uartConfigStruct.uartDataType ; i++) begin
+			repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+			tx = uartTxPacketStruct.transmissionData[i];
+			uartTransmitterState = UartTransmitterStateEnum'(i + 3);
+		end
 
-			// driving parity bit
-	    if(uartConfigStruct.uartParityEnable ==1) begin 
-	      if(uartConfigStruct.uartParityErrorInjection==0) begin 
-	        if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
-						repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
-		  			evenParityCompute(uartConfigStruct,uartTxPacketStruct,tx);
-						uartTransmitterState = PARITYBIT;
-	        end
-	        else if (uartConfigStruct.uartParityType == ODD_PARITY) begin 
-						repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
-		  			oddParityCompute(uartConfigStruct,uartTxPacketStruct,tx);
-						uartTransmitterState = PARITYBIT;
-	        end 
-	      end
-	      else begin 
-	        if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
-						repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
-	        	oddParityCompute(uartConfigStruct,uartTxPacketStruct,tx);
-						uartTransmitterState = PARITYBIT;
-	        end 
-	        else if(uartConfigStruct.uartParityType == ODD_PARITY) begin
-						repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
-		  			evenParityCompute(uartConfigStruct,uartTxPacketStruct,tx);
-						uartTransmitterState = PARITYBIT;
-	      	end 
-	      end 
-	    end
-
-			// driving stop bit
-		  repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
-			if(uartConfigStruct.uartFramingErrorInjection == 0 && uartConfigStruct.uartBreakingErrorInjection == 0)begin 
-	    	tx = STOP_BIT;  
-	    	uartTransmitterState = STOPBIT;
-				repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
-				if(uartConfigStruct.uartStopBit == TWO_BIT) begin
-					uartTransmitterState = STOPBIT;
+		// driving parity bit
+		if(uartConfigStruct.uartParityEnable ==1) begin 
+			if(uartConfigStruct.uartParityErrorInjection==0) begin 
+				if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
 					repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+					evenParityCompute(uartConfigStruct,uartTxPacketStruct,tx);
+					uartTransmitterState = PARITYBIT;
 				end
-	   		uartTransmitterState = IDLE;
-	    end 
-						
-			else if(uartConfigStruct.uartFramingErrorInjection == 1 && uartConfigStruct.uartBreakingErrorInjection == 0) begin
-	    	tx='b x;
+				else if (uartConfigStruct.uartParityType == ODD_PARITY) begin 
+					repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+					oddParityCompute(uartConfigStruct,uartTxPacketStruct,tx);
+					uartTransmitterState = PARITYBIT;
+				end 
+			end
+			else begin 
+				if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
+					repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+					oddParityCompute(uartConfigStruct,uartTxPacketStruct,tx);
+					uartTransmitterState = PARITYBIT;
+				end 
+				else if(uartConfigStruct.uartParityType == ODD_PARITY) begin
+					repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+					evenParityCompute(uartConfigStruct,uartTxPacketStruct,tx);
+					uartTransmitterState = PARITYBIT;
+				end 
+			end 
+		end
+
+		// driving stop bit
+		repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+		if(uartConfigStruct.uartFramingErrorInjection == 0 && uartConfigStruct.uartBreakingErrorInjection == 0)begin 
+			tx = STOP_BIT;  
+			uartTransmitterState = STOPBIT;
+			repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+			if(uartConfigStruct.uartStopBit == TWO_BIT) begin
 				uartTransmitterState = STOPBIT;
-		    repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
-				if(uartConfigStruct.uartStopBit == TWO_BIT) begin
-					uartTransmitterState = STOPBIT;
-					repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
-				end
-				tx=1;
-				uartTransmitterState = IDLE;
-	    end
-						
-			else if(uartConfigStruct.uartBreakingErrorInjection == 1)begin 
-	    	tx = 'b 0;  
-	    	uartTransmitterState = STOPBIT;
 				repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
-				if(uartConfigStruct.uartStopBit == TWO_BIT) begin
-					uartTransmitterState = STOPBIT;
-					repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
-				end
-				tx=1;
-	   		uartTransmitterState = IDLE;
-	    end 
-	  end
-		
-	  else if(uartConfigStruct.OverSampledBaudFrequencyClk ==0)begin
-			// driving start bit
-	    @(posedge baudClk);
-	    tx =START_BIT;
-	    uartTransmitterState = STARTBIT;
-
-			// driving data bits
-	    for( int i=0 ; i< uartConfigStruct.uartDataType ; i++) begin
-	      @(posedge baudClk)
-	      tx = uartTxPacketStruct.transmissionData[i];
-				uartTransmitterState = UartTransmitterStateEnum'(i+3);
-	    end 
-
-			// driving parity bit
-	    if(uartConfigStruct.uartParityEnable ==1) begin
-	      if(uartConfigStruct.uartParityErrorInjection==0) begin
-	        if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
-		  			@(posedge baudClk)
-		  			evenParityCompute(uartConfigStruct,uartTxPacketStruct,tx);
-					end 
-					else if(uartConfigStruct.uartParityType == ODD_PARITY) begin
-		  			@(posedge baudClk)
-		  			oddParityCompute(uartConfigStruct,uartTxPacketStruct,tx);
-					end 
-	  		end 
-	      else begin 
-	        if(uartConfigStruct.uartParityType == EVEN_PARITY)begin
-		  			@(posedge baudClk)
-		  			oddParityCompute(uartConfigStruct,uartTxPacketStruct,tx);
-	        end 
-					else if(uartConfigStruct.uartParityType == ODD_PARITY) begin
-		  			@(posedge baudClk)
-		  			evenParityCompute(uartConfigStruct,uartTxPacketStruct,tx);
-					end 
-	  		end 
-	    end 
-
-			// driving stop bit
-	    @(posedge baudClk)
-	    tx =STOP_BIT;
-	    uartTransmitterState = STOPBIT;
-	  end 
+			end
+			uartTransmitterState = IDLE;
+		end 
+					
+		else if(uartConfigStruct.uartFramingErrorInjection == 1 && uartConfigStruct.uartBreakingErrorInjection == 0) begin
+			tx='b x;
+			uartTransmitterState = STOPBIT;
+			repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+			if(uartConfigStruct.uartStopBit == TWO_BIT) begin
+				uartTransmitterState = STOPBIT;
+				repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+			end
+			tx=1;
+			uartTransmitterState = IDLE;
+		end
+					
+		else if(uartConfigStruct.uartBreakingErrorInjection == 1)begin 
+			tx = 'b 0;  
+			uartTransmitterState = STOPBIT;
+			repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+			if(uartConfigStruct.uartStopBit == TWO_BIT) begin
+				uartTransmitterState = STOPBIT;
+				repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk);
+			end
+			tx=1;
+			uartTransmitterState = IDLE;
+		end 
 	endtask
 	
 endinterface : UartTxDriverBfm
