@@ -7,9 +7,9 @@
 class UartSample13BaudRate19200Datatype6NoParityStopbit1 extends UartBaseTest;
   `uvm_component_utils(UartSample13BaudRate19200Datatype6NoParityStopbit1)
     UartVirtualBaseSequence uartVirtualBaseSequence;
-    //-------------------------------------------------------
-    // Externally defined Tasks and Functions
-    //-------------------------------------------------------
+//-------------------------------------------------------
+// Externally defined Tasks and Functions
+//-------------------------------------------------------
   extern function new(string name = "UartSample13BaudRate19200Datatype6NoParityStopbit1" , uvm_component parent = null);
     extern virtual function void  build_phase(uvm_phase phase);
     extern virtual task run_phase(uvm_phase phase);
@@ -40,7 +40,7 @@ function void UartSample13BaudRate19200Datatype6NoParityStopbit1:: build_phase(u
   uartEnvConfig.uartTxAgentConfig.uartStopBit = ONE_BIT;
   uartEnvConfig.uartTxAgentConfig.hasParity=PARITY_DISABLED;
 
-     uartEnvConfig.uartRxAgentConfig.uartOverSamplingMethod =OVERSAMPLING_13;
+  uartEnvConfig.uartRxAgentConfig.uartOverSamplingMethod =OVERSAMPLING_13;
   uartEnvConfig.uartRxAgentConfig.uartBaudRate = BAUD_19200;
   uartEnvConfig.uartRxAgentConfig.uartDataType = SIX_BIT;
   uartEnvConfig.uartRxAgentConfig.uartStopBit = ONE_BIT;
@@ -57,5 +57,5 @@ endfunction  : build_phase
 //------------------------------------------------------------------------------------------
 task UartSample13BaudRate19200Datatype6NoParityStopbit1:: run_phase(uvm_phase phase);
   super.run_phase(phase);
-  endtask : run_phase
+endtask : run_phase
 `endif
