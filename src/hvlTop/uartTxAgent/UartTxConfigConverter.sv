@@ -25,5 +25,4 @@ function void UartTxConfigConverter :: from_Class(input UartTxAgentConfig uartTx
   uartConfigStruct.uartStopBit = uartTxAgentConfig.uartStopBit;
 endfunction : from_Class
 
-
 `endif
