@@ -4,10 +4,10 @@
 import UartGlobalPkg :: *;
 //import UartTxCoverParameter :: *;
 interface UartTxAssertions ( input bit uartClk , input logic uartTx);
-  import uvm_pkg :: *;
-  `include "uvm_macros.svh"
-  import UartTxPkg ::UartTxAgentConfig;
-  UartTxAgentConfig uartTxAgentConfig;
+import uvm_pkg :: *;
+`include "uvm_macros.svh"
+import UartTxPkg ::UartTxAgentConfig;
+UartTxAgentConfig uartTxAgentConfig;
 
   int localWidth = 0;
   bit uartStopDetectInitiation;
@@ -33,18 +33,19 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
      overSamplingMethod = uartTxAgentConfig.uartOverSamplingMethod;
   end 
 
+  // Function to compute Even Parity
   function evenParityCompute();
     case(uartTxAgentConfig.uartDataType)
-    FIVE_BIT : parity=^(uartLocalData[4:0]);
-    SIX_BIT : parity=^(uartLocalData[5:0]);
-    SEVEN_BIT : parity=^(uartLocalData[6:0]);
-    EIGHT_BIT : parity=^(uartLocalData[7:0]);
+      FIVE_BIT : parity=^(uartLocalData[4:0]);
+      SIX_BIT : parity=^(uartLocalData[5:0]);
+      SEVEN_BIT : parity=^(uartLocalData[6:0]);
+      EIGHT_BIT : parity=^(uartLocalData[7:0]);
     endcase
     $display("PARITY IN ASSERTION IS %b",parity);
     return parity;
   endfunction 
   
-  
+  // Function to compute Odd Parity
   function oddParityCompute();
     case(uartTxAgentConfig.uartDataType)
       FIVE_BIT : parity=~^(uartLocalData[4:0]);
@@ -59,17 +60,13 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
   always@(posedge uartClk) begin 
     if(!(uartStartDetectInitiation))begin
       repeat((uartTxAgentConfig.uartOverSamplingMethod)-1)
-       @(posedge uartClk);
-
-      //$display("local width near if %0d @%t",localWidth,$time);
-      if(uartTxAgentConfig.uartDataType !=localWidth)begin 
-      uartLocalData = {uartLocalData,uartTx};
-      //$display("%b",uartLocalData);
-      localWidth++;
-      end
+        @(posedge uartClk);
+        if(uartTxAgentConfig.uartDataType !=localWidth)begin 
+          uartLocalData = {uartLocalData,uartTx};
+          localWidth++;
+        end
 
       if(localWidth == (uartTxAgentConfig.uartDataType))begin
-       //$display("entered inside if check");
         if(uartParityEnabled == 1)begin 
           if(uartEvenOddParity == EVEN_PARITY)begin
             uartEvenParityDetectionInitiation = 1;
@@ -88,17 +85,16 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
           uartStopDetectInitiation = 1;
         end 
       end
-      //localWidth++;
     end
 
   end 
 
+	//Assertion to detect start bit
   property start_bit_detection_property;
     @(posedge  uartClk) disable iff(!(uartStartDetectInitiation))
     (!($isunknown(uartTx)) && uartTx) |-> first_match( (##[0:$] $fell(uartTx)));
-
-  endproperty
-
+	endproperty
+	
   IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS: assert property (start_bit_detection_property)begin 
     if(uartStartDetectInitiation == 1) begin
       $info("*******************************START BIT DETECTED : ASSERTION PASS");
@@ -107,17 +103,17 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
   end 
   else 
     $error("FAILED TO DETECT START BIT : ASSERTION FAILED");
-    
+
+	//Assertion to check for data width
   property data_width_check_property;
     @(posedge uartClk) disable iff(!(uartDataWidthDetectInitiation))
 
     if(overSamplingMethod==OVERSAMPLING_16)  ##16 localWidth == uartLegalDataWidth
-   else if (overSamplingMethod==OVERSAMPLING_13)  ##13 localWidth == uartLegalDataWidth;
-
-   endproperty 
+		else if (overSamplingMethod==OVERSAMPLING_13)  ##13 localWidth == uartLegalDataWidth;
+  endproperty 
 
   CHECK_FOR_DATA_WIDTH_LENGTH : assert property (data_width_check_property)begin
-    $info("*****************************DATA WIDTH IS MATCHING : ASSERTION PASS ");
+		$info("*****************************DATA WIDTH IS MATCHING : ASSERTION PASS ");
     uartDataWidthDetectInitiation = 0;
     uartStartDetectInitiation = 1;
     localWidth=0;
@@ -126,9 +122,9 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
       $error("DATA WIDTH MATCH FAILED : ASSERTION FAILED ");
       uartDataWidthDetectInitiation = 0;
       localWidth=0;
-
-    end 
-
+		end
+		
+  //Assertion to check for even parity
   property even_parity_check;
     @(posedge uartClk) disable iff(!(uartEvenParityDetectionInitiation))
   
@@ -136,7 +132,7 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
     else if(overSamplingMethod==OVERSAMPLING_13) ##13 uartTx==evenParityCompute();
   endproperty 
     
-  CHECK_FOR_EVEN_PROPERTY : assert property (even_parity_check)begin 
+  CHECK_FOR_EVEN_PARITY : assert property (even_parity_check)begin 
     $info("*********************EVEN PARITY IS DETECTED : ASSERTION PASS ");
     uartEvenParityDetectionInitiation = 0;
 
@@ -144,15 +140,16 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
     else begin 
       $error("EVEN PARITY NOT DETECTED : ASSERTION FAIL ");
       uartEvenParityDetectionInitiation = 0;
-    end 
-
+    end
+		
+  //Assertion to check for odd parity
   property odd_parity_check;
     @(posedge uartClk) disable iff(!(uartOddParityDetectionInitiation))
-  if(overSamplingMethod==OVERSAMPLING_16) ##16 uartTx==oddParityCompute()
-  else if(overSamplingMethod==OVERSAMPLING_13) ##13 uartTx==oddParityCompute();
+  	if(overSamplingMethod==OVERSAMPLING_16) ##16 uartTx==oddParityCompute()
+  	else if(overSamplingMethod==OVERSAMPLING_13) ##13 uartTx==oddParityCompute();
   endproperty 
     
-  CHECK_FOR_ODD_PROPERTY : assert property (odd_parity_check)begin 
+  CHECK_FOR_ODD_PARITY : assert property (odd_parity_check)begin 
     $info("***********************8ODD PARITY IS DETECTED : ASSERTION PASS ");
     uartOddParityDetectionInitiation = 0;
     end 
@@ -160,10 +157,12 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
       $error("Odd PARITY NOT DETECTED : ASSERTION FAIL ");
       uartOddParityDetectionInitiation = 0;
     end 
+
+	//Assertion to detect stop bit
   property stop_bit_detection_property;
     @(posedge uartClk) disable iff (!(uartStopDetectInitiation))
-    if(overSamplingMethod==OVERSAMPLING_16) ##16 ($rose(uartTx) || $stable(uartTx))
-    else if(overSamplingMethod==OVERSAMPLING_13) ##13 ($rose(uartTx) || $stable(uartTx));
+    if(overSamplingMethod==OVERSAMPLING_16) ##16 uartTx
+    else if(overSamplingMethod==OVERSAMPLING_13) ##13 uartTx;
   endproperty
 
   CHECK_FOR_STOP_BIT : assert property(stop_bit_detection_property)begin 
@@ -178,7 +177,6 @@ interface UartTxAssertions ( input bit uartClk , input logic uartTx);
       uartStopDetectInitiation = 0;
       uartStartDetectInitiation = 1;
       uartLocalData='b x;
-
       uartLocalData=0;
     end
 
