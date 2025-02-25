@@ -34,7 +34,7 @@ endfunction  : new
 //--------------------------------------------------------------------------------------------
 function void UartSample13BaudRate19200Datatype7OddParityStopbit2 :: build_phase(uvm_phase phase);
   super.build_phase(phase);
-   uartEnvConfig.uartTxAgentConfig.uartOverSamplingMethod =OVERSAMPLING_13;
+  uartEnvConfig.uartTxAgentConfig.uartOverSamplingMethod =OVERSAMPLING_13;
   uartEnvConfig.uartTxAgentConfig.uartBaudRate = BAUD_19200;
   uartEnvConfig.uartTxAgentConfig.uartDataType = SEVEN_BIT;
   uartEnvConfig.uartTxAgentConfig.uartParityType = ODD_PARITY;
@@ -60,5 +60,5 @@ endfunction  : build_phase
 //------------------------------------------------------------------------------------------
 task UartSample13BaudRate19200Datatype7OddParityStopbit2::run_phase(uvm_phase phase);
  super.run_phase(phase);
-  endtask : run_phase
+endtask : run_phase
 `endif 
