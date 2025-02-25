@@ -34,7 +34,7 @@ interface UartTxMonitorBfm (input  logic   clk,
   end
 
   //------------------------------------------------------------------
-  // Task: Baud_div
+  // Task: GenerateBaudClk
   // this task will calculate the baud divider based on sys clk frequency
   //-------------------------------------------------------------------
   task GenerateBaudClk(inout UartConfigStruct uartConfigStruct);
@@ -92,7 +92,10 @@ interface UartTxMonitorBfm (input  logic   clk,
 	task StartMonitoring(inout UartTxPacketStruct uartTxPacketStruct , inout UartConfigStruct uartConfigStruct);
 		Deserializer(uartTxPacketStruct,uartConfigStruct);
   endtask
-
+	
+	//-------------------------------------------------------
+	// Task: To compute Even Parity
+	//-------------------------------------------------------
 	function evenParityCompute(input UartConfigStruct uartConfigStruct,input UartTxPacketStruct uartTxPacketStruct);
 	  bit parity;
 	  case(uartConfigStruct.uartDataType)
@@ -103,6 +106,10 @@ interface UartTxMonitorBfm (input  logic   clk,
 	  endcase
 	return parity;
 	endfunction
+	
+	//-------------------------------------------------------
+	// Task: To compute Odd Parity
+	//-------------------------------------------------------
 	function oddParityCompute(input UartConfigStruct uartConfigStruct,input UartTxPacketStruct uartTxPacketStruct);
 	  bit parity;
 	  case(uartConfigStruct.uartDataType)
