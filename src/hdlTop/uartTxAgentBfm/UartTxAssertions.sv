@@ -86,8 +86,7 @@ UartTxAgentConfig uartTxAgentConfig;
         end 
       end
     end
-
-  end 
+ end 
 
 	//Assertion to detect start bit
   property start_bit_detection_property;
