@@ -27,15 +27,15 @@ interface UartRxAssertions ( input bit uartClk , input logic uartRx);
   initial begin 
   start_of_simulation_ph.wait_for_state(UVM_PHASE_STARTED);
     if(!(uvm_config_db#(UartRxAgentConfig) :: get(null,"","uartRxAgentConfig",uartRxAgentConfig)))
-      `uvm_fatal("[TX ASSERTION]","FAILED TO GET CONFIG OBJECT")
+      `uvm_fatal("[Rx ASSERTION]","FAILED TO GET CONFIG OBJECT")
       uartParityEnabled = uartRxAgentConfig.hasParity;
       uartStartDetectInitiation = 1;
       uartEvenOddParity = uartRxAgentConfig.uartParityType;
       uartLegalDataWidth = uartRxAgentConfig.uartDataType;
       overSamplingMethod = uartRxAgentConfig.uartOverSamplingMethod;
-      framingError = uartTxAgentConfig.framingErrorInjection;
-      parityError = uartTxAgentConfig.parityErrorInjection;
-      breakingError = uartTxAgentConfig.breakingErrorInjection;
+      framingError = uartRxAgentConfig.framingErrorInjection;
+      parityError = uartRxAgentConfig.parityErrorInjection;
+      breakingError = uartRxAgentConfig.breakingErrorInjection;
   end 
 
   function evenParityCompute();
