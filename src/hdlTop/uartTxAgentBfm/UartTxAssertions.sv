@@ -20,17 +20,23 @@ UartTxAgentConfig uartTxAgentConfig;
   bit parity;
   int uartLegalDataWidth;
   parityTypeEnum uartEvenOddParity;
+	bit parityError;
+	bit framingError;
+	bit breakingError;
 
   overSamplingEnum overSamplingMethod;
   initial begin 
   start_of_simulation_ph.wait_for_state(UVM_PHASE_STARTED);
     if(!(uvm_config_db#(UartTxAgentConfig) :: get(null,"","uartTxAgentConfig",uartTxAgentConfig)))
-      `uvm_fatal("[TX ASSERTION]","FAILED TO GET CONFIG OBJECT")
-     uartParityEnabled = uartTxAgentConfig.hasParity;
-     uartStartDetectInitiation = 1;
-     uartEvenOddParity = uartTxAgentConfig.uartParityType;
-     uartLegalDataWidth = uartTxAgentConfig.uartDataType;
-     overSamplingMethod = uartTxAgentConfig.uartOverSamplingMethod;
+			`uvm_fatal("[TX ASSERTION]","FAILED TO GET CONFIG OBJECT")
+			uartParityEnabled = uartTxAgentConfig.hasParity;
+			uartStartDetectInitiation = 1;
+			uartEvenOddParity = uartTxAgentConfig.uartParityType;
+			uartLegalDataWidth = uartTxAgentConfig.uartDataType;
+			overSamplingMethod = uartTxAgentConfig.uartOverSamplingMethod;
+			framingError = uartTxAgentConfig.framingErrorInjection;
+			parityError = uartTxAgentConfig.parityErrorInjection;
+			breakingError = uartTxAgentConfig.breakingErrorInjectio;
   end 
 
   // Function to compute Even Parity
@@ -125,7 +131,7 @@ UartTxAgentConfig uartTxAgentConfig;
 		
   //Assertion to check for even parity
   property even_parity_check;
-		@(posedge uartClk) disable iff(!(uartEvenParityDetectionInitiation ) & uartTxAgentConfig.parityErrorInjection & uartTxAgentConfig.breakingErrorInjection)
+		@(posedge uartClk) disable iff(!(uartEvenParityDetectionInitiation ) & parityError & breakingError)
   
     if(overSamplingMethod==OVERSAMPLING_16) ##16 uartTx==evenParityCompute()
     else if(overSamplingMethod==OVERSAMPLING_13) ##13 uartTx==evenParityCompute();
@@ -143,7 +149,7 @@ UartTxAgentConfig uartTxAgentConfig;
 		
   //Assertion to check for odd parity
   property odd_parity_check;
-		@(posedge uartClk) disable iff(!(uartOddParityDetectionInitiation) & uartTxAgentConfig.parityErrorInjection & uartTxAgentConfig.breakingErrorInjection)
+		@(posedge uartClk) disable iff(!(uartOddParityDetectionInitiation) & parityError & breakingError)
   	if(overSamplingMethod==OVERSAMPLING_16) ##16 uartTx==oddParityCompute()
   	else if(overSamplingMethod==OVERSAMPLING_13) ##13 uartTx==oddParityCompute();
   endproperty 
@@ -159,7 +165,7 @@ UartTxAgentConfig uartTxAgentConfig;
 
 	//Assertion to detect stop bit
   property stop_bit_detection_property;
-		@(posedge uartClk) disable iff (!(uartStopDetectInitiation) & uartTxAgentConfig.framingErrorInjection & uartTxAgentConfig.breakingErrorInjection)
+		@(posedge uartClk) disable iff (!(uartStopDetectInitiation) & framingError & breakingError)
     if(overSamplingMethod==OVERSAMPLING_16) ##16 uartTx
     else if(overSamplingMethod==OVERSAMPLING_13) ##13 uartTx;
   endproperty
