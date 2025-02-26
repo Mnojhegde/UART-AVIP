@@ -36,7 +36,7 @@ UartTxAgentConfig uartTxAgentConfig;
 			overSamplingMethod = uartTxAgentConfig.uartOverSamplingMethod;
 			framingError = uartTxAgentConfig.framingErrorInjection;
 			parityError = uartTxAgentConfig.parityErrorInjection;
-			breakingError = uartTxAgentConfig.breakingErrorInjectio;
+			breakingError = uartTxAgentConfig.breakingErrorInjection;
   end 
 
   // Function to compute Even Parity
