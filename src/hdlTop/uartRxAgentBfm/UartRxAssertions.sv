@@ -35,7 +35,7 @@ interface UartRxAssertions ( input bit uartClk , input logic uartRx);
       overSamplingMethod = uartRxAgentConfig.uartOverSamplingMethod;
       framingError = uartTxAgentConfig.framingErrorInjection;
       parityError = uartTxAgentConfig.parityErrorInjection;
-      breakingError = uartTxAgentConfig.breakingErrorInjectio;
+      breakingError = uartTxAgentConfig.breakingErrorInjection;
   end 
 
   function evenParityCompute();
