@@ -43,6 +43,7 @@ function void UartEvenParityWithErrorTest :: build_phase(uvm_phase phase);
   uartEnvConfig.uartTxAgentConfig.hasParity = PARITY_ENABLED;
   uartEnvConfig.uartTxAgentConfig.uartParityType = EVEN_PARITY;
   uartEnvConfig.uartTxAgentConfig.parityErrorInjection =1;
+	uartEnvConfig.uartRxAgentConfig.parityErrorInjection =1;
 endfunction  : build_phase
 			         
 				    
