@@ -22,7 +22,8 @@ class UartRxAgentConfig extends uvm_object;
   logic[DATA_WIDTH-1:0]patternToTransmit;
   bit parityErrorInjection;
   bit OverSampledBaudFrequencyClk;
-  bit framingErrorInjection; 
+  bit framingErrorInjection;
+  bit breakingErrorInjection;
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
