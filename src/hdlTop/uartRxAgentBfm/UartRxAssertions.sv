@@ -130,7 +130,7 @@ interface UartRxAssertions ( input bit uartClk , input logic uartRx);
     end 
 
   property even_parity_check;
-    @(posedge uartClk) disable iff(!(uartEvenParityDetectionInitiation) & parityError & breakingError)
+		@(posedge uartClk) disable iff((!uartEvenParityDetectionInitiation) & parityError & breakingError)
   
     if(overSamplingMethod==OVERSAMPLING_16) ##16 uartRx==evenParityCompute()
     else if(overSamplingMethod==OVERSAMPLING_13) ##13 uartRx==evenParityCompute();
@@ -147,13 +147,13 @@ interface UartRxAssertions ( input bit uartClk , input logic uartRx);
     end 
 
   property odd_parity_check;
-    @(posedge uartClk) disable iff(!(uartOddParityDetectionInitiation) & parityError & breakingError)
+		@(posedge uartClk) disable iff((!uartOddParityDetectionInitiation) & parityError & breakingError)
   if(overSamplingMethod==OVERSAMPLING_16) ##16 uartRx==oddParityCompute()
   else if(overSamplingMethod==OVERSAMPLING_13) ##13 uartRx==oddParityCompute();
   endproperty 
     
   CHECK_FOR_ODD_PROPERTY : assert property (odd_parity_check)begin 
-    $info("***********************8ODD PARITY IS DETECTED : ASSERTION PASS ");
+    $info("***********************ODD PARITY IS DETECTED : ASSERTION PASS ");
     uartOddParityDetectionInitiation = 0;
     end 
     else begin 
@@ -161,7 +161,7 @@ interface UartRxAssertions ( input bit uartClk , input logic uartRx);
       uartOddParityDetectionInitiation = 0;
     end 
   property stop_bit_detection_property;
-    @(posedge uartClk) disable iff (!(uartStopDetectInitiation) & framingError & breakingError)
+		@(posedge uartClk) disable iff ((!uartStopDetectInitiation) & framingError & breakingError)
     if(overSamplingMethod==OVERSAMPLING_16) ##16 uartRx
     else if(overSamplingMethod==OVERSAMPLING_13) ##13 uartRx;
   endproperty
