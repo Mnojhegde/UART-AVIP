@@ -159,7 +159,7 @@ UartTxAgentConfig uartTxAgentConfig;
 
 	//Assertion to detect stop bit
   property stop_bit_detection_property;
-		@(posedge uartClk) disable iff (!(uartStopDetectInitiation) & uartTxAgentConfig.framingErrorInjection & uartTxAgentConfig.breakingErrorInjectio)
+		@(posedge uartClk) disable iff (!(uartStopDetectInitiation) & uartTxAgentConfig.framingErrorInjection & uartTxAgentConfig.breakingErrorInjection)
     if(overSamplingMethod==OVERSAMPLING_16) ##16 uartTx
     else if(overSamplingMethod==OVERSAMPLING_13) ##13 uartTx;
   endproperty
