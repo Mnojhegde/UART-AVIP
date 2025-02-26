@@ -130,7 +130,7 @@ interface UartRxAssertions ( input bit uartClk , input logic uartRx);
     end 
 
   property even_parity_check;
-		@(posedge uartClk) disable iff((!uartEvenParityDetectionInitiation) & parityError & breakingError)
+		@(posedge uartClk) disable iff((!uartEvenParityDetectionInitiation) || parityError || breakingError)
   
     if(overSamplingMethod==OVERSAMPLING_16) ##16 uartRx==evenParityCompute()
     else if(overSamplingMethod==OVERSAMPLING_13) ##13 uartRx==evenParityCompute();
@@ -147,7 +147,7 @@ interface UartRxAssertions ( input bit uartClk , input logic uartRx);
     end 
 
   property odd_parity_check;
-		@(posedge uartClk) disable iff((!uartOddParityDetectionInitiation) & parityError & breakingError)
+		@(posedge uartClk) disable iff((!uartOddParityDetectionInitiation) || parityError || breakingError)
   if(overSamplingMethod==OVERSAMPLING_16) ##16 uartRx==oddParityCompute()
   else if(overSamplingMethod==OVERSAMPLING_13) ##13 uartRx==oddParityCompute();
   endproperty 
@@ -161,7 +161,7 @@ interface UartRxAssertions ( input bit uartClk , input logic uartRx);
       uartOddParityDetectionInitiation = 0;
     end 
   property stop_bit_detection_property;
-		@(posedge uartClk) disable iff ((!uartStopDetectInitiation) & framingError & breakingError)
+		@(posedge uartClk) disable iff ((!uartStopDetectInitiation) || framingError || breakingError)
     if(overSamplingMethod==OVERSAMPLING_16) ##16 uartRx
     else if(overSamplingMethod==OVERSAMPLING_13) ##13 uartRx;
   endproperty
