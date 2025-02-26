@@ -131,7 +131,7 @@ UartTxAgentConfig uartTxAgentConfig;
 		
   //Assertion to check for even parity
   property even_parity_check;
-		@(posedge uartClk) disable iff((!uartEvenParityDetectionInitiation ) & parityError & breakingError)
+		@(posedge uartClk) disable iff((!uartEvenParityDetectionInitiation ) || parityError || breakingError)
   
     if(overSamplingMethod==OVERSAMPLING_16) ##16 uartTx==evenParityCompute()
     else if(overSamplingMethod==OVERSAMPLING_13) ##13 uartTx==evenParityCompute();
@@ -149,7 +149,7 @@ UartTxAgentConfig uartTxAgentConfig;
 		
   //Assertion to check for odd parity
   property odd_parity_check;
-		@(posedge uartClk) disable iff((!uartOddParityDetectionInitiation) & parityError & breakingError)
+		@(posedge uartClk) disable iff((!uartOddParityDetectionInitiation) || parityError || breakingError)
   	if(overSamplingMethod==OVERSAMPLING_16) ##16 uartTx==oddParityCompute()
   	else if(overSamplingMethod==OVERSAMPLING_13) ##13 uartTx==oddParityCompute();
   endproperty 
@@ -165,7 +165,7 @@ UartTxAgentConfig uartTxAgentConfig;
 
 	//Assertion to detect stop bit
   property stop_bit_detection_property;
-		@(posedge uartClk) disable iff ((!uartStopDetectInitiation) & framingError & breakingError)
+		@(posedge uartClk) disable iff ((!uartStopDetectInitiation) || framingError || breakingError)
     if(overSamplingMethod==OVERSAMPLING_16) ##16 uartTx
     else if(overSamplingMethod==OVERSAMPLING_13) ##13 uartTx;
   endproperty
