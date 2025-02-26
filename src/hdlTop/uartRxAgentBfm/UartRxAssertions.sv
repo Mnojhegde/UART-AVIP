@@ -20,16 +20,22 @@ interface UartRxAssertions ( input bit uartClk , input logic uartRx);
   int uartLegalDataWidth;
   parityTypeEnum uartEvenOddParity;
   overSamplingEnum overSamplingMethod;
+  bit parityError;
+	bit framingError;
+	bit breakingError;
   
   initial begin 
   start_of_simulation_ph.wait_for_state(UVM_PHASE_STARTED);
     if(!(uvm_config_db#(UartRxAgentConfig) :: get(null,"","uartRxAgentConfig",uartRxAgentConfig)))
       `uvm_fatal("[TX ASSERTION]","FAILED TO GET CONFIG OBJECT")
-     uartParityEnabled = uartRxAgentConfig.hasParity;
-     uartStartDetectInitiation = 1;
-     uartEvenOddParity = uartRxAgentConfig.uartParityType;
-     uartLegalDataWidth = uartRxAgentConfig.uartDataType;
-     overSamplingMethod = uartRxAgentConfig.uartOverSamplingMethod;
+      uartParityEnabled = uartRxAgentConfig.hasParity;
+      uartStartDetectInitiation = 1;
+      uartEvenOddParity = uartRxAgentConfig.uartParityType;
+      uartLegalDataWidth = uartRxAgentConfig.uartDataType;
+      overSamplingMethod = uartRxAgentConfig.uartOverSamplingMethod;
+      framingError = uartTxAgentConfig.framingErrorInjection;
+      parityError = uartTxAgentConfig.parityErrorInjection;
+      breakingError = uartTxAgentConfig.breakingErrorInjectio;
   end 
 
   function evenParityCompute();
@@ -124,7 +130,7 @@ interface UartRxAssertions ( input bit uartClk , input logic uartRx);
     end 
 
   property even_parity_check;
-    @(posedge uartClk) disable iff(!(uartEvenParityDetectionInitiation) & uartRxAgentConfig.parityErrorInjection & uartRxAgentConfig.breakingErrorInjection)
+    @(posedge uartClk) disable iff(!(uartEvenParityDetectionInitiation) & parityError & breakingError)
   
     if(overSamplingMethod==OVERSAMPLING_16) ##16 uartRx==evenParityCompute()
     else if(overSamplingMethod==OVERSAMPLING_13) ##13 uartRx==evenParityCompute();
@@ -141,7 +147,7 @@ interface UartRxAssertions ( input bit uartClk , input logic uartRx);
     end 
 
   property odd_parity_check;
-    @(posedge uartClk) disable iff(!(uartOddParityDetectionInitiation) & uartRxAgentConfig.parityErrorInjection & uartRxAgentConfig.breakingErrorInjection)
+    @(posedge uartClk) disable iff(!(uartOddParityDetectionInitiation) & parityError & breakingError)
   if(overSamplingMethod==OVERSAMPLING_16) ##16 uartRx==oddParityCompute()
   else if(overSamplingMethod==OVERSAMPLING_13) ##13 uartRx==oddParityCompute();
   endproperty 
@@ -155,7 +161,7 @@ interface UartRxAssertions ( input bit uartClk , input logic uartRx);
       uartOddParityDetectionInitiation = 0;
     end 
   property stop_bit_detection_property;
-    @(posedge uartClk) disable iff (!(uartStopDetectInitiation) & uartRxAgentConfig.framingErrorInjection & uartRxAgentConfig.breakingErrorInjection)
+    @(posedge uartClk) disable iff (!(uartStopDetectInitiation) & framingError & breakingError)
     if(overSamplingMethod==OVERSAMPLING_16) ##16 uartRx
     else if(overSamplingMethod==OVERSAMPLING_13) ##13 uartRx;
   endproperty
