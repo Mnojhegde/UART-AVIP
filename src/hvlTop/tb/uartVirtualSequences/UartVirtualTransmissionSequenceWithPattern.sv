@@ -39,7 +39,6 @@ endfunction : new
 //--------------------------------------------------------------------------------------------
 
 task UartVirtualTransmissionSequenceWithPattern :: body();
-  super.body();
   uartTxBaseSequenceWithPattern = UartTxBaseSequenceWithPattern :: type_id :: create("uartTxBaseSequenceWithPattern");
   uartRxBaseSequence = UartRxBaseSequence :: type_id :: create("uartRxBaseSequence");
   if(!(uvm_config_db#(UartTxAgentConfig) :: get(null,"","uartTxAgentConfig",uartTxAgentConfig)))
