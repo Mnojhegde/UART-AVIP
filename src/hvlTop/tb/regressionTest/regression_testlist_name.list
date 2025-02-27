@@ -152,10 +152,10 @@ UartSample16BaudRate9600Datatype8NoParityStopbit1
 UartSample16BaudRate9600Datatype8NoParityStopbit2
 
 #Error test
-#UartBreakingErrorTest
+UartBreakingErrorTest
 
-#UartEvenParityWithErrorTest
-#UartFramingErrorEvenParityTest
-#UartFramingErrorNoParityTest
-#UartFramingErrorOddParityTest
-#UartOddParityWithErrorTest
+UartEvenParityWithErrorTest
+UartFramingErrorEvenParityTest
+UartFramingErrorNoParityTest
+UartFramingErrorOddParityTest
+UartOddParityWithErrorTest
