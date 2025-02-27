@@ -155,10 +155,10 @@ simulate:
 	# vsim -view waveform.wlf -do apb_waves.do &
 
 clean_simulate:
-	rm -rf *_Test*
+	rm -rf Uart*
 
 clean_compile:
-	rm -rf work/ *_compile.log transcript waveform.wlf
+	rm -rf work/ *_compile.log transcript waveform.wlf work
 	rm -rf merged_coverage.ucdb merged_cov_html_report
 
 clean:
