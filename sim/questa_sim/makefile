@@ -136,7 +136,7 @@ simulate:
 	# For checking and reporting simulation errors
 	make simulate_war_err
 
-	## TODO(mshariff): 
+	## TODO: 
 	## # For coverage report in text format 
 	## #vcover report -text $(test)/$(test)_cov
 	# -c -do "log -r /*; add wave -r /*; coverage save -onexit -assert -directive -cvg -codeAll $(test)/coverage.ucdb; coverage report -file $(teset)/coverage.txt -byfile -detail -noannotate -option -directive -cvg -details -verbose; run -all; exit" \
@@ -155,7 +155,7 @@ simulate:
 	# vsim -view waveform.wlf -do apb_waves.do &
 
 clean_simulate:
-	rm -rf *_test*
+	rm -rf *_Test*
 
 clean_compile:
 	rm -rf work/ *_compile.log transcript waveform.wlf
@@ -212,30 +212,30 @@ compile_war_err:
 
 
 simulate_war_err:
-	echo "" >> regression_summary.log
-	echo "-----------------------------------------------------------------" >> regression_summary.log
-	echo "-------------------- Simulation Report --------------------------" >> regression_summary.log
-	echo "" >> regression_summary.log
-	echo "Simulator Errors" >> regression_summary.log
-	grep "Error" $(test_folder)/$(test).log >> regression_summary.log
-	echo "" >> regression_summary.log
-	echo "UVM Fatal" >> regression_summary.log
-	grep "UVM_FATAL" $(test_folder)/$(test).log >> regression_summary.log
-	echo "" >> regression_summary.log
-	echo "UVM Errors" >> regression_summary.log
-	grep "UVM_ERROR" $(test_folder)/$(test).log >> regression_summary.log
-	echo "" >> regression_summary.log
-	echo "UVM Warnings" >> regression_summary.log
-	grep "UVM_WARNING" $(test_folder)/$(test).log >> regression_summary.log
-	echo "" >> regression_summary.log
-	echo "Testname: $(test)" >> regression_summary.log
-	echo "" >> regression_summary.log
-	echo "Log file path: $(test_folder)/$(test).log" >> regression_summary.log
-	echo "" >> regression_summary.log
-	echo "Waveform: vsim -view $(test_folder)/waveform.wlf &" >> regression_summary.log
-	echo "" >> regression_summary.log
-	echo "Coverage report: firefox $(test_folder)/html_cov_report/index.html &" >> regression_summary.log
-	echo "" >> regression_summary.log
-	echo "-----------------------------------------------------------------" >> regression_summary.log
-	echo "-----------------------------------------------------------------" >> regression_summary.log
-	echo ""
+	echo "";
+	echo "-----------------------------------------------------------------";
+	echo "-------------------- Simulation Report --------------------------";
+	echo "";
+	echo "Simulator Errors";
+	grep "Error" $(test_folder)/$(test).log;
+	echo "";
+	echo "UVM Fatal";
+	grep "UVM_FATAL" $(test_folder)/$(test).log;
+	echo "";
+	echo "UVM Errors";
+	grep "UVM_ERROR" $(test_folder)/$(test).log;
+	echo "";
+	echo "UVM Warnings";
+	grep "UVM_WARNING" $(test_folder)/$(test).log;
+	echo "";
+	echo "Testname: $(test)"
+	echo "";
+	echo "Log file path: $(test_folder)/$(test).log"
+	echo "";
+	echo "Waveform: vsim -view $(test_folder)/waveform.wlf &"
+	echo "";
+	echo "Coverage report: firefox $(test_folder)/html_cov_report/index.html &"
+	echo "";
+	echo "-----------------------------------------------------------------";
+	echo "-----------------------------------------------------------------";
+	echo "";
