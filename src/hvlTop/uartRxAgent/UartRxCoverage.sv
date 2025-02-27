@@ -21,10 +21,7 @@ class UartRxCoverage extends uvm_subscriber #(UartRxTransaction);
   //-------------------------------------------------------
   covergroup UartRxCovergroup with function sample (UartRxAgentConfig uartRxAgentConfig, bit[DATA_WIDTH-1:0] data);
     RX_CP : coverpoint data{
-      bins UART_TX1 = {[0:63]};
-      bins UART_TX2 = {[64:127]};
-      bins UART_TX3 = {[128:191]};
-      bins UART_TX4 = {[192:255]};
+      bins UART_RX = {[0:255]};
     }
 
     DATA_WIDTH_CP : coverpoint uartRxAgentConfig.uartDataType{
