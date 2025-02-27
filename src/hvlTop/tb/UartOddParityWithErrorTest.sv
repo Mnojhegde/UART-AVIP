@@ -42,6 +42,7 @@ function void UartOddParityWithErrorTest :: build_phase(uvm_phase phase);
   super.build_phase(phase);
   uartEnvConfig.uartTxAgentConfig.hasParity = PARITY_ENABLED;
   uartEnvConfig.uartTxAgentConfig.uartParityType = ODD_PARITY;
+	uartEnvConfig.uartRxAgentConfig.uartParityType = ODD_PARITY;
   uartEnvConfig.uartTxAgentConfig.parityErrorInjection =1;
 	uartEnvConfig.uartRxAgentConfig.parityErrorInjection =1;
 
