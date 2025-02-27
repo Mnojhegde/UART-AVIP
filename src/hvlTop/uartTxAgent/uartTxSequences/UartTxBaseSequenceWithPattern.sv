@@ -15,7 +15,6 @@ function  UartTxBaseSequenceWithPattern :: new(string name= "UartTxBaseSequenceW
 endfunction : new
 
 task UartTxBaseSequenceWithPattern :: body();
-  super.body();
   req = UartTxTransaction :: type_id :: create("req");
   repeat(packetsNeeded)begin 
     start_item(req);
