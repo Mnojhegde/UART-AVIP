@@ -57,7 +57,7 @@ class UartRxCoverage extends uvm_subscriber #(UartRxTransaction);
       bins HAS_PARITY_1 = {1};
     }
  
-    PARITY_ERROR_INJECTION:coverpoint uartRxAgentConfig.parityErrorInjection{
+    PARITY_ERROR_INJECTION_CP:coverpoint uartRxAgentConfig.parityErrorInjection{
       bins WITH_NO_ERROR = {0};
       bins WITH_ERROR = {1};
     }
@@ -65,6 +65,7 @@ class UartRxCoverage extends uvm_subscriber #(UartRxTransaction);
     DATA_WIDTH_CP_PARITY_CP : cross DATA_WIDTH_CP,PARITY_CP;
     DATA_WIDTH_CP_STOP_BIT_CP :cross DATA_WIDTH_CP,STOP_BIT_CP;
     OVER_SAMPLINGxBAUD_RATE:cross BAUD_RATE_CP,  OVER_SAMPLING_CP;
+    HAS_PARITY_CP_PARITY_ERROR_INJECTION_CP : cross HAS_PARITY_CP, PARITY_ERROR_INJECTION_CP {ignore_bins parity_0 = binsof(HAS_PARITY_CP) intersect {0};}
     OVER_SAMPLINGxDATA_TYPE:cross  DATA_WIDTH_CP,OVER_SAMPLING_CP;
     DATA_WIDTHxBAUD_RATE: cross  DATA_WIDTH_CP ,BAUD_RATE_CP;
     
