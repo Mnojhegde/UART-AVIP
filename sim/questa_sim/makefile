@@ -158,7 +158,7 @@ clean_simulate:
 	rm -rf Uart*
 
 clean_compile:
-	rm -rf work/ *_compile.log transcript waveform.wlf work
+	rm -rf work/ *_compile.log transcript waveform.wlf work test_names_trace.txt  vsim_stacktrace.vstf  vsim.wlf
 	rm -rf merged_coverage.ucdb merged_cov_html_report
 
 clean:
