@@ -10,7 +10,8 @@ class UartBaseTest extends uvm_test;
  
   `uvm_component_utils(UartBaseTest)
  
-  UartVirtualBaseSequence uartVirtualBaseSequence;
+  //UartVirtualBaseSequence uartVirtualBaseSequence;
+  UartVirtualTransmissionSequence uartVirtualTransmissionSequence;
   UartEnvConfig           uartEnvConfig;
   UartEnv                 uartEnv;
   //-------------------------------------------------------
@@ -141,7 +142,7 @@ endfunction : end_of_elaboration_phase
    //UartVirtualBaseSequence :: type_id ::set_type_override(UartVirtualTransmissionSequenceWithPattern::get_type());
   
   //uartVirtualBaseSequence = UartVirtualBaseSequence :: type_id :: create("uartVirtualBaseSequence");
-  uartVirtualTransmissionSequence = uartVirtualTransmissionSequence :: type_id :: create("uartVirtualTransmissionSequence");
+  uartVirtualTransmissionSequence = UartVirtualTransmissionSequence :: type_id :: create("uartVirtualTransmissionSequence");
   //uartVirtualBaseSequence.print();
   uartVirtualTransmissionSequence.print();
   phase.raise_objection(this);
