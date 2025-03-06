@@ -136,6 +136,7 @@ interface UartTxMonitorBfm (input  logic   clk,
 			// sampling data bits 
 			for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
 				repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk); begin
+					$display("THE UART DATA TYPE IS %s in monitor bfm",uartConfigStruct.uartDataType);
 					uartTxPacketStruct.transmissionData[i] = tx;
 					concatData={concatData,tx};
 					uartTransmitterState = UartTransmitterStateEnum'(i+3);

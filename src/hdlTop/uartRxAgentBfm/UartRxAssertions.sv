@@ -24,9 +24,10 @@ interface UartRxAssertions ( input bit uartClk , input logic uartRx);
 	bit framingError;
 	bit breakingError;
   
-  initial begin 
-  start_of_simulation_ph.wait_for_state(UVM_PHASE_STARTED);
-    if(!(uvm_config_db#(UartRxAgentConfig) :: get(null,"","uartRxAgentConfig",uartRxAgentConfig)))
+//  initial begin 
+ // start_of_simulation_ph.wait_for_state(UVM_PHASE_STARTED);
+   always@(posedge uartClk) begin 
+   if(!(uvm_config_db#(UartRxAgentConfig) :: get(null,"","uartRxAgentConfig",uartRxAgentConfig)))
       `uvm_fatal("[Rx ASSERTION]","FAILED TO GET CONFIG OBJECT")
       uartParityEnabled = uartRxAgentConfig.hasParity;
       uartStartDetectInitiation = 1;

@@ -71,18 +71,21 @@ task UartTxDriverProxy :: run_phase(uvm_phase phase);
 			end
 			begin 
 				uartTxDriverBfm.WaitForReset();
-				forever begin
-					seq_item_port.get_next_item(req);
-					UartTxConfigConverter::from_Class(uartTxAgentConfig , uartConfigStruct);
-					`uvm_info("[DRIVER PROXY]",$sformatf("UartDataType = %s \nThe baudrate of Uart = %s \nThe parity enable = %s \n No. of stop bits = %s\n oversampling method = %s",
-					uartTxAgentConfig.uartDataType, uartTxAgentConfig.uartBaudRate, uartTxAgentConfig.hasParity, uartTxAgentConfig.uartStopBit, uartTxAgentConfig.uartOverSamplingMethod),UVM_LOW);
+				forever begin	
+				 UartTxConfigConverter::from_Class(uartTxAgentConfig , uartConfigStruct);
+
+				seq_item_port.get_next_item(req);
+				//	 UartTxConfigConverter::from_Class(uartTxAgentConfig , uartConfigStruct);
+
+					`uvm_info("[DRIVER PROXY]",$sformatf("UartDataType = %s \nThe baudrate of Uart = %s \nThe parity enable = %s \n No. of stop bits = %s\n oversampling method = %s",uartConfigStruct.uartDataType, uartConfigStruct.uartBaudRate, uartConfigStruct.uartParityEnable, uartConfigStruct.uartStopBit, uartConfigStruct.uartOverSamplingMethod),UVM_LOW);
+					
+					
 					$write("Data to be sent : ");
-  				for(int i=0;i<uartTxAgentConfig.uartDataType;i++)
+  				      for(int i=0;i<uartConfigStruct.uartDataType;i++)
    					$write("%b",req.transmissionData[i]);
-   				$display(" ");
+   				$display(" \n");
 					UartTxSeqItemConverter :: fromTxClass(req,uartTxAgentConfig,uartTxPacketStruct);
 					uartTxDriverBfm.DriveToBfm(uartTxPacketStruct , uartConfigStruct);
-				 	//wait(driverSynchronizer.triggered);
 					seq_item_port.item_done();
 				end
 			end 

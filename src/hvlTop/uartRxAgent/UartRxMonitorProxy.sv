@@ -74,14 +74,17 @@ task UartRxMonitorProxy :: run_phase(uvm_phase phase);
     begin 
   	uartRxMonitorBfm.WaitForReset();
   	forever begin
+	    //UartRxConfigConverter :: from_Class(uartRxAgentConfig , uartConfigStruct);
 	    UartRxTransaction uartRxTransaction_clone;
 	    UartRxSeqItemConverter :: fromRxClass(uartRxTransaction,uartRxAgentConfig,uartRxPacketStruct);
-	    UartRxConfigConverter::from_Class(uartRxAgentConfig , uartConfigStruct);
+	    UartRxConfigConverter :: from_Class(uartRxAgentConfig , uartConfigStruct);
+	    $display("**********\n the config of the [receiver monitor] is %p \n**************", uartConfigStruct);
 	    uartRxMonitorBfm.StartMonitoring(uartRxPacketStruct, uartConfigStruct);
+	    
 	    UartRxSeqItemConverter::toRxClass(uartRxPacketStruct,uartRxAgentConfig,uartRxTransaction);
-	
-			$write("Data received : ");
-			for(int i=0;i<uartRxAgentConfig.uartDataType;i++)
+
+			$write("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^)))))))))))))))))))))))))))))))\n \n \n \n \n \nData received : ");
+			for(int i=0;i<uartConfigStruct.uartDataType;i++)
 				$write("%b",uartRxTransaction.receivingData[i]);
    		$display(" ");
 	    $cast(uartRxTransaction_clone, uartRxTransaction.clone());  

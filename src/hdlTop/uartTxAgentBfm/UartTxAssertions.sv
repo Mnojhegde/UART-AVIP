@@ -16,7 +16,7 @@ UartTxAgentConfig uartTxAgentConfig;
   bit uartOddParityDetectionInitiation;
   logic [ DATA_WIDTH-1:0]uartLocalData;
   bit uartParityEnabled;
-  bit uartStartDetectInitiation;
+  bit uartStartDetectInitiation=1;
   bit parity;
   int uartLegalDataWidth;
   parityTypeEnum uartEvenOddParity;
@@ -25,12 +25,16 @@ UartTxAgentConfig uartTxAgentConfig;
 	bit breakingError;
 
   overSamplingEnum overSamplingMethod;
-  initial begin 
-  start_of_simulation_ph.wait_for_state(UVM_PHASE_STARTED);
+  
+  
+//  initial begin 
+ // start_of_simulation_ph.wait_for_state(UVM_PHASE_STARTED);
+  always@(posedge uartClk) begin 
     if(!(uvm_config_db#(UartTxAgentConfig) :: get(null,"","uartTxAgentConfig",uartTxAgentConfig)))
 			`uvm_fatal("[TX ASSERTION]","FAILED TO GET CONFIG OBJECT")
+
 			uartParityEnabled = uartTxAgentConfig.hasParity;
-			uartStartDetectInitiation = 1;
+//			uartStartDetectInitiation = 1;
 			uartEvenOddParity = uartTxAgentConfig.uartParityType;
 			uartLegalDataWidth = uartTxAgentConfig.uartDataType;
 			overSamplingMethod = uartTxAgentConfig.uartOverSamplingMethod;

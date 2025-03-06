@@ -16,7 +16,7 @@ class UartVirtualTransmissionSequence extends UartVirtualBaseSequence;
   //-------------------------------------------------------
   extern function new(string name = "UartVirtualTransmissionSequence");
   extern virtual task body();
-
+  extern task setConfig(UartTxAgentConfig uartTxAgentConfig);
 endclass : UartVirtualTransmissionSequence
     
 //--------------------------------------------------------------------------------------------
@@ -28,6 +28,9 @@ endclass : UartVirtualTransmissionSequence
 //--------------------------------------------------------------------------------------------
 function UartVirtualTransmissionSequence :: new(string name = "UartVirtualTransmissionSequence" );
   super.new(name);
+   // uartTxBaseSequence = UartTxBaseSequence :: type_id :: create("uartTxBaseSequence");
+   uartRxBaseSequence = UartRxBaseSequence :: type_id :: create("uartRxBaseSequence");
+
 endfunction : new
     
 //--------------------------------------------------------------------------------------------
@@ -39,17 +42,37 @@ endfunction : new
 //--------------------------------------------------------------------------------------------
 
 task UartVirtualTransmissionSequence :: body();
-  uartTxBaseSequence = UartTxBaseSequence :: type_id :: create("uartTxBaseSequence");
-  uartRxBaseSequence = UartRxBaseSequence :: type_id :: create("uartRxBaseSequence");
-  if(!(uvm_config_db#(UartTxAgentConfig) :: get(null,"","uartTxAgentConfig",uartTxAgentConfig)))
-    `uvm_fatal("[VIRTUAL SEQUENCE]",$sformatf("failed to get the config"))
-  begin 
- //   uartTxBaseSequence.start(p_sequencer.uartTxSequencer);
-     `uvm_do_on_with(uartTxBaseSequence , p_sequencer.uartTxSequencer,{packetsNeeded ==uartTxAgentConfig.packetsNeeded;})
- //  uartRxBaseSequence.start(p_sequencer.uartRxSequencer);
-  end 
+//  uartTxBaseSequence = UartTxBaseSequence :: type_id :: create("uartTxBaseSequence");
+  //uartRxBaseSequence = UartRxBaseSequence :: type_id :: create("uartRxBaseSequence");
+  //if(!(uvm_config_db#(UartTxAgentConfig) :: get(null,"","uartTxAgentConfig",uartTxAgentConfig)))
+    //`uvm_fatal("[VIRTUAL SEQUENCE]",$sformatf("failed to get the config"))
+ 
+ 
+ //if (uartTxBaseSequence == null)
+   //  `uvm_fatal("[VIRTUAL SEQUENCE]", "Failed to create uartTxBaseSequence")
+ 
+  //uartTxBaseSequence.setConfig(this.uartTxAgentConfig);
+ 
 
+ //if (uartTxBaseSequence.uartTxAgentConfig_ == null)
+     //`uvm_fatal("[VIRTUAL SEQUENCE]", "uartTxAgentConfig is NULL after setConfig")
+ //   uartTxBaseSequence.start(p_sequencer.uartTxSequencer);
+  fork 
+  `uvm_do_on_with(uartTxBaseSequence , p_sequencer.uartTxSequencer,{packetsNeeded ==uartTxAgentConfig.packetsNeeded;})
+   uartTxBaseSequence.setConfig(this.uartTxAgentConfig);
+ join
+ //uartTxBaseSequence.packetsNeeded = uartTxAgentConfig.packetsNeeded;
+ //uartTxBaseSequence.start(p_sequencer.uartTxSequencer);
+
+ 
+ //  uartRxBaseSequence.start(p_sequencer.uartRxSequencer);
+  
 
 endtask : body
+
+task UartVirtualTransmissionSequence :: setConfig(UartTxAgentConfig uartTxAgentConfig);
+  this.uartTxAgentConfig = uartTxAgentConfig;
+endtask 
+
 
 `endif

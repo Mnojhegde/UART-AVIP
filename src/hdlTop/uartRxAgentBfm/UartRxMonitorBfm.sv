@@ -14,7 +14,7 @@
   import uvm_pkg::*;
   `include "uvm_macros.svh"
 	
-  string name = "UART_TRANSMITTER_MONITOR_BFM";
+  string name = "UART_RECEIVER_MONITOR_BFM";
 	
   //Variable: bclk
   //baud clock for uart transmisson/reception
@@ -127,13 +127,17 @@
   //  converts serial data to parallel
   //-------------------------------------------------------
   task Deserializer(inout UartRxPacketStruct uartRxPacketStruct, inout UartConfigStruct uartConfigStruct);
+	  $display("WAITING FOR START BIT IN RECEIVER");
 	  @(negedge rx);
+	   $display("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##########################################################$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
 			repeat(uartConfigStruct.uartOverSamplingMethod/2) @(posedge baudClk);//needs this posedge or 1 cycle delay to avoid race around or delay in output
 			uartTransmitterState = STARTBIT;
 			concatData={concatData,rx};
 	
 			for( int i=0 ; i < uartConfigStruct.uartDataType ; i++) begin
 				repeat(uartConfigStruct.uartOverSamplingMethod) @(posedge baudClk); begin
+				  $display("THE UART DATA TYPE IS %s",uartConfigStruct.uartDataType);	
+					$display("\t \t the data received is %b \t\t",rx);
 					uartRxPacketStruct.receivingData[i] = rx;
 					concatData={concatData,rx};
 					uartTransmitterState = UartTransmitterStateEnum'(i+3);

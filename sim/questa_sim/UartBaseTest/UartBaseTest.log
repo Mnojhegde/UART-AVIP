@@ -1,7 +1,9 @@
 # vsim -vopt work.HvlTop work.HdlTop -voptargs="+acc=npr" -assertdebug "+UVM_TESTNAME=UartBaseTest" "+UVM_VERBOSITY=UVM_MEDIUM" "+define+UartBaseTest" -l UartBaseTest/UartBaseTest.log -sva -coverage -c -do "log -r /*; add wave -r /*; coverage save -onexit -assert -directive -cvg -codeAll UartBaseTest/UartBaseTest_coverage.ucdb; run -all; exit" -wlf UartBaseTest/waveform.wlf 
-# Start time: 09:11:00 on Feb 18,2025
+# Start time: 16:43:09 on Mar 06,2025
 # ** Note: (vsim-3812) Design is being optimized...
-# ** Warning: ../../src/hvlTop/uartEnv/UartScoreboard.sv(215): (vopt-2875) Task "packetSummary" is being called in function "report_phase".
+# ** Warning: ../../src/hvlTop/tb/UartBaseTest.sv(90): (vopt-2240) Treating stand-alone use of function 'randomize' as an implicit VOID cast.
+# ** Warning: ../../src/hvlTop/tb/UartBaseTest.sv(106): (vopt-2875) Task "copyTxConfigToRx" is being called in function "setupUartRxAgentConfig".
+# ** Warning: ../../src/hvlTop/tb/UartBaseTest.sv(141): (vopt-2240) Treating stand-alone use of function 'randomize' as an implicit VOID cast.
 # //  Questa Sim
 # //  Version 10.6c linux Jul 25 2017
 # //
@@ -46,12 +48,10 @@
 # Loading work.UartRxDriverBfm(fast)
 # Loading work.UartRxMonitorBfm_sv_unit(fast)
 # Loading work.UartRxMonitorBfm(fast)
+# Loading work.UartRxAssertions_sv_unit(fast)
+# Loading work.UartRxAssertions(fast)
 # Loading mtiUvm.questa_uvm_pkg(fast)
-# ** Warning: (vsim-3764) ../../src/hvlTop/uartEnv/UartScoreboard.sv(99): Stand-alone call to function 'get' treated as implicit void cast.
-#    Time: 0 ps  Iteration: 0  Region: /UartEnvPkg File: ../../src/hvlTop/uartEnv/UartEnvPkg.sv
-# ** Warning: (vsim-3764) ../../src/hvlTop/uartEnv/UartScoreboard.sv(100): Stand-alone call to function 'get' treated as implicit void cast.
-#    Time: 0 ps  Iteration: 0  Region: /UartEnvPkg File: ../../src/hvlTop/uartEnv/UartEnvPkg.sv
-# ** Warning: (vsim-3839) ../../src/hdlTop/UartHdlTop.sv(74): Variable '/HdlTop/uartIf/rx', driven via a port connection, is multiply driven. See ../../src/hdlTop/uartRxAgentBfm/UartRxAgentBfm.sv(23).
+# ** Warning: (vsim-3839) ../../src/hdlTop/UartHdlTop.sv(70): Variable '/HdlTop/uartIf/rx', driven via a port connection, is multiply driven. See ../../src/hdlTop/uartRxAgentBfm/UartRxAgentBfm.sv(23).
 #    Time: 0 ps  Iteration: 0  Instance: /HdlTop File: ../../src/hdlTop/UartHdlTop.sv
 # Loading /tools/mentor/questasim_10.6c/questasim/uvm-1.1d/linux/uvm_dpi.so
 # log -r /*
@@ -83,13 +83,11 @@
 # UVM_INFO @ 0: reporter [RNTST] Running test UartBaseTest...
 # UVM_INFO ../../src/hdlTop/UartHdlTop.sv(15) @ 0: reporter [HDL_TOP] HDL_TOP
 # UVM_INFO ../../src/hdlTop/uartTxAgentBfm/UartTxAgentBfm.sv(16) @ 0: reporter [uart transmitter agent bfm] UART TRANSMITTER AGENT BFM
-# UVM_INFO ../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv(58) @ 0: reporter [UART_TRANSMITTER_DRIVER_BFM] UART_TRANSMITTER_DRIVER_BFM
+# UVM_INFO ../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv(53) @ 0: reporter [UART_TRANSMITTER_DRIVER_BFM] UART_TRANSMITTER_DRIVER_BFM
 # UVM_INFO ../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv(33) @ 0: reporter [UART_TRANSMITTER_MONITOR_BFM] UART_TRANSMITTER_MONITOR_BFM
-# UVM_INFO ../../src/hdlTop/uartRxAgentBfm/UartRxAgentBfm.sv(16) @ 0: reporter [uart transmitter agent bfm] UART TRANSMITTER AGENT BFM
-# UVM_INFO ../../src/hdlTop/uartRxAgentBfm/UartRxDriverBfm.sv(59) @ 0: reporter [UART_RECIEVER_DRIVER_BFM] UART_RECIEVER_DRIVER_BFM
-# UVM_INFO ../../src/hdlTop/uartRxAgentBfm/UartRxMonitorBfm.sv(35) @ 0: reporter [UART_TRANSMITTER_MONITOR_BFM] UART_TRANSMITTER_MONITOR_BFM
-# Warning: In instance '\/UartRxPkg::UartRxCoverage::UartRxCovergroup ' the 'option.per_instance' is set to '0' (false). Assignment to members 'weight', 'goal' and 'comment' of 'option' would not have any effect.
-# Warning: In instance '\/UartTxPkg::UartTxCoverage::UartTxCovergroup ' the 'option.per_instance' is set to '0' (false). Assignment to members 'weight', 'goal' and 'comment' of 'option' would not have any effect.
+# UVM_INFO ../../src/hdlTop/uartRxAgentBfm/UartRxAgentBfm.sv(16) @ 0: reporter [uart receiver agent bfm] UART RECEIVER AGENT BFM
+# UVM_INFO ../../src/hdlTop/uartRxAgentBfm/UartRxDriverBfm.sv(62) @ 0: reporter [UART_RECIEVER_DRIVER_BFM] UART_RECIEVER_DRIVER_BFM
+# UVM_INFO ../../src/hdlTop/uartRxAgentBfm/UartRxMonitorBfm.sv(34) @ 0: reporter [UART_RECEIVER_MONITOR_BFM] UART_RECEIVER_MONITOR_BFM
 # UVM_INFO @ 0: reporter [UVMTOP] UVM testbench topology:
 # -----------------------------------------------------------------------------
 # Name                                  Type                        Size  Value
@@ -142,225 +140,1113 @@
 #       num_last_rsps                   integral                    32    'd1  
 # -----------------------------------------------------------------------------
 # 
-# ----------------------------------------------------------------------
-# Name                     Type                             Size  Value 
-# ----------------------------------------------------------------------
-# uartVirtualBaseSequence  UartVirtualTransmissionSequence  -     @998  
-#   req                    object                           -     <null>
-#   rsp                    object                           -     <null>
-# ----------------------------------------------------------------------
-# UVM_WARNING @ 0: uvm_test_top.uartEnv.uartVirtualSequencer@@uartVirtualBaseSequence [uvm_sequence_base] Body definition undefined
-# UVM_WARNING @ 0: uvm_test_top.uartEnv.uartTxAgent.uartTxSequencer@@uartVirtualBaseSequence.uartTxBaseSequence [uvm_sequence_base] Body definition undefined
-# UVM_INFO ../../src/hdlTop/uartRxAgentBfm/UartRxMonitorBfm.sv(87) @ 1000: reporter [UART_TRANSMITTER_MONITOR_BFM] system reset activated
-# UVM_INFO ../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv(116) @ 1000: reporter [UART_TRANSMITTER_DRIVER_BFM] RESET DETECTED
+# ------------------------------------------------------------------------------
+# Name                             Type                             Size  Value 
+# ------------------------------------------------------------------------------
+# uartVirtualTransmissionSequence  UartVirtualTransmissionSequence  -     @997  
+#   req                            object                           -     <null>
+#   rsp                            object                           -     <null>
+# ------------------------------------------------------------------------------
+# UVM_INFO ../../src/hvlTop/uartTxAgent/uartTxSequences//UartTxBaseSequence.sv(48) @ 0: uvm_test_top.uartEnv.uartTxAgent.uartTxSequencer@@uartVirtualTransmissionSequence.uartTxBaseSequence [[TX SEQUENCE]] uartTxAgentConfig_ successfully set
+# UVM_INFO ../../src/hdlTop/uartRxAgentBfm/UartRxMonitorBfm.sv(86) @ 1000: reporter [UART_RECEIVER_MONITOR_BFM] system reset activated
+# UVM_INFO ../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv(110) @ 1000: reporter [UART_TRANSMITTER_DRIVER_BFM] RESET DETECTED
 # UVM_INFO ../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv(85) @ 1000: reporter [UART_TRANSMITTER_MONITOR_BFM] system reset activated
 # UVM_INFO ../../src/hdlTop/uartTxAgentBfm/UartTxMonitorBfm.sv(88) @ 1100: reporter [UART_TRANSMITTER_MONITOR_BFM] system reset deactivated
-# UVM_INFO ../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv(121) @ 1100: reporter [UART_TRANSMITTER_DRIVER_BFM] RESET DEASSERTED
-# UVM_INFO ../../src/hdlTop/uartRxAgentBfm/UartRxMonitorBfm.sv(90) @ 1100: reporter [UART_TRANSMITTER_MONITOR_BFM] system reset deactivated
-# --------------------------------------------------------------------------------------------------------------------------------------------
-# Name                           Type               Size  Value                                                                               
-# --------------------------------------------------------------------------------------------------------------------------------------------
-# req                            UartTxTransaction  -     @1025                                                                               
-#   begin_time                   time               64    1100                                                                                
-#   depth                        int                32    'd3                                                                                 
-#   parent sequence (name)       string             18    uartTxBaseSequence                                                                  
-#   parent sequence (full name)  string             84    uvm_test_top.uartEnv.uartVirtualSequencer.uartVirtualBaseSequence.uartTxBaseSequence
-#   sequencer                    string             48    uvm_test_top.uartEnv.uartTxAgent.uartTxSequencer                                    
-#   transmissionData[7]          integral           1     'b0                                                                                 
-#   transmissionData[6]          integral           1     'b1                                                                                 
-#   transmissionData[5]          integral           1     'b1                                                                                 
-#   transmissionData[4]          integral           1     'b1                                                                                 
-#   transmissionData[3]          integral           1     'b1                                                                                 
-#   transmissionData[2]          integral           1     'b1                                                                                 
-#   transmissionData[1]          integral           1     'b1                                                                                 
-#   transmissionData[0]          integral           1     'b0                                                                                 
-#   parity                       integral           1     'b0x                                                                                
-# --------------------------------------------------------------------------------------------------------------------------------------------
-# UVM_INFO ../../src/hvlTop/uartTxAgent//UartTxDriverProxy.sv(77) @ 1100: uvm_test_top.uartEnv.uartTxAgent.uartTxDriverProxy [[DRIVER PROXY]] The UartDataType is FIVE_BIT 
-# The baudrate of Uart is 9600 
-# The parity enable=1
-# UVM_INFO ../../src/hvlTop/uartTxAgent//UartTxDriverProxy.sv(79) @ 1100: uvm_test_top.uartEnv.uartTxAgent.uartTxDriverProxy [[Driver PROXY]] DATA BEING SENT FROM TRANSMITTER DRIVER PROXY IS:	
-# DATATYPE = 5
-# 01111 
+# *************N THE config of [TRANSMITTER monitor] is '{uartOverSamplingMethod:OVERSAMPLING_16, uartBaudRate:BAUD_4800, uartDataType:SIX_BIT, uartParityType:ODD_PARITY, uartStopBit:ONE_BIT, uartParityEnable:PARITY_DISABLED, uartParityErrorInjection:1, uartFramingErrorInjection:0, uartBreakingErrorInjection:0, OverSampledBaudFrequencyClk:1} 
+# **********
+# UVM_INFO ../../src/hdlTop/uartTxAgentBfm/UartTxDriverBfm.sv(115) @ 1100: reporter [UART_TRANSMITTER_DRIVER_BFM] RESET DEASSERTED
+# UVM_INFO ../../src/hdlTop/uartRxAgentBfm/UartRxMonitorBfm.sv(89) @ 1100: reporter [UART_RECEIVER_MONITOR_BFM] system reset deactivated
+# **********
+#  the config of the [receiver monitor] is '{uartOverSamplingMethod:OVERSAMPLING_16, uartBaudRate:BAUD_4800, uartDataType:SIX_BIT, uartParityType:ODD_PARITY, uartStopBit:ONE_BIT, uartParityEnable:PARITY_DISABLED, uartParityErrorInjection:1, uartFramingErrorInjection:0, uartBreakingErrorInjection:0, OverSampledBaudFrequencyClk:1} 
+# **************
+# WAITING FOR START BIT IN RECEIVER
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# Name                           Type               Size  Value                                                                                       
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# req                            UartTxTransaction  -     @1019                                                                                       
+#   begin_time                   time               64    1100                                                                                        
+#   depth                        int                32    'd3                                                                                         
+#   parent sequence (name)       string             18    uartTxBaseSequence                                                                          
+#   parent sequence (full name)  string             92    uvm_test_top.uartEnv.uartVirtualSequencer.uartVirtualTransmissionSequence.uartTxBaseSequence
+#   sequencer                    string             48    uvm_test_top.uartEnv.uartTxAgent.uartTxSequencer                                            
+#   transmissionData[7]          integral           1     'b1                                                                                         
+#   transmissionData[6]          integral           1     'b0                                                                                         
+#   transmissionData[5]          integral           1     'b1                                                                                         
+#   transmissionData[4]          integral           1     'b1                                                                                         
+#   transmissionData[3]          integral           1     'b1                                                                                         
+#   transmissionData[2]          integral           1     'b1                                                                                         
+#   transmissionData[1]          integral           1     'b0                                                                                         
+#   transmissionData[0]          integral           1     'b1                                                                                         
+#   parity                       integral           1     'b0x                                                                                        
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# UVM_INFO ../../src/hvlTop/uartTxAgent//UartTxDriverProxy.sv(80) @ 1100: uvm_test_top.uartEnv.uartTxAgent.uartTxDriverProxy [[DRIVER PROXY]] UartDataType = SIX_BIT 
+# The baudrate of Uart = BAUD_4800 
+# The parity enable = PARITY_DISABLED 
+#  No. of stop bits = ONE_BIT
+#  oversampling method = OVERSAMPLING_16
+# Data to be sent : 101111 
+# 
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##########################################################$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 # ** Info: *******************************START BIT DETECTED : ASSERTION PASS
-#    Time: 10200 ps Started: 3600 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 104
-# local width near if 0 @              115800
-# xxxxxxx0
-# local width near if 1 @              221400
-# xxxxxx01
-# local width near if 2 @              327000
-# xxxxx011
-# local width near if 3 @              432600
-# xxxx0111
-# local width near if 4 @              538200
-# xxx01111
-# entered inside if check
+#    Time: 19800 ps Started: 6800 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 109
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 19800 ps Started: 6800 ps  Scope: HdlTop.uartRxAgentBfm.uartRxMonitorBfm.RecievingAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartRxAgentBfm/UartRxAssertions.sv Line: 105
+# THE UART DATA TYPE IS SIX_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SIX_BIT in monitor bfm
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 435800 ps Started: 422800 ps  Scope: HdlTop.uartRxAgentBfm.uartRxMonitorBfm.RecievingAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartRxAgentBfm/UartRxAssertions.sv Line: 105
+# THE UART DATA TYPE IS SIX_BIT
+# 	 	 the data received is 0 		
+# THE UART DATA TYPE IS SIX_BIT in monitor bfm
+# THE UART DATA TYPE IS SIX_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SIX_BIT in monitor bfm
+# THE UART DATA TYPE IS SIX_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SIX_BIT in monitor bfm
+# THE UART DATA TYPE IS SIX_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SIX_BIT in monitor bfm
+# THE UART DATA TYPE IS SIX_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SIX_BIT in monitor bfm
+# ** Info: *****************************DATA WIDTH IS MATCHING : ASSERTION PASS
+#    Time: 1475800 ps Started: 1267800 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.CHECK_FOR_DATA_WIDTH_LENGTH File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 125
+# ** Info: STOP BIT IS BEING DETECTED : ASSERTION PASS
+#    Time: 1475800 ps Started: 1267800 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.CHECK_FOR_STOP_BIT File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 178
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^)))))))))))))))))))))))))))))))
+#  
+#  
+#  
+#  
+#  
+# Data received : 101111 
+# **********
+#  the config of the [receiver monitor] is '{uartOverSamplingMethod:OVERSAMPLING_16, uartBaudRate:BAUD_4800, uartDataType:SIX_BIT, uartParityType:ODD_PARITY, uartStopBit:ONE_BIT, uartParityEnable:PARITY_DISABLED, uartParityErrorInjection:1, uartFramingErrorInjection:0, uartBreakingErrorInjection:0, OverSampledBaudFrequencyClk:1} 
+# **************
+# WAITING FOR START BIT IN RECEIVER
+# *************N THE config of [TRANSMITTER monitor] is '{uartOverSamplingMethod:OVERSAMPLING_16, uartBaudRate:BAUD_4800, uartDataType:SIX_BIT, uartParityType:ODD_PARITY, uartStopBit:ONE_BIT, uartParityEnable:PARITY_DISABLED, uartParityErrorInjection:1, uartFramingErrorInjection:0, uartBreakingErrorInjection:0, OverSampledBaudFrequencyClk:1} 
+# **********
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(132) @ 1670800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Printing transmissionData= xx111101
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(135) @ 1670800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Printing receivingData= xx111101
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 1670800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 7
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 1670800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = x,RecievingData = x
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 1670800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 6
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 1670800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = x,RecievingData = x
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 1670800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 5
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 1670800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 1670800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 4
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 1670800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 1670800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 3
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 1670800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 1670800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 2
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 1670800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 1670800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 1670800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 0,RecievingData = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 1670800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 1670800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(176) @ 1670800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] No parity
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(200) @ 1670800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] PACKET MATCH SUCCESSFUL
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(207) @ 1670800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] 
+#  transmissionData:xx111101
+#  receivingData:xx111101
+#  tx parity:x rx parity:x
+#  tx framingError:0 rx framingError:0
+#  tx parityError:x rx parityError:x
+#  tx breakingError:0 rx breakingError:0
+# UVM_INFO ../../src/hvlTop/uartTxAgent/uartTxSequences//UartTxBaseSequence.sv(48) @ 1670800: uvm_test_top.uartEnv.uartTxAgent.uartTxSequencer@@uartVirtualTransmissionSequence.uartTxBaseSequence [[TX SEQUENCE]] uartTxAgentConfig_ successfully set
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# Name                           Type               Size  Value                                                                                       
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# req                            UartTxTransaction  -     @1343                                                                                       
+#   begin_time                   time               64    1670800                                                                                     
+#   depth                        int                32    'd3                                                                                         
+#   parent sequence (name)       string             18    uartTxBaseSequence                                                                          
+#   parent sequence (full name)  string             92    uvm_test_top.uartEnv.uartVirtualSequencer.uartVirtualTransmissionSequence.uartTxBaseSequence
+#   sequencer                    string             48    uvm_test_top.uartEnv.uartTxAgent.uartTxSequencer                                            
+#   transmissionData[7]          integral           1     'b0                                                                                         
+#   transmissionData[6]          integral           1     'b1                                                                                         
+#   transmissionData[5]          integral           1     'b0                                                                                         
+#   transmissionData[4]          integral           1     'b1                                                                                         
+#   transmissionData[3]          integral           1     'b1                                                                                         
+#   transmissionData[2]          integral           1     'b1                                                                                         
+#   transmissionData[1]          integral           1     'b1                                                                                         
+#   transmissionData[0]          integral           1     'b0                                                                                         
+#   parity                       integral           1     'b0x                                                                                        
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# UVM_INFO ../../src/hvlTop/uartTxAgent//UartTxDriverProxy.sv(80) @ 1670800: uvm_test_top.uartEnv.uartTxAgent.uartTxDriverProxy [[DRIVER PROXY]] UartDataType = SIX_BIT 
+# The baudrate of Uart = BAUD_4800 
+# The parity enable = PARITY_DISABLED 
+#  No. of stop bits = ONE_BIT
+#  oversampling method = OVERSAMPLING_16
+# Data to be sent : 011110 
+# 
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##########################################################$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 1696800 ps Started: 1683800 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 109
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 1696800 ps Started: 1683800 ps  Scope: HdlTop.uartRxAgentBfm.uartRxMonitorBfm.RecievingAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartRxAgentBfm/UartRxAssertions.sv Line: 105
+# THE UART DATA TYPE IS SIX_BIT
+# 	 	 the data received is 0 		
+# THE UART DATA TYPE IS SIX_BIT in monitor bfm
+# THE UART DATA TYPE IS SIX_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SIX_BIT in monitor bfm
+# THE UART DATA TYPE IS SIX_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SIX_BIT in monitor bfm
+# THE UART DATA TYPE IS SIX_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SIX_BIT in monitor bfm
+# THE UART DATA TYPE IS SIX_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SIX_BIT in monitor bfm
+# ** Info: *****************************DATA WIDTH IS MATCHING : ASSERTION PASS
+#    Time: 2944800 ps Started: 2736800 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.CHECK_FOR_DATA_WIDTH_LENGTH File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 125
+# THE UART DATA TYPE IS SIX_BIT
+# 	 	 the data received is x 		
+# THE UART DATA TYPE IS SIX_BIT in monitor bfm
+# ** Info: STOP BIT IS BEING DETECTED : ASSERTION PASS
+#    Time: 3152800 ps Started: 2944800 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.CHECK_FOR_STOP_BIT File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 178
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^)))))))))))))))))))))))))))))))
+#  
+#  
+#  
+#  
+#  
+# Data received : 011111 
+# **********
+#  the config of the [receiver monitor] is '{uartOverSamplingMethod:OVERSAMPLING_16, uartBaudRate:BAUD_9600, uartDataType:FIVE_BIT, uartParityType:EVEN_PARITY, uartStopBit:TWO_BIT, uartParityEnable:PARITY_ENABLED, uartParityErrorInjection:1, uartFramingErrorInjection:0, uartBreakingErrorInjection:0, OverSampledBaudFrequencyClk:1} 
+# **************
+# WAITING FOR START BIT IN RECEIVER
+# *************N THE config of [TRANSMITTER monitor] is '{uartOverSamplingMethod:OVERSAMPLING_16, uartBaudRate:BAUD_9600, uartDataType:FIVE_BIT, uartParityType:EVEN_PARITY, uartStopBit:TWO_BIT, uartParityEnable:PARITY_ENABLED, uartParityErrorInjection:1, uartFramingErrorInjection:0, uartBreakingErrorInjection:0, OverSampledBaudFrequencyClk:1} 
+# **********
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(132) @ 3347800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Printing transmissionData= xx111110
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(135) @ 3347800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Printing receivingData= xx111110
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 3347800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 7
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 3347800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = x,RecievingData = x
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 3347800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 6
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 3347800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = x,RecievingData = x
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 3347800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 5
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 3347800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 3347800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 4
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 3347800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 3347800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 3
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 3347800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 3347800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 2
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 3347800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 3347800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 3347800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 3347800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 3347800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 0,RecievingData = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(200) @ 3347800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] PACKET MATCH SUCCESSFUL
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(207) @ 3347800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] 
+#  transmissionData:xx111110
+#  receivingData:xx111110
+#  tx parity:x rx parity:x
+#  tx framingError:0 rx framingError:0
+#  tx parityError:x rx parityError:x
+#  tx breakingError:0 rx breakingError:0
+# UVM_INFO ../../src/hvlTop/uartTxAgent/uartTxSequences//UartTxBaseSequence.sv(48) @ 3347800: uvm_test_top.uartEnv.uartTxAgent.uartTxSequencer@@uartVirtualTransmissionSequence.uartTxBaseSequence [[TX SEQUENCE]] uartTxAgentConfig_ successfully set
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# Name                           Type               Size  Value                                                                                       
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# req                            UartTxTransaction  -     @1617                                                                                       
+#   begin_time                   time               64    3347800                                                                                     
+#   depth                        int                32    'd3                                                                                         
+#   parent sequence (name)       string             18    uartTxBaseSequence                                                                          
+#   parent sequence (full name)  string             92    uvm_test_top.uartEnv.uartVirtualSequencer.uartVirtualTransmissionSequence.uartTxBaseSequence
+#   sequencer                    string             48    uvm_test_top.uartEnv.uartTxAgent.uartTxSequencer                                            
+#   transmissionData[7]          integral           1     'b0                                                                                         
+#   transmissionData[6]          integral           1     'b0                                                                                         
+#   transmissionData[5]          integral           1     'b1                                                                                         
+#   transmissionData[4]          integral           1     'b1                                                                                         
+#   transmissionData[3]          integral           1     'b1                                                                                         
+#   transmissionData[2]          integral           1     'b1                                                                                         
+#   transmissionData[1]          integral           1     'b1                                                                                         
+#   transmissionData[0]          integral           1     'b0                                                                                         
+#   parity                       integral           1     'b0x                                                                                        
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# UVM_INFO ../../src/hvlTop/uartTxAgent//UartTxDriverProxy.sv(80) @ 3347800: uvm_test_top.uartEnv.uartTxAgent.uartTxDriverProxy [[DRIVER PROXY]] UartDataType = FIVE_BIT 
+# The baudrate of Uart = BAUD_9600 
+# The parity enable = PARITY_ENABLED 
+#  No. of stop bits = TWO_BIT
+#  oversampling method = OVERSAMPLING_16
+# Data to be sent : 01111 
+# 
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##########################################################$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 3373800 ps Started: 3360800 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 109
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 3373800 ps Started: 3360800 ps  Scope: HdlTop.uartRxAgentBfm.uartRxMonitorBfm.RecievingAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartRxAgentBfm/UartRxAssertions.sv Line: 105
 # PARITY IN ASSERTION IS 0
 # ** Info: *********************EVEN PARITY IS DETECTED : ASSERTION PASS
-#    Time: 643800 ps Started: 538200 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.CHECK_FOR_EVEN_PROPERTY File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 140
+#    Time: 3568800 ps Started: 3360800 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.CHECK_FOR_EVEN_PARITY File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 145
+# THE UART DATA TYPE IS FIVE_BIT
+# 	 	 the data received is 0 		
+# THE UART DATA TYPE IS FIVE_BIT in monitor bfm
+# THE UART DATA TYPE IS FIVE_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS FIVE_BIT in monitor bfm
+# THE UART DATA TYPE IS FIVE_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS FIVE_BIT in monitor bfm
+# THE UART DATA TYPE IS FIVE_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS FIVE_BIT in monitor bfm
+# THE UART DATA TYPE IS FIVE_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS FIVE_BIT in monitor bfm
 # ** Info: *****************************DATA WIDTH IS MATCHING : ASSERTION PASS
-#    Time: 643800 ps Started: 538200 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.CHECK_FOR_DATA_WIDTH_LENGTH File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 120
-# PARITY IS ASSSIGNED AT               690000
-# OUTSIDE PARITY GEN IS               690000
-# ** Info: STOP BIT IS BEING DETECTED : ASSERTION PASS
-#    Time: 749400 ps Started: 643800 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.CHECK_FOR_STOP_BIT File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 170
-# STOP BIT IS BEING ASSIGNED IN  MONITOR AT               795600
-# THE NUMBER OF ZEROES IS 3
-# THE BREAKING ERROR IS 0
-# STOP BIT IS BEING ASSIGNED IN  MONITOR AT               795600
-# THE NUMBER OF ZEROES IS 3
-# THE BREAKING ERROR IS 0
-# UVM_INFO ../../src/hvlTop/uartRxAgent/UartRxMonitorProxy.sv(81) @ 848400: uvm_test_top.uartEnv.uartRxAgent.uartRxMonitorProxy [[receciever monitor PROXY]] DATA BEING Sreceived FROM TRANSMITTER DRIVER PROXY IS:	
-# 01111 
-# parity is 0
-# UVM_INFO ../../src/hvlTop/uartTxAgent//UartTxMonitorProxy.sv(83) @ 848400: uvm_test_top.uartEnv.uartTxAgent.uartTxMonitorProxy [[MONITOR PROXY]] MONITOR HAS RECEIVED FOLLOWING PACKET FROM TRANSMISTTER PROXY
-# 01111
-#  parity of the packet obtained is 0
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(132) @ 848400: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Printing transmissionData= xxx11110
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(135) @ 848400: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Printing receivingData= xxx11110
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(158) @ 848400: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 7
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(159) @ 848400: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = x,RecievingData = x
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(158) @ 848400: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 6
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(159) @ 848400: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = x,RecievingData = x
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(158) @ 848400: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 5
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(159) @ 848400: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = x,RecievingData = x
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(158) @ 848400: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 4
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(159) @ 848400: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(158) @ 848400: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 3
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(159) @ 848400: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(158) @ 848400: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 2
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(159) @ 848400: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(158) @ 848400: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 1
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(159) @ 848400: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(158) @ 848400: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 0
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(159) @ 848400: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 0,RecievingData = 0
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(194) @ 848400: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] SUCCESSFUL DATA MATCH
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(195) @ 848400: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] 
+#    Time: 4829800 ps Started: 4621800 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.CHECK_FOR_DATA_WIDTH_LENGTH File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 125
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^)))))))))))))))))))))))))))))))
+#  
+#  
+#  
+#  
+#  
+# Data received : 01111 
+# **********
+#  the config of the [receiver monitor] is '{uartOverSamplingMethod:OVERSAMPLING_16, uartBaudRate:BAUD_9600, uartDataType:SIX_BIT, uartParityType:EVEN_PARITY, uartStopBit:TWO_BIT, uartParityEnable:PARITY_DISABLED, uartParityErrorInjection:0, uartFramingErrorInjection:0, uartBreakingErrorInjection:0, OverSampledBaudFrequencyClk:1} 
+# **************
+# WAITING FOR START BIT IN RECEIVER
+# *************N THE config of [TRANSMITTER monitor] is '{uartOverSamplingMethod:OVERSAMPLING_16, uartBaudRate:BAUD_9600, uartDataType:SIX_BIT, uartParityType:EVEN_PARITY, uartStopBit:TWO_BIT, uartParityEnable:PARITY_DISABLED, uartParityErrorInjection:0, uartFramingErrorInjection:1, uartBreakingErrorInjection:0, OverSampledBaudFrequencyClk:1} 
+# **********
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(132) @ 5232800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Printing transmissionData= xxx11110
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(135) @ 5232800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Printing receivingData= xxx11110
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 5232800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 7
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 5232800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = x,RecievingData = x
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 5232800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 6
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 5232800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = x,RecievingData = x
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 5232800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 5
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 5232800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = x,RecievingData = x
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 5232800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 4
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 5232800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 5232800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 3
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 5232800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 5232800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 2
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 5232800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 5232800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 5232800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 5232800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 5232800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 0,RecievingData = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(176) @ 5232800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] No parity
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(200) @ 5232800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] PACKET MATCH SUCCESSFUL
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(207) @ 5232800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] 
 #  transmissionData:xxx11110
 #  receivingData:xxx11110
-#  tx parity:0 rx parity:0
-#  tx framingError:0 rx framingError:0
-#  tx parityError:0 rx parityError:0
-#  tx breakingError:0 rx breakingError:0
-# --------------------------------------------------------------------------------------------------------------------------------------------
-# Name                           Type               Size  Value                                                                               
-# --------------------------------------------------------------------------------------------------------------------------------------------
-# req                            UartTxTransaction  -     @1025                                                                               
-#   begin_time                   time               64    848400                                                                              
-#   end_time                     time               64    848400                                                                              
-#   depth                        int                32    'd3                                                                                 
-#   parent sequence (name)       string             18    uartTxBaseSequence                                                                  
-#   parent sequence (full name)  string             84    uvm_test_top.uartEnv.uartVirtualSequencer.uartVirtualBaseSequence.uartTxBaseSequence
-#   sequencer                    string             48    uvm_test_top.uartEnv.uartTxAgent.uartTxSequencer                                    
-#   transmissionData[7]          integral           1     'b1                                                                                 
-#   transmissionData[6]          integral           1     'b1                                                                                 
-#   transmissionData[5]          integral           1     'b1                                                                                 
-#   transmissionData[4]          integral           1     'b1                                                                                 
-#   transmissionData[3]          integral           1     'b0                                                                                 
-#   transmissionData[2]          integral           1     'b1                                                                                 
-#   transmissionData[1]          integral           1     'b1                                                                                 
-#   transmissionData[0]          integral           1     'b0                                                                                 
-#   parity                       integral           1     'b0x                                                                                
-# --------------------------------------------------------------------------------------------------------------------------------------------
-# UVM_INFO ../../src/hvlTop/uartTxAgent//UartTxDriverProxy.sv(77) @ 848400: uvm_test_top.uartEnv.uartTxAgent.uartTxDriverProxy [[DRIVER PROXY]] The UartDataType is FIVE_BIT 
-# The baudrate of Uart is 9600 
-# The parity enable=1
-# UVM_INFO ../../src/hvlTop/uartTxAgent//UartTxDriverProxy.sv(79) @ 848400: uvm_test_top.uartEnv.uartTxAgent.uartTxDriverProxy [[Driver PROXY]] DATA BEING SENT FROM TRANSMITTER DRIVER PROXY IS:	
-# DATATYPE = 5
-# 01101 
-# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
-#    Time: 861600 ps Started: 749400 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 104
-# local width near if 0 @              967200
-# xxxxxxx0
-# local width near if 1 @             1072800
-# xxxxxx01
-# local width near if 2 @             1178400
-# xxxxx011
-# local width near if 3 @             1284000
-# xxxx0110
-# local width near if 4 @             1389600
-# xxx01101
-# entered inside if check
-# PARITY IN ASSERTION IS 1
-# ** Info: *****************************DATA WIDTH IS MATCHING : ASSERTION PASS
-#    Time: 1495200 ps Started: 1389600 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.CHECK_FOR_DATA_WIDTH_LENGTH File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 120
-# ** Info: *********************EVEN PARITY IS DETECTED : ASSERTION PASS
-#    Time: 1495200 ps Started: 1389600 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.CHECK_FOR_EVEN_PROPERTY File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 140
-# PARITY IS ASSSIGNED AT              1541400
-# OUTSIDE PARITY GEN IS              1541400
-# ** Info: STOP BIT IS BEING DETECTED : ASSERTION PASS
-#    Time: 1600800 ps Started: 1495200 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.CHECK_FOR_STOP_BIT File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 170
-# STOP BIT IS BEING ASSIGNED IN  MONITOR AT              1647000
-# THE NUMBER OF ZEROES IS 3
-# THE BREAKING ERROR IS 0
-# STOP BIT IS BEING ASSIGNED IN  MONITOR AT              1647000
-# THE NUMBER OF ZEROES IS 3
-# THE BREAKING ERROR IS 0
-# UVM_INFO ../../src/hvlTop/uartRxAgent/UartRxMonitorProxy.sv(81) @ 1699800: uvm_test_top.uartEnv.uartRxAgent.uartRxMonitorProxy [[receciever monitor PROXY]] DATA BEING Sreceived FROM TRANSMITTER DRIVER PROXY IS:	
-# 01101 
-# parity is 1
-# UVM_INFO ../../src/hvlTop/uartTxAgent//UartTxMonitorProxy.sv(83) @ 1699800: uvm_test_top.uartEnv.uartTxAgent.uartTxMonitorProxy [[MONITOR PROXY]] MONITOR HAS RECEIVED FOLLOWING PACKET FROM TRANSMISTTER PROXY
-# 01101
-#  parity of the packet obtained is 1
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(132) @ 1699800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Printing transmissionData= xxx10110
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(135) @ 1699800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Printing receivingData= xxx10110
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(158) @ 1699800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 7
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(159) @ 1699800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = x,RecievingData = x
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(158) @ 1699800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 6
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(159) @ 1699800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = x,RecievingData = x
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(158) @ 1699800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 5
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(159) @ 1699800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = x,RecievingData = x
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(158) @ 1699800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 4
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(159) @ 1699800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(158) @ 1699800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 3
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(159) @ 1699800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 0,RecievingData = 0
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(158) @ 1699800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 2
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(159) @ 1699800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(158) @ 1699800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 1
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(159) @ 1699800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(158) @ 1699800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 0
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(159) @ 1699800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 0,RecievingData = 0
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(194) @ 1699800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] SUCCESSFUL DATA MATCH
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(195) @ 1699800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] 
-#  transmissionData:xxx10110
-#  receivingData:xxx10110
 #  tx parity:1 rx parity:1
 #  tx framingError:0 rx framingError:0
+#  tx parityError:1 rx parityError:1
+#  tx breakingError:0 rx breakingError:0
+# UVM_INFO ../../src/hvlTop/uartTxAgent/uartTxSequences//UartTxBaseSequence.sv(48) @ 5232800: uvm_test_top.uartEnv.uartTxAgent.uartTxSequencer@@uartVirtualTransmissionSequence.uartTxBaseSequence [[TX SEQUENCE]] uartTxAgentConfig_ successfully set
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# Name                           Type               Size  Value                                                                                       
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# req                            UartTxTransaction  -     @1923                                                                                       
+#   begin_time                   time               64    5232800                                                                                     
+#   depth                        int                32    'd3                                                                                         
+#   parent sequence (name)       string             18    uartTxBaseSequence                                                                          
+#   parent sequence (full name)  string             92    uvm_test_top.uartEnv.uartVirtualSequencer.uartVirtualTransmissionSequence.uartTxBaseSequence
+#   sequencer                    string             48    uvm_test_top.uartEnv.uartTxAgent.uartTxSequencer                                            
+#   transmissionData[7]          integral           1     'b0                                                                                         
+#   transmissionData[6]          integral           1     'b1                                                                                         
+#   transmissionData[5]          integral           1     'b1                                                                                         
+#   transmissionData[4]          integral           1     'b0                                                                                         
+#   transmissionData[3]          integral           1     'b0                                                                                         
+#   transmissionData[2]          integral           1     'b0                                                                                         
+#   transmissionData[1]          integral           1     'b1                                                                                         
+#   transmissionData[0]          integral           1     'b0                                                                                         
+#   parity                       integral           1     'b0x                                                                                        
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# UVM_INFO ../../src/hvlTop/uartTxAgent//UartTxDriverProxy.sv(80) @ 5232800: uvm_test_top.uartEnv.uartTxAgent.uartTxDriverProxy [[DRIVER PROXY]] UartDataType = SIX_BIT 
+# The baudrate of Uart = BAUD_9600 
+# The parity enable = PARITY_DISABLED 
+#  No. of stop bits = TWO_BIT
+#  oversampling method = OVERSAMPLING_16
+# Data to be sent : 010001 
+# 
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##########################################################$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 5258800 ps Started: 5245800 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 109
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 5258800 ps Started: 5245800 ps  Scope: HdlTop.uartRxAgentBfm.uartRxMonitorBfm.RecievingAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartRxAgentBfm/UartRxAssertions.sv Line: 105
+# THE UART DATA TYPE IS SIX_BIT
+# 	 	 the data received is 0 		
+# THE UART DATA TYPE IS SIX_BIT in monitor bfm
+# THE UART DATA TYPE IS SIX_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SIX_BIT in monitor bfm
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 5882800 ps Started: 5869800 ps  Scope: HdlTop.uartRxAgentBfm.uartRxMonitorBfm.RecievingAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartRxAgentBfm/UartRxAssertions.sv Line: 105
+# THE UART DATA TYPE IS SIX_BIT
+# 	 	 the data received is 0 		
+# THE UART DATA TYPE IS SIX_BIT in monitor bfm
+# THE UART DATA TYPE IS SIX_BIT
+# 	 	 the data received is 0 		
+# THE UART DATA TYPE IS SIX_BIT in monitor bfm
+# THE UART DATA TYPE IS SIX_BIT
+# 	 	 the data received is 0 		
+# THE UART DATA TYPE IS SIX_BIT in monitor bfm
+# THE UART DATA TYPE IS SIX_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SIX_BIT in monitor bfm
+# ** Info: *****************************DATA WIDTH IS MATCHING : ASSERTION PASS
+#    Time: 6922800 ps Started: 6714800 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.CHECK_FOR_DATA_WIDTH_LENGTH File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 125
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^)))))))))))))))))))))))))))))))
+#  
+#  
+#  
+#  
+#  
+# Data received : 010001 
+# **********
+#  the config of the [receiver monitor] is '{uartOverSamplingMethod:OVERSAMPLING_16, uartBaudRate:BAUD_9600, uartDataType:SEVEN_BIT, uartParityType:EVEN_PARITY, uartStopBit:TWO_BIT, uartParityEnable:PARITY_DISABLED, uartParityErrorInjection:0, uartFramingErrorInjection:0, uartBreakingErrorInjection:0, OverSampledBaudFrequencyClk:1} 
+# **************
+# WAITING FOR START BIT IN RECEIVER
+# *************N THE config of [TRANSMITTER monitor] is '{uartOverSamplingMethod:OVERSAMPLING_16, uartBaudRate:BAUD_9600, uartDataType:SEVEN_BIT, uartParityType:EVEN_PARITY, uartStopBit:TWO_BIT, uartParityEnable:PARITY_DISABLED, uartParityErrorInjection:0, uartFramingErrorInjection:0, uartBreakingErrorInjection:1, OverSampledBaudFrequencyClk:1} 
+# **********
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(132) @ 7117800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Printing transmissionData= xx100010
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(135) @ 7117800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Printing receivingData= xx100010
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 7117800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 7
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 7117800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = x,RecievingData = x
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 7117800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 6
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 7117800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = x,RecievingData = x
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 7117800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 5
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 7117800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 7117800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 4
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 7117800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 0,RecievingData = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 7117800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 3
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 7117800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 0,RecievingData = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 7117800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 2
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 7117800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 0,RecievingData = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 7117800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 7117800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 7117800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 7117800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 0,RecievingData = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(176) @ 7117800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] No parity
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(200) @ 7117800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] PACKET MATCH SUCCESSFUL
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(207) @ 7117800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] 
+#  transmissionData:xx100010
+#  receivingData:xx100010
+#  tx parity:1 rx parity:x
+#  tx framingError:1 rx framingError:1
+#  tx parityError:1 rx parityError:x
+#  tx breakingError:0 rx breakingError:0
+# UVM_INFO ../../src/hvlTop/uartTxAgent/uartTxSequences//UartTxBaseSequence.sv(48) @ 7117800: uvm_test_top.uartEnv.uartTxAgent.uartTxSequencer@@uartVirtualTransmissionSequence.uartTxBaseSequence [[TX SEQUENCE]] uartTxAgentConfig_ successfully set
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# Name                           Type               Size  Value                                                                                       
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# req                            UartTxTransaction  -     @2229                                                                                       
+#   begin_time                   time               64    7117800                                                                                     
+#   depth                        int                32    'd3                                                                                         
+#   parent sequence (name)       string             18    uartTxBaseSequence                                                                          
+#   parent sequence (full name)  string             92    uvm_test_top.uartEnv.uartVirtualSequencer.uartVirtualTransmissionSequence.uartTxBaseSequence
+#   sequencer                    string             48    uvm_test_top.uartEnv.uartTxAgent.uartTxSequencer                                            
+#   transmissionData[7]          integral           1     'b1                                                                                         
+#   transmissionData[6]          integral           1     'b1                                                                                         
+#   transmissionData[5]          integral           1     'b1                                                                                         
+#   transmissionData[4]          integral           1     'b0                                                                                         
+#   transmissionData[3]          integral           1     'b1                                                                                         
+#   transmissionData[2]          integral           1     'b1                                                                                         
+#   transmissionData[1]          integral           1     'b1                                                                                         
+#   transmissionData[0]          integral           1     'b1                                                                                         
+#   parity                       integral           1     'b0x                                                                                        
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# UVM_INFO ../../src/hvlTop/uartTxAgent//UartTxDriverProxy.sv(80) @ 7117800: uvm_test_top.uartEnv.uartTxAgent.uartTxDriverProxy [[DRIVER PROXY]] UartDataType = SEVEN_BIT 
+# The baudrate of Uart = BAUD_9600 
+# The parity enable = PARITY_DISABLED 
+#  No. of stop bits = TWO_BIT
+#  oversampling method = OVERSAMPLING_16
+# Data to be sent : 1111011 
+# 
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##########################################################$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 7143800 ps Started: 7130800 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 109
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 7143800 ps Started: 7130800 ps  Scope: HdlTop.uartRxAgentBfm.uartRxMonitorBfm.RecievingAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartRxAgentBfm/UartRxAssertions.sv Line: 105
+# THE UART DATA TYPE IS SEVEN_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SEVEN_BIT in monitor bfm
+# THE UART DATA TYPE IS SEVEN_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SEVEN_BIT in monitor bfm
+# THE UART DATA TYPE IS SEVEN_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SEVEN_BIT in monitor bfm
+# THE UART DATA TYPE IS SEVEN_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SEVEN_BIT in monitor bfm
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 8183800 ps Started: 8170800 ps  Scope: HdlTop.uartRxAgentBfm.uartRxMonitorBfm.RecievingAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartRxAgentBfm/UartRxAssertions.sv Line: 105
+# THE UART DATA TYPE IS SEVEN_BIT
+# 	 	 the data received is 0 		
+# THE UART DATA TYPE IS SEVEN_BIT in monitor bfm
+# THE UART DATA TYPE IS SEVEN_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SEVEN_BIT in monitor bfm
+# THE UART DATA TYPE IS SEVEN_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SEVEN_BIT in monitor bfm
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 8807800 ps Started: 8794800 ps  Scope: HdlTop.uartRxAgentBfm.uartRxMonitorBfm.RecievingAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartRxAgentBfm/UartRxAssertions.sv Line: 105
+# ** Info: *****************************DATA WIDTH IS MATCHING : ASSERTION PASS
+#    Time: 9015800 ps Started: 8807800 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.CHECK_FOR_DATA_WIDTH_LENGTH File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 125
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^)))))))))))))))))))))))))))))))
+#  
+#  
+#  
+#  
+#  
+# Data received : 1111011 
+# **********
+#  the config of the [receiver monitor] is '{uartOverSamplingMethod:OVERSAMPLING_16, uartBaudRate:BAUD_9600, uartDataType:EIGHT_BIT, uartParityType:EVEN_PARITY, uartStopBit:ONE_BIT, uartParityEnable:PARITY_DISABLED, uartParityErrorInjection:0, uartFramingErrorInjection:0, uartBreakingErrorInjection:0, OverSampledBaudFrequencyClk:1} 
+# **************
+# WAITING FOR START BIT IN RECEIVER
+# *************N THE config of [TRANSMITTER monitor] is '{uartOverSamplingMethod:OVERSAMPLING_16, uartBaudRate:BAUD_9600, uartDataType:EIGHT_BIT, uartParityType:EVEN_PARITY, uartStopBit:ONE_BIT, uartParityEnable:PARITY_DISABLED, uartParityErrorInjection:0, uartFramingErrorInjection:0, uartBreakingErrorInjection:1, OverSampledBaudFrequencyClk:1} 
+# **********
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(132) @ 9210800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Printing transmissionData= x1101111
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(135) @ 9210800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Printing receivingData= x1101111
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 9210800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 7
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 9210800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = x,RecievingData = x
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 9210800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 6
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 9210800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 9210800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 5
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 9210800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 9210800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 4
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 9210800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 0,RecievingData = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 9210800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 3
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 9210800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 9210800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 2
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 9210800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 9210800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 9210800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 9210800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 9210800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(176) @ 9210800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] No parity
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(200) @ 9210800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] PACKET MATCH SUCCESSFUL
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(207) @ 9210800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] 
+#  transmissionData:x1101111
+#  receivingData:x1101111
+#  tx parity:1 rx parity:x
+#  tx framingError:1 rx framingError:1
+#  tx parityError:1 rx parityError:x
+#  tx breakingError:0 rx breakingError:0
+# UVM_INFO ../../src/hvlTop/uartTxAgent/uartTxSequences//UartTxBaseSequence.sv(48) @ 9210800: uvm_test_top.uartEnv.uartTxAgent.uartTxSequencer@@uartVirtualTransmissionSequence.uartTxBaseSequence [[TX SEQUENCE]] uartTxAgentConfig_ successfully set
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# Name                           Type               Size  Value                                                                                       
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# req                            UartTxTransaction  -     @2567                                                                                       
+#   begin_time                   time               64    9210800                                                                                     
+#   depth                        int                32    'd3                                                                                         
+#   parent sequence (name)       string             18    uartTxBaseSequence                                                                          
+#   parent sequence (full name)  string             92    uvm_test_top.uartEnv.uartVirtualSequencer.uartVirtualTransmissionSequence.uartTxBaseSequence
+#   sequencer                    string             48    uvm_test_top.uartEnv.uartTxAgent.uartTxSequencer                                            
+#   transmissionData[7]          integral           1     'b1                                                                                         
+#   transmissionData[6]          integral           1     'b0                                                                                         
+#   transmissionData[5]          integral           1     'b0                                                                                         
+#   transmissionData[4]          integral           1     'b0                                                                                         
+#   transmissionData[3]          integral           1     'b0                                                                                         
+#   transmissionData[2]          integral           1     'b1                                                                                         
+#   transmissionData[1]          integral           1     'b1                                                                                         
+#   transmissionData[0]          integral           1     'b1                                                                                         
+#   parity                       integral           1     'b0x                                                                                        
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# UVM_INFO ../../src/hvlTop/uartTxAgent//UartTxDriverProxy.sv(80) @ 9210800: uvm_test_top.uartEnv.uartTxAgent.uartTxDriverProxy [[DRIVER PROXY]] UartDataType = EIGHT_BIT 
+# The baudrate of Uart = BAUD_9600 
+# The parity enable = PARITY_DISABLED 
+#  No. of stop bits = ONE_BIT
+#  oversampling method = OVERSAMPLING_16
+# Data to be sent : 11100001 
+# 
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##########################################################$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 9236800 ps Started: 9223800 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 109
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 9236800 ps Started: 9223800 ps  Scope: HdlTop.uartRxAgentBfm.uartRxMonitorBfm.RecievingAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartRxAgentBfm/UartRxAssertions.sv Line: 105
+# THE UART DATA TYPE IS EIGHT_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS EIGHT_BIT in monitor bfm
+# THE UART DATA TYPE IS EIGHT_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS EIGHT_BIT in monitor bfm
+# THE UART DATA TYPE IS EIGHT_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS EIGHT_BIT in monitor bfm
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 10068800 ps Started: 10055800 ps  Scope: HdlTop.uartRxAgentBfm.uartRxMonitorBfm.RecievingAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartRxAgentBfm/UartRxAssertions.sv Line: 105
+# THE UART DATA TYPE IS EIGHT_BIT
+# 	 	 the data received is 0 		
+# THE UART DATA TYPE IS EIGHT_BIT in monitor bfm
+# THE UART DATA TYPE IS EIGHT_BIT
+# 	 	 the data received is 0 		
+# THE UART DATA TYPE IS EIGHT_BIT in monitor bfm
+# THE UART DATA TYPE IS EIGHT_BIT
+# 	 	 the data received is 0 		
+# THE UART DATA TYPE IS EIGHT_BIT in monitor bfm
+# THE UART DATA TYPE IS EIGHT_BIT
+# 	 	 the data received is 0 		
+# THE UART DATA TYPE IS EIGHT_BIT in monitor bfm
+# ** Info: *****************************DATA WIDTH IS MATCHING : ASSERTION PASS
+#    Time: 10900800 ps Started: 10692800 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.CHECK_FOR_DATA_WIDTH_LENGTH File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 125
+# THE UART DATA TYPE IS EIGHT_BIT
+# 	 	 the data received is x 		
+# THE UART DATA TYPE IS EIGHT_BIT in monitor bfm
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^)))))))))))))))))))))))))))))))
+#  
+#  
+#  
+#  
+#  
+# Data received : 1110000x 
+# **********
+#  the config of the [receiver monitor] is '{uartOverSamplingMethod:OVERSAMPLING_16, uartBaudRate:BAUD_9600, uartDataType:SEVEN_BIT, uartParityType:EVEN_PARITY, uartStopBit:ONE_BIT, uartParityEnable:PARITY_ENABLED, uartParityErrorInjection:0, uartFramingErrorInjection:0, uartBreakingErrorInjection:0, OverSampledBaudFrequencyClk:1} 
+# **************
+# WAITING FOR START BIT IN RECEIVER
+# *************N THE config of [TRANSMITTER monitor] is '{uartOverSamplingMethod:OVERSAMPLING_16, uartBaudRate:BAUD_9600, uartDataType:SEVEN_BIT, uartParityType:EVEN_PARITY, uartStopBit:ONE_BIT, uartParityEnable:PARITY_ENABLED, uartParityErrorInjection:0, uartFramingErrorInjection:1, uartBreakingErrorInjection:1, OverSampledBaudFrequencyClk:1} 
+# **********
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(132) @ 11303800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Printing transmissionData= x0000111
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(135) @ 11303800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Printing receivingData= x0000111
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 11303800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 7
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 11303800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = x,RecievingData = x
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 11303800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 6
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 11303800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 0,RecievingData = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 11303800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 5
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 11303800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 0,RecievingData = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 11303800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 4
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 11303800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 0,RecievingData = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 11303800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 3
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 11303800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 0,RecievingData = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 11303800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 2
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 11303800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 11303800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 11303800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 11303800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 11303800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(200) @ 11303800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] PACKET MATCH SUCCESSFUL
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(207) @ 11303800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] 
+#  transmissionData:x0000111
+#  receivingData:x0000111
+#  tx parity:1 rx parity:x
+#  tx framingError:1 rx framingError:1
+#  tx parityError:1 rx parityError:x
+#  tx breakingError:0 rx breakingError:0
+# UVM_INFO ../../src/hvlTop/uartTxAgent/uartTxSequences//UartTxBaseSequence.sv(48) @ 11303800: uvm_test_top.uartEnv.uartTxAgent.uartTxSequencer@@uartVirtualTransmissionSequence.uartTxBaseSequence [[TX SEQUENCE]] uartTxAgentConfig_ successfully set
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# Name                           Type               Size  Value                                                                                       
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# req                            UartTxTransaction  -     @2905                                                                                       
+#   begin_time                   time               64    11303800                                                                                    
+#   depth                        int                32    'd3                                                                                         
+#   parent sequence (name)       string             18    uartTxBaseSequence                                                                          
+#   parent sequence (full name)  string             92    uvm_test_top.uartEnv.uartVirtualSequencer.uartVirtualTransmissionSequence.uartTxBaseSequence
+#   sequencer                    string             48    uvm_test_top.uartEnv.uartTxAgent.uartTxSequencer                                            
+#   transmissionData[7]          integral           1     'b0                                                                                         
+#   transmissionData[6]          integral           1     'b0                                                                                         
+#   transmissionData[5]          integral           1     'b1                                                                                         
+#   transmissionData[4]          integral           1     'b1                                                                                         
+#   transmissionData[3]          integral           1     'b0                                                                                         
+#   transmissionData[2]          integral           1     'b0                                                                                         
+#   transmissionData[1]          integral           1     'b1                                                                                         
+#   transmissionData[0]          integral           1     'b1                                                                                         
+#   parity                       integral           1     'b0x                                                                                        
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# UVM_INFO ../../src/hvlTop/uartTxAgent//UartTxDriverProxy.sv(80) @ 11303800: uvm_test_top.uartEnv.uartTxAgent.uartTxDriverProxy [[DRIVER PROXY]] UartDataType = SEVEN_BIT 
+# The baudrate of Uart = BAUD_9600 
+# The parity enable = PARITY_ENABLED 
+#  No. of stop bits = ONE_BIT
+#  oversampling method = OVERSAMPLING_16
+# Data to be sent : 1100110 
+# 
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##########################################################$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 11329800 ps Started: 11316800 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 109
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 11329800 ps Started: 11316800 ps  Scope: HdlTop.uartRxAgentBfm.uartRxMonitorBfm.RecievingAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartRxAgentBfm/UartRxAssertions.sv Line: 105
+# THE UART DATA TYPE IS SEVEN_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SEVEN_BIT in monitor bfm
+# THE UART DATA TYPE IS SEVEN_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SEVEN_BIT in monitor bfm
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 11953800 ps Started: 11940800 ps  Scope: HdlTop.uartRxAgentBfm.uartRxMonitorBfm.RecievingAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartRxAgentBfm/UartRxAssertions.sv Line: 105
+# THE UART DATA TYPE IS SEVEN_BIT
+# 	 	 the data received is 0 		
+# THE UART DATA TYPE IS SEVEN_BIT in monitor bfm
+# THE UART DATA TYPE IS SEVEN_BIT
+# 	 	 the data received is 0 		
+# THE UART DATA TYPE IS SEVEN_BIT in monitor bfm
+# THE UART DATA TYPE IS SEVEN_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SEVEN_BIT in monitor bfm
+# THE UART DATA TYPE IS SEVEN_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SEVEN_BIT in monitor bfm
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 12785800 ps Started: 12772800 ps  Scope: HdlTop.uartRxAgentBfm.uartRxMonitorBfm.RecievingAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartRxAgentBfm/UartRxAssertions.sv Line: 105
+# THE UART DATA TYPE IS SEVEN_BIT
+# 	 	 the data received is 0 		
+# THE UART DATA TYPE IS SEVEN_BIT in monitor bfm
+# ** Info: *****************************DATA WIDTH IS MATCHING : ASSERTION PASS
+#    Time: 12993800 ps Started: 12785800 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.CHECK_FOR_DATA_WIDTH_LENGTH File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 125
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^)))))))))))))))))))))))))))))))
+#  
+#  
+#  
+#  
+#  
+# Data received : 1100110 
+# **********
+#  the config of the [receiver monitor] is '{uartOverSamplingMethod:OVERSAMPLING_16, uartBaudRate:BAUD_9600, uartDataType:SEVEN_BIT, uartParityType:EVEN_PARITY, uartStopBit:TWO_BIT, uartParityEnable:PARITY_ENABLED, uartParityErrorInjection:0, uartFramingErrorInjection:0, uartBreakingErrorInjection:0, OverSampledBaudFrequencyClk:1} 
+# **************
+# WAITING FOR START BIT IN RECEIVER
+# *************N THE config of [TRANSMITTER monitor] is '{uartOverSamplingMethod:OVERSAMPLING_16, uartBaudRate:BAUD_9600, uartDataType:SEVEN_BIT, uartParityType:EVEN_PARITY, uartStopBit:TWO_BIT, uartParityEnable:PARITY_ENABLED, uartParityErrorInjection:0, uartFramingErrorInjection:1, uartBreakingErrorInjection:1, OverSampledBaudFrequencyClk:1} 
+# **********
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(132) @ 13396800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Printing transmissionData= x0110011
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(135) @ 13396800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Printing receivingData= x0110011
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 13396800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 7
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 13396800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = x,RecievingData = x
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 13396800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 6
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 13396800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 0,RecievingData = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 13396800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 5
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 13396800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 13396800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 4
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 13396800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 13396800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 3
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 13396800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 0,RecievingData = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 13396800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 2
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 13396800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 0,RecievingData = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 13396800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 13396800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 13396800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 13396800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(200) @ 13396800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] PACKET MATCH SUCCESSFUL
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(207) @ 13396800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] 
+#  transmissionData:x0110011
+#  receivingData:x0110011
+#  tx parity:0 rx parity:0
+#  tx framingError:1 rx framingError:1
 #  tx parityError:0 rx parityError:0
 #  tx breakingError:0 rx breakingError:0
-# UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_objection.svh(1268) @ 1799800: reporter [TEST_DONE] 'run' phase is ready to proceed to the 'extract' phase
-# UVM_INFO ../../src/hvlTop/uartRxAgent/UartRxCoverage.sv(131) @ 1799800: uvm_test_top.uartEnv.uartRxAgent.uartRxCoverage [UartRxCoverage] ******************** UART RX Agent Coverage = 28.24 % *********************
+# UVM_INFO ../../src/hvlTop/uartTxAgent/uartTxSequences//UartTxBaseSequence.sv(48) @ 13396800: uvm_test_top.uartEnv.uartTxAgent.uartTxSequencer@@uartVirtualTransmissionSequence.uartTxBaseSequence [[TX SEQUENCE]] uartTxAgentConfig_ successfully set
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# Name                           Type               Size  Value                                                                                       
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# req                            UartTxTransaction  -     @3243                                                                                       
+#   begin_time                   time               64    13396800                                                                                    
+#   depth                        int                32    'd3                                                                                         
+#   parent sequence (name)       string             18    uartTxBaseSequence                                                                          
+#   parent sequence (full name)  string             92    uvm_test_top.uartEnv.uartVirtualSequencer.uartVirtualTransmissionSequence.uartTxBaseSequence
+#   sequencer                    string             48    uvm_test_top.uartEnv.uartTxAgent.uartTxSequencer                                            
+#   transmissionData[7]          integral           1     'b0                                                                                         
+#   transmissionData[6]          integral           1     'b0                                                                                         
+#   transmissionData[5]          integral           1     'b0                                                                                         
+#   transmissionData[4]          integral           1     'b0                                                                                         
+#   transmissionData[3]          integral           1     'b1                                                                                         
+#   transmissionData[2]          integral           1     'b1                                                                                         
+#   transmissionData[1]          integral           1     'b1                                                                                         
+#   transmissionData[0]          integral           1     'b1                                                                                         
+#   parity                       integral           1     'b0x                                                                                        
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# UVM_INFO ../../src/hvlTop/uartTxAgent//UartTxDriverProxy.sv(80) @ 13396800: uvm_test_top.uartEnv.uartTxAgent.uartTxDriverProxy [[DRIVER PROXY]] UartDataType = SEVEN_BIT 
+# The baudrate of Uart = BAUD_9600 
+# The parity enable = PARITY_ENABLED 
+#  No. of stop bits = TWO_BIT
+#  oversampling method = OVERSAMPLING_16
+# Data to be sent : 1111000 
+# 
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##########################################################$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 13422800 ps Started: 13409800 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 109
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 13422800 ps Started: 13409800 ps  Scope: HdlTop.uartRxAgentBfm.uartRxMonitorBfm.RecievingAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartRxAgentBfm/UartRxAssertions.sv Line: 105
+# THE UART DATA TYPE IS SEVEN_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SEVEN_BIT in monitor bfm
+# THE UART DATA TYPE IS SEVEN_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SEVEN_BIT in monitor bfm
+# THE UART DATA TYPE IS SEVEN_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SEVEN_BIT in monitor bfm
+# THE UART DATA TYPE IS SEVEN_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SEVEN_BIT in monitor bfm
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 14462800 ps Started: 14449800 ps  Scope: HdlTop.uartRxAgentBfm.uartRxMonitorBfm.RecievingAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartRxAgentBfm/UartRxAssertions.sv Line: 105
+# THE UART DATA TYPE IS SEVEN_BIT
+# 	 	 the data received is 0 		
+# THE UART DATA TYPE IS SEVEN_BIT in monitor bfm
+# THE UART DATA TYPE IS SEVEN_BIT
+# 	 	 the data received is 0 		
+# THE UART DATA TYPE IS SEVEN_BIT in monitor bfm
+# ** Info: *****************************DATA WIDTH IS MATCHING : ASSERTION PASS
+#    Time: 14878800 ps Started: 14670800 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.CHECK_FOR_DATA_WIDTH_LENGTH File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 125
+# THE UART DATA TYPE IS SEVEN_BIT
+# 	 	 the data received is x 		
+# THE UART DATA TYPE IS SEVEN_BIT in monitor bfm
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^)))))))))))))))))))))))))))))))
+#  
+#  
+#  
+#  
+#  
+# Data received : 1111000 
+# **********
+#  the config of the [receiver monitor] is '{uartOverSamplingMethod:OVERSAMPLING_16, uartBaudRate:BAUD_9600, uartDataType:SIX_BIT, uartParityType:ODD_PARITY, uartStopBit:ONE_BIT, uartParityEnable:PARITY_DISABLED, uartParityErrorInjection:1, uartFramingErrorInjection:0, uartBreakingErrorInjection:0, OverSampledBaudFrequencyClk:1} 
+# **************
+# WAITING FOR START BIT IN RECEIVER
+# *************N THE config of [TRANSMITTER monitor] is '{uartOverSamplingMethod:OVERSAMPLING_16, uartBaudRate:BAUD_9600, uartDataType:SIX_BIT, uartParityType:ODD_PARITY, uartStopBit:ONE_BIT, uartParityEnable:PARITY_DISABLED, uartParityErrorInjection:1, uartFramingErrorInjection:1, uartBreakingErrorInjection:1, OverSampledBaudFrequencyClk:1} 
+# **********
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(132) @ 15697800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Printing transmissionData= x0001111
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(135) @ 15697800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Printing receivingData= x0001111
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 15697800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 7
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 15697800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = x,RecievingData = x
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 15697800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 6
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 15697800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 0,RecievingData = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 15697800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 5
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 15697800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 0,RecievingData = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 15697800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 4
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 15697800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 0,RecievingData = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 15697800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 3
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 15697800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 15697800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 2
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 15697800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 15697800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 15697800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 15697800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 15697800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(176) @ 15697800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] No parity
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(200) @ 15697800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] PACKET MATCH SUCCESSFUL
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(207) @ 15697800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] 
+#  transmissionData:x0001111
+#  receivingData:x0001111
+#  tx parity:x rx parity:x
+#  tx framingError:1 rx framingError:1
+#  tx parityError:0 rx parityError:0
+#  tx breakingError:0 rx breakingError:0
+# UVM_INFO ../../src/hvlTop/uartTxAgent/uartTxSequences//UartTxBaseSequence.sv(48) @ 15697800: uvm_test_top.uartEnv.uartTxAgent.uartTxSequencer@@uartVirtualTransmissionSequence.uartTxBaseSequence [[TX SEQUENCE]] uartTxAgentConfig_ successfully set
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# Name                           Type               Size  Value                                                                                       
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# req                            UartTxTransaction  -     @3613                                                                                       
+#   begin_time                   time               64    15697800                                                                                    
+#   depth                        int                32    'd3                                                                                         
+#   parent sequence (name)       string             18    uartTxBaseSequence                                                                          
+#   parent sequence (full name)  string             92    uvm_test_top.uartEnv.uartVirtualSequencer.uartVirtualTransmissionSequence.uartTxBaseSequence
+#   sequencer                    string             48    uvm_test_top.uartEnv.uartTxAgent.uartTxSequencer                                            
+#   transmissionData[7]          integral           1     'b1                                                                                         
+#   transmissionData[6]          integral           1     'b1                                                                                         
+#   transmissionData[5]          integral           1     'b1                                                                                         
+#   transmissionData[4]          integral           1     'b1                                                                                         
+#   transmissionData[3]          integral           1     'b1                                                                                         
+#   transmissionData[2]          integral           1     'b1                                                                                         
+#   transmissionData[1]          integral           1     'b1                                                                                         
+#   transmissionData[0]          integral           1     'b1                                                                                         
+#   parity                       integral           1     'b0x                                                                                        
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# UVM_INFO ../../src/hvlTop/uartTxAgent//UartTxDriverProxy.sv(80) @ 15697800: uvm_test_top.uartEnv.uartTxAgent.uartTxDriverProxy [[DRIVER PROXY]] UartDataType = SIX_BIT 
+# The baudrate of Uart = BAUD_9600 
+# The parity enable = PARITY_DISABLED 
+#  No. of stop bits = ONE_BIT
+#  oversampling method = OVERSAMPLING_16
+# Data to be sent : 111111 
+# 
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##########################################################$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 15723800 ps Started: 15710800 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 109
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 15723800 ps Started: 15710800 ps  Scope: HdlTop.uartRxAgentBfm.uartRxMonitorBfm.RecievingAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartRxAgentBfm/UartRxAssertions.sv Line: 105
+# THE UART DATA TYPE IS SIX_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SIX_BIT in monitor bfm
+# THE UART DATA TYPE IS SIX_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SIX_BIT in monitor bfm
+# THE UART DATA TYPE IS SIX_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SIX_BIT in monitor bfm
+# THE UART DATA TYPE IS SIX_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SIX_BIT in monitor bfm
+# THE UART DATA TYPE IS SIX_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS SIX_BIT in monitor bfm
+# ** Info: *****************************DATA WIDTH IS MATCHING : ASSERTION PASS
+#    Time: 16971800 ps Started: 16763800 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.CHECK_FOR_DATA_WIDTH_LENGTH File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 125
+# THE UART DATA TYPE IS SIX_BIT
+# 	 	 the data received is x 		
+# THE UART DATA TYPE IS SIX_BIT in monitor bfm
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 17179800 ps Started: 16958800 ps  Scope: HdlTop.uartRxAgentBfm.uartRxMonitorBfm.RecievingAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartRxAgentBfm/UartRxAssertions.sv Line: 105
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^)))))))))))))))))))))))))))))))
+#  
+#  
+#  
+#  
+#  
+# Data received : 111110 
+# **********
+#  the config of the [receiver monitor] is '{uartOverSamplingMethod:OVERSAMPLING_16, uartBaudRate:BAUD_9600, uartDataType:FIVE_BIT, uartParityType:EVEN_PARITY, uartStopBit:ONE_BIT, uartParityEnable:PARITY_ENABLED, uartParityErrorInjection:0, uartFramingErrorInjection:0, uartBreakingErrorInjection:0, OverSampledBaudFrequencyClk:1} 
+# **************
+# WAITING FOR START BIT IN RECEIVER
+# *************N THE config of [TRANSMITTER monitor] is '{uartOverSamplingMethod:OVERSAMPLING_16, uartBaudRate:BAUD_9600, uartDataType:FIVE_BIT, uartParityType:EVEN_PARITY, uartStopBit:ONE_BIT, uartParityEnable:PARITY_ENABLED, uartParityErrorInjection:0, uartFramingErrorInjection:0, uartBreakingErrorInjection:1, OverSampledBaudFrequencyClk:1} 
+# **********
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(132) @ 17374800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Printing transmissionData= x0011111
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(135) @ 17374800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Printing receivingData= x0011111
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 17374800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 7
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 17374800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = x,RecievingData = x
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 17374800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 6
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 17374800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 0,RecievingData = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 17374800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 5
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 17374800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 0,RecievingData = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 17374800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 4
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 17374800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 17374800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 3
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 17374800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 17374800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 2
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 17374800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 17374800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 17374800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 17374800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 17374800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(200) @ 17374800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] PACKET MATCH SUCCESSFUL
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(207) @ 17374800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] 
+#  transmissionData:x0011111
+#  receivingData:x0011111
+#  tx parity:x rx parity:x
+#  tx framingError:1 rx framingError:1
+#  tx parityError:0 rx parityError:x
+#  tx breakingError:0 rx breakingError:0
+# UVM_INFO ../../src/hvlTop/uartTxAgent/uartTxSequences//UartTxBaseSequence.sv(48) @ 17374800: uvm_test_top.uartEnv.uartTxAgent.uartTxSequencer@@uartVirtualTransmissionSequence.uartTxBaseSequence [[TX SEQUENCE]] uartTxAgentConfig_ successfully set
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# Name                           Type               Size  Value                                                                                       
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# req                            UartTxTransaction  -     @3887                                                                                       
+#   begin_time                   time               64    17374800                                                                                    
+#   depth                        int                32    'd3                                                                                         
+#   parent sequence (name)       string             18    uartTxBaseSequence                                                                          
+#   parent sequence (full name)  string             92    uvm_test_top.uartEnv.uartVirtualSequencer.uartVirtualTransmissionSequence.uartTxBaseSequence
+#   sequencer                    string             48    uvm_test_top.uartEnv.uartTxAgent.uartTxSequencer                                            
+#   transmissionData[7]          integral           1     'b1                                                                                         
+#   transmissionData[6]          integral           1     'b1                                                                                         
+#   transmissionData[5]          integral           1     'b1                                                                                         
+#   transmissionData[4]          integral           1     'b1                                                                                         
+#   transmissionData[3]          integral           1     'b0                                                                                         
+#   transmissionData[2]          integral           1     'b0                                                                                         
+#   transmissionData[1]          integral           1     'b0                                                                                         
+#   transmissionData[0]          integral           1     'b1                                                                                         
+#   parity                       integral           1     'b0x                                                                                        
+# ----------------------------------------------------------------------------------------------------------------------------------------------------
+# UVM_INFO ../../src/hvlTop/uartTxAgent//UartTxDriverProxy.sv(80) @ 17374800: uvm_test_top.uartEnv.uartTxAgent.uartTxDriverProxy [[DRIVER PROXY]] UartDataType = FIVE_BIT 
+# The baudrate of Uart = BAUD_9600 
+# The parity enable = PARITY_ENABLED 
+#  No. of stop bits = ONE_BIT
+#  oversampling method = OVERSAMPLING_16
+# Data to be sent : 10001 
+# 
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##########################################################$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 17400800 ps Started: 17387800 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 109
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 17400800 ps Started: 17387800 ps  Scope: HdlTop.uartRxAgentBfm.uartRxMonitorBfm.RecievingAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartRxAgentBfm/UartRxAssertions.sv Line: 105
+# PARITY IN ASSERTION IS 0
+# ** Info: *********************EVEN PARITY IS DETECTED : ASSERTION PASS
+#    Time: 17595800 ps Started: 17387800 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.CHECK_FOR_EVEN_PARITY File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 145
+# ** Error:  FAILED TO DETECT STOP BIT : ASSERTION FAIL
+#    Time: 17595800 ps Started: 17387800 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.CHECK_FOR_STOP_BIT File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 185 Expr: uartTx
+# THE UART DATA TYPE IS FIVE_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS FIVE_BIT in monitor bfm
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 17816800 ps Started: 17803800 ps  Scope: HdlTop.uartTxAgentBfm.uartTxMonitorBfm.TransmissionAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartTxAgentBfm/UartTxAssertions.sv Line: 109
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 17816800 ps Started: 17803800 ps  Scope: HdlTop.uartRxAgentBfm.uartRxMonitorBfm.RecievingAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartRxAgentBfm/UartRxAssertions.sv Line: 105
+# THE UART DATA TYPE IS FIVE_BIT
+# 	 	 the data received is 0 		
+# THE UART DATA TYPE IS FIVE_BIT in monitor bfm
+# THE UART DATA TYPE IS FIVE_BIT
+# 	 	 the data received is 0 		
+# THE UART DATA TYPE IS FIVE_BIT in monitor bfm
+# THE UART DATA TYPE IS FIVE_BIT
+# 	 	 the data received is 0 		
+# THE UART DATA TYPE IS FIVE_BIT in monitor bfm
+# THE UART DATA TYPE IS FIVE_BIT
+# 	 	 the data received is 1 		
+# THE UART DATA TYPE IS FIVE_BIT in monitor bfm
+# ** Info: *******************************START BIT DETECTED : ASSERTION PASS
+#    Time: 18648800 ps Started: 18635800 ps  Scope: HdlTop.uartRxAgentBfm.uartRxMonitorBfm.RecievingAssertions.IF_THERE_IS_FALLINGEDGE_ASSERTION_PASS File: ../../src/hdlTop/uartRxAgentBfm/UartRxAssertions.sv Line: 105
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^)))))))))))))))))))))))))))))))
+#  
+#  
+#  
+#  
+#  
+# Data received : 10001 
+# **********
+#  the config of the [receiver monitor] is '{uartOverSamplingMethod:OVERSAMPLING_16, uartBaudRate:BAUD_9600, uartDataType:EIGHT_BIT, uartParityType:EVEN_PARITY, uartStopBit:TWO_BIT, uartParityEnable:PARITY_DISABLED, uartParityErrorInjection:0, uartFramingErrorInjection:0, uartBreakingErrorInjection:0, OverSampledBaudFrequencyClk:1} 
+# **************
+# WAITING FOR START BIT IN RECEIVER
+# *************N THE config of [TRANSMITTER monitor] is '{uartOverSamplingMethod:OVERSAMPLING_16, uartBaudRate:BAUD_9600, uartDataType:EIGHT_BIT, uartParityType:EVEN_PARITY, uartStopBit:TWO_BIT, uartParityEnable:PARITY_DISABLED, uartParityErrorInjection:0, uartFramingErrorInjection:0, uartBreakingErrorInjection:0, OverSampledBaudFrequencyClk:1} 
+# **********
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(132) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Printing transmissionData= xxx10001
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(135) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Printing receivingData= xxx10001
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 7
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = x,RecievingData = x
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 6
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = x,RecievingData = x
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 5
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = x,RecievingData = x
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 4
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 3
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 0,RecievingData = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 2
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 0,RecievingData = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 0,RecievingData = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(160) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] Bit Match = 0
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(161) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] TransmissionData = 1,RecievingData = 1
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(176) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] No parity
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(200) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] PACKET MATCH SUCCESSFUL
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(207) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] 
+#  transmissionData:xxx10001
+#  receivingData:xxx10001
+#  tx parity:0 rx parity:0
+#  tx framingError:1 rx framingError:1
+#  tx parityError:0 rx parityError:0
+#  tx breakingError:0 rx breakingError:0
+# UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_objection.svh(1268) @ 19051800: reporter [TEST_DONE] 'run' phase is ready to proceed to the 'extract' phase
+# UVM_INFO ../../src/hvlTop/uartRxAgent/UartRxCoverage.sv(120) @ 19051800: uvm_test_top.uartEnv.uartRxAgent.uartRxCoverage [UartRxCoverage] ******************** UART RX Agent Coverage = 78.87 % *********************
 # ----------------------------------------------------------------------------------------------------------------------------------------
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(202) @ 1799800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] 
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(228) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] 
 # Packet 1 Summary:
+#  TransmissionData:00111101
+#  RecievingData:00111101
+#  Packet matched
+#  Parity match
+#  Parity Error match
+#  Breaking Error match
+#  Framing Error match
+# 
+# ----------------------------------------------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------------------------
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(228) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] 
+# Packet 2 Summary:
+#  TransmissionData:00111110
+#  RecievingData:00111110
+#  Packet matched
+#  Parity match
+#  Parity Error match
+#  Breaking Error match
+#  Framing Error match
+# 
+# ----------------------------------------------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------------------------
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(228) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] 
+# Packet 3 Summary:
 #  TransmissionData:00011110
 #  RecievingData:00011110
 #  Packet matched
 #  Parity match
-#  No Parity Error
-#  No Breaking Error
-#  No Framing Error
+#  Parity Error match
+#  Breaking Error match
+#  Framing Error match
 # 
 # ----------------------------------------------------------------------------------------------------------------------------------------
 # ----------------------------------------------------------------------------------------------------------------------------------------
-# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(202) @ 1799800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] 
-# Packet 2 Summary:
-#  TransmissionData:00010110
-#  RecievingData:00010110
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(228) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] 
+# Packet 4 Summary:
+#  TransmissionData:00100010
+#  RecievingData:00100010
 #  Packet matched
 #  Parity match
-#  No Parity Error
-#  No Breaking Error
-#  No Framing Error
+#  Parity Error match
+#  Breaking Error match
+#  Framing Error match
 # 
 # ----------------------------------------------------------------------------------------------------------------------------------------
-# UVM_INFO ../../src/hvlTop/uartTxAgent//UartTxCoverage.sv(128) @ 1799800: uvm_test_top.uartEnv.uartTxAgent.uartTxCoverage [UartTxCoverage] ******************** UART TX Agent Coverage = 36.11 % *********************
+# ----------------------------------------------------------------------------------------------------------------------------------------
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(228) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] 
+# Packet 5 Summary:
+#  TransmissionData:01101111
+#  RecievingData:01101111
+#  Packet matched
+#  Parity match
+#  Parity Error match
+#  Breaking Error match
+#  Framing Error match
+# 
+# ----------------------------------------------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------------------------
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(228) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] 
+# Packet 6 Summary:
+#  TransmissionData:00000111
+#  RecievingData:00000111
+#  Packet matched
+#  Parity match
+#  Parity Error match
+#  Breaking Error match
+#  Framing Error match
+# 
+# ----------------------------------------------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------------------------
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(228) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] 
+# Packet 7 Summary:
+#  TransmissionData:00110011
+#  RecievingData:00110011
+#  Packet matched
+#  Parity match
+#  Parity Error match
+#  Breaking Error match
+#  Framing Error match
+# 
+# ----------------------------------------------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------------------------
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(228) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] 
+# Packet 8 Summary:
+#  TransmissionData:00001111
+#  RecievingData:00001111
+#  Packet matched
+#  Parity match
+#  Parity Error match
+#  Breaking Error match
+#  Framing Error match
+# 
+# ----------------------------------------------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------------------------
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(228) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] 
+# Packet 9 Summary:
+#  TransmissionData:00011111
+#  RecievingData:00011111
+#  Packet matched
+#  Parity match
+#  Parity Error match
+#  Breaking Error match
+#  Framing Error match
+# 
+# ----------------------------------------------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------------------------
+# UVM_INFO ../../src/hvlTop/uartEnv/UartScoreboard.sv(228) @ 19051800: uvm_test_top.uartEnv.uartScoreboard [UartScoreboard] 
+# Packet 10 Summary:
+#  TransmissionData:00010001
+#  RecievingData:00010001
+#  Packet matched
+#  Parity match
+#  Parity Error match
+#  Breaking Error match
+#  Framing Error match
+# 
+# ----------------------------------------------------------------------------------------------------------------------------------------
+# UVM_INFO ../../src/hvlTop/uartTxAgent//UartTxCoverage.sv(120) @ 19051800: uvm_test_top.uartEnv.uartTxAgent.uartTxCoverage [UartTxCoverage] ******************** UART TX Agent Coverage = 78.87 % *********************
 # 
 # --- UVM Report Summary ---
 # 
 # ** Report counts by severity
-# UVM_INFO :   70
-# UVM_WARNING :    2
+# UVM_INFO :  256
+# UVM_WARNING :    0
 # UVM_ERROR :    0
 # UVM_FATAL :    0
 # ** Report counts by id
@@ -368,21 +1254,20 @@
 # [Questa UVM]     2
 # [RNTST]     1
 # [TEST_DONE]     1
+# [UART_RECEIVER_MONITOR_BFM]     3
 # [UART_RECIEVER_DRIVER_BFM]     1
 # [UART_TRANSMITTER_DRIVER_BFM]     3
-# [UART_TRANSMITTER_MONITOR_BFM]     6
+# [UART_TRANSMITTER_MONITOR_BFM]     3
 # [UVMTOP]     1
 # [UartRxCoverage]     1
-# [UartScoreboard]    42
+# [UartScoreboard]   216
 # [UartTxCoverage]     1
-# [[DRIVER PROXY]]     2
-# [[Driver PROXY]]     2
-# [[MONITOR PROXY]]     2
-# [[receciever monitor PROXY]]     2
-# [uart transmitter agent bfm]     2
-# [uvm_sequence_base]     2
+# [[DRIVER PROXY]]    10
+# [[TX SEQUENCE]]    10
+# [uart receiver agent bfm]     1
+# [uart transmitter agent bfm]     1
 # ** Note: $finish    : /tools/mentor/questasim_10.6c/questasim/linux/../verilog_src/uvm-1.1d/src/base/uvm_root.svh(430)
-#    Time: 1799800 ps  Iteration: 54  Instance: /HvlTop
+#    Time: 19051800 ps  Iteration: 66  Instance: /HvlTop
 # Saving coverage database on exit...
-# End time: 09:11:04 on Feb 18,2025, Elapsed time: 0:00:04
-# Errors: 0, Warnings: 6
+# End time: 16:43:17 on Mar 06,2025, Elapsed time: 0:00:08
+# Errors: 1, Warnings: 4

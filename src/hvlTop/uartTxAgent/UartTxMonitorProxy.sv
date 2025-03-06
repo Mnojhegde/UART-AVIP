@@ -75,11 +75,14 @@ task UartTxMonitorProxy :: run_phase(uvm_phase phase);
 		  uartTxMonitorBfm.WaitForReset();
       forever begin
 				UartTxTransaction uartTxTransaction_clone;
+				//wait(monitorSynchronizer.triggered);
+				UartTxConfigConverter :: from_Class(uartTxAgentConfig,uartConfigStruct);
+                                $display("*************\N THE config of [TRANSMITTER monitor] is %p \n**********",uartConfigStruct);
+
 				uartTxMonitorBfm.StartMonitoring(uartTxPacketStruct , uartConfigStruct);
 				UartTxSeqItemConverter::toTxClass(uartTxPacketStruct , uartTxAgentConfig , uartTxTransaction);
-
 				$cast(uartTxTransaction_clone, uartTxTransaction.clone());  
-    		uartTxMonitorAnalysisPort.write(uartTxTransaction_clone);
+    		                uartTxMonitorAnalysisPort.write(uartTxTransaction_clone);
 				//->monitorSynchronizer;
        end 
 		end 

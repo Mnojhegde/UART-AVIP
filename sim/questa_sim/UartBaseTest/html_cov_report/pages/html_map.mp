@@ -12,6 +12,7 @@ gbins1.json = NON_SCOPE
 g1.json = NON_SCOPE
 gcons1.json = NON_SCOPE
 z2.json = NON_SCOPE
+z3.json = NON_SCOPE
 testlist.html = NON_SCOPE
 globattrlist.html = NON_SCOPE
 dulist.html = NON_SCOPE
